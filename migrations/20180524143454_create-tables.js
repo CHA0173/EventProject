@@ -1,7 +1,6 @@
 
 exports.up = function (knex, Promise) {
-    return
-    knex.schema.createTable('users', (users) => {
+    return knex.schema.createTable('users', (users) => {
         users.increments();
         users.string("name");
         users.string("password");
@@ -12,7 +11,8 @@ exports.up = function (knex, Promise) {
             events.string("name");
             events.string("description");
             events.timestamp("dateTime");
-            events.point("location");
+            events.string('address');
+            events.specificType('location', 'POINT');
             events.boolean("privatePublic");
             events.decimal("deposit");
             events.boolean("template");
@@ -60,15 +60,15 @@ exports.up = function (knex, Promise) {
             todoItems.foreign("items_id").references("items.id");
         })
     })
-};
+}
 
 exports.down = function (knex, Promise) {
     return knex.schema.dropTable('toDo_items')
-        .then(()=>knex.schema.dropTable('toDo'))
-        .then(()=>knex.schema.dropTable('events_users'))
-        .then(()=>knex.schema.dropTable('items'))
-        .then(()=>knex.schema.dropTable('categories'))
-        .then(()=>knex.schema.dropTable('events'))
-        .then(()=>knex.schema.dropTable('users'))
+        .then(() => knex.schema.dropTable('toDo'))
+        .then(() => knex.schema.dropTable('events_users'))
+        .then(() => knex.schema.dropTable('items'))
+        .then(() => knex.schema.dropTable('categories'))
+        .then(() => knex.schema.dropTable('events'))
+        .then(() => knex.schema.dropTable('users'));
 
-};
+}
