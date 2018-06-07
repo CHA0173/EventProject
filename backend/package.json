@@ -1,0 +1,17 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@types/dotenv": "^4.0.3",
+    "@types/fs-extra": "^5.0.2",
+    "@types/knex": "^0.14.14",
+    "dotenv": "^6.0.0",
+    "fs-extra": "^6.0.1",
+    "knex": "^0.14.6",
+    "pg": "^7.4.3",
+    "ts-node": "^6.1.0",
+    "typescript": "^2.9.1"
+  }
+}

@@ -1,0 +1,32 @@
+[{
+    "name": "champagne bottes",
+    "quantity": 5,
+    "isactive": true,
+    "category": "drinks",
+    "user": "peter"
+
+},
+{
+    "name": "snack bags",
+    "quantity": 10,
+    "isactive": true,
+    "category": "food",
+    "user": "paul"
+
+},
+{
+    "name": "portable speakers",
+    "quantity": 1,
+    "isactive": true,
+    "category": "equipment",
+    "user": "mary"
+
+},
+{
+    "name": "poker set",
+    "quantity": 1,
+    "isactive": true,
+    "category": "toys/games",
+    "user": "host"
+
+}]
