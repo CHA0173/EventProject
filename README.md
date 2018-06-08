@@ -55,3 +55,33 @@ Created database and related tables via knex migrations
 ### Changed
 
 ---
+
+## version 0.1 May 24, 2018 (Stephen)
+
+Created database and related tables via knex migrations 
+
+### Added
+
+- yarn installed
+    - pg
+- database created
+    - knexfile created
+    - migration file for tables created
+- Github repository created
+  - README file created
+
+### Changed
+
+---
+
+## version 0.11 June 8, 2018 (Lucas)
+
+Upload the Front-End file (NavigationApp) 
+
+### Added
+
+- Added NavigationApp file
+
+### Changed
+
+---
