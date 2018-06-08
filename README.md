@@ -19,6 +19,8 @@ Event organization made painless
 - Bootstrap
 - Typescript
 - PostgreSQL
+- Knex
+- Axios
 
 --- 
 
