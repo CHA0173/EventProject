@@ -39,3 +39,17 @@ Created database and related tables via knex migrations
 ### Changed
 
 ---
+
+## version 0.11 June 7, 2018 (Stephen)
+
+Created database and related tables via knex migrations 
+
+### Added
+
+- Added migration file
+- Added seed file
+- Separated frontend and backend
+
+### Changed
+
+---
