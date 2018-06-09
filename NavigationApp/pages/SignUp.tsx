@@ -33,29 +33,31 @@ export default class LogIn extends React.Component<LogInProps, LogInState> {
         <Text style={{ fontSize: 100, color: 'black', flex: 0.4 }}>
           YouIn
         </Text>
-        <View style={{marginTop: 50, marginBottom: 50, backgroundColor: 'white'}}>
+        <View style={{marginTop: 50, marginBottom: 50}}>
           <TextInput
-            style={{ height: 40, width: 200 }}
+            style={{ height: 40, width: 300 }}
             placeholder="Email"
             onChangeText={(text) => this.setState({ text })}
           />
           <TextInput
-            style={{ height: 40, width: 200 }}
+            style={{ height: 40, width: 300 }}
             placeholder="Password"
             onChangeText={(text) => this.setState({ text })}
           />
           <TextInput
-            style={{ height: 40, width: 200 }}
+            style={{ height: 40, width: 300 }}
             placeholder="Display Name"
             onChangeText={(text) => this.setState({ text })}
           />
         </View>
+        <View style={{width: 300}}>
         <Button
           onPress={() => {
             Alert.alert('Test')
           }}
           title='SignUp'
         />
+        </View>
 
       </View>
     )

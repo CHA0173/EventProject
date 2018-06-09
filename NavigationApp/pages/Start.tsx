@@ -18,56 +18,79 @@ interface StartProps {
 
 
 
-export default class Start extends React.Component<StartProps> {
+export default class Start extends React.Component<StartProps, {renderStart: boolean}> {
   constructor(props: StartProps) {
     super(props)
-
+    this.state = {
+      renderStart:false
+    }
+    setTimeout(() => {
+      this.setState({
+        renderStart: true,
+      })
+    }, 1600);
   }
-
-  public render() {
-    return (
-      <View style={{ backgroundColor: 'yellow', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ fontSize: 100, color: 'black', flex: 0.4, marginTop: 50 }}>
-          YouIn
-        </Text>
-        <View style={{ margin: 10, flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-          <View >
-            <Button
-              title='LogIn'
-              onPress={() => {
-                this.props.navigator.push({
-                  screen: 'LogInScreen',
-                  title: 'LogIn',
-                  navigatorStyle: { navBarTitleTextCentered: true }
-                })
-
-              }}
-            />
+  renderStart = () => {
+    if (this.state.renderStart) {
+      return (
+        <View style={{ backgroundColor: 'yellow', flex: 1 }}>
+          <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1.5 }}>
+            <Text style={{ fontSize: 100, color: 'black' }}>
+              YouIn
+          </Text>
           </View>
-          <View style={{ marginBottom: 50 }}>
-            <Button
-              onPress={() => {
-                this.props.navigator.push({
-                  screen: 'SignUpScreen',
-                  title: 'SignUp',
-                  navigatorStyle: { navBarTitleTextCentered: true }
-                })
-              }}
-              title='SignUp'
-            />
+          <View style={{ margin: 10, flexDirection: 'row', justifyContent: 'space-between' }}>
+            <View style={{ width: 180 }}>
+              <Button
+                title='LogIn'
+                onPress={() => {
+                  this.props.navigator.push({
+                    screen: 'LogInScreen',
+                    title: 'LogIn',
+                    navigatorStyle: { navBarTitleTextCentered: true }
+                  })
+
+                }}
+              />
+            </View>
+            <View style={{ width: 180 }}>
+              <Button
+                onPress={() => {
+                  this.props.navigator.push({
+                    screen: 'SignUpScreen',
+                    title: 'SignUp',
+                    navigatorStyle: { navBarTitleTextCentered: true }
+                  })
+                }}
+                title='SignUp'
+              />
+            </View>
           </View>
-        </View>
-        {/* <View style={{ marginBottom: 50 }}>
-          <Button
+          {/* <View style={{ marginBottom: 50 }}>
+            <Button
             onPress={() => {
               this.props.navigator.push({
                 screen: ''
               })
-            }}
-            title='Social LogIn'
-          />
-        </View> */}
-      </View>
+              }}
+              title='Social LogIn'
+            />
+          </View> */}
+        </View>
+      )
+    } else {
+      return (
+        <View style={{ backgroundColor: 'yellow', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <View style={{ borderStyle: 'solid', borderWidth: 1, backgroundColor: 'white' }}>
+            <Text style={{ fontSize: 50, color: 'black' }}> YouIn </Text>
+          </View>
+        </View>
+      )
+    }
+  }
+  public render() {
+    return (
+      this.renderStart()
     )
   }
 }
