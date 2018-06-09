@@ -28,7 +28,7 @@ export default class Start extends React.Component<StartProps, {renderStart: boo
       this.setState({
         renderStart: true,
       })
-    }, 1600);
+    }, 2000);
   }
   renderStart = () => {
     if (this.state.renderStart) {

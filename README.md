@@ -85,3 +85,19 @@ Upload the Front-End file (NavigationApp)
 ### Changed
 
 ---
+
+## version 0.11 June 9, 2018 (Lucas)
+
+Changed some Front-End file, and will start to writting the event pages.
+
+### Added
+
+- 
+
+### Changed
+
+- Start.tsx 
+    - combine the LandingPage and StartPage to one page (start.tsx) 
+    - make ads more smooth (show up 2s than go to StartPage[Login/SignUp] )
+    
+---
