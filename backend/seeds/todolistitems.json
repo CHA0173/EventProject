@@ -1,32 +1,36 @@
 [{
-    "name": "champagne bottes",
+    "type":"boat party",
+    "name": "champagne bottles",
     "quantity": 5,
     "isactive": true,
     "category": "drinks",
-    "user": "peter"
+    "user": "Peter"
 
 },
 {
-    "name": "snack bags",
+    "type":"boat party",
+    "name": "birthday cake",
     "quantity": 10,
     "isactive": true,
     "category": "food",
-    "user": "paul"
+    "user": "Paul"
 
 },
 {
+    "type":"boat party",
     "name": "portable speakers",
     "quantity": 1,
     "isactive": true,
     "category": "equipment",
-    "user": "mary"
+    "user": "Mary"
 
 },
 {
+   "type":"boat party",
     "name": "poker set",
     "quantity": 1,
     "isactive": true,
     "category": "toys/games",
-    "user": "host"
+    "user": "Alex"
 
 }]
