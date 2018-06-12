@@ -1,14 +1,20 @@
 import * as React from 'react';
 import {
   View,
-  TouchableOpacity,
   Text,
   TextInput,
   Button,
-  Alert
 } from 'react-native';
 
 import { Navigator, Navigation } from 'react-native-navigation';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+const FacebookLogIn = (
+  <Icon.Button name="facebook" backgroundColor="#3b5998"  onPress={this.loginWithFacebook} style={{width: 300}}>
+    <Text style={{ color: 'white', textAlign: 'center', fontFamily: 'Arial', fontSize: 15 }}>Login with Facebook</Text>
+  </Icon.Button>
+);
+
 
 interface LogInProps {
   navigator: Navigator
@@ -28,6 +34,7 @@ export default class LogIn extends React.Component<LogInProps, LogInState> {
   }
 
   public render() {
+
     return (
       <View style={{ backgroundColor: 'yellow', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text style={{ fontSize: 100, color: 'black', flex: 0.4 }}>
@@ -46,31 +53,38 @@ export default class LogIn extends React.Component<LogInProps, LogInState> {
             onChangeText={(text) => this.setState({ text })}
           />
         </View>
-        <View style={{ width: 300 }}>
+        <View style={{ width: 300, margin: 10 }}>
           <Button
             title='LogIn'
             onPress={() => {
               Navigation.startTabBasedApp({
                 tabs: [
                   {
+                    label: 'Search',
+                    screen: 'SearchTabScreen', // this is a registered name for a screen
+                    icon: require('../img/search.png'),
+                    selectedIcon: require('../img/search.png'), // iOS only
+                    title: 'YouIn'
+                  },
+                  {
                     label: 'Profile',
                     screen: 'ProfileTabScreen',
-                    icon: require('../img/react.png'),
-                    selectedIcon: require('../img/react.png'), // iOS only
+                    icon: require('../img/profile.png'),
+                    selectedIcon: require('../img/profile.png'), // iOS only
                     title: 'Profile'
                   },
                   {
-                    label: 'Search',
-                    screen: 'SearchTabScreen', // this is a registered name for a screen
-                    icon: require('../img/react.png'),
-                    selectedIcon: require('../img/react.png'), // iOS only
-                    title: 'YouIn'
+                    label: 'Events',
+                    screen: 'EventsTabScreen',
+                    icon: require('../img/Calendar1.png'),
+                    selectedIcon: require('../img/Calendar1.png'), // iOS only
+                    title: 'Profile'
                   },
                   {
                     label: 'Notification',
                     screen: 'NotificationTabScreen',
-                    icon: require('../img/react.png'),
-                    selectedIcon: require('../img/react.png'), // iOS only
+                    icon: require('../img/notification3.png'),
+                    selectedIcon: require('../img/notification3.png'), // iOS only
                     title: 'Notification'
                   }],
                 drawer: {
@@ -84,6 +98,9 @@ export default class LogIn extends React.Component<LogInProps, LogInState> {
               })
             }}
           />
+        </View>
+        <View>
+          {FacebookLogIn}
         </View>
       </View>
     )
