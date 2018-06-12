@@ -101,3 +101,22 @@ Changed some Front-End file, and will start to writting the event pages.
     - make ads more smooth (show up 2s than go to StartPage[Login/SignUp] )
     
 ---
+
+## version 0.11 June 11, 2018 (Lucas)
+
+ Added PhotoPicker . now you can choose the photo from your phone and maybe you can use the camera to select photo( didn't tested ). but still have some problem , i can't save the photo maybe need to combine to store. And remove store for now make the first page err gone( if you added some action to store you will fix the err ).
+
+### Added
+
+- PlueIn for pick phote
+    - react-native-image-picker
+
+### Changed
+
+- store.ts 
+    - hide all the code 
+
+- Navigator.ts
+    - hide all about the store
+    
+---

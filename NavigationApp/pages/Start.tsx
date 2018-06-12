@@ -81,8 +81,8 @@ export default class Start extends React.Component<StartProps, {renderStart: boo
     } else {
       return (
         <View style={{ backgroundColor: 'yellow', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <View style={{ borderStyle: 'solid', borderWidth: 1, backgroundColor: 'white' }}>
-            <Text style={{ fontSize: 50, color: 'black' }}> YouIn </Text>
+          <View >
+            <Text style={{ fontSize: 100, color: 'black' }}> YouIn </Text>
           </View>
         </View>
       )

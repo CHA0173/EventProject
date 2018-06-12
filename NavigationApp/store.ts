@@ -1,10 +1,10 @@
-import { createStore, combineReducers, applyMiddleware } from "redux";
-import thunk from 'redux-thunk';
+// import { createStore, combineReducers, applyMiddleware } from "redux";
+// import thunk from 'redux-thunk';
 
-export interface RootState {
+// export interface RootState {
 
-}
+// }
 
-export const store = createStore(combineReducers({
+// export const store = createStore(combineReducers({
 
-}),applyMiddleware(thunk));
+// }),applyMiddleware(thunk));
