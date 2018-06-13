@@ -4,15 +4,15 @@ import { Provider } from 'react-redux';
 
 // import App from './App';
 // import LandingPage from './pages/LandingPage';
-import Start from './pages/Start';
-import LogIn from './pages/Login';
-import SignUp from './pages/SignUp';
-import Search from './pages/Search';
-import Events from './pages/Events';
-import Profile from './pages/Profile';
-import Info from './pages/Info';
-import Menu from './pages/Menu';
-import Notification from './pages/Notification';
+import Start from './src/screens/Start';
+import LogIn from './src/screens/Login';
+import SignUp from './src/screens/SignUp';
+import Search from './src/screens/Search';
+import Events from './src/screens/Events';
+import Profile from './src/screens/Profile';
+import Info from './src/screens/Info';
+import Menu from './src/screens/Menu';
+import Notification from './src/screens/Notification';
 
 // one page no tab ( LandingPage )
 // Navigation.registerComponent('LandingScreen', () => LandingPage,  Provider);
