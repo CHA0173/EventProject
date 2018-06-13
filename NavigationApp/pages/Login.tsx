@@ -64,28 +64,32 @@ export default class LogIn extends React.Component<LogInProps, LogInState> {
                     screen: 'SearchTabScreen', // this is a registered name for a screen
                     icon: require('../img/search.png'),
                     selectedIcon: require('../img/search.png'), // iOS only
-                    title: 'YouIn'
+                    title: 'SearchBar',
+                    navigatorStyle: {navBarTitleTextCentered: true}
                   },
                   {
                     label: 'Profile',
                     screen: 'ProfileTabScreen',
                     icon: require('../img/profile.png'),
                     selectedIcon: require('../img/profile.png'), // iOS only
-                    title: 'Profile'
+                    title: 'Profile',
+                    navigatorStyle: {navBarTitleTextCentered: true}
                   },
                   {
                     label: 'Events',
                     screen: 'EventsTabScreen',
                     icon: require('../img/Calendar1.png'),
                     selectedIcon: require('../img/Calendar1.png'), // iOS only
-                    title: 'Profile'
+                    title: 'Events',
+                    navigatorStyle: {navBarTitleTextCentered: true}
                   },
                   {
                     label: 'Notification',
                     screen: 'NotificationTabScreen',
                     icon: require('../img/notification3.png'),
                     selectedIcon: require('../img/notification3.png'), // iOS only
-                    title: 'Notification'
+                    title: 'Notification',
+                    navigatorStyle: {navBarTitleTextCentered: true}
                   }],
                 drawer: {
                   right: {
@@ -93,7 +97,8 @@ export default class LogIn extends React.Component<LogInProps, LogInState> {
                   },
                   style: {
                     drawerShadow: true,
-                  }
+                  },
+                  animationType: 'fade'
                 }
               })
             }}

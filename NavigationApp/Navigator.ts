@@ -24,7 +24,7 @@ Navigation.registerComponent('MenuScreen', () => Menu,  Provider);
 // inside the app with tab
 Navigation.registerComponent('ProfileTabScreen', () => Profile,  Provider);
 Navigation.registerComponent('SearchTabScreen', () => Search,  Provider);
-Navigation.registerComponent('EventsTabScreen', () => Search,  Provider);
+Navigation.registerComponent('EventsTabScreen', () => Events,  Provider);
 Navigation.registerComponent('NotificationTabScreen', () => Notification,  Provider);
 
 // action in Stack without tab
