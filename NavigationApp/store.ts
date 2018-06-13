@@ -6,5 +6,5 @@
 // }
 
 // export const store = createStore(combineReducers({
-
+  
 // }),applyMiddleware(thunk));

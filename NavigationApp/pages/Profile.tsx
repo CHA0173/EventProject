@@ -72,7 +72,7 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
             }
           </View>
         </TouchableOpacity>
-          <Text style={{fontSize: 20}}> UserName this.params.user.id</Text>
+          <Text style={{fontSize: 20}}> user.displayname</Text>
       </View>
 
       // render() {

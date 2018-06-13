@@ -10,7 +10,7 @@ import { Navigator, Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const FacebookLogIn = (
-  <Icon.Button name="facebook" backgroundColor="#3b5998"  onPress={this.loginWithFacebook} style={{width: 300}}>
+  <Icon.Button name="facebook" backgroundColor="#3b5998" onPress={this.loginWithFacebook} style={{ width: 300 }}>
     <Text style={{ color: 'white', textAlign: 'center', fontFamily: 'Arial', fontSize: 15 }}>Login with Facebook</Text>
   </Icon.Button>
 );
@@ -65,15 +65,7 @@ export default class LogIn extends React.Component<LogInProps, LogInState> {
                     icon: require('../img/search.png'),
                     selectedIcon: require('../img/search.png'), // iOS only
                     title: 'SearchBar',
-                    navigatorStyle: {navBarTitleTextCentered: true}
-                  },
-                  {
-                    label: 'Profile',
-                    screen: 'ProfileTabScreen',
-                    icon: require('../img/profile.png'),
-                    selectedIcon: require('../img/profile.png'), // iOS only
-                    title: 'Profile',
-                    navigatorStyle: {navBarTitleTextCentered: true}
+                    navigatorStyle: { navBarTitleTextCentered: true, navBarHidden: true}
                   },
                   {
                     label: 'Events',
@@ -81,7 +73,7 @@ export default class LogIn extends React.Component<LogInProps, LogInState> {
                     icon: require('../img/Calendar1.png'),
                     selectedIcon: require('../img/Calendar1.png'), // iOS only
                     title: 'Events',
-                    navigatorStyle: {navBarTitleTextCentered: true}
+                    navigatorStyle: { navBarTitleTextCentered: true }
                   },
                   {
                     label: 'Notification',
@@ -89,8 +81,17 @@ export default class LogIn extends React.Component<LogInProps, LogInState> {
                     icon: require('../img/notification3.png'),
                     selectedIcon: require('../img/notification3.png'), // iOS only
                     title: 'Notification',
-                    navigatorStyle: {navBarTitleTextCentered: true}
-                  }],
+                    navigatorStyle: { navBarTitleTextCentered: true }
+                  },
+                  {
+                    label: 'Profile',
+                    screen: 'ProfileTabScreen',
+                    icon: require('../img/profile.png'),
+                    selectedIcon: require('../img/profile.png'), // iOS only
+                    title: 'Profile',
+                    navigatorStyle: { navBarTitleTextCentered: true }
+                  }
+                ],
                 drawer: {
                   right: {
                     screen: 'MenuScreen',

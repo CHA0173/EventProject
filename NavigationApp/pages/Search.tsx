@@ -15,12 +15,16 @@ import {
 const { width, height } = Dimensions.get('window')
 import { Navigator, NavigatorButton } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {fakeData} from '../fakeData';
+// import { Events } from './fakeData';
 
-
+   
 interface ISearchProps {
   navigator: Navigator;
-  navigatorButton: NavigatorButton;
+  Events: [{
+    id: number,
+    name: string,
+    img: string,
+  }]
 };
 
 interface ISearchState {
@@ -39,7 +43,15 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
   }
 
   public filter(text) {
-    const data = fakeData()
+    const data = [{
+      id:1, 
+      name: 'EVENT 1', 
+      img: 'https://dummyimage.com/600x400/000000/fff.png&text=fake+img'
+    }, {
+      id: 2,
+      name: 'EVENT 2',
+      img: 'https://dummyimage.com/600x400/000000/fff.png&text=fake+img'
+    }]
     const newData = data.filter((item) => {
       const itemData = item.name.toUpperCase()
       const textData = text.toUpperCase()
@@ -75,7 +87,8 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
   }
 
   render() {
-    const back = this.props.navigatorButton
+    // TODO: go back
+    // const back = this.props.navigatorButton
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -104,11 +117,11 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
             </TouchableOpacity> : null}
           {//TODO: back buttom || can use pop to go back screen='' 
           }
-          {/* <TouchableOpacity onPress={() => back()}>
+          <TouchableOpacity >
             <View>
               <Text style={styles.cancelButtonText}>Cancel</Text>
             </View>
-          </TouchableOpacity> */}
+          </TouchableOpacity>
         </View>
         <ScrollView>
           <FlatList
