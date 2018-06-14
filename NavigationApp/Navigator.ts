@@ -8,6 +8,7 @@ import Start from './pages/Start';
 import LogIn from './pages/Login';
 import SignUp from './pages/SignUp';
 import Search from './pages/Search';
+import Events from './pages/Events';
 import Profile from './pages/Profile';
 import Info from './pages/Info';
 import Menu from './pages/Menu';
@@ -23,6 +24,7 @@ Navigation.registerComponent('MenuScreen', () => Menu,  Provider);
 // inside the app with tab
 Navigation.registerComponent('ProfileTabScreen', () => Profile,  Provider);
 Navigation.registerComponent('SearchTabScreen', () => Search,  Provider);
+Navigation.registerComponent('EventsTabScreen', () => Events,  Provider);
 Navigation.registerComponent('NotificationTabScreen', () => Notification,  Provider);
 
 // action in Stack without tab

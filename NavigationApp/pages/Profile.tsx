@@ -31,12 +31,12 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
     super(props)
 
     this.state = {
-      avatarSource: '',
+      avatarSource: null,
       uri: '',
     }
   }
 
-  
+
   public selectPhotoTapped = () => {
     const options = {
       quality: 1.0,
@@ -64,7 +64,7 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
   render() {
 
     return (
-      <View style={styles.container}>
+      <View style={{ justifyContent: 'space-between', alignItems: 'center', margin: 20, flexDirection: 'row', maxWidth: 300 }}>
         <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
           <View style={[styles.avatar, styles.avatarContainer, { marginBottom: 20 }]}>
             {this.state.avatarSource === null ? <Text>Select a Photo</Text> :
@@ -72,6 +72,7 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
             }
           </View>
         </TouchableOpacity>
+          <Text style={{fontSize: 20}}> user.displayname</Text>
       </View>
 
       // render() {
@@ -116,16 +117,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
   instructions: {
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
-  }, avatarContainer: {
+  },
+  avatarContainer: {
     borderColor: '#9B9B9B',
     borderWidth: 1 / PixelRatio.get(),
     justifyContent: 'center',
@@ -133,7 +130,7 @@ const styles = StyleSheet.create({
   },
   avatar: {
     borderRadius: 75,
-    width: 150,
-    height: 150
+    width: 100,
+    height: 100
   },
 });

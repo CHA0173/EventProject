@@ -120,3 +120,20 @@ Changed some Front-End file, and will start to writting the event pages.
     - hide all about the store
     
 ---
+
+## version 0.11 June 12, 2018 (Lucas)
+
+ Added VectorIcon . Now we have the Facebook buttom and changed tab icon ('./img/xxx.png')
+
+### Added
+
+- PlueIn for icon 
+    - react-native-vector-icon
+
+### Changed
+
+- login.ts
+    - added Facebook buttom
+    - changed tab with icon
+    
+---

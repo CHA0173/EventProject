@@ -18,11 +18,11 @@ interface StartProps {
 
 
 
-export default class Start extends React.Component<StartProps, {renderStart: boolean}> {
+export default class Start extends React.Component<StartProps, { renderStart: boolean }> {
   constructor(props: StartProps) {
     super(props)
     this.state = {
-      renderStart:false
+      renderStart: false
     }
     setTimeout(() => {
       this.setState({
@@ -40,7 +40,7 @@ export default class Start extends React.Component<StartProps, {renderStart: boo
           </Text>
           </View>
           <View style={{ margin: 10, flexDirection: 'row', justifyContent: 'space-between' }}>
-            <View style={{ width: 180 }}>
+            <View style={{ width: 150 }}>
               <Button
                 title='LogIn'
                 onPress={() => {
@@ -53,7 +53,7 @@ export default class Start extends React.Component<StartProps, {renderStart: boo
                 }}
               />
             </View>
-            <View style={{ width: 180 }}>
+            <View style={{ width: 150 }}> 
               <Button
                 onPress={() => {
                   this.props.navigator.push({
