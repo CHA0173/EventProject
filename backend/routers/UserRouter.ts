@@ -9,7 +9,7 @@ import UserService from '../services/UserService';
 export default class UserRouter {
     private userService: UserService;
 
-    constructor(userService:UserService) {
+    constructor(userService: UserService) {
         this.userService = this.userService;
     }
 
@@ -20,12 +20,16 @@ export default class UserRouter {
         return router;//passes data back to front
     }
 
-    get(req:express.Request, res:express.Response) {//checks if user's access token matches with the one in 
-        return this.userService.list()//responds with user's data
-            .then((data) => {//passes data back to getRouter
+    get(req: any, res: any) {//checks if user's access token matches with the one in 
+        
+    req.user = 1
+    console.log("req.user", req.user)
+        
+        return this.userService.getProfile(req.user)//responds with user's data
+            .then((data: any) => {//passes data back to getRouter
                 res.json(data)
             })
-            .catch((err:express.Errback) => {
+            .catch((err: express.Errback) => {
                 res.status(500).json(err)
             });
     }

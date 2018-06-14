@@ -33,4 +33,37 @@
     "category": "toys/games",
     "user": "Alex"
 
+},
+{
+   "type":"wedding",
+    "name": "wedding cake",
+    "quantity": 1,
+    "isactive": true,
+    "category": "food",
+    "user": "Mary"
+
+},
+{
+   "type":"wedding",
+    "name": "ceremonial tea",
+    "quantity": 1,
+    "isactive": true,
+    "category": "drinks",
+    "user": "Alex"
+},
+{
+   "type":"wedding",
+    "name": "ribbon decorations",
+    "quantity": 10,
+    "isactive": true,
+    "category": "equipment",
+    "user": "Peter"
+},
+{
+   "type":"wedding",
+    "name": "cameraman",
+    "quantity": 1,
+    "isactive": true,
+    "category": "equipment",
+    "user": "Paul"
 }]

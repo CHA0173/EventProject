@@ -4,7 +4,7 @@ dotenv.config();
 
 
 export default {
-    jwtSecret: '',// Insert JWT secret here
+    jwtSecret: 'jsakdlfljadsmview12',// Insert JWT secret here
     jwtSession: {
         session: false
     },

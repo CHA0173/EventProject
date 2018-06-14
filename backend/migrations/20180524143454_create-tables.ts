@@ -6,6 +6,7 @@ exports.up = (knex: Knex) => {
         users.string("email").notNullable().unique();
         users.string("name").notNullable().unique();
         users.string("password");
+        users.string("photo");
         users.boolean("isactive");
     }).then(() => {
 
@@ -13,6 +14,7 @@ exports.up = (knex: Knex) => {
             events.increments();
             events.string("name").notNullable();
             events.string("description").notNullable();
+            events.string("photo");
             events.timestamp("datetime").notNullable();
             events.string('address').notNullable();
             events.specificType('location', 'POINT');
@@ -44,6 +46,7 @@ exports.up = (knex: Knex) => {
             items.increments();
             items.string("name").notNullable();
             items.integer("quantity");
+            items.boolean("completed");
             items.integer("categories_id").unsigned();
             items.foreign("categories_id");
             items.integer("users_id").unsigned();

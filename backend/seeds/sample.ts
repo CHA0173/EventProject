@@ -35,16 +35,26 @@ exports.seed = (knex: Knex) => {
           .then(() => {
             return knex('events').del()
               .then(() => {
-                return knex('events').insert({
+                return knex('events').insert([{
                   isactive: true,
                   address: 'Saikung Pier 1',
                   datetime: '2018-07-20 09:00:00',
                   deposit: 100,
                   description: 'Alex is getting old!',
                   name: "Alex's birthday boat",
+                  private: true
+                },
+                {
+                  address: "Lord Stanley's House",
+                  datetime: '2018-09-20 10:00:00',
+                  description: "They're tying the knot!",
+                  name: "Mary's Wedding",
                   private: true,
-                })
+                  isactive: true
+                }])
+
               })
+
           })
           .then(() => {
             return knex('categories').del()
@@ -84,21 +94,24 @@ exports.seed = (knex: Knex) => {
               })
           })
           .then(() => {
-            let eventList = fs.readJsonSync(path.join(__dirname, "usersevents.json"));
-            return knex('events_users').del()
-              .then(() => {
-                let result: any[] = [];
-                eventList.forEach((item: any) => {
-                  let event = item.event
-                  let user = item.user
-                  result.push(createUserEvent(knex, item, user, event))
-                });
-                return Promise.all(result);
-              })
+            return knex("events_users").insert([{
+              users_id: 1,
+              isactive: true,
+              events_id: 1,
+              creator: true
+            },
+            {
+              users_id: 2,
+              isactive: true,
+              events_id: 2,
+              creator: true
+            }])
+
           })
       })
     })
   })
+
 };
 
 const createList = (knex: any, item: any, event: any) => {
@@ -143,29 +156,6 @@ const createItem = (knex: any, item: any, category: any, user: any, eventType: a
                 toDo_id: toDo.id
               })
             })
-        })
-    })
-}
-
-
-const createUserEvent = (knex: any, item: any, event: any, user: any) => {
-  console.log("event", event);
-  return knex('events')
-    .where("name", user)//SEARCH QUERIES ARE SWAPPED
-    .first()
-    .then((user: any) => {
-      console.log(user);
-      return knex("users")
-        .where("name", event)//DID NOT FIND MATCH
-        .first()
-        .then((eventRecord: any) => {
-          console.log(eventRecord)
-          return knex("events_users").insert({
-            users_id: user.id,
-            isactive: item.isactive,
-            events_id: eventRecord.id,
-            creator: item.creator
-          })
         })
     })
 }
