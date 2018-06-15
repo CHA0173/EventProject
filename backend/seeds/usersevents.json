@@ -1,0 +1,12 @@
+[{
+    "event": "Alex's birthday boat",
+    "user": "Alex",
+    "creator": true,
+    "isactive": true
+},
+{
+    "event": "Mary's Wedding",
+    "user": "Mary",
+    "creator": true,
+    "isactive": true
+}]

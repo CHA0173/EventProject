@@ -1,0 +1,12 @@
+[{
+    "event": "Alex's birthday boat",
+    "type":"boat party",
+    "template": true,
+    "isactive": true
+},{
+    "event": "Mary's Wedding",
+    "type":"wedding",
+    "template": true,
+    "isactive": true
+}
+]
