@@ -434,6 +434,12 @@
     lodash "^4.17.5"
     to-fast-properties "^2.0.0"
 
+"@types/react-native-elements@^0.18.0":
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/@types/react-native-elements/-/react-native-elements-0.18.0.tgz#81cf92d75a5d9ed73599761da37bd2b05b107a91"
+  dependencies:
+    react-native-elements "*"
+
 "@types/react-native-navigation@^1.1.11":
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/@types/react-native-navigation/-/react-native-navigation-1.1.11.tgz#58a9457468129ad1ed4484579f8c05dd87d444c6"
@@ -4298,7 +4304,7 @@ react-is@^16.3.1:
   version "16.4.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.4.0.tgz#cc9fdc855ac34d2e7d9d2eb7059bbc240d35ffcf"
 
-react-native-elements@^0.19.1:
+react-native-elements@*, react-native-elements@^0.19.1:
   version "0.19.1"
   resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-0.19.1.tgz#f92b69d864a150215d01f81fe3c52a9cada83e45"
   dependencies:

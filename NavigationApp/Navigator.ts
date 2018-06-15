@@ -1,5 +1,5 @@
 import { Navigation } from 'react-native-navigation';
-// import { store } from './store';
+import { store } from './src/store';
 import { Provider } from 'react-redux';
 
 // import App from './App';
@@ -16,21 +16,21 @@ import Notification from './src/screens/Notification';
 
 // one page no tab ( LandingPage )
 // Navigation.registerComponent('LandingScreen', () => LandingPage,  Provider);
-Navigation.registerComponent('StartScreen', () => Start,  Provider);
+Navigation.registerComponent('StartScreen', () => Start, store, Provider);
 
 //drawer
-Navigation.registerComponent('MenuScreen', () => Menu,  Provider);
+Navigation.registerComponent('MenuScreen', () => Menu, store, Provider);
 
 // inside the app with tab
-Navigation.registerComponent('ProfileTabScreen', () => Profile,  Provider);
-Navigation.registerComponent('SearchTabScreen', () => Search,  Provider);
-Navigation.registerComponent('EventsTabScreen', () => Events,  Provider);
-Navigation.registerComponent('NotificationTabScreen', () => Notification,  Provider);
+Navigation.registerComponent('ProfileTabScreen', () => Profile, store, Provider);
+Navigation.registerComponent('SearchTabScreen', () => Search, store, Provider);
+Navigation.registerComponent('EventsTabScreen', () => Events, store, Provider);
+Navigation.registerComponent('NotificationTabScreen', () => Notification, store, Provider);
 
 // action in Stack without tab
-Navigation.registerComponent('LogInScreen', () => LogIn,  Provider);
-Navigation.registerComponent('SignUpScreen', () => SignUp,  Provider);
-Navigation.registerComponent('InfoPushedScreen', () => Info,  Provider);
+Navigation.registerComponent('LogInScreen', () => LogIn, store, Provider);
+Navigation.registerComponent('SignUpScreen', () => SignUp, store, Provider);
+Navigation.registerComponent('InfoPushedScreen', () => Info, store, Provider);
 
 
 

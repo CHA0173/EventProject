@@ -7,37 +7,44 @@ import {
   FlatList
 } from 'react-native';
 import { Navigator } from 'react-native-navigation';
+import { ButtonGroup } from 'react-native-elements'
 
-
-type Props = {
+interface IEventsProps {
   navigator: Navigator;
 };
-export default class Events extends React.Component<Props> {
-  render() {
+interface IEventsStates {
+  selectedIndex: number;
+};
+
+export default class Events extends React.Component<IEventsProps, IEventsStates> {
+  static navigatorButtons = {
+    rightButtons: [
+      {
+        title:'add'
+      },{}]}
+  constructor (props: IEventsProps) {
+    super(props)
+    this.state = {
+      selectedIndex: 0
+    }
+    this.updateIndex = this.updateIndex.bind(this)
+  }
+  updateIndex (selectedIndex) {
+    this.setState({selectedIndex})
+  }
+  render () {
+    const buttons = ['Upcoming', 'Created']
+  
     return (
-      <View style={styles.container}>
-        <FlatList
-          data={[{ id: 1, name: 'Alex' }, { id: 2, name: 'Lucas' }]}
-          renderItem={(data) => (
-            <TouchableOpacity key={data.item.id} onPress={() =>
-              this.props.navigator.push({
-                screen: 'InfoPushedScreen',
-                title: 'This is for ' + data.item.name,
-                passProps: {
-                  selectedItem: data.item
-                }
-              })}>
-              <Text style={styles.welcome}>
-                Name: {data.item.name}
-              </Text>
-            </TouchableOpacity>
-          )}>
-        </FlatList>
-        <Text style={styles.instructions}>
-          To get started, edit Events.js
-        </Text>
+      <View>
+        <ButtonGroup
+          onPress={this.updateIndex}
+          selectedIndex={this.state.selectedIndex}
+          buttons={buttons}
+          containerStyle={{height: 30}}
+        />
       </View>
-    );
+    )
   }
 }
 
