@@ -70,13 +70,10 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
 
   public renderItem(item) {
     return (
-      <FlatList
-      data= {fakedata}
-      renderItem={(fakedata) =>(
       <TouchableWithoutFeedback onPress={() => {
         this.props.navigator.push({
           screen: 'EventsTabScreen',
-          title: 'This is for ' + fakedata.item.name,
+          title: item.name,
           passProps: {
             selectedItem: item.item
           }
@@ -84,7 +81,6 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
       }}>
         <Image style={styles.image} source={{ uri: item.img }} />
       </TouchableWithoutFeedback>
-      )}/>
     )
   }
 
