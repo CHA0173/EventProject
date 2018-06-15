@@ -64,17 +64,18 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
   render() {
 
     return (
-      <View style={{ justifyContent: 'space-between', alignItems: 'center', margin: 20, flexDirection: 'row', maxWidth: 300 }}>
-        <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
-          <View style={[styles.avatar, styles.avatarContainer, { marginBottom: 20 }]}>
-            {this.state.avatarSource === null ? <Text>Select a Photo</Text> :
-              <Image style={styles.avatar} source={this.state.avatarSource} />
-            }
-          </View>
-        </TouchableOpacity>
-          <Text style={{fontSize: 20}}> user.displayname</Text>
+      <View style={{ borderBottomWidth: 1, borderColor: '#3a3a3a' }}>
+        <View style={{ justifyContent: 'space-between', alignItems: 'center', margin: 20, flexDirection: 'row', maxWidth: 300 }}>
+          <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
+            <View style={[styles.avatar, styles.avatarContainer]}>
+              {this.state.avatarSource === null ? <Text>Select a Photo</Text> :
+                <Image style={styles.avatar} source={this.state.avatarSource} />
+              }
+            </View>
+          </TouchableOpacity>
+          <Text style={{ fontSize: 20 }}> user.displayname</Text>
+        </View>
       </View>
-
       // render() {
       //   return (
       //     <View style={styles.container}>

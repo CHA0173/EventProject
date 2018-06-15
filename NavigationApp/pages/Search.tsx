@@ -9,6 +9,7 @@ import {
   View,
   TouchableOpacity,
   FlatList,
+  TouchableWithoutFeedback,
 
 } from 'react-native';
 
@@ -17,14 +18,19 @@ import { Navigator, NavigatorButton } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 // import { Events } from './fakeData';
 
-   
+const fakedata = [{
+  id: 1,
+  name: 'Event 1',
+  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E1'
+}, {
+  id: 2,
+  name: 'Event 2',
+  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
+}]
+
+
 interface ISearchProps {
   navigator: Navigator;
-  Events: [{
-    id: number,
-    name: string,
-    img: string,
-  }]
 };
 
 interface ISearchState {
@@ -43,16 +49,7 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
   }
 
   public filter(text) {
-    const data = [{
-      id:1, 
-      name: 'EVENT 1', 
-      img: 'https://dummyimage.com/600x400/000000/fff.png&text=fake+img'
-    }, {
-      id: 2,
-      name: 'EVENT 2',
-      img: 'https://dummyimage.com/600x400/000000/fff.png&text=fake+img'
-    }]
-    const newData = data.filter((item) => {
+    const newData = fakedata.filter(function (item) {
       const itemData = item.name.toUpperCase()
       const textData = text.toUpperCase()
       return itemData.indexOf(textData) > -1
@@ -73,16 +70,21 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
 
   public renderItem(item) {
     return (
-      <TouchableOpacity onPress={() => this.props.navigator.push({
-        screen: 'Events',
-        title: item.item.name,
-        passProps: {
-          selectedItem: item.item
-        }
-      })
-      }>
-        <Image style={{ width: 120, height: 180 }} source={{ uri: item.image }} />
-      </TouchableOpacity>
+      <FlatList
+      data= {fakedata}
+      renderItem={(fakedata) =>(
+      <TouchableWithoutFeedback onPress={() => {
+        this.props.navigator.push({
+          screen: 'EventsTabScreen',
+          title: 'This is for ' + fakedata.item.name,
+          passProps: {
+            selectedItem: item.item
+          }
+        })
+      }}>
+        <Image style={styles.image} source={{ uri: item.img }} />
+      </TouchableWithoutFeedback>
+      )}/>
     )
   }
 
@@ -107,19 +109,19 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
             autoFocus={true}
           />
           {this.state.text ?
-            <TouchableOpacity onPress={() => this.deleteData()}>
+            <TouchableWithoutFeedback onPress={() => this.deleteData()}>
               <Icon
                 name='times-circle'
                 color='grey'
                 size={18}
                 style={styles.iconInputClose}
               />
-            </TouchableOpacity> : null}
-          {//TODO: back buttom || can use pop to go back screen='' 
-          }
-          <TouchableOpacity >
+            </TouchableWithoutFeedback>
+            : null}
+
+          <TouchableOpacity onPress={() => this.props.navigator.pop()}>
             <View>
-              <Text style={styles.cancelButtonText}>Cancel</Text>
+              <Text style={styles.cancelButtonText} >Cancel</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -129,7 +131,7 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
             data={this.state.data}
             numColumns={3}
             columnWrapperStyle={{ marginTop: 5, marginLeft: 5 }}
-            renderItem={(item) => this.renderItem(item)}
+            renderItem={({ item }) => this.renderItem(item)}
           />
         </ScrollView>
       </View>
@@ -169,7 +171,7 @@ const styles = StyleSheet.create({
   },
   input: {
     width: width - (width / 4),
-    height: 30,
+    height: 40,
     backgroundColor: '#323232',
     marginHorizontal: 10,
     paddingLeft: 30,
