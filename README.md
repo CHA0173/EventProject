@@ -137,3 +137,21 @@ Changed some Front-End file, and will start to writting the event pages.
     - changed tab with icon
     
 ---
+
+## version 0.3 June 12, 2018 (Lucas)
+
+ Added routes for profile information, event search, and upcoming events list, currently progressing on event create route (inserting new events and items)
+ 
+### Added
+
+- Search Event GET Route
+- User Profile GET Route for volunteered items and (past) events
+- Upcoming events GET Route
+
+### Changed
+
+- added route initialization for app.ts and apirouter.ts
+- changed migrate file: removed categories table and relationships, added discussion table and relationships
+- added more sample data
+    
+---
