@@ -155,3 +155,22 @@ Changed some Front-End file, and will start to writting the event pages.
 - added more sample data
     
 ---
+
+## version 0.1 June 15, 2018 (Lucas)
+
+ Added search and changed search/profile contant
+
+### Added
+
+- search.tsx
+
+### Changed
+
+- search.tsx
+    - changed some code and stylesheet
+
+- profile.tsx
+    - changed some contant and stylesheet 
+    - added some fake data to test
+    
+---
