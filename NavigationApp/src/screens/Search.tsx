@@ -26,6 +26,50 @@ const fakedata = [{
   id: 2,
   name: 'Event 2',
   img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
+}, {
+  id: 2,
+  name: 'Event 2',
+  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
+}, {
+  id: 2,
+  name: 'Event 2',
+  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
+}, {
+  id: 2,
+  name: 'Event 2',
+  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
+}, {
+  id: 2,
+  name: 'Event 2',
+  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
+}, {
+  id: 2,
+  name: 'Event 2',
+  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
+}, {
+  id: 2,
+  name: 'Event 2',
+  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
+}, {
+  id: 2,
+  name: 'Event 2',
+  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
+}, {
+  id: 2,
+  name: 'Event 2',
+  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
+}, {
+  id: 2,
+  name: 'Event 2',
+  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
+}, {
+  id: 2,
+  name: 'Event 2',
+  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
+}, {
+  id: 2,
+  name: 'Event 2',
+  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
 }]
 
 
@@ -79,14 +123,16 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
           }
         })
       }}>
-        <Image style={styles.image} source={{ uri: item.img }} />
+        <View>
+          <Image style={styles.image} source={{ uri: item.img }} />
+          <Text style={{ color: 'white' , margin: 20}}>{item.name}</Text>
+        </View>
       </TouchableWithoutFeedback>
     )
   }
 
-  render() {
-    // TODO: go back
-    // const back = this.props.navigatorButton
+  render() { 
+
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -102,7 +148,7 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
             style={styles.input}
             placeholder='Search'
             keyboardAppearance='dark'
-            autoFocus={true}
+            autoFocus={false}
           />
           {this.state.text ?
             <TouchableWithoutFeedback onPress={() => this.deleteData()}>
@@ -115,18 +161,16 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
             </TouchableWithoutFeedback>
             : null}
 
-          <TouchableOpacity onPress={() => this.props.navigator.pop()}>
-            <View>
-              <Text style={styles.cancelButtonText} >Cancel</Text>
-            </View>
-          </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.deleteData()}>
+              <View>
+                <Text style={styles.cancelButtonText} >Cancel</Text>
+              </View>
+            </TouchableOpacity>
         </View>
         <ScrollView>
           <FlatList
-            style={{ marginHorizontal: 5 }}
+            style={styles.flatstyle}
             data={this.state.data}
-            numColumns={3}
-            columnWrapperStyle={{ marginTop: 5, marginLeft: 5 }}
             renderItem={({ item }) => this.renderItem(item)}
           />
         </ScrollView>
@@ -179,7 +223,10 @@ const styles = StyleSheet.create({
   },
   image: {
     marginRight: 5,
-    width: 115,
+    width: width,
     height: 170
   },
+  flatstyle: {
+    marginHorizontal: 10,
+  }
 });
