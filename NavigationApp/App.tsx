@@ -30,7 +30,7 @@ export default class App extends React.Component<Props> {
     return (
       <View style={styles.container}>
         <FlatList
-          data={[{ id: 1, name: 'Alex' }, { id: 2, name: 'Lucas' }]}
+          data={[{ id: 1, key: 1, name: 'Alex' }, { id: 2, key: 2, name: 'Lucas' }]}
           renderItem={(data) => (
             <TouchableOpacity key={data.item.id} onPress={() =>
               this.props.navigator.push({
