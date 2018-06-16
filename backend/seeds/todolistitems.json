@@ -3,7 +3,6 @@
     "name": "champagne bottles",
     "quantity": 5,
     "isactive": true,
-    "category": "drinks",
     "user": "Peter"
 
 },
@@ -12,7 +11,6 @@
     "name": "birthday cake",
     "quantity": 10,
     "isactive": true,
-    "category": "food",
     "user": "Paul"
 
 },
@@ -21,7 +19,6 @@
     "name": "portable speakers",
     "quantity": 1,
     "isactive": true,
-    "category": "equipment",
     "user": "Mary"
 
 },
@@ -30,7 +27,6 @@
     "name": "poker set",
     "quantity": 1,
     "isactive": true,
-    "category": "toys/games",
     "user": "Alex"
 
 },
@@ -39,7 +35,6 @@
     "name": "wedding cake",
     "quantity": 1,
     "isactive": true,
-    "category": "food",
     "user": "Mary"
 
 },
@@ -48,7 +43,6 @@
     "name": "ceremonial tea",
     "quantity": 1,
     "isactive": true,
-    "category": "drinks",
     "user": "Alex"
 },
 {
@@ -56,7 +50,6 @@
     "name": "ribbon decorations",
     "quantity": 10,
     "isactive": true,
-    "category": "equipment",
     "user": "Peter"
 },
 {
@@ -64,6 +57,5 @@
     "name": "cameraman",
     "quantity": 1,
     "isactive": true,
-    "category": "equipment",
     "user": "Paul"
 }]

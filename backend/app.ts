@@ -9,17 +9,21 @@ import config           from './config';
 import jwtStrategy      from './utils/auth/JwtStrategy';
 import ApiRouter        from './routers/ApiRouter';
 import UserService      from './services/UserService';
-import SearchService      from './services/SearchService';
+import SearchService    from './services/SearchService';
+import UpcomingService  from './services/UpcomingService';
+import CreateService     from './services/CreateService';
 
 
 
 const knex = Knex(Knexfile[config.env]);
 const app = express();
 
+const createService = new CreateService(knex);
 const userService = new UserService(knex);
+const upcomingService = new UpcomingService(knex);
 const searchService = new SearchService(knex);
 const jwtAuth = jwtStrategy(userService);
-const apiRouter = new ApiRouter(jwtAuth, userService, searchService);
+const apiRouter = new ApiRouter(jwtAuth, userService, searchService, upcomingService, createService);
 
 app.set("utils", path.join(__dirname, "utils"));
 app.set("routers", path.join(__dirname, "routers"));

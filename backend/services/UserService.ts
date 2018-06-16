@@ -7,104 +7,56 @@ export default class UserService {
         this.knex = knex
     }
 
-    getProfile(userid: any) {
-        return this.knex("events_users")
-            .select("events_users.events_id")
+    getProfile(userid: number) {
+
+        console.log("userid", userid)
+        // console.log( this.knex("items")
+        // .select("items.name as item_name, items.id as item_id, items.quantity, items.completed, events.name as event_name, events.id as event_id")
+        // .join("toDo", "toDo.id", "items.toDo_id")
+        // .join("events", "events.id", "toDo.events_id")
+        // .where("items.users_id", userid).toSQL())
+        return this.knex("events")//select all users events
+            .select("events.id as events_id", "events.name as events_name", "events.datetime", "events.photo")
+            .join("events_users", "events_users.events_id", "events.id")
             .join("users", "events_users.users_id", "users.id")
             .where("users.id", userid)
-            .then(eventIdArray => {
-                eventIdArray = eventIdArray.map((e: any) => e.events_id)
-                return this.knex("events")
-                    .select("events.id as events_id", "events.name", "events.photo", "events.datetime")
-                    .where("events.id", "in", eventIdArray)
-                    .then(eventArray => {
-                        let eventArrayObject = {};
-                        for (let i = 0; i < eventArray.length; i++) {
-                            let newnewElement = {
-                                event_id: eventArray[i].events_id,
-                                event_name: eventArray[i].name,
-                                event_photo: eventArray[i].photo,
-                                event_datetime: eventArray[i].datetime
-                            }
-                            let event_id = eventArray[i].events_id;
-                            if (!Array.isArray(eventArrayObject[event_id])) {
-                                eventArrayObject[event_id] = [newnewElement]
-                            } else {
-                                eventArrayObject[event_id].push(newnewElement)
-                            }
-                        }
-                    }).then(eventArrayObject => {
-                        console.log(eventArrayObject, eventIdArray)
-                        return this.knex("items")
-                            .select("items.name as item_name, items.id as item_id, items.quantity, items.completed, events.name as event_name, events.id as event_id")
-                            .join("toDo", "toDo.id", "items.toDo_id")
-                            .join("events", "events.id", "toDo.events_id")
-                            .where("items.user_id", userid)
-                            .then(itemArray => {
-                                let itemArrayObject = {};
-                                for (let i = 0; i < itemArray.length; i++) {
-                                    let newElement = {
-                                        event_id: itemArray[i].events_id,
-                                        event_name: itemArray[i].event_name,
-                                        item_name: itemArray[i].item_name,
-                                        item_quantity: itemArray[i].quantity,
-                                        item_completed: itemArray[i].completed
-                                    }
-                                    let item_id = itemArray[i].item_id
-                                    if (!Array.isArray(itemArrayObject[item_id])) {
-                                        itemArrayObject[item_id] = [newElement]
-                                    } else {
-                                        itemArrayObject[item_id].push(newElement)
-                                    }
+            .andWhere("events.isactive", true)
+            .then(eventArray => {
+                eventArray.map((data: any) => { data.events_id, data.events_name, data.datetime, data.photo })
+
+                return this.knex("items")
+                    .select("items.name as items_name", "items.id as items_id", "items.quantity", "items.completed", "events.id as events_id", "events.name as events_name")
+                    .join("toDo", "toDo.id", "items.toDo_id")
+                    .join("events", "events.id", "toDo.events_id")
+                    .where("items.users_id", userid)
+                    .andWhere("items.isactive", true)
+                    .then(itemArray => {
+                        itemArray.map((data: any) => { data.items_name, data.items_id, data.quantity, data.completed, data.events_id, data.events_name });
+                        console.log("itemArray Before", itemArray)
+                        return this.knex("users")
+                            .select("users.id as users_id", "users.name as users_name", "users.photo")
+                            .where("users.id", userid)
+                            .andWhere("users.isactive", true)
+                            .then((usersArray: any) => {
+                                // console.log("usersArray", usersArray)
+                                let result: any = {
+                                    user_id: usersArray[0].users_id,
+                                    user_name: usersArray[0].users_name,
+                                    user_photo: usersArray[0].photo,
+                                    itemArray,
+                                    eventArray
                                 }
-                            })
-                            .then(itemArrayObject => {
-                                return this.knex("users")
-                                    .select("users.id as users_id", "users.name as users_name", "users.photo")
-                                    .where("users.id", userid)
-                                    .then((usersArray: string[]) => {
-                                        let result: any = []
-                                        result = result.unshift(usersArray[0], usersArray[1], usersArray[2], itemArrayObject)
-                                        return result
-                                    })
+                                console.log(result)
+                                return result
                             })
                     })
             })
     }
 
 
-    async myEvents(userid: any) {
-        return this.knex("events_users")
-            .select("events_users.events_id")
-            .join("users", "events_users.users_id", "users.id")
-            .where("users.id", userid)
-            .then(eventIdArray => {
-                eventIdArray = eventIdArray.map((e: any) => e.events_id)
-                return this.knex("events")
-                    .select("events.id as events_id", "events.name", "events.photo", "events.datetime")
-                    .where("events.id", "in", eventIdArray)
-                    .then(eventArray => {
-                        let eventArrayObject = {};
-                        for (let i = 0; i < eventArray.length; i++) {
-                            let newnewElement = {
-                                event_id: eventArray[i].events_id,
-                                event_name: eventArray[i].name,
-                                event_photo: eventArray[i].photo,
-                                event_datetime: eventArray[i].datetime
-                            }
-                            let event_id = eventArray[i].events_id;
-                            if (!Array.isArray(eventArrayObject[event_id])) {
-                                eventArrayObject[event_id] = [newnewElement]
-                            } else {
-                                eventArrayObject[event_id].push(newnewElement)
-                            }
-                        }
-                    })
-            })
-    }
+    
 
-
-    async findByEmail(email: string, password: string) {
+    findByEmail(email: string, password: string) {
         return this.knex('users')
             .select('id')
             .first()
