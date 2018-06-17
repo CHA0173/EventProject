@@ -138,7 +138,7 @@ Changed some Front-End file, and will start to writting the event pages.
     
 ---
 
-## version 0.3 June 12, 2018 (Lucas)
+## version 0.3 June 12, 2018 (Stephen)
 
  Added routes for profile information, event search, and upcoming events list, currently progressing on event create route (inserting new events and items)
  
@@ -156,7 +156,7 @@ Changed some Front-End file, and will start to writting the event pages.
     
 ---
 
-## version 0.1 June 15, 2018 (Lucas)
+## version 0.3 June 15, 2018 (Lucas)
 
  Added search and changed search/profile contant
 
@@ -172,5 +172,20 @@ Changed some Front-End file, and will start to writting the event pages.
 - profile.tsx
     - changed some contant and stylesheet 
     - added some fake data to test
+    
+---
+
+
+## version 0.3 June 17, 2018 (Stephen)
+
+Completed create and save event route (except for photo)
+
+### Added
+
+- createService.saveNewEvent()
+
+### Changed
+
+
     
 ---
