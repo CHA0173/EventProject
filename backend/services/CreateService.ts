@@ -21,7 +21,7 @@ export default class CreateService {
             })
     }
 
-    saveNewEvent(data: any, user: any) {
+    saveNewEvent(data: any, user: any, res: any) {
         // console.log("data.itemsArray", data.itemsArray)
         return this.knex.transaction((trx) => {
             return trx("events")
@@ -36,24 +36,71 @@ export default class CreateService {
                     isactive: true
                 })
                 .returning("id")
-                .then(todoid => {
-                    console.log("todoid", todoid)
-                    todoid.map((idata: any) => {
-                        todo_id: idata.id
+                .then(eventid => {
+                    console.log("eventid", eventid)
+                    eventid.map((idata: any) => {
+                        idata.id
                     })
-                    let parsedItems: any[] = [];
-
-                    for (let i in data.itemsArray) {
-                        parsedItems.push({
-                            name: data.itemsArray[i].items_name,
-                            quantity: data.itemsArray[i].quantity
+                    return trx("toDo")
+                        .insert({
+                            events_id: eventid[0],
+                            type: data.todo_type,
+                            isactive: true,
+                            template: false
                         })
-                    }
-                    console.log(parsedItems)
-                    return trx("items")
-                        .insert(parsedItems)
+                        .returning("id")
+                        .then((todoid: any) => {
+                            console.log("todoid", todoid)
+                            todoid.map((tdata: any) => {
+                                tdata.id
+                            })
+                            //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ADDING NEW VOLUNTEERS    
+                            // let volunteerIds: any[] = [];
 
-                });
+                            // for (let i in data.itemsArray) {
+                            //     this.knex("users")
+                            //         .select("users.id")
+                            //         .where("name", data.itemsArray[i].volunteer)
+                            //         .then((vId) => {
+                            //             console.log("vId", vId)
+                            //             volunteerIds.push(
+                            //                 vId.id
+                            //             )
+                            //         })
+                            // }
+                            // console.log("volunteerIds",volunteerIds)
+                            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<ADDING NEW VOLUNTEERS
+
+
+                            let parsedItems: any[] = [];
+
+                            for (let i in data.itemsArray) {
+                                parsedItems.push({
+                                    name: data.itemsArray[i].items_name,
+                                    quantity: data.itemsArray[i].quantity,
+                                    toDo_id: todoid[0],
+                                    isactive: true
+                                })
+                            }
+                            console.log("parsedItems", parsedItems)
+                            return trx("items")
+                                .insert(parsedItems)
+                                .returning("id")
+                                .then((itemid: any) => {
+                                    return trx("events_users")
+                                        .insert({
+                                            users_id: user,
+                                            events_id: eventid[0],
+                                            creator: true,
+                                            isactive: true
+                                        })
+                                })
+                        })
+                        .catch((err: any) => {
+                            console.log("post err", err);
+                            res.status(500).json({ status: "failed" })
+                        })
+                })
 
         })
 
