@@ -16,6 +16,7 @@ import {
   Dimensions,
   ScrollView,
   TouchableWithoutFeedback,
+  Switch,
 } from 'react-native';
 const { width, height } = Dimensions.get('window')
 
@@ -31,49 +32,49 @@ const TodoData = [{
   eventname: 'Even 1',
   isActive: true
 }, {
-  id: 1,
+  id: 2,
   item: 'Coke',
   quality: 12,
   eventname: 'Even 1',
   isActive: true
 }, {
-  id: 1,
+  id: 3,
   item: 'Coke',
   quality: 12,
   eventname: 'Even 1',
   isActive: false
 }, {
-  id: 6,
+  id: 4,
+  item: 'Coke',
+  quality: 102,
+  eventname: 'Even 2',
+  isActive: false
+}, {
+  id: 5,
   item: 'Coke',
   quality: 102,
   eventname: 'Even 2',
   isActive: false
 }, {
   id: 6,
-  item: 'Coke',
-  quality: 102,
-  eventname: 'Even 2',
-  isActive: false
-}, {
-  id: 1,
   item: 'Coke',
   quality: 12,
   eventname: 'Even 1',
   isActive: true
 }, {
-  id: 6,
+  id: 7,
   item: 'Coke',
   quality: 102,
   eventname: 'Even 1',
   isActive: false
 }, {
-  id: 6,
+  id: 8,
   item: 'Coke',
   quality: 102,
   eventname: 'Even 2',
   isActive: false
 }, {
-  id: 6,
+  id: 9,
   item: 'Coke',
   quality: 102,
   eventname: 'Even 2',
@@ -98,12 +99,12 @@ const EventData = [{
     drink: [{
       name: 'water',
       quantity: '12'
-    },{
+    }, {
       name: 'coke',
       quantity: '5'
     }]
   }
-},{
+}, {
   id: 2,
   name: 'Boat Party',
   image: require('../img/boatparty.jpg'),
@@ -121,7 +122,7 @@ const EventData = [{
     drink: [{
       name: 'water',
       quantity: '12'
-    },{
+    }, {
       name: 'coke',
       quantity: '5'
     }]
@@ -138,6 +139,7 @@ interface IProfileState {
   uri: string,
   itemdata: any,
   eventdata: any,
+  isActive: boolean
 }
 
 export default class Profile extends React.Component<IProfileProps, IProfileState> {
@@ -149,6 +151,8 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
       uri: '',
       itemdata: TodoData,
       eventdata: EventData,
+      isActive: null,
+      // isActive: TodoData.isActive,
     }
   }
 
@@ -180,14 +184,27 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
   public renderTodoItem(item) {
     return (
       <View style={{ borderColor: 'gray', borderWidth: 1, margin: 10 }}>
-        <View style={{ marginHorizontal: 10 }}>
-          <Text>{item.item}</Text>
-          <Text>{item.quality}</Text>
-          <Text>{item.eventname}</Text>
+        <TouchableOpacity onPress={() => {
+          this.props.navigator.push({
+            screen: ''
+          })
+        }}>
+          <View style={{ marginHorizontal: 10 }}>
+            <Text>{item.item}</Text>
+            <Text>{item.quality}</Text>
+            <Text>{item.eventname}</Text>
+          </View>
+        </TouchableOpacity>
+        <View>
+          <TouchableWithoutFeedback>
+            <Switch
+              onValueChange={value => this.setState({
+                isActive: value
+              })}
+              value={item.isActive}
+            />
+          </TouchableWithoutFeedback>
         </View>
-        <TouchableWithoutFeedback>
-          <Text>{item.isActive}</Text>
-        </TouchableWithoutFeedback>
       </View>
     )
   }
@@ -199,13 +216,13 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
           screen: 'EventsTabScreen'
         })
       }}>
-      <Card
-        title={item.name}
-        image={item.image}>
-        <Text style={{ marginBottom: 10 }}>
-          {item.description}
-        </Text>
-      </Card>
+        <Card
+          title={item.name}
+          image={item.image}>
+          <Text style={{ marginBottom: 10 }}>
+            {item.description}
+          </Text>
+        </Card>
       </TouchableOpacity>
     )
   }
@@ -214,33 +231,33 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
 
     return (
       <View>
-        <View style={{ borderBottomWidth: 1, borderColor: '#3a3a3a' }}>
-          <View style={{ justifyContent: 'space-between', alignItems: 'center', margin: 20, flexDirection: 'row', maxWidth: 300 }}>
-            <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
-              <View style={[styles.avatar, styles.avatarContainer]}>
-                {this.state.avatarSource === null ? <Text>Select a Photo</Text> :
-                  <Image style={styles.avatar} source={this.state.avatarSource} />
-                }
+        <ScrollView>
+          <View style={{ borderBottomWidth: 1, borderColor: '#3a3a3a' }}>
+            <View style={{ justifyContent: 'space-between', alignItems: 'center', margin: 20, flexDirection: 'row', maxWidth: 300 }}>
+              <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
+                <View style={[styles.avatar, styles.avatarContainer]}>
+                  {this.state.avatarSource === null ? <Text>Select a Photo</Text> :
+                    <Image style={styles.avatar} source={this.state.avatarSource} />
+                  }
+                </View>
+              </TouchableOpacity>
+              <View style={{ justifyContent: 'space-between' }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Text style={{ fontSize: 20 }}>1</Text>
+                  <Text style={{ fontSize: 20 }}>2</Text>
+                  <Text style={{ fontSize: 20 }}>3</Text>
+                </View>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Text style={{ color: 'gray' }}>one</Text>
+                  <Text style={{ color: 'gray' }}>two</Text>
+                  <Text style={{ color: 'gray' }}>three</Text>
+                </View>
+                <Text style={{ fontSize: 20, margin: 5 }}> user.displayname</Text>
               </View>
-            </TouchableOpacity>
-            <View style={{ justifyContent: 'space-between' }}>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Text style={{ fontSize: 20 }}>1</Text>
-                <Text style={{ fontSize: 20 }}>2</Text>
-                <Text style={{ fontSize: 20 }}>3</Text>
-              </View>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Text style={{ color: 'gray' }}>one</Text>
-                <Text style={{ color: 'gray' }}>two</Text>
-                <Text style={{ color: 'gray' }}>three</Text>
-              </View>
-              <Text style={{ fontSize: 20, margin: 5 }}> user.displayname</Text>
             </View>
           </View>
-        </View>
-        <ScrollView>
           <View>
-            <Text style={{ width: width }}>To Do List</Text>
+            <Text style={{ width: width, borderWidth: 1 }}>To Do List</Text>
             <FlatList
               style={{ marginHorizontal: 10 }}
               data={TodoData}
@@ -248,7 +265,7 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
             />
           </View>
           <View>
-            <Text style={{ width: width, }}>Event History</Text>
+            <Text style={{ width: width, borderWidth: 1, marginVertical: 20 }}>Event History</Text>
             <FlatList
               style={{ marginHorizontal: 10 }}
               data={EventData}
