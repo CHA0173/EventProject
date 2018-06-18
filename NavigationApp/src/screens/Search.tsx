@@ -88,7 +88,7 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
 
     this.state = {
       text: '',
-      data: '',
+      data: fakedata,
     }
   }
 

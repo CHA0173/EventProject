@@ -127,6 +127,29 @@ const EventData = [{
       quantity: '5'
     }]
   }
+}, {
+  id: 2,
+  name: 'Boat Party',
+  image: require('../img/boatparty.jpg'),
+  description: 'Wanna meet some sexy ladies this weekend? Join and bring enough cash!',
+  location: 'sai kung',
+  price: 'HKD300',
+  todo: {
+    food: [{
+      name: 'cake',
+      quantity: '2'
+    }, {
+      name: 'apple',
+      quantity: '3'
+    }],
+    drink: [{
+      name: 'water',
+      quantity: '12'
+    }, {
+      name: 'coke',
+      quantity: '5'
+    }]
+  }
 }]
 
 
