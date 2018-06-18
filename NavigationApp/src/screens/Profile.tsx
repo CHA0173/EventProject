@@ -128,7 +128,7 @@ const EventData = [{
     }]
   }
 }, {
-  id: 2,
+  id: 3,
   name: 'Boat Party',
   image: require('../img/boatparty.jpg'),
   description: 'Wanna meet some sexy ladies this weekend? Join and bring enough cash!',
@@ -209,7 +209,7 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
       <View style={{ borderColor: 'gray', borderWidth: 1, margin: 10 }}>
         <TouchableOpacity onPress={() => {
           this.props.navigator.push({
-            screen: ''
+            screen: 'EventsTabScreen'
           })
         }}>
           <View style={{ marginHorizontal: 10 }}>

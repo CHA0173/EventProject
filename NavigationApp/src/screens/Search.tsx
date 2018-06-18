@@ -108,7 +108,7 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
   public deleteData() {
     this.setState({
       text: '',
-      data: '',
+      data: fakedata,
     });
   };
 
@@ -162,6 +162,9 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
             : null}
 
           <TouchableOpacity onPress={() => this.deleteData()}>
+            {/* <TouchableOpacity onPress={() => this.props.navigator.switchToTab({
+            tabIndex: 1
+          })}> */}
             <View>
               <Text style={styles.cancelButtonText} >Cancel</Text>
             </View>
