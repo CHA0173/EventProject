@@ -189,3 +189,27 @@ Completed create and save event route (except for photo)
 
     
 ---
+
+
+## version 0.3 June 18, 2018 (Lucas)
+
+Created Notification page with fakedata, StyleSheet and contant of Search and Profile
+
+### Added
+
+- Notification.tsx
+    - look like facebook notification page ( only have created event note )
+
+### Changed
+
+- Profile.tsx 
+    - changed some style and isActive using <Switch> (have some problem)
+    - { fakedata } move to dakeData.tsx
+    - event history require from Brad event data
+
+- Search.tsx
+    - now can show all the events 
+    - changed canel and time-cirle button contant
+    - changed fakedata to fix the yellow box
+
+---

@@ -22,64 +22,10 @@ const { width, height } = Dimensions.get('window')
 
 import { Navigator } from 'react-native-navigation';
 import { Card } from 'react-native-elements';
+import { TodoData } from './fakeData'
+
 const ImagePicker = require('react-native-image-picker');
 
-
-const TodoData = [{
-  id: 1,
-  item: 'Coke',
-  quality: 12,
-  eventname: 'Even 1',
-  isActive: true
-}, {
-  id: 2,
-  item: 'Coke',
-  quality: 12,
-  eventname: 'Even 1',
-  isActive: true
-}, {
-  id: 3,
-  item: 'Coke',
-  quality: 12,
-  eventname: 'Even 1',
-  isActive: false
-}, {
-  id: 4,
-  item: 'Coke',
-  quality: 102,
-  eventname: 'Even 2',
-  isActive: false
-}, {
-  id: 5,
-  item: 'Coke',
-  quality: 102,
-  eventname: 'Even 2',
-  isActive: false
-}, {
-  id: 6,
-  item: 'Coke',
-  quality: 12,
-  eventname: 'Even 1',
-  isActive: true
-}, {
-  id: 7,
-  item: 'Coke',
-  quality: 102,
-  eventname: 'Even 1',
-  isActive: false
-}, {
-  id: 8,
-  item: 'Coke',
-  quality: 102,
-  eventname: 'Even 2',
-  isActive: false
-}, {
-  id: 9,
-  item: 'Coke',
-  quality: 102,
-  eventname: 'Even 2',
-  isActive: false
-},]
 
 const EventData = [{
   id: 1,
