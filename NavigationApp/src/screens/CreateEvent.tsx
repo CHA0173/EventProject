@@ -3,17 +3,20 @@ import {
     Text,
     View,
     TouchableOpacity,
-    Switch
+    Switch,
+    ScrollView
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
+
+import StepIndicator from 'react-native-step-indicator';
+
 import Description from './CreateEventComponents/Description';
 import SelectTemplate from './CreateEventComponents/SelectTemplate';
 import ToDoList from './CreateEventComponents/ToDoList';
 import Confirmation from './CreateEventComponents/Confirmation';
 
+const labels = ["Description", "To-Do List", "Confirm"];
 interface ICreateEventProps {
-    nextStep: ()=> void
 }
 
 interface ICreateEventState {
@@ -21,6 +24,10 @@ interface ICreateEventState {
 }
 
 export default class CreateEvent extends React.Component<{}, ICreateEventState> {
+    static navigatorStyle = {
+        tabBarHidden: true
+    };
+
     constructor(props: {}) {
         super(props);
         this.state = {
@@ -28,29 +35,42 @@ export default class CreateEvent extends React.Component<{}, ICreateEventState> 
         }
     }
 
-    nextStep () {
+    nextStep() {
         this.setState({
-            step:  this.state.step + 1
+            step: this.state.step + 1
         })
     }
 
-    prevStep () {
+    prevStep() {
         this.setState({
-            step:  this.state.step - 1
+            step: this.state.step - 1
         })
     }
 
-    render() {
-        switch (this.state.step) {
+    renderComponent(step) {
+        switch (step) {
             case 1:
                 return <Description nextStep={this.nextStep.bind(this)} />
             case 2:
-                return <SelectTemplate />
+                return <SelectTemplate nextStep={this.nextStep.bind(this)}
+                                        prevStep={this.prevStep.bind(this)}/>
             case 3:
                 return <ToDoList />
             case 4:
                 return <Confirmation />
         }
+    }
 
+    render() {
+        return (
+            <ScrollView>
+                <StepIndicator
+                    currentPosition={this.state.step - 1}
+                    labels={labels}
+                    stepCount={3}
+                />
+                {this.renderComponent(this.state.step)}
+            </ScrollView>
+        )
     }
 }

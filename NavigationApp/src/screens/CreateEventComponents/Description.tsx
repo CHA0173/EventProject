@@ -4,23 +4,21 @@ import {
     View,
     TouchableOpacity,
     Switch,
-    Button
+    Button,
+    ScrollView
 } from 'react-native';
 import { FormLabel, FormInput } from 'react-native-elements'
-
 
 interface IDescriptionProps {
     nextStep: () => void
 }
 
 export default class Description extends React.Component<IDescriptionProps, {}> {
-    constructor(props: {}) {
-        super(props);
-    }
 
     render() {
         return (
             <View>
+                <ScrollView>
                 <Switch />
                 <FormLabel>Name</FormLabel>
                 <FormInput onChangeText={() => { }} />
@@ -30,8 +28,8 @@ export default class Description extends React.Component<IDescriptionProps, {}> 
                 <FormInput onChangeText={() => { }} />
                 <FormLabel>Deposit</FormLabel>
                 <FormInput onChangeText={() => { }} />
-                <Button onPress={ this.props.nextStep } title="next" />
-
+                <Button onPress={this.props.nextStep} title="next" />
+                </ScrollView>
             </View>
         )
     }

@@ -2,11 +2,11 @@
 //   return fetch(`https://dummyimage.com/600x400/000000/fff.png&text=fake+img`)
 //       .then(response => Promise.all([response, response.json()]))
 // }
- const Events =  [{
+const Events = [{
   id: 1,
   name: 'event1',
-  img: `https://dummyimage.com/600x400/000000/fff.png&text=fake+img` 
-}, 
+  img: `https://dummyimage.com/600x400/000000/fff.png&text=fake+img`
+},
 {
   id: 2,
   name: 'event2',
@@ -30,11 +30,42 @@ const event = {
     drink: [{
       name: 'water',
       quantity: '12'
-    },{
+    }, {
       name: 'coke',
       quantity: '5'
     }]
   }
 }
 
-export { Events, event };
+const templateA = [
+  {
+    name: 'coke',
+    quality: 10
+  },
+  {
+    name: 'apple',
+    quality: 6
+  },
+  {
+    name: 'boardgame',
+    quality: 1
+  }
+]
+
+const templateB = [
+  {
+    name: 'wine',
+    quality: 10
+  },
+  {
+    name: 'oyster',
+    quality: 6
+  },
+  {
+    name: 'switch',
+    quality: 1
+  }
+]
+
+
+export { Events, event, templateA, templateB };

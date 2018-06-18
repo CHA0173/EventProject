@@ -19,15 +19,7 @@ export default class ViewEvent extends React.Component<{}, {}> {
     render() {
         return (
             <View>
-                <Switch />
-                <FormLabel>Name</FormLabel>
-                <FormInput onChangeText={() => { }} />
-                <FormLabel>Description</FormLabel>
-                <FormInput onChangeText={() => { }} />
-                <FormLabel>Address</FormLabel>
-                <FormInput onChangeText={() => { }} />
-                <FormLabel>Deposit</FormLabel>
-                <FormInput onChangeText={() => { }} />
+                
             </View>
         )
     }

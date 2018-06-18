@@ -4323,6 +4323,12 @@ react-native-navigation@^1.1.468:
   dependencies:
     lodash "4.x.x"
 
+react-native-step-indicator@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/react-native-step-indicator/-/react-native-step-indicator-0.0.8.tgz#f1693bd447e223a7096c2326b81b009dbb59f4ec"
+  dependencies:
+    prop-types "^15.6.0"
+
 react-native-typescript-transformer@^1.2.9:
   version "1.2.9"
   resolved "https://registry.yarnpkg.com/react-native-typescript-transformer/-/react-native-typescript-transformer-1.2.9.tgz#a8724eee5d787c4f88da50cf2e091c53be2121ee"
@@ -4683,6 +4689,10 @@ rimraf@^2.5.4, rimraf@^2.6.1:
 rimraf@~2.2.6:
   version "2.2.8"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
+
+rn-viewpager@^1.2.9:
+  version "1.2.9"
+  resolved "https://registry.yarnpkg.com/rn-viewpager/-/rn-viewpager-1.2.9.tgz#7f06f898e23b296f3b5be7c98bd9101d94427779"
 
 rsvp@^3.3.3:
   version "3.6.2"
