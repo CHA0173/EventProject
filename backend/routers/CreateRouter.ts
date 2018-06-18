@@ -23,9 +23,12 @@ export default class CreateRouter {
             })
     }
     add(req :any, res: express.Response) {
-        return this.createService.saveNewEvent(req.body, req.user)
+        return this.createService.saveNewEvent(req.body, 1, res)
             .then((data) => {
                 res.json(data)
+            })
+            .then((pathName) => {
+                res.redirect('/')//I want to redirect back to event page
             })
             .catch((err: express.Errback) => {
                 res.status(500).json(err)

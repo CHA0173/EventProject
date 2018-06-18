@@ -13,8 +13,8 @@ import {
 
 } from 'react-native';
 
-const { width, height } = Dimensions.get('window')
-import { Navigator, NavigatorButton } from 'react-native-navigation';
+const { width, height } = Dimensions.get('window');
+import { Navigator } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 // import { Events } from './fakeData';
 
@@ -27,49 +27,49 @@ const fakedata = [{
   name: 'Event 2',
   img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
 }, {
-  id: 2,
-  name: 'Event 2',
-  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
+  id: 3,
+  name: 'Event 3',
+  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E3'
 }, {
-  id: 2,
-  name: 'Event 2',
-  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
+  id: 4,
+  name: 'Event 4',
+  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E4'
 }, {
-  id: 2,
-  name: 'Event 2',
-  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
+  id: 5,
+  name: 'Event 5',
+  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E5'
 }, {
-  id: 2,
-  name: 'Event 2',
-  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
+  id: 6,
+  name: 'Event 6',
+  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E6'
 }, {
-  id: 2,
-  name: 'Event 2',
-  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
+  id: 7,
+  name: 'Event 7',
+  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E7'
 }, {
-  id: 2,
-  name: 'Event 2',
-  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
+  id: 8,
+  name: 'Event 8',
+  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E8'
 }, {
-  id: 2,
-  name: 'Event 2',
-  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
+  id: 9,
+  name: 'Event 9',
+  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E9'
 }, {
-  id: 2,
-  name: 'Event 2',
-  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
+  id: 10,
+  name: 'Event 10',
+  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E10'
 }, {
-  id: 2,
-  name: 'Event 2',
-  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
+  id: 11,
+  name: 'Event 11',
+  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E11'
 }, {
-  id: 2,
-  name: 'Event 2',
-  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
+  id: 12,
+  name: 'Event 12',
+  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E12'
 }, {
-  id: 2,
-  name: 'Event 2',
-  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
+  id: 13,
+  name: 'Event 13',
+  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E13'
 }]
 
 
@@ -88,7 +88,7 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
 
     this.state = {
       text: '',
-      data: '',
+      data: fakedata,
     }
   }
 
@@ -108,7 +108,7 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
   public deleteData() {
     this.setState({
       text: '',
-      data: '',
+      data: fakedata,
     });
   };
 
@@ -125,13 +125,13 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
       }}>
         <View>
           <Image style={styles.image} source={{ uri: item.img }} />
-          <Text style={{ color: 'white' , margin: 20}}>{item.name}</Text>
+          <Text style={{ color: 'white', margin: 20 }}>{item.name}</Text>
         </View>
       </TouchableWithoutFeedback>
     )
   }
 
-  render() { 
+  render() {
 
     return (
       <View style={styles.container}>
@@ -161,11 +161,14 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
             </TouchableWithoutFeedback>
             : null}
 
-            <TouchableOpacity onPress={() => this.deleteData()}>
-              <View>
-                <Text style={styles.cancelButtonText} >Cancel</Text>
-              </View>
-            </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.deleteData()}>
+            {/* <TouchableOpacity onPress={() => this.props.navigator.switchToTab({
+            tabIndex: 1
+          })}> */}
+            <View>
+              <Text style={styles.cancelButtonText} >Cancel</Text>
+            </View>
+          </TouchableOpacity>
         </View>
         <ScrollView>
           <FlatList
