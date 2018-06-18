@@ -3,9 +3,9 @@ import {
     Text,
     View
 } from 'react-native';
-import { Card, ListItem } from 'react-native-elements'
+import { Card, ListItem, List } from 'react-native-elements'
 
-import { templateA, templateB } from '../fakeData'
+import { junkBoat, birthdayParty } from '../fakeData'
 
 import { PagerTabIndicator, IndicatorViewPager, PagerTitleIndicator, PagerDotIndicator } from 'rn-viewpager';
 import { ScrollView } from 'react-native';
@@ -18,47 +18,71 @@ export default class Templates extends React.Component<ITemplatesProps, {}> {
     constructor(props: ITemplatesProps) {
         super(props)
     }
-    render() {
-        return (
-            <View style={{ flex: 1 }}>
-                <IndicatorViewPager
-                    style={{ height: 300 }}
-                    indicator={this._renderDotIndicator()}
-                >
-                    <View style={{ backgroundColor: 'cadetblue' }}>
-                        <Card title="CARD WITH DIVIDER">
-                            {
-                                templateA.map((item, i) => {
-                                    return (
-                                        <ListItem
-                                            key={i}
-                                            title={item.name}
-                                        />
-                                    );
-                                })
-                            }
-                        </Card>
-                    </View>
-                    <View style={{ backgroundColor: 'cornflowerblue' }}>
-                        <Card title="CARD WITH DIVIDER">
-                            {
-                                templateB.map((item, i) => {
-                                    return (
-                                        <ListItem
-                                            key={i}
-                                            title={item.name}
-                                        />
-                                    );
-                                })
-                            }
-                        </Card>                    
-                    </View>
-                </IndicatorViewPager>
-            </View>
-        );
+
+    renderType() {
+        if (this.props.type == 'junkBoat') {
+            return junkBoat
+        } else {
+            return birthdayParty
+        }
     }
+
 
     _renderDotIndicator() {
         return <PagerDotIndicator pageCount={3} />;
+    }
+
+    renderTemplate() {
+        return (
+            <IndicatorViewPager
+                style={{ height: 300 }}
+                indicator={this._renderDotIndicator()}
+            >
+                <View style={{ backgroundColor: 'cadetblue' }}>
+                    <Card title="CARD WITH DIVIDER">
+                        {
+                            this.renderType().templateA.map((item, i) => {
+                                return (
+                                    <ListItem
+                                        key={i}
+                                        title={item.name}
+                                        hideChevron={true}
+                                    />
+                                );
+                            })
+                        }
+                    </Card>
+                </View>
+                <View style={{ backgroundColor: 'cornflowerblue' }}>
+                    <Card title="CARD WITH DIVIDER">
+                        {
+                            this.renderType().templateB.map((item, i) => {
+                                return (
+                                    <ListItem
+                                        key={i}
+                                        title={item.name}
+                                        hideChevron={true}
+                                    />
+                                );
+                            })
+                        }
+                    </Card>
+                </View>
+                <View>
+                    <Text>
+                        You choose la 
+                    </Text>
+                </View>
+            </IndicatorViewPager>
+        )
+    }
+    render() {
+        return (
+            <View style={{ flex: 1 }}>
+                {
+                    this.props.type === '0'? null : this.renderTemplate()
+                }
+            </View>
+        );
     }
 }

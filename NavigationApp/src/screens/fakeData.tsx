@@ -37,35 +37,67 @@ const event = {
   }
 }
 
-const templateA = [
-  {
-    name: 'coke',
-    quality: 10
-  },
-  {
-    name: 'apple',
-    quality: 6
-  },
-  {
-    name: 'boardgame',
-    quality: 1
-  }
-]
+const junkBoat = {
+  templateA: [
+    {
+      name: 'coke',
+      quality: 10
+    },
+    {
+      name: 'apple',
+      quality: 6
+    },
+    {
+      name: 'boardgame',
+      quality: 1
+    }
+  ],
+  templateB: [
+    {
+      name: 'wine',
+      quality: 10
+    },
+    {
+      name: 'oyster',
+      quality: 6
+    },
+    {
+      name: 'switch',
+      quality: 1
+    }
+  ]
+}
 
-const templateB = [
-  {
-    name: 'wine',
-    quality: 10
-  },
-  {
-    name: 'oyster',
-    quality: 6
-  },
-  {
-    name: 'switch',
-    quality: 1
-  }
-]
+const birthdayParty = {
+  templateA: [
+    {
+      name: 'coke',
+      quality: 10
+    },
+    {
+      name: 'cake',
+      quality: 1
+    },
+    {
+      name: 'candle',
+      quality: 1
+    }
+  ],
+  templateB: [
+    {
+      name: 'wine',
+      quality: 10
+    },
+    {
+      name: 'pizza',
+      quality: 6
+    },
+    {
+      name: 'cake',
+      quality: 1
+    }
+  ]
+}
 
 
-export { Events, event, templateA, templateB };
+export { Events, event, junkBoat, birthdayParty };

@@ -7,7 +7,6 @@ import {
     Picker
 } from 'react-native';
 import { Card, ListItem } from 'react-native-elements'
-import { templateA, templateB } from '../fakeData'
 import Templates from './Templates'
 import { stepButtons } from '../../styles'
 
@@ -16,30 +15,32 @@ interface ISelectTemplateProps {
     prevStep: () => void
 }
 interface ISelectTemplateState {
-    template: string,
+    type: string,
 }
 
 export default class SelectTemplate extends React.Component<ISelectTemplateProps, ISelectTemplateState> {
     constructor(props: ISelectTemplateProps) {
         super(props);
         this.state = {
-            template: ''
+            type: '0'
         }
     }
     render() {
         return (
             <View>
-                <Text>
-                    Select Event Type
-                </Text>
                 <Picker
-                    selectedValue={this.state.template}
+                    selectedValue={this.state.type}
                     style={{}}
-                    onValueChange={(itemValue, itemIndex) => this.setState({ template: itemValue })}>
-                    <Picker.Item label="Junk Boat" value="templateA" />
-                    <Picker.Item label="Birthday Party" value="templateB" />
+                    onValueChange={(itemValue, itemIndex) => this.setState({ type: itemValue })}>
+                    <Picker.Item label="Select Event Type" value="0" />
+                    <Picker.Item label="Junk Boat" value="junkBoat" />
+                    <Picker.Item label="Birthday Party" value="birthdayParty" />
+                    <Picker.Item label="Custom..." value="custom" />
                 </Picker>
-                <Templates type={this.state.template} />
+                
+                <Templates type={this.state.type} />
+
+
                 <View style={stepButtons.container}>
                     <View style={stepButtons.button}>
                         <Button title="prev" onPress={this.props.prevStep} />
