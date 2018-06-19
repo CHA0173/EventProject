@@ -58,4 +58,75 @@
     "quantity": 1,
     "isactive": true,
     "user": "Paul"
-}]
+},{
+    "type":"boat party",
+    "package":"basic",
+    "name":"soft drink 12pack",
+    "quantity":"3",
+    "isactive":true,
+    "user": "sample"
+},{
+    "type":"boat party",
+    "package":"basic",
+    "name":"light snacks",
+    "quantity":"15",
+    "isactive":true,
+    "user": "sample"
+},{
+    "type":"boat party",
+    "package":"basic",
+    "name":"pack of cards",
+    "quantity":"2",
+    "isactive":true,
+    "user": "sample"
+},{
+    "type":"boat party",
+    "package":"basic",
+    "name":"cheap liquor bottles",
+    "quantity":"8",
+    "isactive":true,
+    "user": "sample"
+},{
+    "type":"boat party",
+    "package":"deluxe",
+    "name":"craft beer 6packs",
+    "quantity":"10",
+    "isactive":true,
+    "user": "sample"
+},{
+    "type":"boat party",
+    "package":"deluxe",
+    "name":"poker set",
+    "quantity":"1",
+    "isactive":true,
+    "user": "sample"
+},{
+    "type":"boat party",
+    "package":"deluxe",
+    "name":"cupcakes",
+    "quantity":"1",
+    "isactive":true,
+    "user": "sample"
+},{
+    "type":"boat party",
+    "package":"supreme",
+    "name":"champagne bottles",
+    "quantity":"10",
+    "isactive":true,
+    "user": "sample"
+},{
+    "type":"boat party",
+    "package":"supreme",
+    "name":"cigars",
+    "quantity":"10",
+    "isactive":true,
+    "user": "sample"
+},{
+    "type":"boat party",
+    "package":"supreme",
+    "name":"box of macarons",
+    "quantity":"5",
+    "isactive":true,
+    "user": "sample"
+}
+]

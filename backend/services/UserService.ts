@@ -12,8 +12,8 @@ export default class UserService {
         console.log("userid", userid)
         // console.log( this.knex("items")
         // .select("items.name as item_name, items.id as item_id, items.quantity, items.completed, events.name as event_name, events.id as event_id")
-        // .join("toDo", "toDo.id", "items.toDo_id")
-        // .join("events", "events.id", "toDo.events_id")
+        // .join("todo", "todo.id", "items.todo_id")
+        // .join("events", "events.id", "todo.events_id")
         // .where("items.users_id", userid).toSQL())
         return this.knex("events")//select all users events
             .select("events.id as events_id", "events.name as events_name", "events.datetime", "events.photo")
@@ -26,8 +26,8 @@ export default class UserService {
 
                 return this.knex("items")
                     .select("items.name as items_name", "items.id as items_id", "items.quantity", "items.completed", "events.id as events_id", "events.name as events_name")
-                    .join("toDo", "toDo.id", "items.toDo_id")
-                    .join("events", "events.id", "toDo.events_id")
+                    .join("todo", "todo.id", "items.todo_id")
+                    .join("events", "events.id", "todo.events_id")
                     .where("items.users_id", userid)
                     .andWhere("items.isactive", true)
                     .then(itemArray => {
