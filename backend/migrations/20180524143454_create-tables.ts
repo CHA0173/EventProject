@@ -6,6 +6,7 @@ exports.up = (knex: Knex) => {
         users.string("email").notNullable().unique();
         users.string("name").notNullable().unique();
         users.string("password");
+        users.string("photo");
         users.boolean("isactive");
     }).then(() => {
 
@@ -13,7 +14,8 @@ exports.up = (knex: Knex) => {
             events.increments();
             events.string("name").notNullable();
             events.string("description").notNullable();
-            events.timestamp("dateTime").notNullable();
+            events.string("photo");
+            events.timestamp("datetime").notNullable();
             events.string('address').notNullable();
             events.specificType('location', 'POINT');
             events.boolean("private");
@@ -29,29 +31,30 @@ exports.up = (knex: Knex) => {
         })
     }).then(() => {
 
-        return knex.schema.createTable("items", (items) => {
-            items.increments();
-            items.string("name").notNullable();
-            items.integer("quantity");
-            items.integer("categories_id").unsigned();
-            items.foreign("categories_id");
-            items.integer("users_id").unsigned();
-            items.foreign("users_id").references("users.id");
-            items.boolean("isactive");
-
-        })
-    }).then(() => {
-
         return knex.schema.createTable("toDo", (todo) => {
             todo.increments();
             todo.integer("events_id").unsigned();
             todo.foreign("events_id").references("events.id");
-            todo.integer("items_id").unsigned();
-            todo.foreign("items_id").references("items.id");
             todo.string('type');
             todo.timestamps(false, true);
             todo.boolean("template");
             todo.boolean("isactive");
+        })
+    }).then(() => {
+
+        return knex.schema.createTable("items", (items) => {
+            items.increments();
+            items.string("name").notNullable();
+            items.integer("quantity");
+            items.boolean("completed");
+            items.integer("categories_id").unsigned();
+            items.foreign("categories_id");
+            items.integer("users_id").unsigned();
+            items.foreign("users_id").references("users.id");
+            items.integer("toDo_id").unsigned();
+            items.foreign("toDo_id").references("toDo.id");
+            items.boolean("isactive");
+
         })
     }).then(() => {
         return knex.schema.createTable("events_users", (eventsUsers) => {
@@ -69,8 +72,8 @@ exports.up = (knex: Knex) => {
 
 exports.down = (knex: Knex) => {
     return knex.schema.dropTable('events_users')
-        .then(() => knex.schema.dropTable('toDo'))
         .then(() => knex.schema.dropTable('items'))
+        .then(() => knex.schema.dropTable('toDo'))
         .then(() => knex.schema.dropTable('categories'))
         .then(() => knex.schema.dropTable('events'))
         .then(() => knex.schema.dropTable('users'));
