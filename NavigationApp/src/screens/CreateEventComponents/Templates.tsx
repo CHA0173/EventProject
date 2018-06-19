@@ -1,7 +1,8 @@
 import * as React from 'react';
 import {
     Text,
-    View
+    View,
+    TouchableOpacity
 } from 'react-native';
 import { Card, ListItem, List } from 'react-native-elements'
 
@@ -11,7 +12,7 @@ import { PagerTabIndicator, IndicatorViewPager, PagerTitleIndicator, PagerDotInd
 import { ScrollView } from 'react-native';
 
 interface ITemplatesProps {
-    type: string
+    type: string,
 }
 
 export default class Templates extends React.Component<ITemplatesProps, {}> {
@@ -70,7 +71,8 @@ export default class Templates extends React.Component<ITemplatesProps, {}> {
                 </View>
                 <View>
                     <Text>
-                        You choose la 
+                        You choose la
+                        Create a new list
                     </Text>
                 </View>
             </IndicatorViewPager>
@@ -80,7 +82,7 @@ export default class Templates extends React.Component<ITemplatesProps, {}> {
         return (
             <View style={{ flex: 1 }}>
                 {
-                    this.props.type === '0'? null : this.renderTemplate()
+                    this.props.type === '0' ? null : this.renderTemplate()
                 }
             </View>
         );
