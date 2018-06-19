@@ -64,6 +64,7 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
         this.props.navigator.push({
           screen: 'EventsTabScreen',
           title: item.name,
+          navigatorStyle: {tabBarHidden: true} ,
           passProps: {
             selectedItem: item.item
           }
