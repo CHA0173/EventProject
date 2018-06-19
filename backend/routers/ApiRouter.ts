@@ -23,12 +23,12 @@ export default class ApiRouter {
     private eventService: EventService;
     private eventRouter: EventRouter;
     
-    constructor(jwtAuth:any, userService: UserService, searchService: SearchService) {
+    constructor(jwtAuth:any, userService: UserService, searchService: SearchService , eventService: EventService) {
         // this.jwtAuth = jwtAuth;
         this.userService = userService;
         this.searchService = searchService;
         this.searchRouter = this.searchRouter;
-        this.eventService= this.eventService;
+        this.eventService= eventService;
         this.eventRouter= this.eventRouter;
     }
 

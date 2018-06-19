@@ -3,24 +3,23 @@ import EventService from '../services/EventService';
 
 
 export default class EventRouter{
-  private EventService: EventService;
+  private eventService: EventService;
 
-  constructor(EventService: EventService){
-      this.EventService = EventService;
+  constructor(eventService: EventService){
+     this.eventService = eventService;
   }
 
   router(){
     let router = express.Router();
-    router.post("/",this.postEvent.bind(this));
-    router.get("/:id",this.getEvent.bind(this));
-    router.put("/:id",this.putEvent.bind(this));
+    router.get("/",this.getEvent.bind(this));
+    router.put("/",this.putEvent.bind(this));
     return router;
   }
 
   getEvent(req: express.Request,res:express.Response){
-    return this.EventService.list(req.params.id)
+    return this.eventService.list(req.query.userid)
     .then((data) => {
-      console.log(data)
+      console.log("res",data)
       res.json(data)
     })
     .catch((err:express.Errback) =>{
@@ -29,7 +28,7 @@ export default class EventRouter{
   }
 
   putEvent(req:express.Request,res:express.Response){
-    return this.EventService.update(req.params.id,req.body)
+    return this.eventService.update(req.query.id,req.body)
     .then((data) => {
       res.json(data)
     })
@@ -37,11 +36,4 @@ export default class EventRouter{
       res.status(500).json(err)
     })
   }
-
-  postEvent(req:express.Request,res:express.Response){
-    return this.EventService.update
-
-  }
-
-  
 }

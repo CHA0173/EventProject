@@ -9,10 +9,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "program": "${workspaceFolder}\\service\\infoService.ts",
-      "outFiles": [
-        "${workspaceFolder}/**/*.js"
-      ]
+      "program": "${workspaceFolder}/index.js"
     }
   ]
 }

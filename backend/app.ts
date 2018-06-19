@@ -10,6 +10,7 @@ import jwtStrategy      from './utils/auth/JwtStrategy';
 import ApiRouter        from './routers/ApiRouter';
 import UserService      from './services/UserService';
 import SearchService      from './services/SearchService';
+import EventService        from './services/eventService';
 
 
 
@@ -18,8 +19,9 @@ const app = express();
 
 const userService = new UserService(knex);
 const searchService = new SearchService(knex);
+const eventService = new EventService(knex);
 const jwtAuth = jwtStrategy(userService);
-const apiRouter = new ApiRouter(jwtAuth, userService, searchService);
+const apiRouter = new ApiRouter(jwtAuth, userService, searchService, eventService);
 
 app.set("utils", path.join(__dirname, "utils"));
 app.set("routers", path.join(__dirname, "routers"));

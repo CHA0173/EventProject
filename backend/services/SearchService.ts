@@ -1,4 +1,5 @@
-import * as Knex from 'knex'
+import * as Knex from 'knex';
+
 
 
 

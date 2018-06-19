@@ -10,7 +10,7 @@ export default class UserRouter {
     private userService: UserService;
 
     constructor(userService: UserService) {
-        this.userService = this.userService;
+        this.userService = userService;
     }
 
     getRouter() {
@@ -21,11 +21,8 @@ export default class UserRouter {
     }
 
     get(req: any, res: any) {//checks if user's access token matches with the one in 
-        
-    req.user = 1
-    console.log("req.user", req.user)
-        
-        return this.userService.getProfile(req.user)//responds with user's data
+
+        return this.userService.getProfile(1)//responds with user's data
             .then((data: any) => {//passes data back to getRouter
                 res.json(data)
             })
@@ -33,4 +30,5 @@ export default class UserRouter {
                 res.status(500).json(err)
             });
     }
+  
 }

@@ -1,4 +1,5 @@
 import * as Knex from "knex";
+// import * as multer from 'multer';
 
 export default class EventService {
   private knex: Knex;
@@ -7,43 +8,124 @@ export default class EventService {
     this.knex = knex;
   }
 
-  list(id: number) {
+
+  list(userid: number) {
     return this.knex("events")
-      
-      // .join("events_users", "events.id", "events_user.events_id")
-      .join("toDo","toDo.events_id","events.id")
-      .join("items","items.toDo_id","toDo.id")
-      // .join("categories","categories.id","items.category_id")
-      .where("events.id", id)
       .select(
-        "events.name",
+        "events.id as events_id",
+        "events.name as events_name",
         "events.description",
-        "events.dateTime",
+        "events.datetime",
+        "events.photo",
         "events.address",
-        // "events.location",
         "events.private",
         "events.deposit",
-        "toDo.id",
-        "toDo.type",
-        "toDo.template",
-        "toDo.events_id",
-        "toDo.items_id",
-        "items.id"
-        // "items.name",
-        // "items.quantity",
-        // "items.categories_id",
-        // "items.users_id",
-        // "items.isactive",
-        // "categories.id",
-        // "categories.category",
-        // // "categories.isactive"
+        "todo.id as todo_id",
+        "todo.type as todo_type"
       )
-      .then(result => {
-        return result;
-      });
+      // .join("events_users", "events.id", "events_user.events_id")
+      .join("todo", "todo.events_id", "events.id")
+      // .join("items", "items.todo_id", "todo.id")
+      .where("events.id", 2)
+      .andWhere("events.isactive", true)
+      .then(eventArray => {
+        // eventArray.map((data: any) => { data.events_id, data.events_name, 
+        //   data.description, data.datetime, data.photo, data.address, data.private,
+        // data.deposit, data.todo_id, data.todo_type })
+
+        console.log("eventArray",eventArray)
+        console.log("eventArray todoid", eventArray[0].todo_id)
+        return this.knex("items")
+          .select(
+            "items.id as items_id",
+            "items.name as items_name",
+            "items.completed",
+            "items.quantity",
+            "items.users_id"
+          )
+          .join("todo", "todo.id", "items.todo_id")
+          .where("items.todo_id", eventArray[0].todo_id)
+          .andWhere("items.isactive",true)
+          .then((itemArray:any) => {
+            console.log("itemArray", itemArray)
+            let arrayItemObject: any[] = []
+            for (let i in itemArray) {
+                  arrayItemObject.push({
+                    items_id: itemArray[i].items_id,
+                    items_name: itemArray[i].items_name,
+                    items_quantity: itemArray[i].quantity,
+                    items_users_id: itemArray[i].users_id
+                  })
+                }
+                console.log("arrayItemObject", arrayItemObject)
+
+          })
+      })
+
   }
 
+  // list(id: number) {
+  //   return (
+  //     this.knex("events")
+
+  //       // .join("events_users", "events.id", "events_user.events_id")
+  //       .select(
+  //         "events.id as events_id",
+  //         "events.name as events_name",
+  //         "events.description as events_description",
+  //         "events.datetime as events_datatime",
+  //         "events.address as events_address",
+  //         "events.location as events_location",
+  //         "events.private as events_private",
+  //         "events.deposit as events_deposit",
+  //         "toDo.id as toDo_id",
+  //         "toDo.type as toDo_type",
+  //         // "toDo.template",
+  //         // "toDo.events_id",
+  //       )
+  //       .join("toDo", "toDo.events_id", "events.id")
+  //       .where("events.id", 2)
+  //       .andWhere("events.isactive",true)
+  //       .then(eventArray=> {
+          
+  //         console.log("eventArray",eventArray)
+  //         console.log("eventArray todoid", eventArray[0].todo_id)
+  //         return this.knex("items")
+  //         .select(
+  //           "items.id as items_id",
+  //           "items.name as items_name",
+  //           "items.compeleted as items_compeleted",
+  //           "items.quantity as items_quantity",
+  //           "items.users_id as items_users_id",
+  //         )
+  //         .join("todo", "todo.id", "items.todo_id")
+  //         .where("items.toDo_id",eventArray[0].toDo_id)
+  //         .andWhere("items.isactive",true)
+  //         .then((itemArray:any) => {
+  //           console.log("itemArray",itemArray)
+  //           let item: any[] = [];
+  //           for (let i = 0; i > itemArray.length; i++) {
+  //             item.push( {
+  //               items_id: itemArray[i].items_id,
+  //               items_name: itemArray[i].items.name,
+  //               items_quantity: itemArray[i].items_quantity,
+  //               items_users_id: itemArray[i].items_users_id,
+  //             })
+              
+  //           }
+  //           console.log("item",item);
+  //         })
+  //       })
+  //       .then(result => {
+  //         console.log(result);
+  //         return result;
+  //       })
+  //   );
+  // }
+
   update(id: number, group: string) {
+    if (id != undefined) {
+    }
     return this.knex("events")
       .update(group)
       .where("events.id", id);
