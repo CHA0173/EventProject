@@ -39,7 +39,7 @@ export default class Templates extends React.Component<ITemplatesProps, {}> {
                 indicator={this._renderDotIndicator()}
             >
                 <View style={{ backgroundColor: 'cadetblue' }}>
-                    <Card title="CARD WITH DIVIDER">
+                    <Card title="Basic">
                         {
                             this.renderType().templateA.map((item, i) => {
                                 return (
@@ -54,7 +54,7 @@ export default class Templates extends React.Component<ITemplatesProps, {}> {
                     </Card>
                 </View>
                 <View style={{ backgroundColor: 'cornflowerblue' }}>
-                    <Card title="CARD WITH DIVIDER">
+                    <Card title="Supreme">
                         {
                             this.renderType().templateB.map((item, i) => {
                                 return (

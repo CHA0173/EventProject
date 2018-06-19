@@ -18,7 +18,6 @@ export default class Description extends React.Component<IDescriptionProps, {}> 
     render() {
         return (
             <View>
-                <ScrollView>
                 <Switch />
                 <FormLabel>Name</FormLabel>
                 <FormInput onChangeText={() => { }} />
@@ -29,7 +28,6 @@ export default class Description extends React.Component<IDescriptionProps, {}> 
                 <FormLabel>Deposit</FormLabel>
                 <FormInput onChangeText={() => { }} />
                 <Button onPress={this.props.nextStep} title="next" />
-                </ScrollView>
             </View>
         )
     }

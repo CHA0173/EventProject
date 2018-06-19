@@ -15,7 +15,7 @@ import SelectTemplate from './CreateEventComponents/SelectTemplate';
 import ToDoList from './CreateEventComponents/ToDoList';
 import Confirmation from './CreateEventComponents/Confirmation';
 
-const labels = ["Description", "To-Do List", "Confirm"];
+const labels = ["Description", "Event Type", "To-do List", "Confirmation"];
 interface ICreateEventProps {
 }
 
@@ -56,6 +56,7 @@ export default class CreateEvent extends React.Component<{}, ICreateEventState> 
                                         prevStep={this.prevStep.bind(this)}/>
             case 3:
                 return <ToDoList />
+
             case 4:
                 return <Confirmation />
         }
@@ -67,7 +68,7 @@ export default class CreateEvent extends React.Component<{}, ICreateEventState> 
                 <StepIndicator
                     currentPosition={this.state.step - 1}
                     labels={labels}
-                    stepCount={3}
+                    stepCount={4}
                 />
                 {this.renderComponent(this.state.step)}
             </ScrollView>
