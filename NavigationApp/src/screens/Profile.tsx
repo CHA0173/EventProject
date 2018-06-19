@@ -155,7 +155,11 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
       <View style={{ borderColor: 'gray', borderWidth: 1, margin: 10 }}>
         <TouchableOpacity onPress={() => {
           this.props.navigator.push({
-            screen: 'EventsTabScreen'
+            screen: 'EventsTabScreen',
+            navigatorStyle: {tabBarHidden: true} ,
+            passProps: {
+              selectedItem: item.item
+            }  
           })
         }}>
           <View style={{ marginHorizontal: 10 }}>
@@ -182,7 +186,11 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
     return (
       <TouchableOpacity onPress={() => {
         this.props.navigator.push({
-          screen: 'EventsTabScreen'
+          screen: 'EventsTabScreen',
+          navigatorStyle: {tabBarHidden: true} ,
+          passProps: {
+            selectedItem: item.item
+          }
         })
       }}>
         <Card
