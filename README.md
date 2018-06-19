@@ -138,7 +138,7 @@ Changed some Front-End file, and will start to writting the event pages.
     
 ---
 
-## version 0.3 June 12, 2018 (Lucas)
+## version 0.3 June 12, 2018 (Stephen)
 
  Added routes for profile information, event search, and upcoming events list, currently progressing on event create route (inserting new events and items)
  
@@ -156,7 +156,7 @@ Changed some Front-End file, and will start to writting the event pages.
     
 ---
 
-## version 0.1 June 15, 2018 (Lucas)
+## version 0.3 June 15, 2018 (Lucas)
 
  Added search and changed search/profile contant
 
@@ -173,4 +173,43 @@ Changed some Front-End file, and will start to writting the event pages.
     - changed some contant and stylesheet 
     - added some fake data to test
     
+---
+
+
+## version 0.3 June 17, 2018 (Stephen)
+
+Completed create and save event route (except for photo)
+
+### Added
+
+- createService.saveNewEvent()
+
+### Changed
+
+
+    
+---
+
+
+## version 0.3 June 18, 2018 (Lucas)
+
+Created Notification page with fakedata, StyleSheet and contant of Search and Profile
+
+### Added
+
+- Notification.tsx
+    - look like facebook notification page ( only have created event note )
+
+### Changed
+
+- Profile.tsx 
+    - changed some style and isActive using <Switch> (have some problem)
+    - { fakedata } move to dakeData.tsx
+    - event history require from Brad event data
+
+- Search.tsx
+    - now can show all the events 
+    - changed canel and time-cirle button contant
+    - changed fakedata to fix the yellow box
+
 ---

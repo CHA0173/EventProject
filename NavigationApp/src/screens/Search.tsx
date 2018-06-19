@@ -13,64 +13,10 @@ import {
 
 } from 'react-native';
 
-const { width, height } = Dimensions.get('window')
-import { Navigator, NavigatorButton } from 'react-native-navigation';
+const { width, height } = Dimensions.get('window');
+import { Navigator } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
-// import { Events } from './fakeData';
-
-const fakedata = [{
-  id: 1,
-  name: 'Event 1',
-  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E1'
-}, {
-  id: 2,
-  name: 'Event 2',
-  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
-}, {
-  id: 2,
-  name: 'Event 2',
-  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
-}, {
-  id: 2,
-  name: 'Event 2',
-  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
-}, {
-  id: 2,
-  name: 'Event 2',
-  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
-}, {
-  id: 2,
-  name: 'Event 2',
-  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
-}, {
-  id: 2,
-  name: 'Event 2',
-  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
-}, {
-  id: 2,
-  name: 'Event 2',
-  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
-}, {
-  id: 2,
-  name: 'Event 2',
-  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
-}, {
-  id: 2,
-  name: 'Event 2',
-  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
-}, {
-  id: 2,
-  name: 'Event 2',
-  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
-}, {
-  id: 2,
-  name: 'Event 2',
-  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
-}, {
-  id: 2,
-  name: 'Event 2',
-  img: 'https://dummyimage.com/600x400/000000/fff.png&text=E2'
-}]
+import { fakedata } from './fakeData';
 
 
 interface ISearchProps {
@@ -88,7 +34,7 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
 
     this.state = {
       text: '',
-      data: '',
+      data: fakedata,
     }
   }
 
@@ -108,7 +54,7 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
   public deleteData() {
     this.setState({
       text: '',
-      data: '',
+      data: fakedata,
     });
   };
 
@@ -118,6 +64,7 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
         this.props.navigator.push({
           screen: 'EventsTabScreen',
           title: item.name,
+          navigatorStyle: {tabBarHidden: true} ,
           passProps: {
             selectedItem: item.item
           }
@@ -125,13 +72,13 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
       }}>
         <View>
           <Image style={styles.image} source={{ uri: item.img }} />
-          <Text style={{ color: 'white' , margin: 20}}>{item.name}</Text>
+          <Text style={{ color: 'white', margin: 20 }}>{item.name}</Text>
         </View>
       </TouchableWithoutFeedback>
     )
   }
 
-  render() { 
+  render() {
 
     return (
       <View style={styles.container}>
@@ -161,11 +108,14 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
             </TouchableWithoutFeedback>
             : null}
 
-            <TouchableOpacity onPress={() => this.deleteData()}>
-              <View>
-                <Text style={styles.cancelButtonText} >Cancel</Text>
-              </View>
-            </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.deleteData()}>
+            {/* <TouchableOpacity onPress={() => this.props.navigator.switchToTab({
+            tabIndex: 1
+          })}> */}
+            <View>
+              <Text style={styles.cancelButtonText} >Cancel</Text>
+            </View>
+          </TouchableOpacity>
         </View>
         <ScrollView>
           <FlatList

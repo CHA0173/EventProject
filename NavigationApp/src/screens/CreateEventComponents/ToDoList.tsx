@@ -3,12 +3,14 @@ import {
     Text,
     View,
     TouchableOpacity,
+    Switch
 } from 'react-native';
+import { FormLabel, FormInput } from 'react-native-elements'
+
 
 interface IViewEventProps {
-    name: string
+    name: string,
 }
-
 
 export default class ViewEvent extends React.Component<{}, {}> {
     constructor(props: {}) {
@@ -17,9 +19,7 @@ export default class ViewEvent extends React.Component<{}, {}> {
     render() {
         return (
             <View>
-                <Text>
-
-                </Text>
+                
             </View>
         )
     }
