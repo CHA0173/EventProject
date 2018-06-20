@@ -14,7 +14,6 @@ export default class SearchService {
         console.log("name", name)
             return this.knex("events")
                 .select("events.id as events_id", "events.name", "events.photo", "events.datetime")
-                .from("events")
                 .where("name", "ilike",  `%${name}%`)
                 .andWhere("events.isactive", true)
                 .then(eventArray => {
