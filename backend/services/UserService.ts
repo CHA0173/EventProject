@@ -25,7 +25,7 @@ export default class UserService {
                 eventArray.map((data: any) => { data.events_id, data.events_name, data.datetime, data.photo })
                 console.log(eventArray)
                 return this.knex("items")
-            .select("items.name as items_name", "items.id as items_id", "items.quantity", "items.completed"/*, "events.id as events_id", "events.name as events_name"*/)
+                    .select("items.name as items_name", "items.id as items_id", "items.quantity", "items.completed", "events.id as events_id", "events.name as events_name")
                     .join("todo", "todo.id", "items.todo_id")
                     .join("events", "events.id", "todo.events_id")
                     .where("items.users_id", userid)

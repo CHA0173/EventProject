@@ -30,7 +30,14 @@ exports.seed = (knex: Knex) => {
               name: "Mary",
               password: "asdf",
               isactive: true,
-            }]);
+            },
+            {
+              email: "sample@sample.com",
+              name: "sample",
+              password: "asdf",
+              isactive: false,
+            }
+          ]);
           })
           .then(() => {
             return knex("events").del()
@@ -51,54 +58,95 @@ exports.seed = (knex: Knex) => {
                   name: "Mary's Wedding",
                   private: true,
                   isactive: true
+                },
+                {
+                  name: "boat party basic template",
+                  description: "basic template",
+                  datetime: "2017-01-01 00:00:00",
+                  address: "none",
+                  private: true,
+                  isactive: false
+                },
+                {
+                  name: "boat party deluxe template",
+                  description: "deluxe template",
+                  datetime: "2017-01-01 00:00:00",
+                  address: "none",
+                  private: true,
+                  isactive: false
+                },
+                {
+                  name: "boat party supreme template",
+                  description: "supreme template",
+                  datetime: "2017-01-01 00:00:00",
+                  address: "none",
+                  private: true,
+                  isactive: false
                 }])
               })
           })
       })
         .then(() => {
           let todolist = fs.readJsonSync(path.join(__dirname, "todolist.json"));
-          return knex("todo").del()
-            .then(() => {
               let result: any[] = [];
               todolist.forEach((item: any) => {
                 let event = item.event
                 result.push(createList(knex, item, event))
               })
               return Promise.all(result);
-            })
+    
         })
         .then(() => {
           let itemList = fs.readJsonSync(path.join(__dirname, "todolistitems.json"));
-          return knex("items").del()
-            .then(() => {
               let result: any[] = [];
               itemList.forEach((item: any) => {
+                let eventPackage = item.package
                 let eventType = item.type
                 let user = item.user
 
-                result.push(createItem(knex, item, user, eventType))
+                result.push(createItem(knex, item, user, eventType, eventPackage))
               });
               return Promise.all(result);
-            })
-        })
-        .then(() => {
-          return knex("events_users").insert([{
-            users_id: 1,
-            isactive: true,
-            events_id: 1,
-            creator: true
-          },
-          {
-            users_id: 2,
-            isactive: true,
-            events_id: 2,
-            creator: true
-          }])
 
         })
+        .then(()=> {
+          let attendeeList = fs.readJsonSync(path.join(__dirname, "usersevents.json"));
+          let result:any[] = [];   
+          attendeeList.forEach((item:any) => {
+            let event = item.event
+            let user = item.user
+            result.push(createEvent(knex, item, user, event))
+          })
+
+            return Promise.all(result);
+        })
+
     })
   })
 };
+
+
+const createEvent = (knex: any, item: any, user:any, event: any) => {
+  console.log("event", event);
+  return knex("events")
+    .select("events.id")
+    .where("name", event)
+    .first()
+    .then((eventId:any) => {
+      return knex("users")
+      .select("users.id")
+      .where("name", user)
+      .first()
+      .then((userId: any) => {
+        return knex("events_users").insert({
+          users_id: userId.id,
+          events_id: eventId.id,
+          isactive: item.isactive,
+        })
+      })
+    })
+ 
+}
 
 const createList = (knex: any, item: any, event: any) => {
   console.log("event", event);
@@ -108,6 +156,7 @@ const createList = (knex: any, item: any, event: any) => {
     .then((eventRecord: any) => {
       return knex("todo").insert({
         type: item.type,
+        package: item.package,
         template: item.template,
         isactive: item.isactive,
         events_id: eventRecord.id
@@ -118,7 +167,7 @@ const createList = (knex: any, item: any, event: any) => {
 
 
 
-const createItem = (knex: any, item: any, user: any, eventType: any) => {
+const createItem = (knex: any, item: any, user: any, eventType: any, eventPackage:any) => {
   console.log("eventType", eventType);
 
   return knex("users")
@@ -127,12 +176,18 @@ const createItem = (knex: any, item: any, user: any, eventType: any) => {
     .then((user: any) => {
       return knex("todo")
         .where("type", eventType)
-        .first()
+        .modify((queryBuilder:any)=> {
+          if(eventPackage) {
+            queryBuilder.where("package", "like", `%${eventPackage}%`)
+          }
+        })
+         .first()
         .then((todo: any) => {
           console.log("todo", todo)
           return knex("items").insert({
             name: item.name,
             quantity: item.quantity,
+            package: item.package,
             isactive: item.isactive,
             users_id: user.id,
             todo_id: todo.id

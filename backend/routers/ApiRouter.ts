@@ -1,4 +1,5 @@
 import * as express from 'express';
+import * as Knex from "knex";
 import AuthRouter   from './AuthRouter';
 import UserRouter   from './UserRouter';
 import UserService  from '../services/UserService';
@@ -33,12 +34,14 @@ export default class ApiRouter {
     private authRouter: AuthRouter;
     private eventRouter: EventRouter; 
     private eventService: EventService;
+    public knex:Knex;
 
 
 
     
-    constructor(jwtAuth:any, userService: UserService, searchService: SearchService, upcomingService: UpcomingService, createService: CreateService, eventService: EventService) {
+    constructor(jwtAuth:any, userService: UserService, searchService: SearchService, upcomingService: UpcomingService, createService: CreateService, eventService: EventService, knex:Knex) {
         this.jwtAuth = jwtAuth;
+        this.knex = knex;
         this.createRouter = this.createRouter
         this.createService = createService
         this.searchService = searchService
@@ -64,6 +67,7 @@ export default class ApiRouter {
         const eventRouter = new EventRouter(this.eventService)
 
 
+
         router.use("/auth", authRouter.getRouter());//returns with jwt token
         router.use("/myprofile", this.jwtAuth.authenticate(), userRouter.getRouter());//grabs user's profile
         router.use("/search", this.jwtAuth.authenticate(), searchRouter.getRouter());//grabs search results
@@ -71,5 +75,6 @@ export default class ApiRouter {
         router.use("/create", this.jwtAuth.authenticate(), createRouter.getRouter());//grabs user's events
         router.use("/event", this.jwtAuth.authenticate(), eventRouter.router());
         return router;
+
     }
 }
