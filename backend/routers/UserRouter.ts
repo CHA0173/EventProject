@@ -20,9 +20,9 @@ export default class UserRouter {
         return router;//passes data back to front
     }
 
-    get(req: any, res: any) {//checks if user's access token matches with the one in 
+    get(req: express.Request, res: express.Response) {//checks if user's access token matches with the one in 
 
-        return this.userService.getProfile(1)//responds with user's data
+        return this.userService.getProfile(req.query.userid)//responds with user's data
             .then((data: any) => {//passes data back to getRouter
                 res.json(data)
             })

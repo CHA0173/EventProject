@@ -8,7 +8,7 @@ import SearchService  from '../services/SearchService';
 import UpcomingRouter   from './UpcomingRouter';
 import UpcomingService  from '../services/UpcomingService';
 import CreateRouter from './CreateRouter';
-import CreateService from '../services/CreateService';
+import TemplateService from '../services/TemplateService';
 import EventService from '../services/eventService';
 import EventRouter from './eventRouter';
 
@@ -24,7 +24,7 @@ export default class ApiRouter {
     // private jwtAuth:any
     private eventService: EventService;
     private eventRouter: EventRouter;
-    private createService: CreateService;
+    private templateService: TemplateService;
     private createRouter: CreateRouter;
     private userService: UserService;
     private upcomingService: UpcomingService;
@@ -36,12 +36,12 @@ export default class ApiRouter {
     public knex: Knex;
 
     
-    constructor(/*jwtAuth:any,*/ userService: UserService, searchService: SearchService, upcomingService: UpcomingService, createService: CreateService, eventService: EventService, knex: Knex) {
+    constructor(/*jwtAuth:any,*/ userService: UserService, searchService: SearchService, upcomingService: UpcomingService, templateService: TemplateService, eventService: EventService, knex: Knex) {
         // this.jwtAuth = jwtAuth;
         this.eventRouter = this.eventRouter
         this.eventService = eventService
         this.createRouter = this.createRouter
-        this.createService = createService
+        this.templateService = templateService
         this.searchService = searchService
         this.upcomingService = upcomingService
         this.searchService = searchService
@@ -61,7 +61,7 @@ export default class ApiRouter {
         const userRouter = new UserRouter(this.userService);
         const searchRouter = new SearchRouter(this.searchService)
         const upcomingRouter = new UpcomingRouter(this.upcomingService)
-        const createRouter = new CreateRouter(this.createService)
+        const createRouter = new CreateRouter(this.templateService)
 
 
 

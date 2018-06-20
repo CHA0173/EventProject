@@ -15,7 +15,7 @@ export default class SearchRouter {
     }
 
     get(req: express.Request,res: express.Response) {
-        return this.searchService.result(req.query.name)
+        return this.searchService.result(req.query.name, res)
             .then((data) => {
                 res.json(data)
             })

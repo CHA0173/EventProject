@@ -11,7 +11,7 @@ import ApiRouter        from './routers/ApiRouter';
 import UserService      from './services/UserService';
 import SearchService    from './services/SearchService';
 import UpcomingService  from './services/UpcomingService';
-import CreateService     from './services/CreateService';
+import TemplateService     from './services/TemplateService';
 import EventService from './services/eventService';
 
 
@@ -20,12 +20,12 @@ const knex = Knex(Knexfile[config.env]);
 const app = express();
 
 const eventService = new EventService(knex)
-const createService = new CreateService(knex);
+const templateService = new TemplateService(knex);
 const userService = new UserService(knex);
 const upcomingService = new UpcomingService(knex);
 const searchService = new SearchService(knex);
 const jwtAuth = jwtStrategy(userService);
-const apiRouter = new ApiRouter(/*jwtAuth,*/ userService, searchService, upcomingService, createService, eventService, knex);
+const apiRouter = new ApiRouter(/*jwtAuth,*/ userService, searchService, upcomingService, templateService, eventService, knex);
 
 app.set("utils", path.join(__dirname, "utils"));
 app.set("routers", path.join(__dirname, "routers"));

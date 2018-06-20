@@ -16,7 +16,7 @@ export default class UserRouter {
 
     get(req: express.Request, res: express.Response) {//checks if user's access token matches with the one in 
     // req.query.user
-        return this.upcomingService.myEvents(2)//cannot read property myEvents of undefined
+        return this.upcomingService.myEvents(req.query.userid)//cannot read property myEvents of undefined
             .then((data) => {//passes data back to getRouter
                 res.json(data)
             })
