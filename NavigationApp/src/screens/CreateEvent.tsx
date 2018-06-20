@@ -53,9 +53,10 @@ export default class CreateEvent extends React.Component<{}, ICreateEventState> 
                 return <Description nextStep={this.nextStep.bind(this)} />
             case 2:
                 return <SelectTemplate nextStep={this.nextStep.bind(this)}
-                                        prevStep={this.prevStep.bind(this)}/>
+                    prevStep={this.prevStep.bind(this)} />
             case 3:
-                return <ToDoList />
+                return <ToDoList nextStep={this.nextStep.bind(this)}
+                    prevStep={this.prevStep.bind(this)} />
 
             case 4:
                 return <Confirmation />
