@@ -12,8 +12,8 @@ export default class UserService {
         console.log("userid", userid)
         // console.log( this.knex("items")
         // .select("items.name as item_name, items.id as item_id, items.quantity, items.completed, events.name as event_name, events.id as event_id")
-        // .join("toDo", "toDo.id", "items.toDo_id")
-        // .join("events", "events.id", "toDo.events_id")
+        // .join("todo", "todo.id", "items.todo_id")
+        // .join("events", "events.id", "todo.events_id")
         // .where("items.users_id", userid).toSQL())
         return this.knex("events")//select all users events
             .select("events.id as events_id", "events.name as events_name", "events.datetime", "events.photo")
@@ -23,16 +23,16 @@ export default class UserService {
             .andWhere("events.isactive", true)
             .then(eventArray => {
                 eventArray.map((data: any) => { data.events_id, data.events_name, data.datetime, data.photo })
-
+                console.log(eventArray)
                 return this.knex("items")
-                    .select("items.name as items_name", "items.id as items_id", "items.quantity", "items.completed", "events.id as events_id", "events.name as events_name")
-                    .join("toDo", "toDo.id", "items.toDo_id")
-                    .join("events", "events.id", "toDo.events_id")
+            .select("items.name as items_name", "items.id as items_id", "items.quantity", "items.completed"/*, "events.id as events_id", "events.name as events_name"*/)
+                    .join("todo", "todo.id", "items.todo_id")
+                    .join("events", "events.id", "todo.events_id")
                     .where("items.users_id", userid)
                     .andWhere("items.isactive", true)
                     .then(itemArray => {
                         itemArray.map((data: any) => { data.items_name, data.items_id, data.quantity, data.completed, data.events_id, data.events_name });
-                        console.log("itemArray Before", itemArray)
+                        // console.log("itemArray Before", itemArray)
                         return this.knex("users")
                             .select("users.id as users_id", "users.name as users_name", "users.photo")
                             .where("users.id", userid)
@@ -46,7 +46,6 @@ export default class UserService {
                                     itemArray,
                                     eventArray
                                 }
-                                console.log(result)
                                 return result
                             })
                     })
@@ -57,11 +56,14 @@ export default class UserService {
     
 
     findByEmail(email: string, password: string) {
-        return this.knex('users')
-            .select('id')
-            .first()
-            .where("email", email)
-            .andWhere("password", password)
+      // console.log("email", email)
+      // console.log("password", password)
+      return this.knex('users')
+      .select('id','email','password')
+      .first()
+      .where("email", email)
+      .andWhere("password", password)
+      
     }
 }
 

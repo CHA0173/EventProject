@@ -1,7 +1,7 @@
 import * as Knex from "knex";
 
 exports.up = (knex: Knex) => {
-    return knex.schema.createTable('users', (users) => {
+    return knex.schema.createTable("users", (users) => {
         users.increments();
         users.string("email").notNullable().unique();
         users.string("name").notNullable().unique();
@@ -16,26 +16,19 @@ exports.up = (knex: Knex) => {
             events.string("description").notNullable();
             events.string("photo");
             events.timestamp("datetime").notNullable();
-            events.string('address').notNullable();
-            events.specificType('location', 'POINT');
+            events.string("address").notNullable();
+            events.specificType("location", "POINT");
             events.boolean("private");
             events.decimal("deposit");
             events.boolean("isactive");
         })
     }).then(() => {
 
-        return knex.schema.createTable("categories", (categories) => {
-            categories.increments();
-            categories.string("category");
-            categories.boolean("isactive");
-        })
-    }).then(() => {
-
-        return knex.schema.createTable("toDo", (todo) => {
+        return knex.schema.createTable("todo", (todo) => {
             todo.increments();
             todo.integer("events_id").unsigned();
             todo.foreign("events_id").references("events.id");
-            todo.string('type');
+            todo.string("type");
             todo.timestamps(false, true);
             todo.boolean("template");
             todo.boolean("isactive");
@@ -47,12 +40,10 @@ exports.up = (knex: Knex) => {
             items.string("name").notNullable();
             items.integer("quantity");
             items.boolean("completed");
-            items.integer("categories_id").unsigned();
-            items.foreign("categories_id");
             items.integer("users_id").unsigned();
             items.foreign("users_id").references("users.id");
-            items.integer("toDo_id").unsigned();
-            items.foreign("toDo_id").references("toDo.id");
+            items.integer("todo_id").unsigned();
+            items.foreign("todo_id").references("todo.id");
             items.boolean("isactive");
 
         })
@@ -65,18 +56,27 @@ exports.up = (knex: Knex) => {
             eventsUsers.foreign("events_id").references("events.id");
             eventsUsers.boolean("creator");
             eventsUsers.boolean("isactive");
-            eventsUsers.json("discussion"); /* ^^^^^^^JSON DISCUSSION OBJECT^^^^^^^^^ */
+        })
+    }).then(() => {
+        return knex.schema.createTable("discussion", (discussion) => {
+            discussion.increments();
+            discussion.integer("users_id").unsigned();
+            discussion.foreign("users_id").references("users.id");
+            discussion.integer("events_id").unsigned();
+            discussion.foreign("events_id").references("events.id");
+            discussion.boolean("isactive");
+            discussion.string("comment");
         })
     })
 }
 
 exports.down = (knex: Knex) => {
-    return knex.schema.dropTable('events_users')
-        .then(() => knex.schema.dropTable('items'))
-        .then(() => knex.schema.dropTable('toDo'))
-        .then(() => knex.schema.dropTable('categories'))
-        .then(() => knex.schema.dropTable('events'))
-        .then(() => knex.schema.dropTable('users'));
+    return knex.schema.dropTable("discussion")
+        .then(() => knex.schema.dropTable("events_users"))
+        .then(() => knex.schema.dropTable("items"))
+        .then(() => knex.schema.dropTable("todo"))
+        .then(() => knex.schema.dropTable("events"))
+        .then(() => knex.schema.dropTable("users"));
 
 }
 
@@ -84,16 +84,16 @@ exports.down = (knex: Knex) => {
 // ^^^^^^^^JSON DISCUSSION OBJECT CREATION^^^^^^^^^^
 // class JsonArrayTest extends Model {
 //     static get tableName() {
-//         return 'capstone'
+//         return "capstone"
 //     }
 
 //     static get jsonSchema() {
 //         return {
-//             type: 'object',
+//             type: "object",
 //             properties: {
 //                 discussion: {
-//                     user: 'user',
-//                     comment: 'comment'
+//                     user: "user",
+//                     comment: "comment"
 //                 }
 //             }
 //         }

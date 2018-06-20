@@ -1,6 +1,7 @@
 import * as Knex from "knex";
 // import * as multer from 'multer';
 
+
 export default class EventService {
   private knex: Knex;
 
@@ -10,22 +11,23 @@ export default class EventService {
 
 
   list(userid: number) {
+    console.log("list start")
     return this.knex("events")
       .select(
         "events.id as events_id",
         "events.name as events_name",
-        "events.description",
-        "events.datetime",
-        "events.photo",
-        "events.address",
-        "events.private",
-        "events.deposit",
+        "events.description as events_description",
+        "events.datetime as events_datetime",
+        "events.photo as events_photo",
+        "events.address as events_address",
+        "events.private as events_private",
+        "events.deposit as events_deposit",
         "todo.id as todo_id",
         "todo.type as todo_type"
       )
       // .join("events_users", "events.id", "events_user.events_id")
       .join("todo", "todo.events_id", "events.id")
-      // .join("items", "items.todo_id", "todo.id")
+      .join("items", "items.todo_id", "todo.id")
       .where("events.id", 2)
       .andWhere("events.isactive", true)
       .then(eventArray => {
@@ -33,8 +35,8 @@ export default class EventService {
         //   data.description, data.datetime, data.photo, data.address, data.private,
         // data.deposit, data.todo_id, data.todo_type })
 
-        console.log("eventArray",eventArray)
-        console.log("eventArray todoid", eventArray[0].todo_id)
+        // console.log("eventArray",eventArray)
+        // console.log("eventArray todoid", eventArray[0].todo_id)
         return this.knex("items")
           .select(
             "items.id as items_id",
@@ -58,13 +60,13 @@ export default class EventService {
                   })
                 }
                 console.log("arrayItemObject", arrayItemObject)
-
+                return { eventArray: eventArray, arrayItemObject: arrayItemObject};
           })
       })
 
   }
 
-  // list(id: number) {
+  // list(id: number) 
   //   return (
   //     this.knex("events")
 
@@ -78,12 +80,12 @@ export default class EventService {
   //         "events.location as events_location",
   //         "events.private as events_private",
   //         "events.deposit as events_deposit",
-  //         "toDo.id as toDo_id",
-  //         "toDo.type as toDo_type",
-  //         // "toDo.template",
-  //         // "toDo.events_id",
+  //         "todo.id as todo_id",
+  //         "todo.type as todo_type",
+  //         // "todo.template",
+  //         // "todo.events_id",
   //       )
-  //       .join("toDo", "toDo.events_id", "events.id")
+  //       .join("todo", "todo.events_id", "events.id")
   //       .where("events.id", 2)
   //       .andWhere("events.isactive",true)
   //       .then(eventArray=> {
@@ -99,7 +101,7 @@ export default class EventService {
   //           "items.users_id as items_users_id",
   //         )
   //         .join("todo", "todo.id", "items.todo_id")
-  //         .where("items.toDo_id",eventArray[0].toDo_id)
+  //         .where("items.todo_id",eventArray[0].todo_id)
   //         .andWhere("items.isactive",true)
   //         .then((itemArray:any) => {
   //           console.log("itemArray",itemArray)
@@ -123,13 +125,18 @@ export default class EventService {
   //   );
   // }
 
-  update(id: number, group: string) {
-    if (id != undefined) {
-    }
-    return this.knex("events")
-      .update(group)
-      .where("events.id", id);
-  }
+  update(id: number, group: string) {  
+    // return this.knex("events")
+    //   .update(
+    //   //   .select(
+    //   //     "events.description",
+    //   //     "events.photo"
+    //   // )
+    //   )
+    //   .where("events.id", id)
+    //   .
+  
+}
 
   diactive() {
     return this.knex("events").update("isactive", "false");

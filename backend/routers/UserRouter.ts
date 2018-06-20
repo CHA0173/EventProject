@@ -1,4 +1,4 @@
-import * as express from 'express'
+import * as express from 'express';
 import UserService from '../services/UserService';
 
 /**
@@ -21,8 +21,8 @@ export default class UserRouter {
     }
 
     get(req: any, res: any) {//checks if user's access token matches with the one in 
-
-        return this.userService.getProfile(1)//responds with user's data
+    console.log("req",req)
+        return this.userService.getProfile(req.user.id)//responds with user's data
             .then((data: any) => {//passes data back to getRouter
                 res.json(data)
             })

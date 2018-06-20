@@ -9,22 +9,18 @@ import {
   View,
   TouchableOpacity,
   FlatList,
+  TouchableWithoutFeedback,
 
 } from 'react-native';
 
-const { width, height } = Dimensions.get('window')
-import { Navigator, NavigatorButton } from 'react-native-navigation';
+const { width, height } = Dimensions.get('window');
+import { Navigator } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
-// import { Events } from './fakeData';
+import { fakedata } from './fakeData';
 
-   
+
 interface ISearchProps {
   navigator: Navigator;
-  Events: [{
-    id: number,
-    name: string,
-    img: string,
-  }]
 };
 
 interface ISearchState {
@@ -38,21 +34,12 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
 
     this.state = {
       text: '',
-      data: '',
+      data: fakedata,
     }
   }
 
   public filter(text) {
-    const data = [{
-      id:1, 
-      name: 'EVENT 1', 
-      img: 'https://dummyimage.com/600x400/000000/fff.png&text=fake+img'
-    }, {
-      id: 2,
-      name: 'EVENT 2',
-      img: 'https://dummyimage.com/600x400/000000/fff.png&text=fake+img'
-    }]
-    const newData = data.filter((item) => {
+    const newData = fakedata.filter(function (item) {
       const itemData = item.name.toUpperCase()
       const textData = text.toUpperCase()
       return itemData.indexOf(textData) > -1
@@ -67,28 +54,32 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
   public deleteData() {
     this.setState({
       text: '',
-      data: '',
+      data: fakedata,
     });
   };
 
   public renderItem(item) {
     return (
-      <TouchableOpacity onPress={() => this.props.navigator.push({
-        screen: 'Events',
-        title: item.item.name,
-        passProps: {
-          selectedItem: item.item
-        }
-      })
-      }>
-        <Image style={{ width: 120, height: 180 }} source={{ uri: item.image }} />
-      </TouchableOpacity>
+      <TouchableWithoutFeedback onPress={() => {
+        this.props.navigator.push({
+          screen: 'EventsTabScreen',
+          title: item.name,
+          navigatorStyle: {tabBarHidden: true} ,
+          passProps: {
+            selectedItem: item.item
+          }
+        })
+      }}>
+        <View>
+          <Image style={styles.image} source={{ uri: item.img }} />
+          <Text style={{ color: 'white', margin: 20 }}>{item.name}</Text>
+        </View>
+      </TouchableWithoutFeedback>
     )
   }
 
   render() {
-    // TODO: go back
-    // const back = this.props.navigatorButton
+
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -104,32 +95,33 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
             style={styles.input}
             placeholder='Search'
             keyboardAppearance='dark'
-            autoFocus={true}
+            autoFocus={false}
           />
           {this.state.text ?
-            <TouchableOpacity onPress={() => this.deleteData()}>
+            <TouchableWithoutFeedback onPress={() => this.deleteData()}>
               <Icon
                 name='times-circle'
                 color='grey'
                 size={18}
                 style={styles.iconInputClose}
               />
-            </TouchableOpacity> : null}
-          {//TODO: back buttom || can use pop to go back screen='' 
-          }
-          <TouchableOpacity >
+            </TouchableWithoutFeedback>
+            : null}
+
+          <TouchableOpacity onPress={() => this.deleteData()}>
+            {/* <TouchableOpacity onPress={() => this.props.navigator.switchToTab({
+            tabIndex: 1
+          })}> */}
             <View>
-              <Text style={styles.cancelButtonText}>Cancel</Text>
+              <Text style={styles.cancelButtonText} >Cancel</Text>
             </View>
           </TouchableOpacity>
         </View>
         <ScrollView>
           <FlatList
-            style={{ marginHorizontal: 5 }}
+            style={styles.flatstyle}
             data={this.state.data}
-            numColumns={3}
-            columnWrapperStyle={{ marginTop: 5, marginLeft: 5 }}
-            renderItem={(item) => this.renderItem(item)}
+            renderItem={({ item }) => this.renderItem(item)}
           />
         </ScrollView>
       </View>
@@ -169,7 +161,7 @@ const styles = StyleSheet.create({
   },
   input: {
     width: width - (width / 4),
-    height: 30,
+    height: 40,
     backgroundColor: '#323232',
     marginHorizontal: 10,
     paddingLeft: 30,
@@ -181,7 +173,10 @@ const styles = StyleSheet.create({
   },
   image: {
     marginRight: 5,
-    width: 115,
+    width: width,
     height: 170
   },
+  flatstyle: {
+    marginHorizontal: 10,
+  }
 });

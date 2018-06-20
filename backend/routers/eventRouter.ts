@@ -12,12 +12,12 @@ export default class EventRouter{
   router(){
     let router = express.Router();
     router.get("/",this.getEvent.bind(this));
-    router.put("/",this.putEvent.bind(this));
+    // router.put("/",this.putEvent.bind(this));
     return router;
   }
 
-  getEvent(req: express.Request,res:express.Response){
-    return this.eventService.list(req.query.userid)
+  getEvent(req: any,res:any){
+    return this.eventService.list(req.user.id)
     .then((data) => {
       console.log("res",data)
       res.json(data)
@@ -27,13 +27,13 @@ export default class EventRouter{
     })
   }
 
-  putEvent(req:express.Request,res:express.Response){
-    return this.eventService.update(req.query.id,req.body)
-    .then((data) => {
-      res.json(data)
-    })
-    .catch((err:express.Errback) => {
-      res.status(500).json(err)
-    })
-  }
+  // putEvent(req:express.Request,res:express.Response){
+  //   return this.eventService.update(req.query.id,req.body)
+  //   .then((data) => {
+  //     res.json(data)
+  //   })
+  //   .catch((err:express.Errback) => {
+  //     res.status(500).json(err)
+  //   })
+  // }
 }
