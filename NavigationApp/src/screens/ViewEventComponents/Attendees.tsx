@@ -4,8 +4,8 @@ import {
     Text,
     FlatList,
     ScrollView,
-    Image,
-    TouchableOpacity
+    TouchableOpacity,
+    Image
 } from 'react-native'
 
 const AttendeesList = [{
