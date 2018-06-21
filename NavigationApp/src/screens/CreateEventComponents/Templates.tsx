@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import { Card, ListItem, List } from 'react-native-elements'
 
-import { junkBoat, birthdayParty } from '../fakeData'
+import { junkBoat, birthdayParty } from '../CreateEventComponents/ToDoTemplates'
 
 import { PagerTabIndicator, IndicatorViewPager, PagerTitleIndicator, PagerDotIndicator } from 'rn-viewpager';
 import { ScrollView } from 'react-native';
@@ -35,17 +35,17 @@ export default class Templates extends React.Component<ITemplatesProps, {}> {
     renderTemplate() {
         return (
             <IndicatorViewPager
-                style={{ height: 300 }}
+                style={{ height: 300, width: 300 }}
                 indicator={this._renderDotIndicator()}
             >
                 <View style={{ backgroundColor: 'cadetblue' }}>
                     <Card title="Basic">
                         {
-                            this.renderType().templateA.map((item, i) => {
+                            this.renderType()[0].itemlist.map((item, i) => {
                                 return (
                                     <ListItem
                                         key={i}
-                                        title={item.name}
+                                        title={item}
                                         hideChevron={true}
                                     />
                                 );
@@ -56,22 +56,17 @@ export default class Templates extends React.Component<ITemplatesProps, {}> {
                 <View style={{ backgroundColor: 'cornflowerblue' }}>
                     <Card title="Supreme">
                         {
-                            this.renderType().templateB.map((item, i) => {
+                            this.renderType()[1].itemlist.map((item, i) => {
                                 return (
                                     <ListItem
                                         key={i}
-                                        title={item.name}
+                                        title={item}
                                         hideChevron={true}
                                     />
                                 );
                             })
                         }
                     </Card>
-                </View>
-                <View>
-                    <Text>
-                        You choose la 
-                    </Text>
                 </View>
             </IndicatorViewPager>
         )
