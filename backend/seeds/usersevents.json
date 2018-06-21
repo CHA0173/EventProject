@@ -5,8 +5,45 @@
     "isactive": true
 },
 {
+    "event": "Alex's birthday boat",
+    "user": "Peter",
+    "creator": false,
+    "isactive": true
+},
+{
+    "event": "Alex's birthday boat",
+    "user": "Paul",
+    "creator": false,
+    "isactive": true
+},
+{
+    "event": "Alex's birthday boat",
+    "user": "Mary",
+    "creator": false,
+    "isactive": true
+},
+{
     "event": "Mary's Wedding",
     "user": "Mary",
     "creator": true,
     "isactive": true
-}]
+},
+{
+    "event": "Mary's Wedding",
+    "user": "Alex",
+    "creator": false,
+    "isactive": true
+},
+{
+    "event": "Mary's Wedding",
+    "user": "Peter",
+    "creator": false,
+    "isactive": true
+},
+{
+    "event": "Mary's Wedding",
+    "user": "Paul",
+    "creator": false,
+    "isactive": true
+}
+]
