@@ -157,12 +157,13 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
     );
   }
 
-  public renderTodoItem(item) {
+  public renderTodoItem(item) { //FIXME: need to send back the data(uri/ base64) to backend  
     return (
       <View style={{ borderColor: 'gray', borderWidth: 1, margin: 10 }}>
         <TouchableOpacity onPress={() => {
           this.props.navigator.push({
-            screen: 'EventsTabScreen',
+            screen: 'ViewEventScreen',
+            title: item.eventname,
             navigatorStyle: { tabBarHidden: true },
             passProps: {
               selectedItem: item.item
@@ -197,7 +198,8 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
     return (
       <TouchableOpacity onPress={() => {
         this.props.navigator.push({
-          screen: 'EventsTabScreen',
+          screen: 'ViewEventScreen',
+          title: item.name,
           navigatorStyle: { tabBarHidden: true },
           passProps: {
             selectedItem: item.item

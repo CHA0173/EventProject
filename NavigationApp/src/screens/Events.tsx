@@ -64,7 +64,8 @@ export default class Events extends React.Component<IEventsProps, IEventsStates>
         <View>
           <TouchableOpacity onPress={() => this.props.navigator.push({
             screen: 'ViewEventScreen',
-            navigatorStyle: { tabBarHidden: true, navBarHidden: true }
+            title: event.name,
+            navigatorStyle: { tabBarHidden: true }
           })}>
             <Card
               title={event.name}

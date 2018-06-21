@@ -75,7 +75,7 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
     return (
       <TouchableWithoutFeedback onPress={() => {
         this.props.navigator.push({
-          screen: 'EventsTabScreen',
+          screen: 'ViewEventScreen',
           title: item.name,
           navigatorStyle: {tabBarHidden: true} ,
           passProps: {
