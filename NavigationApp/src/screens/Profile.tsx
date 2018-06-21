@@ -138,10 +138,17 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
 
     ImagePicker.showImagePicker(options, (response) => {
 
-      const source = { uri: response.uri };
+      // const source = { uri: response.uri };
 
+      
       // You can also display the image using data:
-      // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+      const source = { uri: 'data:image/jpeg;base64,' + response.data };
+      // const header = {
+      //   method: 'post',
+      //   headers: {
+      //     'Accept': 'application/json'
+      //   }
+      // }
 
       this.setState({
         avatarSource: source

@@ -110,6 +110,7 @@ export default class CreateEvent extends React.Component<ICreateEventProps, ICre
                 })
                 return <SelectTemplate nextStep={this.nextStep.bind(this)}
                     prevStep={this.prevStep.bind(this)} />
+<<<<<<< HEAD
 
             case 3:
                 this.props.navigator.setTitle({
@@ -128,6 +129,11 @@ export default class CreateEvent extends React.Component<ICreateEventProps, ICre
                     ]
                 })
                 return <ToDoList />
+=======
+            case 3:
+                return <ToDoList nextStep={this.nextStep.bind(this)}
+                    prevStep={this.prevStep.bind(this)} />
+>>>>>>> 4a828a63e91728ee69cd98c15e62f4d27c005f05
 
             case 4:
                 this.props.navigator.setTitle({
@@ -151,11 +157,17 @@ export default class CreateEvent extends React.Component<ICreateEventProps, ICre
 
     render() {
         return (
+<<<<<<< HEAD
             <Provider store={store}>
                 <ScrollView>
                     {this.renderComponent(this.state.step)}
                 </ScrollView>
             </Provider>
+=======
+            <ScrollView>
+                {this.renderComponent(this.state.step)}
+            </ScrollView>
+>>>>>>> 4a828a63e91728ee69cd98c15e62f4d27c005f05
         )
     }
 }
