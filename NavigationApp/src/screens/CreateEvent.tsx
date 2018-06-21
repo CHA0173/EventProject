@@ -66,11 +66,6 @@ export default class CreateEvent extends React.Component<{}, ICreateEventState> 
     render() {
         return (
             <ScrollView>
-                <StepIndicator
-                    currentPosition={this.state.step - 1}
-                    labels={labels}
-                    stepCount={4}
-                />
                 {this.renderComponent(this.state.step)}
             </ScrollView>
         )
