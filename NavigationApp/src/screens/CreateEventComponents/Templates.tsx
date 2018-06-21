@@ -69,15 +69,12 @@ export default class Templates extends React.Component<ITemplatesProps, {}> {
                         }
                     </Card>
                 </View>
-<<<<<<< HEAD
-=======
                 <View>
                     <Text>
                         You choose la
                         Create a new list
                     </Text>
                 </View>
->>>>>>> 4a828a63e91728ee69cd98c15e62f4d27c005f05
             </IndicatorViewPager>
         )
     }
