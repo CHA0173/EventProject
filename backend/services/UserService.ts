@@ -1,74 +1,76 @@
 import * as Knex from 'knex';
+import { default as joinjs } from 'join-js';
 
 export default class UserService {
-    private knex: Knex;
-
-    constructor(knex: Knex) {
-        this.knex = knex
-    }
-
-    getProfile(userid: number) {
-
-        console.log("userid", userid)
-     
-        return this.knex("events")//select all users events
-            .select("events.id as events_id", "events.name as events_name", "events.datetime", "events.photo")
-            .join("events_users", "events_users.events_id", "events.id")
-            .join("users", "events_users.users_id", "users.id")
-            .where("users.id", userid)
-            .andWhere("events.isactive", true)
-            .then(eventArray => {
-                eventArray.map((data: any) => { data.events_id, data.events_name, data.datetime, data.photo })
-
-                return this.knex("items")
-                    .select("items.name as items_name", "items.id as items_id", "items.quantity", "items.completed", "events.id as events_id", "events.name as events_name")
-                    .join("todo", "todo.id", "items.todo_id")
-                    .join("events", "events.id", "todo.events_id")
-                    .where("items.users_id", userid)
-                    .andWhere("items.isactive", true)
-                    .then(itemArray => {
-                        itemArray.map((data: any) => { data.items_name, data.items_id, data.quantity, data.completed, data.events_id, data.events_name });
-                        console.log("itemArray Before", itemArray)
-                        return this.knex("users")
-                            .select("users.id as users_id", "users.name as users_name", "users.photo")
-                            .where("users.id", userid)
-                            .andWhere("users.isactive", true)
-                            .then((usersArray: any) => {
-                                // console.log("usersArray", usersArray)
-                                let result: any = {
-                                    user_id: usersArray[0].users_id,
-                                    user_name: usersArray[0].users_name,
-                                    user_photo: usersArray[0].photo,
-                                    itemArray,
-                                    eventArray
-                                }
-                                console.log(result)
-                                return result
-                            })
-                    })
-            })
-    }
-
-
     
-
-    findByEmail(email: string, password: string) {
+    private resultMaps: Array<Object>;
+    
+    constructor(private knex: Knex) {
+        this.knex = knex;
+        this.resultMaps = [
+            {
+                mapId: 'userEventsMap',
+                idProperty: 'id',
+                properties: ['name', 'photo'],
+                collections: [
+                    { name: 'events', mapId: 'eventsMap', columnPrefix: 'events_' },
+                    { name: 'items', mapId: 'itemsMap', columnPrefix: 'items_' },
+                ]
+            },
+            {
+                mapId: 'eventsMap',
+                idProperty: 'id',
+                properties: ['name', 'datetime', 'photo'],
+                collections: [
+                    { name: 'items', mapId: 'itemsMap', columnPrefix: 'items_' },
+                ]   //wouldnt eventsMap duplicate if called by userEventsMap?
+            },
+            {
+                mapId: 'itemsMap',
+                idProperty: 'id',
+                properties: ['name', 'quantity', 'completed']
+            }
+        ]
+    }
+    
+    getById(userid: number) {
+        return this.knex("events")
+        .select(
+            "users.id           as user_id",
+            "users.name         as user_name",
+            "users.photo        as user_photo",
+            "events.id          as events_id",
+            "events.name        as events_name",
+            "events.datetime    as events_datetime",
+            "events.photo       as events_photo",
+            "items.id           as items_id",
+            "items.name         as items_name",
+            "items.quantity     as items_quantity",
+            "items.completed    as items_completed"
+        )
+        .join("events_users", "events_users.events_id", "events.id")
+        .join("users", "events_users.users_id", "users.id")
+        .join("items", "items.users_id", "users.id")
+        .join("todo", function () {
+            this
+            .on("todo.id", "items.todo_id")
+            .andOn("todo.events_id", "events.id")
+        })
+        .where("users.id", userid)
+        .andWhere("events.isactive", true)
+        .andWhere("items.isactive", true)
+        .andWhere("users.isactive", true)
+        .then(result => {
+            return joinjs.mapOne(result, this.resultMaps, 'userEventsMap', 'user_');
+        })
+    }
+    
+    
+    getByEmail(email: string, password: string) {
         return this.knex('users')
-            .select('id')
-            .first()
-            .where("email", email)
-            .andWhere("password", password)
+        .select('id')
+        .first()
+        .where("email", email)
+        .andWhere("password", password)
     }
 }
-
-// return this.knex("users").select("users.id as users_id", "users.name as user_name", "events.id as events_id", "events.name as event_name")
-// .join("users", "users.id", "events_users.users_id")
-// .join("events", "events.id", "events_users.events_id")
-// .where("users.email", email)
-// .then(profileArray => {
-//     return this.knex("items")
-//     .select(
-//         "items", "quantity"
-//     )
-//     .join("items", "items.users_id")
-// })

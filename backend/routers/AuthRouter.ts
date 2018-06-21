@@ -1,44 +1,41 @@
 import * as express from 'express';
 import axios from 'axios';
 import * as jwtSimple from 'jwt-simple';
+
 import config from '../config';
-import * as Knex from 'knex';
-import * as Knexfile from '../knexfile';
 import UserService from '../services/UserService'
 
 /**
- * API Routes
+ * Authenciation Routes
  * -------------------------
- * Handle requests from /api
+ * Handle requests from /auth
  */
-const knex = Knex(Knexfile[config.env]);
-const userService = new UserService(knex);
-
 export default class AuthRouter {
-    constructor() {
+    constructor(private userService: UserService) {
+        this.userService = userService;
     }
+
     getRouter() {
         const router = express.Router();
-        router.post("/local", this.localLogin.bind(this));
-        router.post("/google", this.loginWithGoogle.bind(this));
-        router.post("/facebook", this.loginWithFacebook.bind(this));
+        router.post("/local", this.localLogin);
+        router.post("/google", this.loginWithGoogle);
+        router.post("/facebook", this.loginWithFacebook);
         return router;
     }
 
-    async localLogin(req: any, res: any) {
-        let user;
+   localLogin = async(req: express.Request, res: express.Response) => {
+        const email = req.body.email;
+        const password = req.body.password;
 
-        if (req.body.email && req.body.password) {
-            const email = req.body.email;
-            const password = req.body.password;
-            user = userService.findByEmail(email, password)
-            console.log(user)
+        if (!email || !password) {
+            res.sendStatus(401);
         }
-
+        
         try {
-            if (user) {
+            const userId = await this.userService.getByEmail(email, password);
+            if (userId) {
                 let payload = {
-                    id: user
+                    id: userId
                 };
                 const token = jwtSimple.encode(payload, config.jwtSecret);
                 res.json({ token: token });
@@ -48,8 +45,7 @@ export default class AuthRouter {
         }
     }
 
-
-    async loginWithGoogle(req: express.Request, res: express.Response) {//validates access token with google
+    loginWithGoogle = async (req: express.Request, res: express.Response) => {//validates access token with google
         const accessToken = req.body.accessToken;
         console.log(accessToken);
 
@@ -70,7 +66,7 @@ export default class AuthRouter {
             res.sendStatus(401);
         }
     }
-    async loginWithFacebook(req: express.Request, res: express.Response) {//validates access token with facebook
+    loginWithFacebook = async (req: express.Request, res: express.Response) => {//validates access token with facebook
         const accessToken = req.body.accessToken;
         console.log(accessToken);
 
