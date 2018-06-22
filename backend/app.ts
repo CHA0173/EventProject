@@ -18,7 +18,7 @@ const eventService    = new EventService(knex)
 const templateService = new TemplateService(knex);
 const userService     = new UserService(knex);
 const jwtAuth         = jwtStrategy(userService);
-const apiRouter       = new ApiRouter(/*jwtAuth,*/ userService, templateService, eventService);
+const apiRouter       = new ApiRouter(jwtAuth, userService, templateService, eventService);
 
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())

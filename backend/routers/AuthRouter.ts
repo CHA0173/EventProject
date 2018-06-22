@@ -23,19 +23,21 @@ export default class AuthRouter {
         return router;
     }
 
-   localLogin = async(req: express.Request, res: express.Response) => {
+    localLogin = async (req: express.Request, res: express.Response) => {
         const email = req.body.email;
         const password = req.body.password;
 
-        if (!email || !password) {
+        if (!req.body.email || !req.body.password) {
             res.sendStatus(401);
         }
-        
+
         try {
-            const userId = await this.userService.getByEmail(email, password);
-            if (userId) {
+            const result = await this.userService.getByEmail(email, password);
+            if (result) {
                 let payload = {
-                    id: userId
+                    id: result.id
+    
+                    
                 };
                 const token = jwtSimple.encode(payload, config.jwtSecret);
                 res.json({ token: token });

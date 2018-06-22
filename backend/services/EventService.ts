@@ -79,18 +79,18 @@ export default class EventService {
               .where("events_users.users_id", userid)
               .update("isactive", false);
           
-              //is true in response to creator?
           return true;
         } else {
-          return true;
-          // console.log("wrong way")
-          // this.knex("events_users")
-          //   .where("events_id", eventid)
-          //   .andWhere("users_id", userid)
-          //   .update("isactive", false)
-          //   .then((nothingmore) => {
-          //     return nothingmore
-          //   })
+    
+          console.log("wrong way")
+          return trx("events_users")
+            .where("events_id", eventid)
+            .andWhere("users_id", userid)
+            .update("isactive", false)
+            .then((nothingmore) => {
+              return true
+            })
+
         }
       } catch(e) {
         return false;
@@ -148,14 +148,14 @@ export default class EventService {
           return eventid[0];
         }
         //why return -1? because its different from all the id's?
-        return -1;
+        return eventid[0];
       } catch(e) {
         return -1;
       }
     })
   }
 
-  writeFile(eventid: number, name: string, body: Express.Multer.File, trx) {
+  writeFile(eventid: number, name: string, body: Express.Multer.File, trx:Knex) {
     const imagePath = path.join(__dirname, `../public/images/${name}`);
     fs.outputFile(imagePath, body.buffer)
     return trx("events").where("events.id", eventid).update({ photo: name })
@@ -262,19 +262,31 @@ export default class EventService {
         
         "users.id           as attendees_id",
         "users.name         as attendees_name",
-        "users.photo        as attendees_photo"
+        "users.photo        as attendees_photo",
+
+        "discussion.id      as discussion_id",
+        "discussion.comment  as dicussion_comment"
       )
       .join("todo", "todo.events_id", "events.id")
       .join("items", "items.todo_id", "todo.id")
       .join("events_users", "events_users.events_id", "events.id")
+      .join("discussion", "events_id", "events.id")
       // .join("users", "items.users_id", "users.id")
       .join("users", "events_users.users_id", "users.id")
       .where("events.id", eid)
       .andWhere("events.isactive", true)
       .andWhere("items.isactive", true)
+      .andWhere("dicussion.isactive", true)
       .then(result => {
         return (result && result.length > 0) ? joinjs.mapOne(result, this.resultMaps, 'eventMap', 'event_') : {};
       })
+  }
+
+  getCommentsById(eventid:number) {
+    return this.knex("discussion")
+    .select("comment")
+    .where("events_id", eventid)
+    .andWhere("isactive", true)
   }
 
   getByName(name: string) {
@@ -282,5 +294,11 @@ export default class EventService {
       .select("events.id as events_id", "events.name", "events.photo", "events.datetime")
       .where("name", "ilike", `%${name}%`)
       .andWhere("events.isactive", true);
+  }
+
+  getAll() {
+    return this.knex("events")
+      .select("events.id as events_id", "events.name", "events.photo", "events.datetime")
+      .where("events.isactive", true);
   }
 }

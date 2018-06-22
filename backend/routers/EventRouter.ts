@@ -17,13 +17,28 @@ export default class EventRouter {
 
   getRouter() {
     const router = express.Router();
+    router.get("/", this.getAll)
     router.get("/upcoming/", this.getUpcoming); 
     router.get("/:id", this.getById);
+    router.get("/:id/discussion", this.getCommentsById);
+    
 
     router.post("/", upload.single("eventPhoto"), this.post)
     router.put("/", this.put);
     router.delete("/:id", this.delete);
     return router;
+  }
+
+  getCommentsById = (req:express.Request, res:express.Response) => {
+    return this.eventService.getCommentsById(req.params.id)//eventid
+      .then((data) => res.json(data))
+    .catch((err: express.Errback) => res.status(500).json(err))
+  }
+
+  getAll = (req:express.Request, res:express.Response) => {
+    return this.eventService.getAll()
+      .then((data) => res.json(data))
+    .catch((err: express.Errback) => res.status(500).json(err))
   }
 
   getById = (req: express.Request, res: express.Response) => {

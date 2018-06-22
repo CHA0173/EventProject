@@ -1,5 +1,7 @@
 import * as Knex from "knex";
 
+// use  ./node_modules/knex/bin/cli.js to run knex on server
+
 exports.up = (knex: Knex) => {
     return knex.schema.createTable("users", (users) => {
         users.increments();
@@ -73,7 +75,8 @@ exports.up = (knex: Knex) => {
 }
 
 exports.down = (knex: Knex) => {
-    return knex.schema.dropTable("events_users")
+    return knex.schema.dropTable("discussion")
+        .then(() =>knex.schema.dropTable("events_users"))
         .then(() => knex.schema.dropTable("items"))
         .then(() => knex.schema.dropTable("todo"))
         .then(() => knex.schema.dropTable("events"))

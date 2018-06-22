@@ -1,4 +1,7 @@
 import * as Knex from 'knex';
+import * as path from "path";
+import * as fs from "fs-extra";
+import { Promise as BlueBirdPromise } from "bluebird";
 import { default as joinjs } from 'join-js';
 
 export default class UserService {
@@ -65,7 +68,17 @@ export default class UserService {
         })
     }
     
+    postById(userid: number) {
+        return this.knex("users")
+
+
     
+    writeFile(eventid: number, name: string, body: Express.Multer.File, trx:Knex) {
+        const imagePath = path.join(__dirname, `../public/images/${name}`);
+        fs.outputFile(imagePath, body.buffer)
+        return trx("events").where("events.id", eventid).update({ photo: name })
+      }
+
     getByEmail(email: string, password: string) {
         return this.knex('users')
         .select('id')

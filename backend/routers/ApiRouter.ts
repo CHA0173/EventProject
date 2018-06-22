@@ -20,11 +20,12 @@ import EventService     from '../services/EventService';
  */
 export default class ApiRouter {
     
-    constructor(/* private jwtAuth:any,*/
+    constructor(
+        private jwtAuth:any,
         private userService: UserService, 
         private templateService: TemplateService, 
         private eventService: EventService) {
-        // this.jwtAuth = jwtAuth;
+        this.jwtAuth = jwtAuth;
         this.eventService = eventService;
         this.templateService = templateService;
         this.userService = userService;
@@ -39,7 +40,7 @@ export default class ApiRouter {
         const templateRouter = new TemplateRouter(this.templateService);
 
         router.use("/auth", authRouter.getRouter());//returns with jwt token
-        router.use("/users", /*this.jwtAuth.authenticate(),*/ userRouter.getRouter());      //grabs user's profile
+        router.use("/users", this.jwtAuth.authenticate(), userRouter.getRouter());      //grabs user's profile
         router.use("/search", /*this.jwtAuth.authenticate(),*/ searchRouter.getRouter());       //grabs search results
         router.use("/events", /*this.jwtAuth.authenticate(),*/ eventRouter.getRouter());         //grabs user's events
         router.use("/templates", /*this.jwtAuth.authenticate(),*/ templateRouter.getRouter());   //grabs user's events
