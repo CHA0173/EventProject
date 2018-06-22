@@ -97,7 +97,6 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
 
   render() {
     return (
-      <Provider store={store}>
       <View style={styles.container}>
         <View style={styles.header}>
           <Icon
@@ -137,12 +136,13 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
         <ScrollView>
           <FlatList
             style={styles.flatstyle}
-            data={this.state.data}
+            data={fakedata}
             renderItem={({ item }) => this.renderItem(item)}
+            keyExtractor={item => item.id.toString()} //FIXME: key problem
           />
         </ScrollView>
       </View>
-      </Provider>
+
     );
   }
 }

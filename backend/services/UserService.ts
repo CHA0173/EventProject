@@ -70,7 +70,7 @@ export default class UserService {
     
     postById(userid: number) {
         return this.knex("users")
-
+    }
 
     
     writeFile(eventid: number, name: string, body: Express.Multer.File, trx:Knex) {

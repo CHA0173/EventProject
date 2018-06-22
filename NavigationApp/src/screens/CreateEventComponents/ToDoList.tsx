@@ -7,57 +7,54 @@ import {
   Button,
   TextInput,
   ScrollView,
-  FlatList,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-interface IToDoListProps {
-  nextStep: () => void,
-  prevStep: () => void
+
+
+interface ToDoItem {
+  id: number,
+  Name: string,
+  Quantity: string,
+  IsActive: boolean,
 }
 
 interface IToDoListStates {
   Name: string,
   Quantity: string,
-  AddName: string,
-  AddQuantity: string,
+  List: ToDoItem[],
 }
 
-export default class ToDoList extends React.Component<IToDoListProps, IToDoListStates> {
-  constructor(props: IToDoListProps) {
+export default class ToDoList extends React.Component<{}, IToDoListStates> {
+  constructor(props: {}) {
     super(props);
 
     this.state = {
       Name: '',
       Quantity: '',
-      AddName: '',
-      AddQuantity: '',
+      List: [],
     }
   }
 
-  public renderToDoItem = () => { //FIXME:return
+  public renderToDoItem = () => {
     this.setState({
-      AddName: this.state.Name,
-      AddQuantity: this.state.Quantity,
-      // AddName: this.state.AddName.concat(this.state.Name),
-      // AddQuantity: this.state.AddQuantity.concat(this.state.Quantity)
+      List: this.state.List.concat({
+        id: Date.now(),
+        Name: this.state.Name,
+        Quantity: this.state.Quantity,
+        IsActive: true
+      }),
+      Name: '',
+      Quantity: '',
     })
-    // return (
-    //   <TouchableOpacity>
-    //     <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
-    //       <Text>{this.state.AddName}</Text>
-    //       <Text>{this.state.AddQuantity}</Text>
-    //     </View>
-    //   </TouchableOpacity>
-    // )
+
   }
 
-  public DeleteItem = () => {
-    this.setState({
-      AddName: '',
-      AddQuantity: '',
-    })
-  }
+  // public DeleteItem = () => {
+  //   this.setState({
+  //     // List: []
+  //   })
+  // }
 
   public render() {
     return (
@@ -82,71 +79,74 @@ export default class ToDoList extends React.Component<IToDoListProps, IToDoListS
             keyboardType='numeric'
           />
           <View style={{ justifyContent: 'center', alignItems: 'center', left: 10 }}>
-            <Button
-              title='ok'
-              // name='check'
+            <Icon.Button
+              name='check'
               color='green'
-              // size={18}
-              onPress={this.renderToDoItem}//FIXME:
+
+              size={18}
+              onPress={this.renderToDoItem}
             />
           </View>
         </View>
 
-        <View style={{ margin: 20, padding: 20, borderRadius: 10, borderColor: 'gray', borderWidth: 1, height: 300 }}>
+        <View style={{ flex: 1, margin: 20, padding: 20, paddingBottom: 0, marginBottom: 40,  borderRadius: 10, borderColor: 'gray', borderWidth: 1, height:400 }}>
           <View >
-            {/* limited item 10 */}
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text>Item</Text>
               <Text>Quantity</Text>
             </View>
 
             <View>
-              <ScrollView>
-                <TouchableOpacity onPress={() => { //FIXME: should be showup a red x todo delete item
+              <ScrollView style={{height: 300}}>
 
-                  <View>
-                    <Icon
-                      name='remove'
-                      color='red'
-                      onPress={this.DeleteItem}
-                      style={{
-                        position: 'absolute',
-                        top: 5,
-                        left: 10,
-                        backgroundColor: 'transparent',
-                        zIndex: 1
-                      }}
-                    />
-                  </View>
+                {
+                  this.state.List.map((List, L) => (
+                    <View key={L} style={{flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center'}}>
+                    <View style={{ width: '20%' }}>
+                      <Icon.Button
+                        name='remove'
+                        color='red'
+                        size={10}
 
-                }}>
+                        onPress={() => {
+                          const newList = [...this.state.List]
+                          newList.splice(L, 1)
+                          this.setState({
+                            List: newList
+                          })
+                        }}
 
-                  <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-                    <Text>{this.state.AddName}</Text>
-                    <Text>{this.state.AddQuantity}</Text>
-
-                    {/* {this.state.AddName.concat(Name => { //FIXME:
-                       <Text>{this.state.AddName}</Text>
-                     })}
-                     {this.state.AddQuantity.map(() => {
-                       <Text>{this.state.AddQuantity}</Text>
-                     })} */}
-                  </View>
-                </TouchableOpacity>
+                      />
+                      </View>
+                      <View style={{ justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 20,  width: '60%' }}>
+                        <TextInput
+                          key={L + 'one'}
+                          value={List.Name}
+                          onChangeText={(text) => {
+                            let newList = [...this.state.List]
+                            newList[L].Name = text;
+                            this.setState({ List: newList })
+                          }}
+                        />
+                        <TextInput
+                          key={L + 'two'}
+                          value={List.Quantity}
+                          onChangeText={(text) => {
+                            let newList = [...this.state.List]
+                            newList[L].Quantity = text;
+                            this.setState({ List: newList })
+                          }}
+                        />
+                      </View>
+                    </View>
+                  ))
+                }
               </ScrollView>
+
             </View>
 
           </View>
         </View>
-
-        <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginHorizontal: 30 }}>
-          <View>
-            <Button title="prev" onPress={this.props.prevStep} />
-          </View>
-          <View>
-            <Button title="next" onPress={this.props.nextStep} />
-          </View>
-        </View >
 
       </View>
     )
