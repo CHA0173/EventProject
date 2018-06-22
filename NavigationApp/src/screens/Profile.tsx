@@ -232,15 +232,15 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
                 </View>
               </TouchableOpacity>
               <View style={{ justifyContent: 'space-between' }}>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <Text style={{ fontSize: 20 }}>1</Text>
-                  <Text style={{ fontSize: 20 }}>2</Text>
-                  <Text style={{ fontSize: 20 }}>3</Text>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' , paddingHorizontal: 20}}>
+                  <Text style={{ fontSize: 20 }}>{TodoData.length}</Text>
+                  <Text style={{ fontSize: 20 }}>{EventData.length}</Text>
+                  {/* <Text style={{ fontSize: 20 }}>3</Text> */}
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <Text style={{ color: 'gray' }}>one</Text>
-                  <Text style={{ color: 'gray' }}>two</Text>
-                  <Text style={{ color: 'gray' }}>three</Text>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 5 }}>
+                  <Text style={{ color: 'gray' }}>ToDo</Text>
+                  <Text style={{ color: 'gray' }}>Event</Text>
+                  {/* <Text style={{ color: 'gray' }}>three</Text> */}
                 </View>
                 <Text style={{ fontSize: 20, margin: 5 }}> user.displayname</Text>
               </View>
@@ -252,6 +252,7 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
               style={{ marginHorizontal: 10 }}
               data={TodoData}
               renderItem={({ item }) => this.renderTodoItem(item)}
+              keyExtractor={item => item.id.toString()} //FIXME: key problem
             />
           </View>
           <View>
@@ -260,6 +261,7 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
               style={{ marginHorizontal: 10 }}
               data={EventData}
               renderItem={({ item }) => this.renderEventItem(item)}
+              keyExtractor={item => item.id.toString()}
             />
           </View>
         </ScrollView>
