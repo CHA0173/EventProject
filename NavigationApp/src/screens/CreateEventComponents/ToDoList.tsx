@@ -7,7 +7,6 @@ import {
   Button,
   TextInput,
   ScrollView,
-  FlatList,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -16,11 +15,16 @@ interface IToDoListProps {
   prevStep: () => void
 }
 
+interface ToDoItem {
+  Name: string,
+  Quantity: string,
+  IsActive: boolean,
+}
+
 interface IToDoListStates {
   Name: string,
   Quantity: string,
-  AddName: string,
-  AddQuantity: string,
+  List: ToDoItem[],
 }
 
 export default class ToDoList extends React.Component<IToDoListProps, IToDoListStates> {
@@ -30,41 +34,35 @@ export default class ToDoList extends React.Component<IToDoListProps, IToDoListS
     this.state = {
       Name: '',
       Quantity: '',
-      AddName: '',
-      AddQuantity: '',
+      List: [],
     }
   }
 
-  public renderToDoItem = () => { //FIXME:return
+  public renderToDoItem = () => {
     this.setState({
-      AddName: this.state.Name,
-      AddQuantity: this.state.Quantity,
-      // AddName: this.state.AddName.concat(this.state.Name),
-      // AddQuantity: this.state.AddQuantity.concat(this.state.Quantity)
+      List: this.state.List.concat({
+        Name: this.state.Name,
+        Quantity: this.state.Quantity,
+        IsActive: false
+      }),
+      Name: '',
+      Quantity: '',
     })
-    // return (
-    //   <TouchableOpacity>
-    //     <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
-    //       <Text>{this.state.AddName}</Text>
-    //       <Text>{this.state.AddQuantity}</Text>
-    //     </View>
-    //   </TouchableOpacity>
-    // )
+
   }
 
-  public DeleteItem = () => {
-    this.setState({
-      AddName: '',
-      AddQuantity: '',
-    })
-  }
+  // public DeleteItem = () => {
+  //   this.setState({
+  //     // List: []
+  //   })
+  // }
 
   public render() {
     return (
       <View>
         <View style={{ flexDirection: 'row', marginHorizontal: 20 }}>
           <TextInput
-            style={{ width: '70%' }}
+            style={{ width: '70%', left: 20 }}
             value={this.state.Name}
             onChangeText={(text) => this.setState({
               Name: text
@@ -87,7 +85,7 @@ export default class ToDoList extends React.Component<IToDoListProps, IToDoListS
               // name='check'
               color='green'
               // size={18}
-              onPress={this.renderToDoItem}//FIXME:
+              onPress={this.renderToDoItem}
             />
           </View>
         </View>
@@ -102,37 +100,48 @@ export default class ToDoList extends React.Component<IToDoListProps, IToDoListS
 
             <View>
               <ScrollView>
-                <TouchableOpacity onPress={() => { //FIXME: should be showup a red x todo delete item
 
-                  <View>
-                    <Icon
-                      name='remove'
-                      color='red'
-                      onPress={this.DeleteItem}
-                      style={{
-                        position: 'absolute',
-                        top: 5,
-                        left: 10,
-                        backgroundColor: 'transparent',
-                        zIndex: 1
-                      }}
-                    />
-                  </View>
+                {
+                  this.state.List.map((List, L) => (
+                    <TouchableOpacity onPress={() => {
 
-                }}>
+                      const newList = [...this.state.List]
+                      newList[L].IsActive = !newList[L].IsActive;
+                      this.setState({
+                        List: newList
+                      })
+                    }
+                    }>
+                      <View key={L} style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
 
-                  <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-                    <Text>{this.state.AddName}</Text>
-                    <Text>{this.state.AddQuantity}</Text>
+                        {this.state.List[L].IsActive &&
+                          <Icon
+                          name='remove'
+                          color='red'
+                          onPress={() => {
+                            
+                            const newList = [...this.state.List]
+                            newList.splice(L, 1)
+                            this.setState({
+                              List: newList
+                            })
+                          }}
+                          style={{
+                            position: 'relative',
+                            top: 5,
+                            
+                            backgroundColor: 'transparent',
+                            zIndex: 1
+                          }}
+                          />
+                        }
+                        <Text>{List.Name}</Text>
+                        <Text>{List.Quantity}</Text>
+                      </View>
+                    </TouchableOpacity>
+                  ))
+                }
 
-                    {/* {this.state.AddName.concat(Name => { //FIXME:
-                       <Text>{this.state.AddName}</Text>
-                     })}
-                     {this.state.AddQuantity.map(() => {
-                       <Text>{this.state.AddQuantity}</Text>
-                     })} */}
-                  </View>
-                </TouchableOpacity>
               </ScrollView>
             </View>
 

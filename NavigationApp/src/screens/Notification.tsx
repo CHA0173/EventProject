@@ -69,6 +69,7 @@ export default class Notification extends React.Component<NotificationProps> {
                 </TouchableOpacity>
               )
             }}
+            keyExtractor={data => data.id.toString()} 
           />
         </TouchableOpacity>
       </View>
