@@ -8,12 +8,27 @@ import {
     ScrollView
 } from 'react-native';
 import { FormLabel, FormInput } from 'react-native-elements'
+import { connect } from 'react-redux'
+import { saveDescription } from '../../actions'
 
 interface IDescriptionProps {
     nextStep: () => void
 }
 
-export default class Description extends React.Component<IDescriptionProps, {}> {
+class Description extends React.Component<IDescriptionProps, {}> {
+    constructor(props: IDescriptionProps){
+        super(props);
+        this.state = {
+            name: '',
+            description: '',
+            date: '',
+            time: '',
+            address: '',
+            private: '',
+            deposit: '',
+            isactive: true
+        }
+    }
 
     render() {
         return (
@@ -32,3 +47,11 @@ export default class Description extends React.Component<IDescriptionProps, {}> 
         )
     }
 }
+
+function mapStateToProps (state) {
+    return {
+        
+    }
+}
+
+export default connect(mapStateToProps, { saveDescription })(Description)

@@ -19,8 +19,8 @@ interface IToDoListProps {
 interface IToDoListStates {
   Name: string,
   Quantity: string,
-  AddToDoItem: string[],
-  AddQuantity: string[],
+  AddName: string,
+  AddQuantity: string,
 }
 
 export default class ToDoList extends React.Component<IToDoListProps, IToDoListStates> {
@@ -30,24 +30,33 @@ export default class ToDoList extends React.Component<IToDoListProps, IToDoListS
     this.state = {
       Name: '',
       Quantity: '',
-      AddToDoItem: [],
-      AddQuantity: [],
+      AddName: '',
+      AddQuantity: '',
     }
   }
 
-  public renderToDoItem(item) { //FIXME:
-    return (
-      <TouchableOpacity onPress={() => {
-        const obj =this.state
-        // obj.AddToDoItem.push(this.state.AddQuantity)
-      }}>
-        <View>
-          <Text>
-            {this.state.Name}{this.state.Quantity}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    )
+  public renderToDoItem = () => { //FIXME:return
+    this.setState({
+      AddName: this.state.Name,
+      AddQuantity: this.state.Quantity,
+      // AddName: this.state.AddName.concat(this.state.Name),
+      // AddQuantity: this.state.AddQuantity.concat(this.state.Quantity)
+    })
+    // return (
+    //   <TouchableOpacity>
+    //     <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+    //       <Text>{this.state.AddName}</Text>
+    //       <Text>{this.state.AddQuantity}</Text>
+    //     </View>
+    //   </TouchableOpacity>
+    // )
+  }
+
+  public DeleteItem = () => {
+    this.setState({
+      AddName: '',
+      AddQuantity: '',
+    })
   }
 
   public render() {
@@ -72,15 +81,17 @@ export default class ToDoList extends React.Component<IToDoListProps, IToDoListS
             placeholder='Quantity'
             keyboardType='numeric'
           />
-          <View style={{justifyContent: 'center', alignItems: 'center', left: 10}}>
-            <Icon
-              name='check'
+          <View style={{ justifyContent: 'center', alignItems: 'center', left: 10 }}>
+            <Button
+              title='ok'
+              // name='check'
               color='green'
-              size={18}
-              onPress={}//FIXME:
+              // size={18}
+              onPress={this.renderToDoItem}//FIXME:
             />
           </View>
         </View>
+
         <View style={{ margin: 20, padding: 20, borderRadius: 10, borderColor: 'gray', borderWidth: 1, height: 300 }}>
           <View >
             {/* limited item 10 */}
@@ -91,12 +102,40 @@ export default class ToDoList extends React.Component<IToDoListProps, IToDoListS
 
             <View>
               <ScrollView>
-                <FlatList //FIXME:
-                  data={}
-                  renderItem={}
-                />
+                <TouchableOpacity onPress={() => { //FIXME: should be showup a red x todo delete item
+
+                  <View>
+                    <Icon
+                      name='remove'
+                      color='red'
+                      onPress={this.DeleteItem}
+                      style={{
+                        position: 'absolute',
+                        top: 5,
+                        left: 10,
+                        backgroundColor: 'transparent',
+                        zIndex: 1
+                      }}
+                    />
+                  </View>
+
+                }}>
+
+                  <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
+                    <Text>{this.state.AddName}</Text>
+                    <Text>{this.state.AddQuantity}</Text>
+
+                    {/* {this.state.AddName.concat(Name => { //FIXME:
+                       <Text>{this.state.AddName}</Text>
+                     })}
+                     {this.state.AddQuantity.map(() => {
+                       <Text>{this.state.AddQuantity}</Text>
+                     })} */}
+                  </View>
+                </TouchableOpacity>
               </ScrollView>
             </View>
+
           </View>
         </View>
 

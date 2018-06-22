@@ -18,14 +18,25 @@ import { Navigator } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { fakedata } from './fakeData';
 
+import { createStore, applyMiddleware } from 'redux'
+import { Provider, connect } from 'react-redux'
+import thunk from 'redux-thunk'
+
+import searchEventsReducers from '../reducers'
+import { fetchingEvents } from '../actions'
+const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
+const store = createStoreWithMiddleware(searchEventsReducers)
 
 interface ISearchProps {
   navigator: Navigator;
+  fetchEvents: () => string[]
 };
 
 interface ISearchState {
   text: string,
   data: any,
+  events: object,
+  isFetching: boolean
 }
 
 export default class Search extends React.Component<ISearchProps, ISearchState> {
@@ -35,6 +46,8 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
     this.state = {
       text: '',
       data: fakedata,
+      events: {},
+      isFetching: true
     }
   }
 
@@ -62,7 +75,7 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
     return (
       <TouchableWithoutFeedback onPress={() => {
         this.props.navigator.push({
-          screen: 'EventsTabScreen',
+          screen: 'ViewEventScreen',
           title: item.name,
           navigatorStyle: {tabBarHidden: true} ,
           passProps: {
@@ -78,9 +91,13 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
     )
   }
 
-  render() {
+  // componentDidMount() {
+  //   this.props.fetchEvents();
+  // }
 
+  render() {
     return (
+      <Provider store={store}>
       <View style={styles.container}>
         <View style={styles.header}>
           <Icon
@@ -125,6 +142,7 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
           />
         </ScrollView>
       </View>
+      </Provider>
     );
   }
 }
@@ -180,3 +198,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   }
 });
+
+const mapStateToProps = state => {
+  return {
+    events: state
+  }
+}
+
+// export default connect(mapStateToProps, { fetchingEvents })(Search)
