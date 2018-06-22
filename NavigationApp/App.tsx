@@ -75,3 +75,8 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
+
+//SDK Initialization
+// componentWillMount() {
+//   OneSignal.init("135b1bdf-66b4-4428-8801-16526ee52e7b");
+// }
