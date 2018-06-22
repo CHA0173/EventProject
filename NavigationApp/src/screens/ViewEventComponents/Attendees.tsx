@@ -31,25 +31,29 @@ export default class Attendees extends React.Component<{}, {}> {
                     renderItem={(data) => {
                         return (
                             <ScrollView>
-                                <TouchableOpacity style={{ borderBottomWidth: 0.5, backgroundColor: 'white' }}>
-                                    <View style={{ justifyContent: 'space-between', flexDirection: 'row', margin: 10 }}>
-                                        <Image
-                                            style={{ borderRadius: 75, width: 70, height: 70, }}
-                                            source={{ uri: data.item.usericon }}
-                                        />
-                                        <Text style={{ justifyContent: 'center', alignItems: 'center', marginHorizontal: 20 }}>
-                                            {data.item.username}
-                                        </Text>
+                                <TouchableOpacity style={{ borderBottomWidth: 0.5, backgroundColor: 'white'}}>
+                                    <View style={{ justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', margin: 10, marginHorizontal: 30 }}>
+
+                                            <Image
+                                                style={{ borderRadius: 75, width: 70, height: 70, }}
+                                                source={{ uri: data.item.usericon }}
+                                            />
+
+                                            <Text style={{ marginHorizontal: 20, padding: 10, fontSize: 20, textAlign: 'center' }}>
+                                                {data.item.username}
+                                            </Text>
+                                       
                                     </View>
                                 </TouchableOpacity>
                             </ScrollView>
                         )
-                    }}
+                    }
+                    }
                 />
-                <Text>
+                < Text >
 
-                </Text>
-            </View>
+                </Text >
+            </View >
         )
     }
 }
