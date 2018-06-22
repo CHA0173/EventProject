@@ -35,7 +35,7 @@ export default class AuthRouter {
             const userId = await this.userService.getByEmail(email, password);
             if (userId) {
                 let payload = {
-                    id: userId
+                    id: userId.id
                 };
                 const token = jwtSimple.encode(payload, config.jwtSecret);
                 res.json({ token: token });
