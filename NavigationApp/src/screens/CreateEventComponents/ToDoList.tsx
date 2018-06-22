@@ -10,12 +10,10 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-interface IToDoListProps {
-  nextStep: () => void,
-  prevStep: () => void
-}
+
 
 interface ToDoItem {
+  id: number,
   Name: string,
   Quantity: string,
   IsActive: boolean,
@@ -27,8 +25,8 @@ interface IToDoListStates {
   List: ToDoItem[],
 }
 
-export default class ToDoList extends React.Component<IToDoListProps, IToDoListStates> {
-  constructor(props: IToDoListProps) {
+export default class ToDoList extends React.Component<{}, IToDoListStates> {
+  constructor(props: {}) {
     super(props);
 
     this.state = {
@@ -41,9 +39,10 @@ export default class ToDoList extends React.Component<IToDoListProps, IToDoListS
   public renderToDoItem = () => {
     this.setState({
       List: this.state.List.concat({
+        id: Date.now(),
         Name: this.state.Name,
         Quantity: this.state.Quantity,
-        IsActive: false
+        IsActive: true
       }),
       Name: '',
       Quantity: '',
@@ -62,7 +61,7 @@ export default class ToDoList extends React.Component<IToDoListProps, IToDoListS
       <View>
         <View style={{ flexDirection: 'row', marginHorizontal: 20 }}>
           <TextInput
-            style={{ width: '70%', left: 20 }}
+            style={{ width: '70%' }}
             value={this.state.Name}
             onChangeText={(text) => this.setState({
               Name: text
@@ -80,82 +79,74 @@ export default class ToDoList extends React.Component<IToDoListProps, IToDoListS
             keyboardType='numeric'
           />
           <View style={{ justifyContent: 'center', alignItems: 'center', left: 10 }}>
-            <Button
-              title='ok'
-              // name='check'
+            <Icon.Button
+              name='check'
               color='green'
-              // size={18}
+
+              size={18}
               onPress={this.renderToDoItem}
             />
           </View>
         </View>
 
-        <View style={{ margin: 20, padding: 20, borderRadius: 10, borderColor: 'gray', borderWidth: 1, height: 300 }}>
+        <View style={{ flex: 1, margin: 20, padding: 20, paddingBottom: 0, marginBottom: 40,  borderRadius: 10, borderColor: 'gray', borderWidth: 1, height:400 }}>
           <View >
-            {/* limited item 10 */}
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text>Item</Text>
               <Text>Quantity</Text>
             </View>
 
             <View>
-              <ScrollView>
+              <ScrollView style={{height: 300}}>
 
                 {
                   this.state.List.map((List, L) => (
-                    <TouchableOpacity onPress={() => {
+                    <View key={L} style={{flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center'}}>
+                    <View style={{ width: '20%' }}>
+                      <Icon.Button
+                        name='remove'
+                        color='red'
+                        size={10}
 
-                      const newList = [...this.state.List]
-                      newList[L].IsActive = !newList[L].IsActive;
-                      this.setState({
-                        List: newList
-                      })
-                    }
-                    }>
-                      <View key={L} style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
+                        onPress={() => {
+                          const newList = [...this.state.List]
+                          newList.splice(L, 1)
+                          this.setState({
+                            List: newList
+                          })
+                        }}
 
-                        {this.state.List[L].IsActive &&
-                          <Icon
-                          name='remove'
-                          color='red'
-                          onPress={() => {
-                            
-                            const newList = [...this.state.List]
-                            newList.splice(L, 1)
-                            this.setState({
-                              List: newList
-                            })
-                          }}
-                          style={{
-                            position: 'relative',
-                            top: 5,
-                            
-                            backgroundColor: 'transparent',
-                            zIndex: 1
-                          }}
-                          />
-                        }
-                        <Text>{List.Name}</Text>
-                        <Text>{List.Quantity}</Text>
+                      />
                       </View>
-                    </TouchableOpacity>
+                      <View style={{ justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 20,  width: '60%' }}>
+                        <TextInput
+                          key={L + 'one'}
+                          value={List.Name}
+                          onChangeText={(text) => {
+                            let newList = [...this.state.List]
+                            newList[L].Name = text;
+                            this.setState({ List: newList })
+                          }}
+                        />
+                        <TextInput
+                          key={L + 'two'}
+                          value={List.Quantity}
+                          onChangeText={(text) => {
+                            let newList = [...this.state.List]
+                            newList[L].Quantity = text;
+                            this.setState({ List: newList })
+                          }}
+                        />
+                      </View>
+                    </View>
                   ))
                 }
-
               </ScrollView>
+
             </View>
 
           </View>
         </View>
-
-        <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginHorizontal: 30 }}>
-          <View>
-            <Button title="prev" onPress={this.props.prevStep} />
-          </View>
-          <View>
-            <Button title="next" onPress={this.props.nextStep} />
-          </View>
-        </View >
 
       </View>
     )
