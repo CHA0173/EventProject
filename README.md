@@ -224,3 +224,29 @@ Working Local Login
 ### Changed
 - AuthRouter.ts
     - changed the localLogin() to be able to send the id,email and password into jwt payload
+
+    
+## version 0.3 June 21, 2018 (Lucas)
+
+Created todo list but still have a problem, merga the Attendees and Discussion page, changed some rount( navigator.push... )
+
+### Added
+
+- CreateEventComponents > ToDoList.tsx
+    - Added TextInput to input the item and quantity ( only can add one item)
+    - Added a form to display the item (ItemName and Quantity)
+
+### Changed
+
+- Profile.tsx / Search.tsx / Notification.tsx
+    - changed navigator.push to ViewEvent page
+
+- Attendees.tsx
+    - Added the FlatList to display the attendees ( bug: can't display img)
+
+- Discussion.tsx 
+    - Added a discussion page 
+    - Added a TextInput to input the massage, but still have a problem like Create ToDoList
+
+
+---

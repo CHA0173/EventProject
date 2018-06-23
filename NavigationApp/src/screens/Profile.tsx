@@ -22,7 +22,8 @@ const { width, height } = Dimensions.get('window')
 
 import { Navigator } from 'react-native-navigation';
 import { Card } from 'react-native-elements';
-import { TodoData } from './fakeData'
+import { TodoData } from './fakeData';
+import axios from 'axios';
 
 const ImagePicker = require('react-native-image-picker');
 
@@ -137,6 +138,9 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
     };
 
     ImagePicker.showImagePicker(options, (response) => {
+      if (!response.data) {
+        return
+      }
 
       // const source = { uri: response.uri };
 
@@ -149,6 +153,7 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
       //     'Accept': 'application/json'
       //   }
       // }
+      axios.post('url', {photo: source})
 
       this.setState({
         avatarSource: source
@@ -157,12 +162,13 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
     );
   }
 
-  public renderTodoItem(item) {
+  public renderTodoItem(item) { //FIXME: need to send back the data(uri/ base64) to backend  
     return (
       <View style={{ borderColor: 'gray', borderWidth: 1, margin: 10 }}>
         <TouchableOpacity onPress={() => {
           this.props.navigator.push({
-            screen: 'EventsTabScreen',
+            screen: 'ViewEventScreen',
+            title: item.eventname,
             navigatorStyle: { tabBarHidden: true },
             passProps: {
               selectedItem: item.item
@@ -197,7 +203,8 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
     return (
       <TouchableOpacity onPress={() => {
         this.props.navigator.push({
-          screen: 'EventsTabScreen',
+          screen: 'ViewEventScreen',
+          title: item.name,
           navigatorStyle: { tabBarHidden: true },
           passProps: {
             selectedItem: item.item
@@ -224,21 +231,21 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
             <View style={{ justifyContent: 'space-between', alignItems: 'center', margin: 20, flexDirection: 'row', maxWidth: 300 }}>
               <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
                 <View style={[styles.avatar, styles.avatarContainer]}>
-                  {this.state.avatarSource === null ? <Text>Select a Photo</Text> :
+                  {this.state.avatarSource === null  ? <Text>Select a Photo</Text> :
                     <Image style={styles.avatar} source={this.state.avatarSource} />
                   }
                 </View>
               </TouchableOpacity>
               <View style={{ justifyContent: 'space-between' }}>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <Text style={{ fontSize: 20 }}>1</Text>
-                  <Text style={{ fontSize: 20 }}>2</Text>
-                  <Text style={{ fontSize: 20 }}>3</Text>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' , paddingHorizontal: 20}}>
+                  <Text style={{ fontSize: 20 }}>{TodoData.length}</Text>
+                  <Text style={{ fontSize: 20 }}>{EventData.length}</Text>
+                  {/* <Text style={{ fontSize: 20 }}>3</Text> */}
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <Text style={{ color: 'gray' }}>one</Text>
-                  <Text style={{ color: 'gray' }}>two</Text>
-                  <Text style={{ color: 'gray' }}>three</Text>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 5 }}>
+                  <Text style={{ color: 'gray' }}>ToDo</Text>
+                  <Text style={{ color: 'gray' }}>Event</Text>
+                  {/* <Text style={{ color: 'gray' }}>three</Text> */}
                 </View>
                 <Text style={{ fontSize: 20, margin: 5 }}> user.displayname</Text>
               </View>
@@ -250,6 +257,7 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
               style={{ marginHorizontal: 10 }}
               data={TodoData}
               renderItem={({ item }) => this.renderTodoItem(item)}
+              keyExtractor={item => item.id.toString()} 
             />
           </View>
           <View>
@@ -258,6 +266,7 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
               style={{ marginHorizontal: 10 }}
               data={EventData}
               renderItem={({ item }) => this.renderEventItem(item)}
+              keyExtractor={item => item.id.toString()}
             />
           </View>
         </ScrollView>

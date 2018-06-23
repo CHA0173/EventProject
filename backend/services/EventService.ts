@@ -79,6 +79,7 @@ export default class EventService {
               .where("events_users.users_id", userid)
               .update("isactive", false);
           
+              //is true in response to creator?
           return true;
         } else {
           return true;
@@ -98,6 +99,7 @@ export default class EventService {
   }
 
   async create(data: any, file: Express.Multer.File) {
+    //why does async need to be called twice?
      return this.knex.transaction(async (trx) => {
        try{
         const eventid = await trx("events")
@@ -111,7 +113,7 @@ export default class EventService {
                                 isactive: true
                               }).returning("id");
 
-        
+            //if eventid exists and if eventid array's length is >0?????
         if (eventid && eventid.length > 0) {
           const toDoId = await trx("todo")
                               .insert({
@@ -145,6 +147,7 @@ export default class EventService {
           }
           return eventid[0];
         }
+        //why return -1? because its different from all the id's?
         return -1;
       } catch(e) {
         return -1;
@@ -189,7 +192,9 @@ export default class EventService {
                                           private:      body.event.private,
                                           deposit:      body.event.deposit
                                         })
+        //why use if to confirm update changes?
         if (eventUpdateResult) {
+          //awaits all mappings and updates to finish
           await BlueBirdPromise.map(body.items, 
             (item: {
               id: number,  name: string, 

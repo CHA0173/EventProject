@@ -37,7 +37,7 @@ export default class Notification extends React.Component<NotificationProps> {
           tabIndex: 0
         })}>
           <FlatList
-            
+
             data={[{
               id: 1,
               user: 'Lucas',
@@ -49,24 +49,27 @@ export default class Notification extends React.Component<NotificationProps> {
               event: 'Boat Party',
               eventImg: 'https://dummyimage.com/600x400/000000/fff.png&text=Boat'
             }]}
-            renderItem={(data) => {    
+            renderItem={(data) => {
               return (
-              <TouchableOpacity 
-                style={{borderBottomWidth: 0.5, }}
-                onPress={() => this.props.navigator.push({
-                screen: 'EventsTabScreen',
-              })}>
-                <View style={{ justifyContent: 'space-between',flexDirection: 'row', margin: 10 }}>
-                  <Image 
-                    style={{ borderRadius: 75, width: 70, height: 70,}}
-                    source={{uri: data.item.eventImg}}
+                <TouchableOpacity
+                  style={{ borderBottomWidth: 0.5, }}
+                  onPress={() => this.props.navigator.push({
+                    screen: 'ViewEventScreen',
+                    title: data.item.event,
+                  })}>
+                  <View style={{ justifyContent: 'space-between', flexDirection: 'row', margin: 10 }}>
+                    <Image
+                      style={{ borderRadius: 75, width: 70, height: 70, }}
+                      source={{ uri: data.item.eventImg }}
                     />
-                  <Text style={{marginHorizontal: 20, padding: 10}}>
-                    {data.item.user} created new event {data.item.event}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            )}}
+                    <Text style={{ marginHorizontal: 20, padding: 10 }}>
+                      {data.item.user} created new event {data.item.event}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              )
+            }}
+            keyExtractor={data => data.id.toString()} 
           />
         </TouchableOpacity>
       </View>
@@ -76,6 +79,6 @@ export default class Notification extends React.Component<NotificationProps> {
 
 const styles = StyleSheet.create({
   FlatListStyle: {
-    
+
   }
 });

@@ -82,67 +82,6 @@ const event = {
   }
 }
 
-const junkBoat = {
-  templateA: [
-    {
-      name: 'coke',
-      quality: 10
-    },
-    {
-      name: 'apple',
-      quality: 6
-    },
-    {
-      name: 'boardgame',
-      quality: 1
-    }
-  ],
-  templateB: [
-    {
-      name: 'wine',
-      quality: 10
-    },
-    {
-      name: 'oyster',
-      quality: 6
-    },
-    {
-      name: 'switch',
-      quality: 1
-    }
-  ]
-}
-
-const birthdayParty = {
-  templateA: [
-    {
-      name: 'coke',
-      quality: 10
-    },
-    {
-      name: 'cake',
-      quality: 1
-    },
-    {
-      name: 'candle',
-      quality: 1
-    }
-  ],
-  templateB: [
-    {
-      name: 'wine',
-      quality: 10
-    },
-    {
-      name: 'pizza',
-      quality: 6
-    },
-    {
-      name: 'cake',
-      quality: 1
-    }
-  ]
-}
 
 // Profile ToDoItem fakedata
 const TodoData = [{
@@ -203,4 +142,4 @@ const TodoData = [{
 
 
 
-export { fakedata, event , TodoData, junkBoat, birthdayParty };
+export { fakedata, event , TodoData };

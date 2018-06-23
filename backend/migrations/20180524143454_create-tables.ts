@@ -73,8 +73,7 @@ exports.up = (knex: Knex) => {
 }
 
 exports.down = (knex: Knex) => {
-    return knex.schema.dropTable("discussion")
-        .then(() => knex.schema.dropTable("events_users"))
+    return knex.schema.dropTable("events_users")
         .then(() => knex.schema.dropTable("items"))
         .then(() => knex.schema.dropTable("todo"))
         .then(() => knex.schema.dropTable("events"))

@@ -35,14 +35,14 @@ export default class Events extends React.Component<IEventsProps, IEventsStates>
     this.updateIndex = this.updateIndex.bind(this)
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
-  
+
   updateIndex(selectedIndex) {
     this.setState({ selectedIndex })
   }
 
-  onNavigatorEvent(event) { 
+  onNavigatorEvent(event) {
     if (event.type == 'NavBarButtonPress') {
-      if (event.id == 'create') { 
+      if (event.id == 'create') {
         this.props.navigator.push({
           screen: 'CreateEventScreen'
         })
@@ -63,15 +63,17 @@ export default class Events extends React.Component<IEventsProps, IEventsStates>
         />
         <View>
           <TouchableOpacity onPress={() => this.props.navigator.push({
-            screen: 'ViewEventScreen'
+            screen: 'ViewEventScreen',
+            title: event.name,
+            navigatorStyle: { tabBarHidden: true }
           })}>
-          <Card
-            title={event.name}
-            image={event.image}>
-            <Text style={{ marginBottom: 10 }}>
-              {event.description}
-            </Text>
-          </Card>
+            <Card
+              title={event.name}
+              image={event.image}>
+              <Text style={{ marginBottom: 10 }}>
+                {event.description}
+              </Text>
+            </Card>
           </TouchableOpacity>
         </View>
       </View>

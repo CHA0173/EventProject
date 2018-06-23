@@ -1,0 +1,304 @@
+{
+	"info": {
+		"_postman_id": "c842bf0b-e5c2-4aa4-8c39-6d1b9302d441",
+		"name": "EventProject",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "events",
+			"description": null,
+			"item": [
+				{
+					"name": "Get Event By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userid\": 1\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/events/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"events",
+								"1"
+							]
+						},
+						"description": "/api/events/:id"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Upcoming Events By UserID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/events/upcoming?userid=1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"events",
+								"upcoming"
+							],
+							"query": [
+								{
+									"key": "userid",
+									"value": "1"
+								}
+							]
+						},
+						"description": "/api/events/upcoming?userid=1"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Event",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "userid",
+									"value": "1",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "event_name",
+									"value": "Test3",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Test Test",
+									"type": "text"
+								},
+								{
+									"key": "datetime",
+									"value": "2018-07-20 09:00:00",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "test address",
+									"type": "text"
+								},
+								{
+									"key": "deposit",
+									"value": "3000",
+									"type": "text"
+								},
+								{
+									"key": "todo_type",
+									"value": "wedding",
+									"type": "text"
+								},
+								{
+									"key": "eventPhoto",
+									"description": "",
+									"type": "file"
+								},
+								{
+									"key": "items[0][item_name]",
+									"value": "test Item 1",
+									"type": "text"
+								},
+								{
+									"key": "items[0][quantity]",
+									"value": "1",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/api/events",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"events"
+							]
+						},
+						"description": "/api/events"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Event",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userid\": 1,\n\t\"event\": {\n\t\t\"id\": 1,\n\t\t\"name\": \"Test2\",\n\t\t\"description\": \"Test2\",\n\t\t\"datetime\": \"2018-07-21 09:00:00\",\n\t\t\"address\": \"Saikung Pier 1\",\n\t\t\"private\": false,\n\t\t\"deposit\": 3333\n\t},\n\t\"items\": [{\n\t\t\"id\": 1,\n\t\t\"name\": \"Test2\",\n\t\t\"quantity\": 100,\n\t\t\"user_id\": 1,\n\t\t\"isactive\": true,\n\t\t\"completed\" : true\n\t}]\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/events/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"events",
+								""
+							]
+						},
+						"description": "/api/events/"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Event By ID",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userid\": 1\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/events/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"events",
+								"1"
+							]
+						},
+						"description": "/api/events/:id"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"description": null,
+			"item": [
+				{
+					"name": "Get User By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/users/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"1"
+							]
+						},
+						"description": "/api/users/:id"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "templates",
+			"description": null,
+			"item": [
+				{
+					"name": "Get All Templates",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/templates",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"templates"
+							]
+						},
+						"description": "/api/templates"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "search",
+			"description": null,
+			"item": [
+				{
+					"name": "Search By Event Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/api/search?name=Mary",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"search"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Mary"
+								}
+							]
+						},
+						"description": "/api/search?name=[name]"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
