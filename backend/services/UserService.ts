@@ -1,7 +1,7 @@
 import * as Knex from 'knex';
 import * as path from "path";
 import * as fs from "fs-extra";
-import { Promise as BlueBirdPromise } from "bluebird";
+// import { Promise as BlueBirdPromise } from "bluebird";
 import { default as joinjs } from 'join-js';
 
 export default class UserService {

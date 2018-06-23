@@ -41,9 +41,9 @@ export default class ApiRouter {
 
         router.use("/auth", authRouter.getRouter());//returns with jwt token
         router.use("/users", this.jwtAuth.authenticate(), userRouter.getRouter());      //grabs user's profile
-        router.use("/search", /*this.jwtAuth.authenticate(),*/ searchRouter.getRouter());       //grabs search results
-        router.use("/events", /*this.jwtAuth.authenticate(),*/ eventRouter.getRouter());         //grabs user's events
-        router.use("/templates", /*this.jwtAuth.authenticate(),*/ templateRouter.getRouter());   //grabs user's events
+        router.use("/search", this.jwtAuth.authenticate(), searchRouter.getRouter());       //grabs search results
+        router.use("/events", this.jwtAuth.authenticate(), eventRouter.getRouter());         //grabs user's events
+        router.use("/templates", this.jwtAuth.authenticate(), templateRouter.getRouter());   //grabs user's events
         return router;
     }
 }
