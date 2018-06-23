@@ -88,6 +88,7 @@ exports.seed = (knex: Knex) => {
       })
         .then(() => {
           let todolist = fs.readJsonSync(path.join(__dirname, "todolist.json"));
+
               let result: any[] = [];
               todolist.forEach((item: any) => {
                 let event = item.event
@@ -142,6 +143,8 @@ const createEvent = (knex: any, item: any, user:any, event: any) => {
           users_id: userId.id,
           events_id: eventId.id,
           isactive: item.isactive,
+          creator: item.creator,
+
         })
       })
     })
@@ -190,7 +193,8 @@ const createItem = (knex: any, item: any, user: any, eventType: any, eventPackag
             package: item.package,
             isactive: item.isactive,
             users_id: user.id,
-            todo_id: todo.id
+            todo_id: todo.id,
+            completed: item.completed
           })
         })
     })

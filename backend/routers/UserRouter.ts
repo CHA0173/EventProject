@@ -1,5 +1,6 @@
-import * as express from 'express';
+import * as express from 'express'
 import UserService from '../services/UserService';
+
 
 /**
  * User Routes
@@ -7,28 +8,20 @@ import UserService from '../services/UserService';
  * Handle requests from /users
  */
 export default class UserRouter {
-    private userService: UserService;
-
-    constructor(userService: UserService) {
+    constructor(private userService: UserService) {
         this.userService = userService;
     }
 
     getRouter() {
         let router = express.Router();
-        router.get("/", this.get.bind(this));//binds call to current class
-        // router.post()
-        return router;//passes data back to front
+        router.get("/:id", this.getById);
+        return router;
     }
 
-    get(req: any, res: any) {//checks if user's access token matches with the one in 
-    console.log("req",req)
-        return this.userService.getProfile(req.user.id)//responds with user's data
-            .then((data: any) => {//passes data back to getRouter
-                res.json(data)
-            })
-            .catch((err: express.Errback) => {
-                res.status(500).json(err)
-            });
+    getById = (req: any, res: any) => { 
+      console.log("this.userService.getById(req.userid)", this.userService.getById(req.userid))
+        return this.userService.getById(req.params.id)
+            .then((data) => res.json(data))
+            .catch((err: express.Errback) => res.status(500).json(err));
     }
-  
 }
