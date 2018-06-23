@@ -214,6 +214,18 @@ Created Notification page with fakedata, StyleSheet and contant of Search and Pr
 
 ---
 
+
+## version 0.3 June 20, 2018 (Jacob)
+
+Working Local Login
+
+## Added
+
+### Changed
+- AuthRouter.ts
+    - changed the localLogin() to be able to send the id,email and password into jwt payload
+
+    
 ## version 0.3 June 21, 2018 (Lucas)
 
 Created todo list but still have a problem, merga the Attendees and Discussion page, changed some rount( navigator.push... )

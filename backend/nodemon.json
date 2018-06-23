@@ -1,0 +1,6 @@
+{
+  "restartable": "rs",
+  "ext": "js,ts,html",
+  "ignore": ["dist"],
+  "watch": ["./index.js"]
+}

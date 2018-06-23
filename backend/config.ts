@@ -2,7 +2,6 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
-
 export default {
     jwtSecret: 'jsakdlfljadsmview12',// Insert JWT secret here
     jwtSession: {

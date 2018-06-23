@@ -1,6 +1,7 @@
 import * as express from 'express'
 import UserService from '../services/UserService';
 
+
 /**
  * User Routes
  * -------------------------
@@ -18,7 +19,8 @@ export default class UserRouter {
         return router;
     }
 
-    getById = (req: express.Request, res: express.Response) => { 
+    getById = (req: any, res: any) => { 
+      console.log("this.userService.getById(req.userid)", this.userService.getById(req.userid))
         return this.userService.getById(req.params.id)
             .then((data) => res.json(data))
             .catch((err: express.Errback) => res.status(500).json(err));

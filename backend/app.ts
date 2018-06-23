@@ -10,6 +10,8 @@ import ApiRouter        from './routers/ApiRouter';
 import UserService      from './services/UserService';
 import TemplateService  from './services/TemplateService';
 import EventService     from './services/EventService';
+import SignUpService from './services/SignUpService';
+
 
 const knex = Knex(Knexfile[config.env]);
 const app  = express();
@@ -17,8 +19,9 @@ const app  = express();
 const eventService    = new EventService(knex)
 const templateService = new TemplateService(knex);
 const userService     = new UserService(knex);
+const signupService   = new SignUpService(knex);
 const jwtAuth         = jwtStrategy(userService);
-const apiRouter       = new ApiRouter(jwtAuth, userService, templateService, eventService);
+const apiRouter       = new ApiRouter(jwtAuth, userService, templateService, eventService, signupService);
 
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
