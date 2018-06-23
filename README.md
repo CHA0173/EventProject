@@ -213,3 +213,14 @@ Created Notification page with fakedata, StyleSheet and contant of Search and Pr
     - changed fakedata to fix the yellow box
 
 ---
+
+
+## version 0.3 June 20, 2018 (Jacob)
+
+Working Local Login
+
+## Added
+
+### Changed
+- AuthRouter.ts
+    - changed the localLogin() to be able to send the id,email and password into jwt payload
