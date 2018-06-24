@@ -18,14 +18,8 @@ import { Navigator } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { fakedata } from './fakeData';
 
-import { createStore, applyMiddleware } from 'redux'
-import { Provider, connect } from 'react-redux'
-import thunk from 'redux-thunk'
-
-import searchEventsReducers from '../reducers'
+import { connect } from 'react-redux'
 import { fetchingEvents } from '../actions'
-const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
-const store = createStoreWithMiddleware(searchEventsReducers)
 
 interface ISearchProps {
   navigator: Navigator;

@@ -22,7 +22,8 @@ const { width, height } = Dimensions.get('window')
 
 import { Navigator } from 'react-native-navigation';
 import { Card } from 'react-native-elements';
-import { TodoData } from './fakeData'
+import { TodoData } from './fakeData';
+import axios from 'axios';
 
 const ImagePicker = require('react-native-image-picker');
 
@@ -137,6 +138,9 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
     };
 
     ImagePicker.showImagePicker(options, (response) => {
+      if (!response.data) {
+        return
+      }
 
       // const source = { uri: response.uri };
 
@@ -149,6 +153,7 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
       //     'Accept': 'application/json'
       //   }
       // }
+      axios.post('url', {photo: source})
 
       this.setState({
         avatarSource: source
@@ -226,7 +231,7 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
             <View style={{ justifyContent: 'space-between', alignItems: 'center', margin: 20, flexDirection: 'row', maxWidth: 300 }}>
               <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
                 <View style={[styles.avatar, styles.avatarContainer]}>
-                  {this.state.avatarSource === null ? <Text>Select a Photo</Text> :
+                  {this.state.avatarSource === null  ? <Text>Select a Photo</Text> :
                     <Image style={styles.avatar} source={this.state.avatarSource} />
                   }
                 </View>
@@ -252,7 +257,7 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
               style={{ marginHorizontal: 10 }}
               data={TodoData}
               renderItem={({ item }) => this.renderTodoItem(item)}
-              keyExtractor={item => item.id.toString()} //FIXME: key problem
+              keyExtractor={item => item.id.toString()} 
             />
           </View>
           <View>

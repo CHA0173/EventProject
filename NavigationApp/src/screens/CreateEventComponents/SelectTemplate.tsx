@@ -88,6 +88,7 @@ export default class SelectTemplate extends React.Component<ISelectTemplateProps
                     featured
                     height={130}
                     imageContainerStyle={{ borderBottomWidth: 3, borderBottomColor: 'white' }}
+                    onPress={() => this.props.nextStep()}
                 />
 
                 <Modal
