@@ -52,5 +52,10 @@ export default class ApiRouter {
         router.use("/events", this.jwtAuth.authenticate(), eventRouter.getRouter());         //grabs user's events
         router.use("/templates", this.jwtAuth.authenticate(), templateRouter.getRouter());   //grabs user's events
         return router;
+
+
+
+
+        
     }
 }
