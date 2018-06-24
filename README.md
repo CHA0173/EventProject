@@ -225,6 +225,7 @@ Working Local Login
 - AuthRouter.ts
     - changed the localLogin() to be able to send the id,email and password into jwt payload
 
+---
     
 ## version 0.3 June 21, 2018 (Lucas)
 
@@ -248,5 +249,22 @@ Created todo list but still have a problem, merga the Attendees and Discussion p
     - Added a discussion page 
     - Added a TextInput to input the massage, but still have a problem like Create ToDoList
 
+
+---
+
+## version 0.3 June 24, 2018 (Lucas)
+
+Fix yellow box key problem , but still have one key problem in view event page !!
+And create ViewEventComponents ToDoList page
+
+### Added
+
+- ViewEventComponents > ToDoList.tsx
+    - UI and fakeData to display ToDoItem
+
+
+### Changed
+-   Changed all pages when using <FlatList /> 
+    - using keyExtractor to fix the yellow box problem
 
 ---

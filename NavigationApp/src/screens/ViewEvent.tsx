@@ -56,7 +56,7 @@ export default class ViewEvent extends React.Component<{}, {}> {
                     <View style={{ backgroundColor: '#1AA094' }}>
                         <Attendees />
                     </View>
-                    <View style={{ backgroundColor: '#1AA094' }}>
+                    <View style={{ backgroundColor: 'yellow' }}>
                         <Discussion />
                     </View>
                 </IndicatorViewPager>
