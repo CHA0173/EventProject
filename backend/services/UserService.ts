@@ -7,6 +7,9 @@ import { default as joinjs } from 'join-js';
 export default class UserService {
   private resultMaps: Array<Object>;
 
+
+
+  
   constructor(private knex: Knex) {
     this.knex = knex;
     this.resultMaps = [
