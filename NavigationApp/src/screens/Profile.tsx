@@ -240,12 +240,10 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' , paddingHorizontal: 20}}>
                   <Text style={{ fontSize: 20 }}>{TodoData.length}</Text>
                   <Text style={{ fontSize: 20 }}>{EventData.length}</Text>
-                  {/* <Text style={{ fontSize: 20 }}>3</Text> */}
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 5 }}>
                   <Text style={{ color: 'gray' }}>ToDo</Text>
                   <Text style={{ color: 'gray' }}>Event</Text>
-                  {/* <Text style={{ color: 'gray' }}>three</Text> */}
                 </View>
                 <Text style={{ fontSize: 20, margin: 5 }}> user.displayname</Text>
               </View>

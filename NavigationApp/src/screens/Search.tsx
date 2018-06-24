@@ -132,7 +132,7 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
             style={styles.flatstyle}
             data={fakedata}
             renderItem={({ item }) => this.renderItem(item)}
-            keyExtractor={item => item.id.toString()} //FIXME: key problem
+            keyExtractor={item => item.id.toString()} 
           />
         </ScrollView>
       </View>
