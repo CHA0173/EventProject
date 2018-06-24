@@ -10,7 +10,7 @@ const initialState = {
     events: []
 }
 
-const searchEventsReducers = (state = initialState, action) => {
+export const searchEventsReducers = (state = initialState, action) => {
     switch(action.type) {
         case FETCH_EVENTS_REQUEST:
             return { ...state, isFetching: true};
@@ -22,5 +22,3 @@ const searchEventsReducers = (state = initialState, action) => {
             return state
     }
 }
-
-export default searchEventsReducers;

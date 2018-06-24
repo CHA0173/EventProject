@@ -8,6 +8,10 @@
         "moduleResolution": "node",
         "noImplicitReturns": true,
         "noImplicitThis": true,
+<<<<<<< HEAD
+        "noImplicitAny": false,
+=======
+>>>>>>> 34ff660c2a98c788c97cab9abebe2b92073351cb
         "strictNullChecks": true,
         "suppressImplicitAnyIndexErrors": true,
         "noUnusedLocals": true,

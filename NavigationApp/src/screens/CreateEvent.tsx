@@ -16,8 +16,8 @@ import SelectTemplate from './CreateEventComponents/SelectTemplate';
 import ToDoList from './CreateEventComponents/ToDoList';
 import Confirmation from './CreateEventComponents/Confirmation';
 
-import { Provider } from 'react-redux'
 import { createStore } from 'redux'
+import { connect } from 'react-redux'
 import reducer from '../reducers/createReducer'
 
 const store = createStore(reducer)
@@ -30,8 +30,7 @@ interface ICreateEventState {
     step: number
 }
 
-
-export default class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> {
+class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> {
     static navigatorStyle = {
         tabBarHidden: true,
         navBarHeight: 45
@@ -151,11 +150,17 @@ export default class CreateEvent extends React.Component<ICreateEventProps, ICre
 
     render() {
         return (
-            <Provider store={store}>
                 <ScrollView>
                     {this.renderComponent(this.state.step)}
                 </ScrollView>
-            </Provider>
         )
     }
 }
+
+function mapStateToProps (state) {
+    return {
+        step: state.step
+    }
+}
+
+export default connect(mapStateToProps, null)(CreateEvent)

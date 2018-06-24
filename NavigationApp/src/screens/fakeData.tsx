@@ -142,4 +142,55 @@ const TodoData = [{
 
 
 
-export { fakedata, event , TodoData };
+export { fakedata, event, TodoData };
+
+
+export const fakeEvent1 = {
+  "id": 1,
+  "name": "Alex’s birthday boat",
+  "description": "Alex is getting old!",
+  "datetime": "2018 - 07 - 20T01: 00: 00.000Z",
+  "photo": null,
+  "address": "Saikung Pier 1",
+  "private": true,
+  "deposit": "100.00",
+  "todo": [
+    {
+      "id": 1,
+      "type": "boat party",
+      "items": [
+        {
+          "id": 1,
+          "name": "champagne bottles",
+          "quantity": 5,
+          "completed": null
+        },
+        {
+          "id": 2,
+          "name": "birthday cake",
+          "quantity": 10,
+          "completed": null
+        },
+        {
+          "id": 3,
+          "name": "portable speakers",
+          "quantity": 1,
+          "completed": null
+        },
+        {
+          "id": 4,
+          "name": "poker set",
+          "quantity": 1,
+          "completed": null
+        }
+      ]
+    }
+  ],
+  "attendees": [
+    {
+      "id": 1,
+      "name": "Alex",
+      "photo": null
+    }
+  ]
+}
