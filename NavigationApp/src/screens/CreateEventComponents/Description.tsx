@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { FormLabel, FormInput } from 'react-native-elements'
 import { connect } from 'react-redux'
-import { saveDescription } from '../../actions'
+import { saveInfo } from '../../actions'
 
 interface IDescriptionProps {
     nextStep: () => void
@@ -18,16 +18,6 @@ interface IDescriptionProps {
 class Description extends React.Component<IDescriptionProps, {}> {
     constructor(props: IDescriptionProps){
         super(props);
-        this.state = {
-            name: '',
-            description: '',
-            date: '',
-            time: '',
-            address: '',
-            private: '',
-            deposit: '',
-            isactive: true
-        }
     }
 
     render() {
@@ -54,4 +44,4 @@ function mapStateToProps (state) {
     }
 }
 
-export default connect(mapStateToProps, { saveDescription })(Description)
+export default connect(mapStateToProps, { saveInfo })(Description)

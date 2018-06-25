@@ -1,5 +1,5 @@
-export const saveDescription = () => {
+export const saveInfo = () => {
     return {
-        type: 'SAVE_DESCRIPTION'
+        type: 'SAVE_INFO'
     }
 }

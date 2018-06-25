@@ -14,6 +14,7 @@ import Info from './ViewEventComponents/Info'
 import ToDoList from './ViewEventComponents/ToDoList'
 import Attendees from './ViewEventComponents/Attendees'
 import Discussion from './ViewEventComponents/Discussion'
+import { fakeEvent1 } from './fakeData'
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -55,7 +56,7 @@ export default class ViewEvent extends React.Component<{}, {}> {
                     <View style={{ backgroundColor: '#1AA094' }}>
                         <Attendees />
                     </View>
-                    <View style={{ backgroundColor: '#1AA094' }}>
+                    <View style={{ backgroundColor: 'yellow' }}>
                         <Discussion />
                     </View>
                 </IndicatorViewPager>
