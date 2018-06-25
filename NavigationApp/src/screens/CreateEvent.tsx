@@ -5,9 +5,12 @@ import {
     TouchableOpacity,
     Switch,
     ScrollView,
-    StyleSheet
+    StyleSheet,
+    Dimensions,
+    Image
 } from 'react-native';
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
+
 
 import StepIndicator from 'react-native-step-indicator';
 
@@ -19,6 +22,11 @@ import Confirmation from './CreateEventComponents/Confirmation';
 import { createStore } from 'redux'
 import { connect } from 'react-redux'
 import reducer from '../reducers/createReducer'
+import { PixelRatio } from 'react-native';
+
+const ImagePicker = require('react-native-image-picker');
+const { width } = Dimensions.get('window')
+
 
 const store = createStore(reducer)
 
@@ -30,7 +38,9 @@ interface IEvent {
     name: string,
     description: string,
     address: string,
-    deposit: string
+    deposit: string,
+    ImgSource: any,
+    uri: string
 }
 
 interface ICreateEventState {
@@ -47,7 +57,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
     };
     static navigatorButtons = {
         leftButtons: [{}]
-      };
+    };
 
     constructor(props: ICreateEventProps) {
         super(props);
@@ -57,7 +67,9 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                 name: '',
                 description: '',
                 address: '',
-                deposit: ''
+                deposit: '',
+                ImgSource: null,
+                uri: '',
             },
             type: [],
             todolist: []
@@ -108,15 +120,35 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                 })
                 return (
                     <View>
+                        <View>
+                            <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
+                                <View style={{
+                                    borderColor: '#9B9B9B',
+                                    borderWidth: 1 / PixelRatio.get(),
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    width: width,
+                                    height: 300
+
+                                }}>
+                                    {this.state.ImgSource === null ? <Text>Select a Photo</Text> :
+                                        <Image source={this.state.ImgSource} style={{
+                                            width: width,
+                                            height: 300
+                                        }} />
+                                    }
+                                </View>
+                            </TouchableOpacity>
+                        </View>
                         <Switch />
                         <FormLabel>Name</FormLabel>
-                        <FormInput onChangeText={(text) => this.setState({name: text})} />
+                        <FormInput onChangeText={(text) => this.setState({ name: text })} />
                         <FormLabel>Description</FormLabel>
-                        <FormInput onChangeText={(text) => this.setState({description: text})} />
+                        <FormInput onChangeText={(text) => this.setState({ description: text })} />
                         <FormLabel>Address</FormLabel>
-                        <FormInput onChangeText={(text) => this.setState({address: text})} />
+                        <FormInput onChangeText={(text) => this.setState({ address: text })} />
                         <FormLabel>Deposit</FormLabel>
-                        <FormInput onChangeText={(text) => this.setState({deposit: text})} />
+                        <FormInput onChangeText={(text) => this.setState({ deposit: text })} />
                     </View>
                 )
 
@@ -137,8 +169,8 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                         }
                     ]
                 })
-                return <SelectTemplate  nextStep={this.nextStep.bind(this)}
-                                        prevStep={this.prevStep.bind(this)} />
+                return <SelectTemplate nextStep={this.nextStep.bind(this)}
+                    prevStep={this.prevStep.bind(this)} />
 
             case 3:
                 this.props.navigator.setTitle({
@@ -178,16 +210,41 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
         }
     }
 
+    public selectPhotoTapped = () => {
+        const options = {
+            quality: 1.0,
+            maxWidth: 500,
+            maxHeight: 500,
+            storageOptions: {
+                skipBackup: true
+            }
+        };
+
+        ImagePicker.showImagePicker(options, (response) => {
+            if (!response.data) {
+                return
+            }
+
+            const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+            // axios.post('url', { photo: source })
+
+            this.setState({
+                ImgSource: source
+            });
+        }
+        );
+    }
     render() {
         return (
-                <ScrollView>
-                    {this.renderComponent(this.state.step)}
-                </ScrollView>
+            <ScrollView>
+                {this.renderComponent(this.state.step)}
+            </ScrollView>
         )
     }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     return {
         step: state.step
     }
