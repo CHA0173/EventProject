@@ -9,7 +9,7 @@ export default class UserService {
 
 
 
-  
+
   constructor(private knex: Knex) {
     this.knex = knex;
     this.resultMaps = [
@@ -38,7 +38,7 @@ export default class UserService {
     ];
   }
 
-  getById(userid: number) {
+  getById(userid: any) {
     const self = this
     return (
       this.knex("users")
@@ -102,4 +102,7 @@ export default class UserService {
         console.log(err);
       });
   }
+
+  // postById()
+
 }
