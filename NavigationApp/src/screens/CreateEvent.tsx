@@ -35,6 +35,7 @@ interface ICreateEventProps {
 }
 
 interface IEvent {
+    private: boolean,
     name: string,
     description: string,
     address: string,
@@ -64,6 +65,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
         this.state = {
             step: 1,
             event: {
+                private: false,
                 name: '',
                 description: '',
                 address: '',
@@ -99,6 +101,8 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                 this.setState({
                     step: this.state.step - 1
                 })
+            } else if (event.id === 'done') {
+                alert('HI')
             }
         }
     }
@@ -140,7 +144,23 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                                 </View>
                             </TouchableOpacity>
                         </View>
-                        <Switch />
+                        <View style={{ justifyContent: 'space-between', flexDirection: 'row', margin: 10, paddingHorizontal: 10 }}>
+                            <Text>Private</Text>
+                            {this.state.event.private ?
+                                <Text style={{color: 'red'}}>Now your Event will be private</Text> : null
+                            }
+                            <Switch
+                                value={this.state.event.private}
+                                onValueChange={(value) => {
+                                    const newPrivate = { ...this.state.event }
+                                    newPrivate.private = value
+
+                                    this.setState({
+                                        event: newPrivate
+                                    })
+                                }}
+                            />
+                        </View>
                         <FormLabel>Name</FormLabel>
 
                         <FormInput
@@ -236,6 +256,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                             title: 'Prev',
                             id: 'prev'
                         }
+                        
                     ]
                 })
                 return <Confirmation event={this.state.event} />

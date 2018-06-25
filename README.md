@@ -269,12 +269,16 @@ And create ViewEventComponents ToDoList page
 
 ---
 
-## version 0.3 June 24, 2018 (Lucas)
+## version 0.3 June 25, 2018 (Lucas)
 
 Now we can show the image to Confirmation page
 
 ### Added
+- action
+    - auth.tsx
 
+- reducers
+    - auth.tsx
 
 ### Changed
 -  editing confirmation.tsx
