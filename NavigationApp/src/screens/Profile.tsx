@@ -1,8 +1,3 @@
-/**
- * Sample React Native Profile
- * https://github.com/facebook/react-native
- * @flow
- */
 
 import * as React from 'react';
 import {
@@ -147,6 +142,7 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
       
       // You can also display the image using data:
       const source = { uri: 'data:image/jpeg;base64,' + response.data };
+      
       // const header = {
       //   method: 'post',
       //   headers: {
