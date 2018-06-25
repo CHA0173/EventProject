@@ -7,27 +7,30 @@ import {
 } from 'react-native';
 import { FormLabel, FormInput } from 'react-native-elements'
 
-
-interface IViewEventProps {
+interface IEvent {
     name: string,
+    description: string,
+    address: string,
+    deposit: string
 }
 
-export default class ViewEvent extends React.Component<{}, {}> {
-    constructor(props: {}) {
+interface IConfirmationProps {
+    event: IEvent,
+}
+
+export default class Confirmation extends React.Component<IConfirmationProps, {}> {
+    constructor(props: IConfirmationProps) {
         super(props);
     }
     render() {
         return (
             <View>
-                <Switch />
-                <FormLabel>Name</FormLabel>
-                <FormInput onChangeText={() => { }} />
-                <FormLabel>Description</FormLabel>
-                <FormInput onChangeText={() => { }} />
-                <FormLabel>Address</FormLabel>
-                <FormInput onChangeText={() => { }} />
-                <FormLabel>Deposit</FormLabel>
-                <FormInput onChangeText={() => { }} />
+                <Text>
+                    {this.props.event.name}
+                    {this.props.event.description}
+                    {this.props.event.address}
+                    {this.props.event.deposit}
+                </Text>
             </View>
         )
     }

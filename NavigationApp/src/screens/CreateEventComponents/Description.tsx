@@ -8,40 +8,34 @@ import {
     ScrollView
 } from 'react-native';
 import { FormLabel, FormInput } from 'react-native-elements'
-import { connect } from 'react-redux'
-import { saveInfo } from '../../actions'
 
 interface IDescriptionProps {
-    nextStep: () => void
 }
 
-class Description extends React.Component<IDescriptionProps, {}> {
+export default class Description extends React.Component<IDescriptionProps, {}> {
     constructor(props: IDescriptionProps){
         super(props);
+        this.state = {
+            name: '',
+            description: '',
+            address: '',
+            deposit: ''
+        }
     }
-
+    
     render() {
         return (
             <View>
                 <Switch />
                 <FormLabel>Name</FormLabel>
-                <FormInput onChangeText={() => { }} />
+                <FormInput onChangeText={(text) => this.setState({name: text})} />
                 <FormLabel>Description</FormLabel>
-                <FormInput onChangeText={() => { }} />
+                <FormInput onChangeText={(text) => this.setState({description: text})} />
                 <FormLabel>Address</FormLabel>
-                <FormInput onChangeText={() => { }} />
+                <FormInput onChangeText={(text) => this.setState({address: text})} />
                 <FormLabel>Deposit</FormLabel>
-                <FormInput onChangeText={() => { }} />
-                <Button onPress={this.props.nextStep} title="next" />
+                <FormInput onChangeText={(text) => this.setState({deposit: text})} />
             </View>
         )
     }
 }
-
-function mapStateToProps (state) {
-    return {
-        
-    }
-}
-
-export default connect(mapStateToProps, { saveInfo })(Description)
