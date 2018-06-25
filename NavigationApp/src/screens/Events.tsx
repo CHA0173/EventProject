@@ -4,7 +4,8 @@ import {
   Text,
   View,
   TouchableOpacity,
-  FlatList
+  FlatList,
+  ScrollView,
 } from 'react-native';
 import { Card, ListItem, Icon, ButtonGroup } from 'react-native-elements';
 import { Navigator, NavigatorButton } from 'react-native-navigation';
@@ -54,28 +55,38 @@ export default class Events extends React.Component<IEventsProps, IEventsStates>
     const buttons = ['Upcoming', 'Created']
 
     return (
-      <View>
+      <View style={{flex: 1}}>
         <ButtonGroup
           onPress={this.updateIndex}
           selectedIndex={this.state.selectedIndex}
           buttons={buttons}
           containerStyle={{ height: 30 }}
         />
-        <View>
-          <TouchableOpacity onPress={() => this.props.navigator.push({
-            screen: 'ViewEventScreen',
-            title: event.name,
-            navigatorStyle: { tabBarHidden: true }
-          })}>
-            <Card
-              title={event.name}
-              image={event.image}>
-              <Text style={{ marginBottom: 10 }}>
-                {event.description}
-              </Text>
-            </Card>
-          </TouchableOpacity>
-        </View>
+        <ScrollView style={{flex: 1}}>
+          <FlatList
+            data={event}
+            renderItem={(event) => {
+              return (
+                <View>
+                  <TouchableOpacity onPress={() => this.props.navigator.push({
+                    screen: 'ViewEventScreen',
+                    title: event.item.name,
+                    navigatorStyle: { tabBarHidden: true }
+                  })}>
+                    <Card
+                      title={event.item.name}
+                      image={event.item.image}>
+                      <Text style={{ marginBottom: 10 }}>
+                        {event.item.description}
+                      </Text>
+                    </Card>
+                  </TouchableOpacity>
+                </View>
+              )
+            }}
+            keyExtractor={data => data.id.toString()}
+          />
+        </ScrollView>
       </View>
     )
   }

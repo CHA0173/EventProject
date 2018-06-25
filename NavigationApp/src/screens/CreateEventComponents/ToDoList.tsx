@@ -50,11 +50,6 @@ export default class ToDoList extends React.Component<{}, IToDoListStates> {
 
   }
 
-  // public DeleteItem = () => {
-  //   this.setState({
-  //     // List: []
-  //   })
-  // }
 
   public render() {
     return (
@@ -78,47 +73,48 @@ export default class ToDoList extends React.Component<{}, IToDoListStates> {
             placeholder='Quantity'
             keyboardType='numeric'
           />
-          <View style={{ justifyContent: 'center', alignItems: 'center', left: 10 }}>
-            <Icon.Button
+          <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center', left: 10 }}>
+            <Icon
               name='check'
               color='green'
-
               size={18}
               onPress={this.renderToDoItem}
             />
-          </View>
+          </TouchableOpacity>
         </View>
 
-        <View style={{ flex: 1, margin: 20, padding: 20, paddingBottom: 0, marginBottom: 40,  borderRadius: 10, borderColor: 'gray', borderWidth: 1, height:400 }}>
+        <View style={{ flex: 1, margin: 20, padding: 20, paddingBottom: 0, marginBottom: 40, borderRadius: 10, borderColor: 'gray', borderWidth: 1, height: 400 }}>
           <View >
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <Text>Action</Text>
               <Text>Item</Text>
               <Text>Quantity</Text>
             </View>
 
             <View>
-              <ScrollView style={{height: 300}}>
+              <ScrollView style={{ height: 300 }}>
 
                 {
                   this.state.List.map((List, L) => (
-                    <View key={L} style={{flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center'}}>
-                    <View style={{ width: '20%' }}>
-                      <Icon.Button
-                        name='remove'
-                        color='red'
-                        size={10}
+                    <View key={L} style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
+                      <TouchableOpacity style={{ width: '20%' }}>
+                        <Icon
+                          name='remove'
+                          color='red'
+                          // backgroundColor='transparent'
+                          size={18}
 
-                        onPress={() => {
-                          const newList = [...this.state.List]
-                          newList.splice(L, 1)
-                          this.setState({
-                            List: newList
-                          })
-                        }}
+                          onPress={() => {
+                            const newList = [...this.state.List]
+                            newList.splice(L, 1)
+                            this.setState({
+                              List: newList
+                            })
+                          }}
 
-                      />
-                      </View>
-                      <View style={{ justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 20,  width: '60%' }}>
+                        />
+                      </TouchableOpacity>
+                      <View style={{ justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 20, width: '60%' }}>
                         <TextInput
                           key={L + 'one'}
                           value={List.Name}
