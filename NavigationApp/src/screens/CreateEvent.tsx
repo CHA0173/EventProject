@@ -7,14 +7,14 @@ import {
     ScrollView,
     StyleSheet,
     Dimensions,
-    Image
+    Image,
+    TextInput
 } from 'react-native';
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
 
 
 import StepIndicator from 'react-native-step-indicator';
 
-import Description from './CreateEventComponents/Description';
 import SelectTemplate from './CreateEventComponents/SelectTemplate';
 import ToDoList from './CreateEventComponents/ToDoList';
 import Confirmation from './CreateEventComponents/Confirmation';
@@ -131,8 +131,8 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                                     height: 300
 
                                 }}>
-                                    {this.state.ImgSource === null ? <Text>Select a Photo</Text> :
-                                        <Image source={this.state.ImgSource} style={{
+                                    {this.state.event.ImgSource === null ? <Text>Select a Photo</Text> :
+                                        <Image source={this.state.event.ImgSource} style={{
                                             width: width,
                                             height: 300
                                         }} />
@@ -142,13 +142,45 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                         </View>
                         <Switch />
                         <FormLabel>Name</FormLabel>
-                        <FormInput onChangeText={(text) => this.setState({ name: text })} />
+
+                        <FormInput
+                            defaultValue={this.state.event.name}
+                            onChangeText={(text) => {
+                                const newName = { ...this.state.event }
+                                newName.name = text
+
+                                this.setState({ event: newName })
+                            }} />
+
                         <FormLabel>Description</FormLabel>
-                        <FormInput onChangeText={(text) => this.setState({ description: text })} />
+                        <FormInput
+                            defaultValue={this.state.event.description}
+                            onChangeText={(text) => {
+                                const newDescription = { ...this.state.event }
+                                newDescription.description = text
+
+                                this.setState({ event: newDescription })
+                            }} />
+
                         <FormLabel>Address</FormLabel>
-                        <FormInput onChangeText={(text) => this.setState({ address: text })} />
+                        <FormInput
+                            defaultValue={this.state.event.address}
+                            onChangeText={(text) => {
+                                const newAddress = { ...this.state.event }
+                                newAddress.address = text
+
+                                this.setState({ event: newAddress })
+                            }} />
+
                         <FormLabel>Deposit</FormLabel>
-                        <FormInput onChangeText={(text) => this.setState({ deposit: text })} />
+                        <FormInput
+                            defaultValue={this.state.event.deposit}
+                            onChangeText={(text) => {
+                                const newDeposit = { ...this.state.event }
+                                newDeposit.deposit = text
+
+                                this.setState({ event: newDeposit })
+                            }} />
                     </View>
                 )
 
@@ -229,8 +261,10 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
 
             // axios.post('url', { photo: source })
 
+            const newImgSource = { ...this.state.event }
+            newImgSource.ImgSource = source
             this.setState({
-                ImgSource: source
+                event: newImgSource
             });
         }
         );
