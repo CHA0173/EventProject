@@ -315,7 +315,7 @@ export default class EventService {
       .join("todo", "todo.events_id", "events.id")
       .join("items", "items.todo_id", "todo.id")
       .join("events_users", "events_users.events_id", "events.id")
-      .join("discussion", "discussion.events_id", "events.id")
+      .leftJoin("discussion", "discussion.events_id", "events.id")
       .leftJoin("users as discussionusers", "discussion.users_id", "discussionusers.id")
       .leftJoin("users as itemusers", "items.users_id", "itemusers.id")
       .join("users", "events_users.users_id", "users.id")
