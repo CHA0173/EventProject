@@ -1,7 +1,4 @@
 import * as Knex from 'knex';
-// import * as path from "path";
-// import * as fs from "fs-extra";
-// import { Promise as BlueBirdPromise } from "bluebird";
 import { default as joinjs } from 'join-js';
 
 export default class UserService {
@@ -75,50 +72,7 @@ export default class UserService {
           this.on("todo.events_id", "eItem.id")
           .andOn("todo.isactive", self.knex.raw(true));
         })
-          
-        // .leftJoin("events_users as eu", function() {
-        //   this.on("eu.users_id", "users.id")
-        //   .andOn("pastEvents.id", "eu.events.id")
-        // })
-        // .innerJoin("events as pastEvents", "eu.users_id", "users.id")
-        // .leftJoin("items", function() {
-        //   this.on("items.users_id", "users.id")
-        // })
-        // .leftJoin("todo", function() {
-        //   this.on("todo.id", "items.todo_id")
-        // })
-        // .leftJoin("events as eItem", function() {
-        //   this.on("todo.events_id", "eItem.id")
-        // })
         .where("users.id", userid)
-        
-
-        // .leftJoin("events_users", "events_users.users_id", "users.id")
-        // .leftJoin("events", function() {
-        //   this.on("events.id", "events_users.events_id").andOn(
-        //     "events.isactive",self.knex.raw(true));
-        // })
-        // .leftJoin("items", function() {
-        //   this.on("items.users_id", "users.id")
-        //   .andOn("items.isactive", self.knex.raw(true));
-        // })
-        // .leftJoin("events as itemEvent", function() {
-        //   this.on("items.users_id", "users.id")
-        //     .andOn("todo.id", "items.todo_id")
-        //     .andOn("todo.events_id", "events.id")
-        //   .andOn("items.isactive", self.knex.raw(true));
-        // })
-        // .leftJoin("todo", function() {
-        //   this.on("todo.id", "items.todo_id")
-        //   .andOn(
-        //     "todo.events_id",
-        //     "events.id"
-        //   );
-        // })
-        // .where("users.id", userid)
-        // // .andWhere("events.isactive", true)
-        // // .andWhere("items.isactive", true)
-        // .andWhere("users.isactive", true)
         .then(result => {
           return joinjs.mapOne(
             result,
@@ -141,9 +95,23 @@ export default class UserService {
       .then(value => {
         return value;
       })
-      // .catch(err => {
-      //   console.log(err);
-      // });
+
   }
 
+  async updateById(body:any) {
+    return this.knex.transaction(async (trx) => {
+        try {
+          await trx("users")
+          .where("users.id", body.userid)
+          .update({
+            photo: body.photo
+          })
+          return true;
+        }
+        catch (e) {
+          return false;
+        }
+      })
+    }
+    
 }

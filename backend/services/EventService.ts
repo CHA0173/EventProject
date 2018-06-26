@@ -130,7 +130,7 @@ export default class EventService {
   }
 
   //Completed
-  async create(data: any, file: Express.Multer.File) {
+  async create(data: any /*,file: Express.Multer.File*/) {
     //why does async need to be called twice?
     return this.knex.transaction(async (trx) => {
       try {
@@ -139,6 +139,7 @@ export default class EventService {
             name: data.event_name,
             description: data.description,
             datetime: data.datetime,
+            photo: data.photo,//can insert base64 of photo here directly, no need to use multer/file buffer
             address: data.address,
             private: true,
             deposit: data.deposit,
@@ -175,9 +176,9 @@ export default class EventService {
               isactive: true
             }).returning("events_id");
 
-          if (file) {
-            await this.writeFile(eventid[0], file.originalname, file, trx);
-          }
+          // if (file) {
+          //   await this.writeFile(eventid[0], file.originalname, file, trx);
+          // }
           return eventid[0];
         }
       
@@ -200,6 +201,7 @@ export default class EventService {
             name: body.event.name,
             description: body.event.description,
             datetime: body.event.datetime,
+            photo: body.event.photo,
             address: body.event.address,
             private: body.event.private,
             deposit: body.event.deposit
@@ -226,21 +228,6 @@ export default class EventService {
                   console.log(err);
                 })
             })
-          // await BlueBirdPromise.map(body.discussion,    //unfinished updating discussions
-          //   (item: {
-          //     users_id: number, events_id:number,
-          //     comment: string
-          //   }) => {
-          //     return trx("discussion")
-          //       .where("id", item.id)
-          //       .update({
-          //         name: item.name,
-          //         quantity: item.quantity,
-          //         users_id: item.user_id,
-          //         isactive: item.isactive,
-          //         completed: item.completed
-          //       })
-          //   })
           return true
         }
         return false
@@ -330,11 +317,13 @@ export default class EventService {
 
 
   //Completed
-  getByName(name: string) {
+  getByName(name: any) {
+    console.log("search parameter:", name)
     return this.knex("events")
       .select("events.id as events_id", "events.name", "events.photo", "events.datetime")
-      .where("name", "ilike", `%${name}%`)
+      .where("events.name", "ilike", `%${name}%`)
       .andWhere("events.isactive", true);
+      
   }
 
   //Completed
@@ -342,5 +331,23 @@ export default class EventService {
     return this.knex("events")
       .select("events.id as events_id", "events.name", "events.photo", "events.datetime")
       .where("events.isactive", true);
+  }
+
+  addComment(body: any) {
+    console.log("body", body)
+    return this.knex.transaction(async (trx) => {
+      try {
+        await trx("discussion")
+          .insert({
+            users_id: body.userid,
+            events_id: body.eventid,
+            comment: body.comment,
+            isactive: true
+          })
+        return true
+      } catch (err) {
+        return false
+      }
+    })
   }
 }

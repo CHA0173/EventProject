@@ -68,6 +68,7 @@ exports.up = (knex: Knex) => {
             discussion.foreign("users_id").references("users.id");
             discussion.integer("events_id").unsigned();
             discussion.foreign("events_id").references("events.id");
+            discussion.timestamps(false, true);
             discussion.boolean("isactive");
             discussion.string("comment");
         })
