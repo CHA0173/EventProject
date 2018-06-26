@@ -268,3 +268,20 @@ And create ViewEventComponents ToDoList page
     - using keyExtractor to fix the yellow box problem
 
 ---
+
+## version 0.3 June 25, 2018 (Lucas)
+
+Now we can show the image to Confirmation page
+
+### Added
+- action
+    - auth.tsx
+
+- reducers
+    - auth.tsx
+
+### Changed
+-  editing confirmation.tsx
+    - will show the data from event info
+
+---
