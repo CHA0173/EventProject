@@ -317,7 +317,7 @@ export default class EventService {
 
 
   //Completed
-  getByName(name: any) {
+  getByName(name: string) {
     console.log("search parameter:", name)
     return this.knex("events")
       .select("events.id as events_id", "events.name", "events.photo", "events.datetime")
