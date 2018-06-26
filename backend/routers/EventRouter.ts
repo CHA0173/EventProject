@@ -18,19 +18,26 @@ export default class EventRouter {
   getRouter() {
     const router = express.Router();
     router.get("/", this.getAll)
-    router.get("/upcoming/", this.getUpcoming); 
+    router.get("/:id/upcoming/", this.getUpcoming); 
     router.get("/:id", this.getById);
-    router.get("/:id/discussion", this.getCommentsById);
+    
     
 
     router.post("/", upload.single("eventPhoto"), this.post)
-    router.put("/", this.put);
+    router.put("/:id/join", this.joinEvent)
+    router.put("/:id", this.put);
     router.delete("/:id", this.delete);
     return router;
   }
 
-  getCommentsById = (req:express.Request, res:express.Response) => {
-    return this.eventService.getCommentsById(req.params.id)//eventid
+  // getCommentsById = (req:express.Request, res:express.Response) => {
+  //   return this.eventService.getCommentsById(req.params.id)//eventid
+  //     .then((data) => res.json(data))
+  //   .catch((err: express.Errback) => res.status(500).json(err))
+  // }
+
+  joinEvent = (req:express.Request, res:express.Response) => {
+    return this.eventService.joinEvent(req.body)
       .then((data) => res.json(data))
     .catch((err: express.Errback) => res.status(500).json(err))
   }
@@ -48,7 +55,7 @@ export default class EventRouter {
   }
 
   getUpcoming = (req: express.Request, res: express.Response) => {  // checks if user's access token matches with the one in 
-    return this.eventService.getUpcomingByUserId(req.query.userid)    // cannot read property myEvents of undefined
+    return this.eventService.getUpcomingByUserId(req.params.id)    // cannot read property myEvents of undefined
         .then((data) => res.json(data))
         .catch((err: express.Errback) => res.status(500).json(err));
   }

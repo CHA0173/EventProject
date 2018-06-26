@@ -7,6 +7,8 @@ export default class TemplateService {
         this.knex = knex
     }
 
+
+    //Completed
     getAll() {
         return this.knex("todo as td")
             .select("td.id as td_id", "td.type", "td.package", "items.name as items_name", "items.quantity")

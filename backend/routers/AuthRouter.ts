@@ -25,7 +25,7 @@ export default class AuthRouter {
   
 
 
-  
+  //Completed  
   localLogin = (req: any, res: any) => {
     const email = req.body.email;
     const password = req.body.password;

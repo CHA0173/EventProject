@@ -1,0 +1,22 @@
+[{
+    "users_id": "1",
+    "events_id": "1",
+    "isactive": true,
+    "comment": "Can someone bring softdrinks?"
+},{
+    "users_id": "2",
+    "events_id": "1",
+    "isactive": true,
+    "comment": "Sure I'll bring some"
+},{
+    "users_id": "3",
+    "events_id": "1",
+    "isactive": true,
+    "comment": "Where are we meeting?"
+},{
+    "users_id": "4",
+    "events_id": "2",
+    "isactive": true,
+    "comment": "Looking forward to the wedding!"
+}
+]
