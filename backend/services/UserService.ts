@@ -30,7 +30,7 @@ export default class UserService {
       {
         mapId: "itemsMap",
         idProperty: "id",
-        properties: ["name", "quantity", "completed"]
+        properties: ["name", "quantity", "completed", "itemEventId"]
       }
     ];
   }
@@ -55,28 +55,70 @@ export default class UserService {
           "items.id           as items_id",
           "items.name         as items_name",
           "items.quantity     as items_quantity",
-          "items.completed    as items_completed"
+          "items.completed    as items_completed",
+          "eItem.id           as items_itemEventId"
         )
-        .leftJoin("events_users", "events_users.users_id", "users.id")
+         .leftJoin("events_users", "events_users.users_id", "users.id")
         .leftJoin("events", function() {
           this.on("events.id", "events_users.events_id").andOn(
             "events.isactive",self.knex.raw(true));
         })
-        .leftJoin("items", function() {
+          .leftJoin("items", function() {
           this.on("items.users_id", "users.id")
           .andOn("items.isactive", self.knex.raw(true));
         })
-        .leftJoin("todo", function() {
+          .leftJoin("todo", function() {
           this.on("todo.id", "items.todo_id")
-          .andOn(
-            "todo.events_id",
-            "events.id"
-          );
+          .andOn("todo.isactive", self.knex.raw(true));
         })
+         .leftJoin("events as eItem", function() {
+          this.on("todo.events_id", "eItem.id")
+          .andOn("todo.isactive", self.knex.raw(true));
+        })
+          
+        // .leftJoin("events_users as eu", function() {
+        //   this.on("eu.users_id", "users.id")
+        //   .andOn("pastEvents.id", "eu.events.id")
+        // })
+        // .innerJoin("events as pastEvents", "eu.users_id", "users.id")
+        // .leftJoin("items", function() {
+        //   this.on("items.users_id", "users.id")
+        // })
+        // .leftJoin("todo", function() {
+        //   this.on("todo.id", "items.todo_id")
+        // })
+        // .leftJoin("events as eItem", function() {
+        //   this.on("todo.events_id", "eItem.id")
+        // })
         .where("users.id", userid)
-        // .andWhere("events.isactive", true)
-        // .andWhere("items.isactive", true)
-        .andWhere("users.isactive", true)
+        
+
+        // .leftJoin("events_users", "events_users.users_id", "users.id")
+        // .leftJoin("events", function() {
+        //   this.on("events.id", "events_users.events_id").andOn(
+        //     "events.isactive",self.knex.raw(true));
+        // })
+        // .leftJoin("items", function() {
+        //   this.on("items.users_id", "users.id")
+        //   .andOn("items.isactive", self.knex.raw(true));
+        // })
+        // .leftJoin("events as itemEvent", function() {
+        //   this.on("items.users_id", "users.id")
+        //     .andOn("todo.id", "items.todo_id")
+        //     .andOn("todo.events_id", "events.id")
+        //   .andOn("items.isactive", self.knex.raw(true));
+        // })
+        // .leftJoin("todo", function() {
+        //   this.on("todo.id", "items.todo_id")
+        //   .andOn(
+        //     "todo.events_id",
+        //     "events.id"
+        //   );
+        // })
+        // .where("users.id", userid)
+        // // .andWhere("events.isactive", true)
+        // // .andWhere("items.isactive", true)
+        // .andWhere("users.isactive", true)
         .then(result => {
           return joinjs.mapOne(
             result,
