@@ -30,7 +30,7 @@ import { Ievent } from '../models/events';
 const ImagePicker = require('react-native-image-picker');
 const { width } = Dimensions.get('window')
 
-const store = createStore(reducer)
+// const store = createStore(reducer)
 
 interface ICreateEventProps {
   navigator: any,
@@ -42,7 +42,12 @@ interface ICreateEventProps {
     photo: any,
     address: string,
     private_event: boolean,
-    deposit: string, ) => void,
+    deposit: string,
+    todo: any,
+    attendees: any,
+    discussion: any,  
+     ) => void,
+    events: any
 }
 
 
@@ -116,7 +121,11 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
           this.state.event.address,
           this.state.event.private_event,
           this.state.event.deposit,
+          this.state.event.todo,
+          this.state.event.attendees,
+          this.state.event.discussion,
         )
+        alert(JSON.stringify(this.props.events))
       }
     }
   }
@@ -348,22 +357,13 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
 
 const mapStateToProps = (state) => {
   return {
-    step: state.step
+    events: state.event.events
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  createEvent: (id,
-    name,
-    description,
-    datetime,
-    photo,
-    address,
-    private_event,
-    deposit,
-    todo,
-    attendees,
-    discussion, ) => dispatch(addEvent(id,
+  return {
+    createEvent: (id,
       name,
       description,
       datetime,
@@ -373,7 +373,18 @@ const mapDispatchToProps = (dispatch) => {
       deposit,
       todo,
       attendees,
-      discussion, ))
+      discussion, ) => dispatch(addEvent(id,
+        name,
+        description,
+        datetime,
+        photo,
+        address,
+        private_event,
+        deposit,
+        todo,
+        attendees,
+        discussion, ))
+  }
 }
 
 
