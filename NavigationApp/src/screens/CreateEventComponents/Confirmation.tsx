@@ -18,7 +18,8 @@ interface IEvent {
     address: string,
     deposit: string
     ImgSource: any,
-    uri: string
+    uri: string,
+    dateTime: string,
 }
 
 interface IConfirmationProps {
@@ -43,6 +44,7 @@ export default class Confirmation extends React.Component<IConfirmationProps, {}
                     {this.props.event.name}
                     {this.props.event.description}
                     {this.props.event.address}
+                    {this.props.event.dateTime}
                     {this.props.event.deposit}
                 </Text>
             </View>

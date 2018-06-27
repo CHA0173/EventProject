@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 const { width, height } = Dimensions.get("window")
 import { Button } from 'react-native-elements'
-import { Navigator } from 'react-native-navigation';
+import { Navigator, Navigation } from 'react-native-navigation';
 
 interface IStartProps {
   navigator: Navigator
@@ -71,7 +71,44 @@ export default class Start extends React.Component<IStartProps, IStartState> {
               iconRight={{ name: 'input' }}
               title='Login'
               buttonStyle={{width: 300, borderRadius: 25, backgroundColor: '#d15953', marginBottom: 20}}
-              onPress={() => {}}
+              onPress={() => {
+                Navigation.startTabBasedApp({
+                  tabs: [
+                    {
+                      label: 'Search',
+                      screen: 'SearchTabScreen', // this is a registered name for a screen
+                      icon: require('../img/search.png'),
+                      selectedIcon: require('../img/search.png'), // iOS only
+                      title: 'SearchBar',
+                      navigatorStyle: { navBarTitleTextCentered: true, navBarHidden: true}
+                    },
+                    {
+                      label: 'Events',
+                      screen: 'EventsTabScreen',
+                      icon: require('../img/Calendar1.png'),
+                      selectedIcon: require('../img/Calendar1.png'), // iOS only
+                      title: 'Events',
+                      navigatorStyle: { navBarTitleTextCentered: true }
+                    },
+                    {
+                      label: 'Notification',
+                      screen: 'NotificationTabScreen',
+                      icon: require('../img/notification3.png'),
+                      selectedIcon: require('../img/notification3.png'), // iOS only
+                      title: 'Notification',
+                      navigatorStyle: { navBarTitleTextCentered: true }
+                    },
+                    {
+                      label: 'Profile',
+                      screen: 'ProfileTabScreen',
+                      icon: require('../img/profile.png'),
+                      selectedIcon: require('../img/profile.png'), // iOS only
+                      title: 'Profile',
+                      navigatorStyle: { navBarTitleTextCentered: true }
+                    }
+                  ]
+                })
+              }}
             />
               <Button
                 onPress={() => {

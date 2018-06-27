@@ -3,7 +3,6 @@ import { store } from './src/store';
 import { Provider } from 'react-redux';
 
 // import App from './App';
-// import LandingPage from './pages/LandingPage';
 import Start from './src/screens/Start';
 import LogIn from './src/screens/Login';
 import SignUp from './src/screens/SignUp';
@@ -17,7 +16,6 @@ import ViewEvent from './src/screens/ViewEvent';
 import CreateEvent from './src/screens/CreateEvent';
 
 // one page no tab ( LandingPage )
-// Navigation.registerComponent('LandingScreen', () => LandingPage,  Provider);
 Navigation.registerComponent('StartScreen', () => Start, store, Provider);
 
 //drawer
@@ -29,7 +27,6 @@ Navigation.registerComponent('SearchTabScreen', () => Search, store, Provider);
 Navigation.registerComponent('EventsTabScreen', () => Events, store, Provider);
 Navigation.registerComponent('NotificationTabScreen', () => Notification, store, Provider);
 
-// action in Stack without tab
 Navigation.registerComponent('LogInScreen', () => LogIn, store, Provider);
 Navigation.registerComponent('SignUpScreen', () => SignUp, store, Provider);
 Navigation.registerComponent('InfoPushedScreen', () => Info, store, Provider);
@@ -37,17 +34,8 @@ Navigation.registerComponent('ViewEventScreen', () => ViewEvent, store, Provider
 Navigation.registerComponent('CreateEventScreen', () => CreateEvent, store, Provider);
 
 
-
-// Landing page
-// Navigation.startSingleScreenApp({
-//   screen: {
-//     screen: 'StartScreen', // unique ID registered with Navigation.registerScreen
-//     navigatorStyle: {navBarHidden: true}, // override the navigator style for the screen, see "Styling the navigator" below (optional)
-//   }
-// });
-
 //TEMP USE, easier access to main screen for testing
-Navigation.startTabBasedApp({
+  Navigation.startTabBasedApp({
   tabs: [
     {
       label: 'Search',
@@ -83,3 +71,11 @@ Navigation.startTabBasedApp({
     }
   ]
 })
+
+// vvvvv Landing page vvvvv
+// Navigation.startSingleScreenApp({
+//   screen: {
+//     screen: 'StartScreen', // unique ID registered with Navigation.registerScreen
+//     navigatorStyle: {navBarHidden: true}, // override the navigator style for the screen, see "Styling the navigator" below (optional)
+//   }
+// });
