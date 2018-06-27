@@ -8,23 +8,14 @@ import {
     Dimensions,
     StyleSheet
 } from 'react-native';
+import { Ievent } from '../../models/events'
 import { FormLabel, FormInput, List, ListItem } from 'react-native-elements'
 
 const { width } = Dimensions.get('window')
 
-interface IEvent {
-    private: boolean,
-    name: string,
-    description: string,
-    address: string,
-    deposit: string
-    ImgSource: any,
-    uri: string,
-    dateTime: string,
-}
 
 interface IConfirmationProps {
-    event: IEvent,
+    event: Ievent,
 }
 
 export default class Confirmation extends React.Component<IConfirmationProps, {}> {
@@ -32,7 +23,7 @@ export default class Confirmation extends React.Component<IConfirmationProps, {}
         super(props);
     }
 
-    private = this.props.event.private ? 'Private' : 'Public'
+    private = this.props.event.private_event ? 'Private' : 'Public'
 
     list = [
         {
@@ -61,18 +52,21 @@ export default class Confirmation extends React.Component<IConfirmationProps, {}
             <View>
                 <Image
                     style={{ width: width, height: 300 }}
-                    source={this.props.event.ImgSource}
+                    source={this.props.event.photo}
                 />
-                {this.props.event.private ?
-                    <Text>Privae</Text>
-                    : <Text>Public</Text>}
-                <Text>
-                    {this.props.event.name}
-                    {this.props.event.description}
-                    {this.props.event.address}
-                    {this.props.event.dateTime}
-                    {this.props.event.deposit}
-                </Text>
+                <List containerStyle={{borderWidth: 10, borderTopWidth: 10}}>
+                    {
+                        this.list.map((item, i) => (
+                            <ListItem
+                                key={i}
+                                title={item.title}
+                                leftIcon={{ name: item.icon }}
+                                hideChevron={true}
+                                containerStyle={{borderBottomWidth: 0.5, borderTopWidth: 0.5}}
+                            />
+                        ))
+                    }
+                </List>
             </View>
         )
     }
