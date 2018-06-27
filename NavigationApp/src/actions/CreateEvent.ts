@@ -117,46 +117,46 @@ export function deleteEvent(id: number): IDeleteEventAction {
   }
 }
 
-export function remoteAddEvent(
-  id: number,
-  name: string,
-  description: string,
-  datetime: string,
-  photo: any,
-  address: string,
-  private_event: boolean,
-  deposit: string,
-  todo: events.Itodo[],
-  attendees: events.Iattendees[],
-  discussion: events.Idiscussion[],
-) {
-  return (dispatch: Dispatch<any>) => {
-    axios.post('https://hivent.xyz/api/users', {
-      id,
-      name,
-      description,
-      datetime,
-      photo,
-      address,
-      private_event,
-      deposit,
-      todo,
-      attendees,
-      discussion,
-    }).then(res => {
-      dispatch(
-        addEvent(
-        res.data.id,
-        name,
-        description,
-        datetime,
-        photo,
-        address,
-        private_event,
-        deposit,
-        todo,
-        attendees,
-        discussion ));
-    })
-  }
-}
+// export function remoteAddEvent(
+//   id: number,
+//   name: string,
+//   description: string,
+//   datetime: string,
+//   photo: any,
+//   address: string,
+//   private_event: boolean,
+//   deposit: string,
+//   todo: events.Itodo[],
+//   attendees: events.Iattendees[],
+//   discussion: events.Idiscussion[],
+// ) {
+//   return (dispatch: Dispatch<any>) => {
+//     axios.post('https://hivent.xyz/api/users', {
+//       id,
+//       name,
+//       description,
+//       datetime,
+//       photo,
+//       address,
+//       private_event,
+//       deposit,
+//       todo,
+//       attendees,
+//       discussion,
+//     }).then(res => {
+//       dispatch(
+//         addEvent(
+//         res.data.id,
+//         name,
+//         description,
+//         datetime,
+//         photo,
+//         address,
+//         private_event,
+//         deposit,
+//         todo,
+//         attendees,
+//         discussion ));
+//     })
+//   }
+// }

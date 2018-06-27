@@ -10,9 +10,9 @@ const initialState = {
   events: []
 }
 
-export const EventReducer = (state: IeventState = initialState, action: IEventAction) => {
+const EventReducer = (state: IeventState = initialState, action: IEventAction) => {
   switch (action.type) {
-    case ADD_EVENT: {
+    case ADD_EVENT: 
       const events = state.events.concat(
         [
           {
@@ -31,9 +31,13 @@ export const EventReducer = (state: IeventState = initialState, action: IEventAc
         ]
       );
       return { ...state, events: events }
-    }
+    default:
+      return state
   }
 }
+
+
+export default EventReducer
 
 // export function reducer(oldState: ITeamState = initialState, action: ITeamActions) {
 //   switch (action.type) {
