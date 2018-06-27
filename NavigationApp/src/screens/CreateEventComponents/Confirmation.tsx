@@ -8,22 +8,13 @@ import {
     Dimensions,
 } from 'react-native';
 import { FormLabel, FormInput } from 'react-native-elements'
+import { Ievent } from '../../models/events'
 
 const { width } = Dimensions.get('window')
 
-interface IEvent {
-    private: boolean,
-    name: string,
-    description: string,
-    address: string,
-    deposit: string
-    ImgSource: any,
-    uri: string,
-    dateTime: string,
-}
 
 interface IConfirmationProps {
-    event: IEvent,
+    event: Ievent,
 }
 
 export default class Confirmation extends React.Component<IConfirmationProps, {}> {
@@ -35,16 +26,16 @@ export default class Confirmation extends React.Component<IConfirmationProps, {}
             <View>
                 <Image
                     style={{ width: width, height: 300 }}
-                    source={this.props.event.ImgSource}
+                    source={this.props.event.photo}
                 />
-                {this.props.event.private ?
+                {this.props.event.private_event ?
                     <Text>Privae</Text>
                     : <Text>Public</Text>}
                 <Text>
                     {this.props.event.name}
                     {this.props.event.description}
                     {this.props.event.address}
-                    {this.props.event.dateTime}
+                    {this.props.event.datetime}
                     {this.props.event.deposit}
                 </Text>
             </View>

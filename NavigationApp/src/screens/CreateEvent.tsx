@@ -12,8 +12,8 @@ import {
   TouchableWithoutFeedback
 } from 'react-native';
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
-import DatePicker from 'react-native-datepicker'
-
+import DatePicker from 'react-native-datepicker';
+import { addEvent } from '../actions/CreateEvent';
 
 import StepIndicator from 'react-native-step-indicator';
 
@@ -25,6 +25,7 @@ import { createStore } from 'redux'
 import { connect } from 'react-redux'
 import reducer from '../reducers/createReducer'
 import { PixelRatio } from 'react-native';
+import { Ievent } from '../models/events';
 
 const ImagePicker = require('react-native-image-picker');
 const { width } = Dimensions.get('window')
@@ -32,25 +33,23 @@ const { width } = Dimensions.get('window')
 const store = createStore(reducer)
 
 interface ICreateEventProps {
-  navigator: any
+  navigator: any,
+  createEvent: (
+    id: number,
+    name: string,
+    description: string,
+    datetime: string,
+    photo: any,
+    address: string,
+    private_event: boolean,
+    deposit: string, ) => void,
 }
 
-interface IEvent {
-  private: boolean,
-  name: string,
-  description: string,
-  address: string,
-  deposit: string,
-  ImgSource: any,
-  uri: string,
-  dateTime: string,
-}
 
 interface ICreateEventState {
   step: number
-  event: IEvent
-  Templatetype: string[]
-  todolist: object[]
+  event: Ievent
+
 }
 
 class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> {
@@ -64,21 +63,24 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
 
   constructor(props: ICreateEventProps) {
     super(props);
+
     this.state = {
       step: 1,
       event: {
-        private: false,
+        id: 0,
         name: '',
         description: '',
+        datetime: '',
+        photo: null,
         address: '',
+        private_event: false,
         deposit: '',
-        ImgSource: null,
-        uri: '',
-        dateTime: '',
-      },
-      Templatetype: [],
-      todolist: []
+        todo: [],
+        attendees: [],
+        discussion: [],
+      }
     }
+
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
@@ -94,7 +96,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
     })
   }
 
-  onNavigatorEvent(event) {
+  onNavigatorEvent = (event) => {
     if (event.type == 'NavBarButtonPress') {
       if (event.id == 'next') {
         this.setState({
@@ -105,7 +107,16 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
           step: this.state.step - 1
         })
       } else if (event.id === 'done') {
-        alert('HI')
+        this.props.createEvent(
+          this.state.event.id,
+          this.state.event.name,
+          this.state.event.description,
+          this.state.event.datetime,
+          this.state.event.photo,
+          this.state.event.address,
+          this.state.event.private_event,
+          this.state.event.deposit,
+        )
       }
     }
   }
@@ -141,8 +152,8 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                   height: 300
 
                 }}>
-                  {this.state.event.ImgSource === null ? <Text>Select a Photo</Text> :
-                    <Image source={this.state.event.ImgSource} style={{
+                  {this.state.event.photo === null ? <Text>Select a Photo</Text> :
+                    <Image source={this.state.event.photo} style={{
                       width: width,
                       height: 300
                     }} />
@@ -152,14 +163,14 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
             </View>
             <View style={{ justifyContent: 'space-between', flexDirection: 'row', margin: 10, paddingHorizontal: 10 }}>
               <Text>Private</Text>
-              {this.state.event.private ?
+              {this.state.event.private_event ?
                 <Text style={{ color: 'red' }}>Now your Event will be private</Text> : null
               }
               <Switch
-                value={this.state.event.private}
+                value={this.state.event.private_event}
                 onValueChange={(value) => {
                   const newPrivate = { ...this.state.event }
-                  newPrivate.private = value
+                  newPrivate.private_event = value
 
                   this.setState({
                     event: newPrivate
@@ -201,7 +212,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
             <FormLabel>Date</FormLabel>
             <DatePicker
               style={{ width: 350 }}
-              date={this.state.event.dateTime}
+              date={this.state.event.datetime}
               mode="datetime"
               placeholder="select date"
               format="YYYY-MM-DD HH:mm"
@@ -276,7 +287,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
             }
           ]
         })
-        return <ToDoList />//FIXME: ToDoList props!
+        return <ToDoList id={1} itemlist={[]} /> //FIXME: 
 
       case 4:
         this.props.navigator.setTitle({
@@ -319,7 +330,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
       // axios.post('url', { photo: source })
 
       const newImgSource = { ...this.state.event }
-      newImgSource.ImgSource = source
+      newImgSource.photo = source
       this.setState({
         event: newImgSource
       });
@@ -335,10 +346,34 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
   }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
   return {
     step: state.step
   }
 }
 
-export default connect(mapStateToProps, null)(CreateEvent)
+const mapDispatchToProps = (dispatch) => {
+  createEvent: (id,
+    name,
+    description,
+    datetime,
+    photo,
+    address,
+    private_event,
+    deposit,
+    todo,
+    attendees,
+    discussion, ) => dispatch(addEvent(id,
+      name,
+      description,
+      datetime,
+      photo,
+      address,
+      private_event,
+      deposit,
+      todo,
+      attendees,
+      discussion, ))
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateEvent)
