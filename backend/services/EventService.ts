@@ -1,6 +1,7 @@
 import * as Knex from "knex";
-import * as path from "path";
-import * as fs from "fs-extra";
+// import * as path from "path";
+// import * as fs from "fs-extra";
+
 import { Promise as BlueBirdPromise } from "bluebird";
 import { default as joinjs } from 'join-js';
 
@@ -46,11 +47,11 @@ export default class EventService {
     ]
   }
 
-  writeFile(eventid: number, name: string, body: Express.Multer.File, trx: Knex) {
-    const imagePath = path.join(__dirname, `../public/images/${name}`);
-    fs.outputFile(imagePath, body.buffer)
-    return trx("events").where("events.id", eventid).update({ photo: name })
-  }
+  // writeFile(eventid: number, name: string, body: Express.Multer.File, trx: Knex) {
+  //   const imagePath = path.join(__dirname, `../public/images/${name}`);
+  //   fs.outputFile(imagePath, body.buffer)
+  //   return trx("events").where("events.id", eventid).update({ photo: name })
+  // }
 
   isAttended(eventid: number, userid: number) {
     return this.knex("events_users")
@@ -74,6 +75,7 @@ export default class EventService {
 
   //Completed
   async remove(eventid: number, userid: number) {
+    console.log("eventid", eventid, "userid", userid)
     return this.knex.transaction(async (trx) => {
       try {
         const creator = await this.isCreator(eventid, userid);
@@ -88,7 +90,7 @@ export default class EventService {
             .join("events", "todo.events_id", "events.id")
             .where("events.id", eventid)
             .first();
-
+          console.log("todo.id", toDo.id)
           await trx("todo")
             .where("id", toDo.id)
             .update("isactive", false);
@@ -97,7 +99,7 @@ export default class EventService {
             .select("items.id")
             .join("todo", "todo.id", "items.todo_id")
             .join("events", "todo.events_id", "events.id")
-            .where("events.id", eventid);
+            .where("todo.id", toDo.id);
 
           await BlueBirdPromise.map(items, (item: { id: number }) => {
             return trx("items")
@@ -113,7 +115,7 @@ export default class EventService {
           return true;
         } else {
 
-          console.log("wrong way")
+          console.log("User is NOT the CREATOR")
           return trx("events_users")
             .where("events_id", eventid)
             .andWhere("users_id", userid)
@@ -132,6 +134,8 @@ export default class EventService {
   //Completed
   async create(data: any /*,file: Express.Multer.File*/) {
     //why does async need to be called twice?
+    console.log("entered create")
+    console.log("data", data)
     return this.knex.transaction(async (trx) => {
       try {
         const eventid = await trx("events")
@@ -146,8 +150,9 @@ export default class EventService {
             isactive: true
           }).returning("id");
 
-        //if eventid exists and if eventid array's length is >0, meaning not []
-        if (eventid && eventid.length > 0) {
+          const listExist = data.items
+
+        if (listExist && listExist.length > 0) {
           const toDoId = await trx("todo")
             .insert({
               events_id: eventid[0],
@@ -162,7 +167,7 @@ export default class EventService {
               quantity: item.quantity,
               todo_id: toDoId[0],
               isactive: true,
-              completed:false
+              completed: false
             }
           });
 
@@ -180,11 +185,13 @@ export default class EventService {
           //   await this.writeFile(eventid[0], file.originalname, file, trx);
           // }
           return eventid[0];
-        }
-      
-        return eventid[0];
+        } 
+          return eventid[0];
+        
       } catch (e) {
+        console.log(e)
         return -1;
+
       }
     })
   }
@@ -236,7 +243,7 @@ export default class EventService {
       }
     });
   }
-  
+
   //Completed
   joinEvent(body: any) {
     console.log("body", body)
@@ -244,7 +251,7 @@ export default class EventService {
       try {
         await trx("events_users")
           .insert({
-            users_id: body.userid,
+            users_id: body.user_id,
             events_id: body.eventid,
             creator: false,
             isactive: true
@@ -257,14 +264,14 @@ export default class EventService {
   }
 
   //Completed
-  getUpcomingByUserId(userid: number) {
-    return this.knex("events")
-      .select("events.id as events_id", "events.name as events_name", "events.datetime", "events.photo")
-      .join("events_users", "events_users.events_id", "events.id")
-      .join("users", "events_users.users_id", "users.id")
-      .where("users.id", userid)
-      .andWhere("events.isactive", true)
-  }
+  // getUpcomingByUserId(userid: number) {
+  //   return this.knex("events")
+  //     .select("events.id as events_id", "events.name as events_name", "events.datetime", "events.photo")
+  //     .join("events_users", "events_users.events_id", "events.id")
+  //     .join("users", "events_users.users_id", "users.id")
+  //     .where("users.id", userid)
+  //     .andWhere("events.isactive", true)
+  // }
 
   //Completed
   getById(eid: number) {
@@ -287,7 +294,7 @@ export default class EventService {
         "items.name         as items_name",
         "items.quantity     as items_quantity",
         "items.users_id      as items_user_id",
-        "itemusers.name     as items_user_name", 
+        "itemusers.name     as items_user_name",
         "items.completed    as items_completed",
 
         "users.id           as attendees_id",
@@ -323,7 +330,7 @@ export default class EventService {
       .select("events.id as events_id", "events.name", "events.photo", "events.datetime")
       .where("events.name", "ilike", `%${name}%`)
       .andWhere("events.isactive", true);
-      
+
   }
 
   //Completed
