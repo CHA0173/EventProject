@@ -7,7 +7,8 @@ import {
     ScrollView,
     StyleSheet,
     Dimensions,
-    Image
+    Image,
+    TextInput
 } from 'react-native';
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
 
@@ -34,6 +35,7 @@ interface ICreateEventProps {
 }
 
 interface IEvent {
+    private: boolean,
     name: string,
     description: string,
     address: string,
@@ -63,6 +65,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
         this.state = {
             step: 1,
             event: {
+                private: false,
                 name: '',
                 description: '',
                 address: '',
@@ -98,6 +101,8 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                 this.setState({
                     step: this.state.step - 1
                 })
+            } else if (event.id === 'done') {
+                alert('HI')
             }
         }
     }
@@ -130,8 +135,8 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                                     height: 300
 
                                 }}>
-                                    {this.state.ImgSource === null ? <Text>Select a Photo</Text> :
-                                        <Image source={this.state.ImgSource} style={{
+                                    {this.state.event.ImgSource === null ? <Text>Select a Photo</Text> :
+                                        <Image source={this.state.event.ImgSource} style={{
                                             width: width,
                                             height: 300
                                         }} />
@@ -139,15 +144,63 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                                 </View>
                             </TouchableOpacity>
                         </View>
-                        <Switch />
+                        <View style={{ justifyContent: 'space-between', flexDirection: 'row', margin: 10, paddingHorizontal: 10 }}>
+                            <Text>Private</Text>
+                            {this.state.event.private ?
+                                <Text style={{color: 'red'}}>Now your Event will be private</Text> : null
+                            }
+                            <Switch
+                                value={this.state.event.private}
+                                onValueChange={(value) => {
+                                    const newPrivate = { ...this.state.event }
+                                    newPrivate.private = value
+
+                                    this.setState({
+                                        event: newPrivate
+                                    })
+                                }}
+                            />
+                        </View>
                         <FormLabel>Name</FormLabel>
-                        <FormInput onChangeText={(text) => this.setState({ name: text })} />
+
+                        <FormInput
+                            defaultValue={this.state.event.name}
+                            onChangeText={(text) => {
+                                const newName = { ...this.state.event }
+                                newName.name = text
+
+                                this.setState({ event: newName })
+                            }} />
+
                         <FormLabel>Description</FormLabel>
-                        <FormInput onChangeText={(text) => this.setState({ description: text })} />
+                        <FormInput
+                            defaultValue={this.state.event.description}
+                            onChangeText={(text) => {
+                                const newDescription = { ...this.state.event }
+                                newDescription.description = text
+
+                                this.setState({ event: newDescription })
+                            }} />
+
                         <FormLabel>Address</FormLabel>
-                        <FormInput onChangeText={(text) => this.setState({ address: text })} />
+                        <FormInput
+                            defaultValue={this.state.event.address}
+                            onChangeText={(text) => {
+                                const newAddress = { ...this.state.event }
+                                newAddress.address = text
+
+                                this.setState({ event: newAddress })
+                            }} />
+
                         <FormLabel>Deposit</FormLabel>
-                        <FormInput onChangeText={(text) => this.setState({ deposit: text })} />
+                        <FormInput
+                            defaultValue={this.state.event.deposit}
+                            onChangeText={(text) => {
+                                const newDeposit = { ...this.state.event }
+                                newDeposit.deposit = text
+
+                                this.setState({ event: newDeposit })
+                            }} />
                     </View>
                 )
 
@@ -187,7 +240,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                         }
                     ]
                 })
-                return <ToDoList />
+                return <ToDoList />//FIXME: ToDoList props!
 
             case 4:
                 this.props.navigator.setTitle({
@@ -203,6 +256,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                             title: 'Prev',
                             id: 'prev'
                         }
+                        
                     ]
                 })
                 return <Confirmation event={this.state.event} />
@@ -228,8 +282,10 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
 
             // axios.post('url', { photo: source })
 
+            const newImgSource = { ...this.state.event }
+            newImgSource.ImgSource = source
             this.setState({
-                ImgSource: source
+                event: newImgSource
             });
         }
         );

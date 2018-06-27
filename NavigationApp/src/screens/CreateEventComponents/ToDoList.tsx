@@ -9,6 +9,7 @@ import {
   ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { junkBoat, birthdayParty } from './ToDoTemplates'; 
 
 
 
@@ -16,7 +17,11 @@ interface ToDoItem {
   id: number,
   Name: string,
   Quantity: string,
-  IsActive: boolean,
+}
+
+interface IToDoListProps {
+  id: number,
+  itemlist: string[]
 }
 
 interface IToDoListStates {
@@ -25,16 +30,21 @@ interface IToDoListStates {
   List: ToDoItem[],
 }
 
-export default class ToDoList extends React.Component<{}, IToDoListStates> {
-  constructor(props: {}) {
+export default class ToDoList extends React.Component<IToDoListProps, IToDoListStates> {
+  constructor(props: IToDoListProps) {
     super(props);
 
     this.state = {
       Name: '',
       Quantity: '',
-      List: [],
+      List: [
+        // id: this.props.id,
+        // Name: {...this.props.itemlist} , //FIXME:
+        // Quantity: '',
+      ],
     }
   }
+
 
   public renderToDoItem = () => {
     this.setState({
@@ -42,7 +52,7 @@ export default class ToDoList extends React.Component<{}, IToDoListStates> {
         id: Date.now(),
         Name: this.state.Name,
         Quantity: this.state.Quantity,
-        IsActive: true
+
       }),
       Name: '',
       Quantity: '',
@@ -137,6 +147,7 @@ export default class ToDoList extends React.Component<{}, IToDoListStates> {
                     </View>
                   ))
                 }
+
               </ScrollView>
 
             </View>
