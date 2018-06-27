@@ -52,7 +52,7 @@ export default class Templates extends React.Component<ITemplatesProps, ITemplat
     renderTemplate() {
         return (
             <IndicatorViewPager
-                style={{ height: 300, width: 300 }}
+                style={{ flex: 1, width: 300 }}
                 indicator={this._renderDotIndicator()}
             >
                 <View style={{ backgroundColor: 'cadetblue' }}>
@@ -85,10 +85,9 @@ export default class Templates extends React.Component<ITemplatesProps, ITemplat
                         }
                     </Card>
                 </View>
-                <View>
+                <View style={{ backgroundColor: 'grey' }}>
                     <Text>
-                        You choose la
-                        Create a new list
+                        Custom
                     </Text>
                 </View>
             </IndicatorViewPager>
