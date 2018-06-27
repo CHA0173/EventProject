@@ -4,12 +4,22 @@ import {
   Text,
   ScrollView,
   FlatList,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
 } from 'react-native'
 import { ToDoItem } from '../fakeData'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import { Ievent } from '../../models/events'
 
+interface IToDoListProps {
+  events: Ievent[]
+}
 
-export default class ToDoList extends React.Component<{}, {}> {
+export default class ToDoList extends React.Component<IToDoListProps, {}> {
+  constructor(props:IToDoListProps) {
+    super(props)
+  }
+
   render() {
     return (
       <View style={{ flex: 1, margin: 20, padding: 20, paddingBottom: 0, marginBottom: 40, borderRadius: 10, borderColor: 'gray', borderWidth: 1, height: 400, backgroundColor: 'white' }}>
@@ -23,25 +33,40 @@ export default class ToDoList extends React.Component<{}, {}> {
             <ScrollView style={{ height: 380 }}>
 
               <FlatList
-                data={ToDoItem}
+                // data={ToDoItem[0].items}
+                data={this.props.events[].todo[]}}
                 renderItem={(data) => {
                   return (
                     <View style={{ borderBottomWidth: 0.5, margin: 15 }}>
                       <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-                        <Text>{data.item.name}</Text>
+                        <View>
+                          {
+                            !data.item.user_name ? //FIXME:
+                              <TouchableWithoutFeedback
+                                onPress={() => {
+                                  <Icon
+                                    name='check'
+                                    color='red'
+                                  />
+                                }}>
+                                <Text>{data.item.user_name}</Text>
+                              </TouchableWithoutFeedback> : <Text>{data.item.user_name}</Text>
+                          }
+                        </View>
                         <Text>{data.item.quantity}</Text>
                       </View>
-                      <View style={{justifyContent: 'space-between', flexDirection: 'row', marginVertical: 10, paddingHorizontal: 10}}>
-                        <Text>{data.item.user}</Text>
+                      <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginVertical: 10, paddingHorizontal: 10 }}>
+
                         {
                           data.item.completed ?
-                        <Icon
-                          name='check'
-                          color='green'
-                          
-                        />
-                        : null
+                            <Icon
+                              name='check'
+                              color='green'
+
+                            />
+                            : null
                         }
+
                       </View>
                     </View>
                   )
