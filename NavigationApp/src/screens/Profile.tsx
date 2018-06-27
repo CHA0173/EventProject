@@ -125,7 +125,20 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
       // isActive: TodoData.isActive,
     }
   }
+ 
+  onNavigatorEvent(event) {
+    // handle a deep link
+    if (event.type == 'DeepLink') {
+      const parts = event.link.split('/'); // Link parts
+      // const payload = event.payload; // (optional) The payload
 
+      if (parts[0] == 'profile') {
+        this.props.navigator.push({
+          screen: 'ProfileTabScreen'// handle the link somehow, usually run a this.props.navigator command
+        })
+      }
+    }
+  }
 
   public selectPhotoTapped = () => {
     const options = {

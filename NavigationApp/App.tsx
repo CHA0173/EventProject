@@ -11,9 +11,28 @@ import {
   Text,
   View,
   TouchableOpacity,
-  FlatList
+  FlatList,
+  Linking,
+  AppRegistry
 } from 'react-native';
+
+//deeplink trying
 import { Navigator } from 'react-native-navigation';
+import { StackNavigator }               from 'react-navigation';
+import Events from './src/screens/Events';
+import Search from './src/screens/Search';
+import Profile from './src/screens/Profile';
+const NavigationApp = StackNavigator({
+  Events: { screen: Events ,
+            path: 'events'} ,
+  Search: { screen: Search },         
+  Profile :{ screen: Profile ,
+            path: 'profile'}
+});
+const prefix = Platform.OS== 'android' ? 'WEvent://WEvent/' : 'WEvent://';
+const MainApp = () => <NavigationApp uriPrefix={prefix} />;
+
+//^^deep link trying
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -25,6 +44,7 @@ const instructions = Platform.select({
 type Props = {
   navigator: Navigator;
 };
+
 export default class App extends React.Component<Props> {
   render() {
     return (
@@ -57,6 +77,48 @@ export default class App extends React.Component<Props> {
   }
 }
 
+//trying deeplink
+class Home extends React.Component{
+  static navigationOptions = { // A
+    title: 'Event',
+  };
+  props: any;
+  componentDidMount() { // B
+    if (Platform.OS === 'android') {
+      Linking.getInitialURL().then(url => {
+        this.navigate(url);
+      });
+    } else {
+        Linking.addEventListener('url', this.handleOpenURL);
+      }
+    }
+    
+    componentWillUnmount() { // C
+      Linking.removeEventListener('url', this.handleOpenURL);
+    }
+    handleOpenURL = (event) => { // D
+      this.navigate(event.url);
+    }
+    navigate = (url) => { // E
+      const { navigate } = this.props.navigation;
+      const route = url.replace(/.*?:\/\//g, '');
+      const id = route.match(/\/([^\/]+)\/?$/)[1];
+      const routeName = route.split('/')[0];
+    
+      if (routeName === 'event') {
+        navigate('Event', { id })
+      };
+      if (routeName === "SignUp"){
+        navigate("SignUp")
+      }
+    }
+    
+
+    render() {
+      return <Text></Text>;
+    }
+}
+//^^^trying deeplink
 const styles = StyleSheet.create({
   container: {
     flex: 1,

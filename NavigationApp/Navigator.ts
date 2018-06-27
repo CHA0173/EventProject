@@ -1,6 +1,9 @@
 import { Navigation } from 'react-native-navigation';
 import { store } from './src/store';
 import { Provider } from 'react-redux';
+//trying deeplink
+import { AppRegistry } from 'react-native';
+
 
 // import App from './App';
 // import LandingPage from './pages/LandingPage';

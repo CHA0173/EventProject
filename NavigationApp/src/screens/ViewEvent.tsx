@@ -14,7 +14,7 @@ import Info from './ViewEventComponents/Info'
 import ToDoList from './ViewEventComponents/ToDoList'
 import Attendees from './ViewEventComponents/Attendees'
 import Discussion from './ViewEventComponents/Discussion'
-import { fakeEvent1 } from './fakeData'
+// import { fakeEvent1 } from './fakeData'
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
