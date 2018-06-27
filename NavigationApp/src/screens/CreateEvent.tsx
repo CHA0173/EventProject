@@ -245,7 +245,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                             }}
                             onDateChange={(date) => {
                                 this.setState({
-                                    event: { ...this.state.event, dateTime: date }
+                                    event: { ...this.state.event, datetime: date }
                                 })
                             }}
                         />

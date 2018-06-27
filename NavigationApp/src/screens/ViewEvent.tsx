@@ -14,7 +14,10 @@ import Info from './ViewEventComponents/Info'
 import ToDoList from './ViewEventComponents/ToDoList'
 import Attendees from './ViewEventComponents/Attendees'
 import Discussion from './ViewEventComponents/Discussion'
+<<<<<<< HEAD
 import { Ievent } from '../models/events'
+=======
+>>>>>>> 0757ee850195fc47b5d1f3e6c357d334705298bb
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
