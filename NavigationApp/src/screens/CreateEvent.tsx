@@ -25,7 +25,8 @@ import { createStore } from 'redux'
 import { connect } from 'react-redux'
 import reducer from '../reducers/createReducer'
 import { PixelRatio } from 'react-native';
-import { Ievent, Itodo } from '../models/events';
+import { Ievent } from '../models/events';
+import { Navigator } from 'react-native-navigation';
 
 const ImagePicker = require('react-native-image-picker');
 const { width } = Dimensions.get('window')
@@ -43,6 +44,7 @@ interface ICreateEventProps {
         address: string,
         private_event: boolean,
         deposit: string, ) => void,
+        events: any
 }
 
 interface ICreateEventState {
@@ -105,7 +107,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                 this.setState({
                     step: this.state.step - 1
                 })
-            } else if (event.id === 'done') {
+            } else if (event.id === 'done') { //FIXME:
                 this.props.createEvent(
                     this.state.event.id,
                     this.state.event.name,
@@ -116,12 +118,14 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                     this.state.event.private_event,
                     this.state.event.deposit,
                 )
+                // alert(JSON.stringify(this.props.events))
+                this.props.navigator.resetTo({
+                    screen: 'EventsTabScreen',
+                    title: 'Events',
+                    navigatorStyle: { navBarTitleTextCentered: true }
+                })
             }
         }
-    }
-
-    showPicker() {
-
     }
 
     renderComponent(step) {
@@ -210,21 +214,26 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
 
                         <FormLabel labelStyle={styles.labelText}>Date</FormLabel>
                         <DatePicker
-                            style={{ width: width - 40, marginHorizontal: 20 }}
+                            style={{ width: 350 }}
                             date={this.state.event.datetime}
                             mode="datetime"
-                            placeholder="Select Date and Time"
+                            placeholder="select date"
                             format="YYYY-MM-DD HH:mm"
                             minDate="2018-06-29"
                             maxDate="2020-06-01"
                             confirmBtnText="Confirm"
                             cancelBtnText="Cancel"
-                            showIcon={false}
                             customStyles={{
+                                dateIcon: {
+                                    position: 'absolute',
+                                    left: 0,
+                                    top: 4,
+                                    marginLeft: 0
+                                },
                                 dateInput: {
-                                    borderWidth: 0,
-                                    borderBottomWidth: 1.3
+                                    marginLeft: 36
                                 }
+                                // ... You can check the source to find the other keys.
                             }}
                             onDateChange={(date) => {
                                 this.setState({
@@ -342,7 +351,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
 
 const mapStateToProps = (state) => {
     return {
-        step: state.step
+        events: state.event.events
     }
 }
 
