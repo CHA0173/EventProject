@@ -162,7 +162,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
               </TouchableOpacity>
             </View>
             <View style={{ justifyContent: 'space-between', flexDirection: 'row', margin: 10, paddingHorizontal: 10 }}>
-              <Text>Private</Text>
+              <Text style={styles.labelText}>Private</Text>
               {this.state.event.private_event ?
                 <Text style={{ color: 'red' }}>Now your Event will be private</Text> : null
               }
@@ -178,7 +178,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                 }}
               />
             </View>
-            <FormLabel>Name</FormLabel>
+            <FormLabel labelStyle={styles.labelText}>Name</FormLabel>
 
             <FormInput
               defaultValue={this.state.event.name}
@@ -189,7 +189,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                 this.setState({ event: newName })
               }} />
 
-            <FormLabel>Description</FormLabel>
+            <FormLabel labelStyle={styles.labelText}>Description</FormLabel>
             <FormInput
               defaultValue={this.state.event.description}
               onChangeText={(text) => {
@@ -199,7 +199,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                 this.setState({ event: newDescription })
               }} />
 
-            <FormLabel>Address</FormLabel>
+            <FormLabel labelStyle={styles.labelText}>Address</FormLabel>
             <FormInput
               defaultValue={this.state.event.address}
               onChangeText={(text) => {
@@ -209,7 +209,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                 this.setState({ event: newAddress })
               }} />
 
-            <FormLabel>Date</FormLabel>
+            <FormLabel labelStyle={styles.labelText}>Date</FormLabel>
             <DatePicker
               style={{ width: 350 }}
               date={this.state.event.datetime}
@@ -376,4 +376,15 @@ const mapDispatchToProps = (dispatch) => {
       discussion, ))
 }
 
+
+
+const styles = StyleSheet.create({
+  labelText: {
+    fontSize: 14,
+    color: 'black',
+    fontWeight: '400'
+  }
+})
+
 export default connect(mapStateToProps, mapDispatchToProps)(CreateEvent)
+
