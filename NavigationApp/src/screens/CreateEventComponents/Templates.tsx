@@ -2,17 +2,20 @@ import * as React from 'react';
 import {
     Text,
     View,
-    TouchableOpacity
+    TouchableOpacity,
+    StyleSheet
 } from 'react-native';
 import { Card, ListItem, List } from 'react-native-elements'
 
-import { junkBoat, birthdayParty } from '../CreateEventComponents/ToDoTemplates'
+import { junkBoat, birthdayParty, meetUp, movieNight } from '../CreateEventComponents/ToDoTemplates'
 
 import { PagerTabIndicator, IndicatorViewPager, PagerTitleIndicator, PagerDotIndicator } from 'rn-viewpager';
 import { ScrollView } from 'react-native';
 
 interface ITemplatesProps {
     Templatetype: string,
+    setModalVisible: (visible) => void
+    nextStep: () => void
 }
 
 interface ITemplatesStates {
@@ -24,25 +27,24 @@ export default class Templates extends React.Component<ITemplatesProps, ITemplat
     constructor(props: ITemplatesProps) {
         super(props)
 
-        this.state ={
+        this.state = {
             id: 0,
             itemlist: []
         }
     }
 
     renderType() {
-        if (this.props.Templatetype == 'junkBoat') {
-            return junkBoat
-        } else {
-            return birthdayParty
+        switch (this.props.Templatetype) {
+            case 'birthdayParty':
+                return birthdayParty
+            case 'junkBoat':
+                return junkBoat
+            case 'meetUp':
+                return meetUp
+            case 'movieNight':
+                return movieNight
         }
-        // switch (this.props.Templatetype) {
-        //     case 'BirthdayParty':
-        //         return birthdayParty
-        //     case 'junkboat':
-        //         return junkBoat
-        }
-    
+    }
 
 
     _renderDotIndicator() {
@@ -69,6 +71,17 @@ export default class Templates extends React.Component<ITemplatesProps, ITemplat
                             })
                         }
                     </Card>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                this.props.nextStep();
+
+                            }}>
+                            <View style={styles.button}>
+                                <Text style={styles.buttonText}>Select</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
                 </View>
                 <View style={{ backgroundColor: 'cornflowerblue' }}>
                     <Card title="Supreme">
@@ -84,11 +97,31 @@ export default class Templates extends React.Component<ITemplatesProps, ITemplat
                             })
                         }
                     </Card>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                this.props.nextStep();
+                            }}>
+                            <View style={styles.button}>
+                                <Text style={styles.buttonText}>Select</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
                 </View>
                 <View style={{ backgroundColor: 'grey' }}>
                     <Text>
                         Custom
                     </Text>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                this.props.nextStep();
+                            }}>
+                            <View style={styles.button}>
+                                <Text style={styles.buttonText}>Select</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </IndicatorViewPager>
         )
@@ -103,3 +136,23 @@ export default class Templates extends React.Component<ITemplatesProps, ITemplat
         );
     }
 }
+
+
+const styles = StyleSheet.create({
+    button: {
+        backgroundColor: '#d15953',
+        padding: 12,
+        margin: 16,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 8,
+        width: 250
+    },
+    buttonContainer: {
+        alignItems: 'center'
+    },
+    buttonText: {
+        fontSize: 15,
+        color: 'white'
+    }
+});
