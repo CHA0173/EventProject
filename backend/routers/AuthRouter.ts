@@ -22,7 +22,10 @@ export default class AuthRouter {
     // router.post("/facebook", this.loginWithFacebook);
     return router;
   }
+  
 
+
+  //Completed  
   localLogin = (req: any, res: any) => {
     const email = req.body.email;
     const password = req.body.password;

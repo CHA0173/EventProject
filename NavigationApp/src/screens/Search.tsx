@@ -58,7 +58,7 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
     }
   }
 
-  public filter(text) {
+  public filter(text) {//insert axios get to backend
     const newData = fakedata.filter(function (item) {
       const itemData = item.name.toUpperCase()
       const textData = text.toUpperCase()

@@ -18,7 +18,7 @@ interface ISelectTemplateProps {
     prevStep: () => void
 }
 interface ISelectTemplateState {
-    type: string,
+    Templatetype: string,
     modalVisible: boolean
 }
 
@@ -26,7 +26,7 @@ export default class SelectTemplate extends React.Component<ISelectTemplateProps
     constructor(props: ISelectTemplateProps) {
         super(props);
         this.state = {
-            type: '0',
+            Templatetype: '0',
             modalVisible: false,
         }
     }
@@ -35,8 +35,8 @@ export default class SelectTemplate extends React.Component<ISelectTemplateProps
         this.setState({ modalVisible: visible });
     }
 
-    setType(type) {
-        this.setState({ type: type })
+    setType(Templatetype) {
+        this.setState({ Templatetype: Templatetype })
     }
 
     render() {
@@ -47,7 +47,7 @@ export default class SelectTemplate extends React.Component<ISelectTemplateProps
                     title="Birthday Party"
                     featured
                     height={130}
-                    imageContainerStyle={{ borderBottomWidth: 3, borderBottomColor: 'white' }}
+                    imageContainerStyle={{ borderBottomWidth: 1.5, borderBottomColor: 'white' }}
                     onPress={() => {
                         this.setModalVisible(true);
                         this.setType('birthdayParty'
@@ -59,7 +59,7 @@ export default class SelectTemplate extends React.Component<ISelectTemplateProps
                     title="Junk Boat Party"
                     featured
                     height={130}
-                    imageContainerStyle={{ borderBottomWidth: 3, borderBottomColor: 'white' }}
+                    imageContainerStyle={{ borderBottomWidth: 1.5, borderBottomColor: 'white' }}
                     onPress={() => {
                         this.setModalVisible(true);
                         this.setType('junkboat'
@@ -71,23 +71,23 @@ export default class SelectTemplate extends React.Component<ISelectTemplateProps
                     title="Meet Up"
                     featured
                     height={130}
-                    imageContainerStyle={{ borderBottomWidth: 3, borderBottomColor: 'white' }}
-                    onPress={() => this.setState({ type: 'meetup' })}
+                    imageContainerStyle={{ borderBottomWidth: 1.5, borderBottomColor: 'white' }}
+                    onPress={() => this.setState({ Templatetype: 'meetup' })}
                 />
                 <Tile
                     imageSrc={require('../../img/movie.jpg')}
                     title="Movie night"
                     featured
                     height={130}
-                    imageContainerStyle={{ borderBottomWidth: 3, borderBottomColor: 'white' }}
-                    onPress={() => this.setState({ type: 'movie' })}
+                    imageContainerStyle={{ borderBottomWidth: 1.5, borderBottomColor: 'white' }}
+                    onPress={() => this.setState({ Templatetype: 'movie' })}
                 />
                 <Tile
                     imageSrc={require('../../img/custom.png')}
                     title="Custom"
                     featured
                     height={130}
-                    imageContainerStyle={{ borderBottomWidth: 3, borderBottomColor: 'white' }}
+                    imageContainerStyle={{ borderBottomWidth: 1.5, borderBottomColor: 'white' }}
                     onPress={() => this.props.nextStep()}
                 />
 
@@ -98,14 +98,15 @@ export default class SelectTemplate extends React.Component<ISelectTemplateProps
                 >
                     <View style={styles.modalContent}>
                         <View>
-                            <Templates type={this.state.type} />
+                            {/* FIXME: maybe need to move to Templates page */}
+                            <Templates Templatetype={this.state.Templatetype} />
                             <View style={styles.buttonContainer}>
                                 <TouchableHighlight
                                     onPress={() => {
                                         this.setModalVisible(!this.state.modalVisible);
                                     }}>
-                                    <View style={styles.button}>
-                                        <Text>Back</Text>
+                                    <View style={styles.buttonBack}>
+                                        <Text style={styles.buttonText}>Back</Text>
                                     </View>
                                 </TouchableHighlight>
                                 <TouchableHighlight
@@ -113,24 +114,13 @@ export default class SelectTemplate extends React.Component<ISelectTemplateProps
                                         this.props.nextStep();
                                     }}>
                                     <View style={styles.button}>
-                                        <Text>Select</Text>
+                                        <Text style={styles.buttonText}>Select</Text>
                                     </View>
                                 </TouchableHighlight>
                             </View>
                         </View>
                     </View>
                 </Modal>
-
-
-
-                {/* <View style={stepButtons.container}>
-                    <View style={stepButtons.button}>
-                        <Button title="prev" onPress={this.props.prevStep} />
-                    </View>
-                    <View style={stepButtons.button}>
-                        <Button title="next" onPress={this.props.nextStep} />
-                    </View>
-                </View> */}
             </View>
         )
     }
@@ -145,17 +135,26 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     button: {
-        backgroundColor: 'lightblue',
+        backgroundColor: '#d15953',
         padding: 12,
         margin: 16,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 4,
-        borderColor: 'rgba(0, 0, 0, 0.1)',
+        borderRadius: 8,
+        width: 120
+    },
+    buttonBack: {
+        backgroundColor: '#999999',
+        padding: 12,
+        margin: 16,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 8,
+        width: 120
     },
     modalContent: {
         backgroundColor: 'white',
-        padding: 22,
+        padding: 30,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 4,
@@ -164,5 +163,9 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around'
+    },
+    buttonText: {
+        fontSize: 15,
+        color: 'white'
     }
 });

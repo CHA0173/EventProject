@@ -1,4 +1,4 @@
-# YouIn? App
+# WEvent App
 Event organization made painless
 
 ## Group member
@@ -266,5 +266,39 @@ And create ViewEventComponents ToDoList page
 ### Changed
 -   Changed all pages when using <FlatList /> 
     - using keyExtractor to fix the yellow box problem
+
+---
+
+## version 0.3 June 25, 2018 (Lucas)
+
+Now we can show the image to Confirmation page
+
+### Added
+- action
+    - auth.tsx
+
+- reducers
+    - auth.tsx
+
+### Changed
+-  editing confirmation.tsx
+    - will show the data from event info
+
+---
+## version 0.7 June 27, 2018 (Lucas)
+
+Now we can show the image to Confirmation page
+
+### Added
+- routes/services
+    - addComment ("/events/<eventid>/comment")
+    - joinEvent     ("/events/<eventid>/join")
+    - uploaded backend to production
+    
+
+    
+### Changed
+- moved searchRouter to eventRouter ("/events/search?=<query>")
+
 
 ---

@@ -12,21 +12,37 @@ import { PagerTabIndicator, IndicatorViewPager, PagerTitleIndicator, PagerDotInd
 import { ScrollView } from 'react-native';
 
 interface ITemplatesProps {
-    type: string,
+    Templatetype: string,
 }
 
-export default class Templates extends React.Component<ITemplatesProps, {}> {
+interface ITemplatesStates {
+    id: number,
+    itemlist: string[]
+}
+
+export default class Templates extends React.Component<ITemplatesProps, ITemplatesStates> {
     constructor(props: ITemplatesProps) {
         super(props)
+
+        this.state ={
+            id: 0,
+            itemlist: []
+        }
     }
 
     renderType() {
-        if (this.props.type == 'junkBoat') {
+        if (this.props.Templatetype == 'junkBoat') {
             return junkBoat
         } else {
             return birthdayParty
         }
-    }
+        // switch (this.props.Templatetype) {
+        //     case 'BirthdayParty':
+        //         return birthdayParty
+        //     case 'junkboat':
+        //         return junkBoat
+        }
+    
 
 
     _renderDotIndicator() {
@@ -36,7 +52,7 @@ export default class Templates extends React.Component<ITemplatesProps, {}> {
     renderTemplate() {
         return (
             <IndicatorViewPager
-                style={{ height: 300, width: 300 }}
+                style={{ flex: 1, width: 300 }}
                 indicator={this._renderDotIndicator()}
             >
                 <View style={{ backgroundColor: 'cadetblue' }}>
@@ -69,10 +85,9 @@ export default class Templates extends React.Component<ITemplatesProps, {}> {
                         }
                     </Card>
                 </View>
-                <View>
+                <View style={{ backgroundColor: 'grey' }}>
                     <Text>
-                        You choose la
-                        Create a new list
+                        Custom
                     </Text>
                 </View>
             </IndicatorViewPager>
@@ -82,7 +97,7 @@ export default class Templates extends React.Component<ITemplatesProps, {}> {
         return (
             <View style={{ flex: 1 }}>
                 {
-                    this.props.type === '0' ? null : this.renderTemplate()
+                    this.props.Templatetype === '0' ? null : this.renderTemplate()
                 }
             </View>
         );

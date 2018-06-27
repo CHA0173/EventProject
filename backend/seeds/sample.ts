@@ -121,11 +121,27 @@ exports.seed = (knex: Knex) => {
 
             return Promise.all(result);
         })
-
+        .then(()=> {
+          let attendeeList = fs.readJsonSync(path.join(__dirname, "comments.json"));
+          let result:any[] = [];   
+          attendeeList.forEach((item:any) => {
+            result.push(createDiscussion(knex, item))
+          })
+            return Promise.all(result);
+        })
     })
   })
 };
 
+const createDiscussion = (knex:any, item:any) => {
+  return knex("discussion")
+    .insert({
+      users_id: item.users_id,
+      events_id: item.events_id,
+      isactive:true,
+      comment: item.comment
+    })
+}
 
 const createEvent = (knex: any, item: any, user:any, event: any) => {
   console.log("event", event);

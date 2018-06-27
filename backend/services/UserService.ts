@@ -1,9 +1,12 @@
-import * as Knex from "knex";
-import joinjs from "join-js";
+import * as Knex from 'knex';
+import { default as joinjs } from 'join-js';
 
 
 export default class UserService {
   private resultMaps: Array<Object>;
+
+
+
 
   constructor(private knex: Knex) {
     this.knex = knex;
@@ -21,19 +24,21 @@ export default class UserService {
         mapId: "eventsMap",
         idProperty: "id",
         properties: ["name", "datetime", "photo"],
-        collections: [
-          // { name: "items", mapId: "itemsMap", columnPrefix: "items_" }
-        ]
       },
       {
         mapId: "itemsMap",
         idProperty: "id",
-        properties: ["name", "quantity", "completed"]
+        properties: ["name", "quantity", "completed", "itemEventId"]
       }
     ];
   }
 
-  getById(userid: number) {
+  getById(userId: number) {
+    return this.knex("users").where("users.id", userId);
+  }
+
+  getEventsById(userid: any) {
+    console.log("userid", userid)
     const self = this
     return (
       this.knex("users")
@@ -48,28 +53,27 @@ export default class UserService {
           "items.id           as items_id",
           "items.name         as items_name",
           "items.quantity     as items_quantity",
-          "items.completed    as items_completed"
+          "items.completed    as items_completed",
+          "eItem.id           as items_itemEventId"
         )
-        .leftJoin("events_users", "events_users.users_id", "users.id")
+         .leftJoin("events_users", "events_users.users_id", "users.id")
         .leftJoin("events", function() {
-          this.on("events.id", "events_users.users_id").andOn(
+          this.on("events.id", "events_users.events_id").andOn(
             "events.isactive",self.knex.raw(true));
         })
-        .leftJoin("items", function() {
+          .leftJoin("items", function() {
           this.on("items.users_id", "users.id")
           .andOn("items.isactive", self.knex.raw(true));
         })
-        .leftJoin("todo", function() {
+          .leftJoin("todo", function() {
           this.on("todo.id", "items.todo_id")
-          .andOn(
-            "todo.events_id",
-            "events.id"
-          );
+          .andOn("todo.isactive", self.knex.raw(true));
+        })
+         .leftJoin("events as eItem", function() {
+          this.on("todo.events_id", "eItem.id")
+          .andOn("todo.isactive", self.knex.raw(true));
         })
         .where("users.id", userid)
-        // .andWhere("events.isactive", true)
-        // .andWhere("items.isactive", true)
-        .andWhere("users.isactive", true)
         .then(result => {
           console.log("result", result)
 
@@ -77,11 +81,10 @@ export default class UserService {
             result,
             this.resultMaps,
             "userEventsMap",
-            "user_"
-          );
+            "user_");
         })
         .catch(err => {
-          console.log("err", err);
+          console.log(err);
         })
     );
   }
@@ -89,15 +92,30 @@ export default class UserService {
   getByEmail(email: string, password: string) {
     
     return this.knex("users")
-    .select("id")
-    .first()
-    .where("email", email)
-    .andWhere("password", password)
-    .then(value => {
-      return value;
-    })
-    .catch(err => {
-      console.log(err);
-    });
+      .select("id")
+      .first()
+      .where("email", email)
+      .andWhere("password", password)
+      .then(value => {
+        return value;
+      })
+
   }
+
+  async updateById(body:any) {
+    return this.knex.transaction(async (trx) => {
+        try {
+          await trx("users")
+          .where("users.id", body.userid)
+          .update({
+            photo: body.photo
+          })
+          return true;
+        }
+        catch (e) {
+          return false;
+        }
+      })
+    }
+    
 }
