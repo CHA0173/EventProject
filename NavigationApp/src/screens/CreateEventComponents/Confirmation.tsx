@@ -19,7 +19,8 @@ interface IEvent {
     address: string,
     deposit: string
     ImgSource: any,
-    uri: string
+    uri: string,
+    dateTime: string,
 }
 
 interface IConfirmationProps {
@@ -62,6 +63,7 @@ export default class Confirmation extends React.Component<IConfirmationProps, {}
                     style={{ width: width, height: 300 }}
                     source={this.props.event.ImgSource}
                 />
+<<<<<<< HEAD
                 <List containerStyle={{borderWidth: 10, borderTopWidth: 10}}>
                     {
                         this.list.map((item, i) => (
@@ -75,6 +77,18 @@ export default class Confirmation extends React.Component<IConfirmationProps, {}
                         ))
                     }
                 </List>
+=======
+                {this.props.event.private ?
+                    <Text>Privae</Text>
+                    : <Text>Public</Text>}
+                <Text>
+                    {this.props.event.name}
+                    {this.props.event.description}
+                    {this.props.event.address}
+                    {this.props.event.dateTime}
+                    {this.props.event.deposit}
+                </Text>
+>>>>>>> b2492277d12b2b0e2ed1f2590b5450b6a91aef08
             </View>
         )
     }
