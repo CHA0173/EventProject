@@ -43,50 +43,59 @@ export default class SelectTemplate extends React.Component<ISelectTemplateProps
         return (
             <View>
                 <Tile
+                    titleStyle={{ marginTop: 25 }}
                     imageSrc={require('../../img/birthday.jpg')}
                     title="Birthday Party"
                     featured
-                    height={130}
+                    height={160}
                     imageContainerStyle={{ borderBottomWidth: 1.5, borderBottomColor: 'white' }}
                     onPress={() => {
                         this.setModalVisible(true);
-                        this.setType('birthdayParty'
-                        )
+                        this.setType('birthdayParty')
                     }}
                 />
                 <Tile
+                    titleStyle={{ marginTop: 25 }}
                     imageSrc={require('../../img/junkboat.jpg')}
                     title="Junk Boat Party"
                     featured
-                    height={130}
+                    height={160}
                     imageContainerStyle={{ borderBottomWidth: 1.5, borderBottomColor: 'white' }}
                     onPress={() => {
                         this.setModalVisible(true);
-                        this.setType('junkboat'
-                        )
+                        this.setType('junkBoat')
                     }}
                 />
                 <Tile
+                    titleStyle={{ marginTop: 25 }}
                     imageSrc={require('../../img/meetup.jpg')}
                     title="Meet Up"
                     featured
-                    height={130}
+                    height={160}
                     imageContainerStyle={{ borderBottomWidth: 1.5, borderBottomColor: 'white' }}
-                    onPress={() => this.setState({ Templatetype: 'meetup' })}
+                    onPress={() => {
+                        this.setModalVisible(true);
+                        this.setType('meetUp')
+                    }}
                 />
                 <Tile
+                    titleStyle={{ marginTop: 25 }}
                     imageSrc={require('../../img/movie.jpg')}
                     title="Movie night"
                     featured
-                    height={130}
+                    height={160}
                     imageContainerStyle={{ borderBottomWidth: 1.5, borderBottomColor: 'white' }}
-                    onPress={() => this.setState({ Templatetype: 'movie' })}
+                    onPress={() => {
+                        this.setModalVisible(true);
+                        this.setType('movieNight')
+                    }}
                 />
                 <Tile
+                    titleStyle={{ marginTop: 25 }}
                     imageSrc={require('../../img/custom.png')}
                     title="Custom"
                     featured
-                    height={130}
+                    height={160}
                     imageContainerStyle={{ borderBottomWidth: 1.5, borderBottomColor: 'white' }}
                     onPress={() => this.props.nextStep()}
                 />
@@ -99,24 +108,18 @@ export default class SelectTemplate extends React.Component<ISelectTemplateProps
                     <View style={styles.modalContent}>
                         <View>
                             {/* FIXME: maybe need to move to Templates page */}
-                            <Templates Templatetype={this.state.Templatetype} />
+                            <Templates Templatetype={this.state.Templatetype}
+                                setModalVisible={this.setModalVisible.bind(this)}
+                                nextStep={this.props.nextStep} />
                             <View style={styles.buttonContainer}>
-                                <TouchableHighlight
+                                <TouchableOpacity
                                     onPress={() => {
-                                        this.setModalVisible(!this.state.modalVisible);
+                                        this.setModalVisible(false);
                                     }}>
                                     <View style={styles.buttonBack}>
                                         <Text style={styles.buttonText}>Back</Text>
                                     </View>
-                                </TouchableHighlight>
-                                <TouchableHighlight
-                                    onPress={() => {
-                                        this.props.nextStep();
-                                    }}>
-                                    <View style={styles.button}>
-                                        <Text style={styles.buttonText}>Select</Text>
-                                    </View>
-                                </TouchableHighlight>
+                                </TouchableOpacity>
                             </View>
                         </View>
                     </View>
@@ -134,15 +137,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    button: {
-        backgroundColor: '#d15953',
-        padding: 12,
-        margin: 16,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 8,
-        width: 120
-    },
     buttonBack: {
         backgroundColor: '#999999',
         padding: 12,
@@ -150,7 +144,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 8,
-        width: 120
+        width: 250
     },
     modalContent: {
         backgroundColor: 'white',
@@ -161,8 +155,7 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(0, 0, 0, 0.1)',
     },
     buttonContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-around'
+        alignItems: 'center'
     },
     buttonText: {
         fontSize: 15,
