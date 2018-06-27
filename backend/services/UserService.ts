@@ -1,6 +1,7 @@
 import * as Knex from "knex";
 import joinjs from "join-js";
 
+
 export default class UserService {
   private resultMaps: Array<Object>;
 
@@ -21,7 +22,7 @@ export default class UserService {
         idProperty: "id",
         properties: ["name", "datetime", "photo"],
         collections: [
-          { name: "items", mapId: "itemsMap", columnPrefix: "items_" }
+          // { name: "items", mapId: "itemsMap", columnPrefix: "items_" }
         ]
       },
       {
@@ -70,6 +71,8 @@ export default class UserService {
         // .andWhere("items.isactive", true)
         .andWhere("users.isactive", true)
         .then(result => {
+          console.log("result", result)
+
           return joinjs.mapOne(
             result,
             this.resultMaps,
@@ -78,22 +81,23 @@ export default class UserService {
           );
         })
         .catch(err => {
-          console.log("fuck you", err);
+          console.log("err", err);
         })
     );
   }
 
   getByEmail(email: string, password: string) {
+    
     return this.knex("users")
-      .select("id")
-      .first()
-      .where("email", email)
-      .andWhere("password", password)
-      .then(value => {
-        return value;
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    .select("id")
+    .first()
+    .where("email", email)
+    .andWhere("password", password)
+    .then(value => {
+      return value;
+    })
+    .catch(err => {
+      console.log(err);
+    });
   }
 }

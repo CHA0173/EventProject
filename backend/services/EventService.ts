@@ -163,11 +163,11 @@ export default class EventService {
 
   isAttended(eventid: number, userid: number) {
     return this.knex("events_users")
-               .select("events_users.users_id")
-               .first()
-               .where("events_users.events_id", eventid)
-               .andWhere("events_users.users_id", userid)
-               .andWhere("events_users.isactive", true);
+      .select("events_users.users_id")
+      .first()
+      .where("events_users.events_id", eventid)
+      .andWhere("events_users.users_id", userid)
+      .andWhere("events_users.isactive", true);
   }
   
   isCreator(eventid: number, userid: number) {
@@ -183,15 +183,15 @@ export default class EventService {
     return this.knex.transaction(async (trx) => {
       try {
         const eventUpdateResult = await trx("events")
-                                        .where("events.id", body.event.id)
-                                        .update({
-                                          name:         body.event.name,
-                                          description:  body.event.description,
-                                          datetime:     body.event.datetime,
-                                          address:      body.event.address,
-                                          private:      body.event.private,
-                                          deposit:      body.event.deposit
-                                        })
+          .where("events.id", body.event.id)
+          .update({
+            name:         body.event.name,
+            description:  body.event.description,
+            datetime:     body.event.datetime,
+            address:      body.event.address,
+            private:      body.event.private,
+            deposit:      body.event.deposit
+          })
         //why use if to confirm update changes?
         if (eventUpdateResult) {
           //awaits all mappings and updates to finish
