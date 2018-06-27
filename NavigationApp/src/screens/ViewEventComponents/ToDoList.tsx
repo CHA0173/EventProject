@@ -4,6 +4,7 @@ import {
   Text,
   ScrollView,
   FlatList,
+  TouchableOpacity,
 } from 'react-native'
 import { ToDoItem } from '../fakeData'
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -41,6 +42,12 @@ export default class ToDoList extends React.Component<{}, {}> {
                           
                         />
                         : null
+                        }
+                        { 
+                          data.item.user ?
+                          <TouchableOpacity>
+                            <Text>{data.item.name}</Text>
+                          </TouchableOpacity>: null
                         }
                       </View>
                     </View>
