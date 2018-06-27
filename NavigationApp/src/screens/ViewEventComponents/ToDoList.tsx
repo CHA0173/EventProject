@@ -5,6 +5,7 @@ import {
   ScrollView,
   FlatList,
   TouchableOpacity,
+  TouchableWithoutFeedback,
 } from 'react-native'
 import { ToDoItem } from '../fakeData'
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -24,31 +25,39 @@ export default class ToDoList extends React.Component<{}, {}> {
             <ScrollView style={{ height: 380 }}>
 
               <FlatList
-                data={ToDoItem}
+                data={ToDoItem[0].items}
                 renderItem={(data) => {
                   return (
                     <View style={{ borderBottomWidth: 0.5, margin: 15 }}>
                       <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-                        <Text>{data.item.name}</Text>
+                        <View>
+                          {
+                            !data.item.user_name ? //FIXME:
+                              <TouchableWithoutFeedback
+                                onPress={() => {
+                                  <Icon
+                                    name='check'
+                                    color='red'
+                                  />
+                                }}>
+                                <Text>{data.item.user_name}</Text>
+                              </TouchableWithoutFeedback> : <Text>{data.item.user_name}</Text>
+                          }
+                        </View>
                         <Text>{data.item.quantity}</Text>
                       </View>
-                      <View style={{justifyContent: 'space-between', flexDirection: 'row', marginVertical: 10, paddingHorizontal: 10}}>
-                        <Text>{data.item.user}</Text>
+                      <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginVertical: 10, paddingHorizontal: 10 }}>
+
                         {
                           data.item.completed ?
-                        <Icon
-                          name='check'
-                          color='green'
-                          
-                        />
-                        : null
+                            <Icon
+                              name='check'
+                              color='green'
+
+                            />
+                            : null
                         }
-                        { 
-                          data.item.user ?
-                          <TouchableOpacity>
-                            <Text>{data.item.name}</Text>
-                          </TouchableOpacity>: null
-                        }
+
                       </View>
                     </View>
                   )
