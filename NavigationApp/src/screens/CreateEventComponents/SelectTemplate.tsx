@@ -15,7 +15,8 @@ import { stepButtons } from '../../styles'
 
 interface ISelectTemplateProps {
     nextStep: () => void,
-    prevStep: () => void
+    prevStep: () => void,
+    setTodo: (templatetodo) => void
 }
 interface ISelectTemplateState {
     Templatetype: string,
@@ -110,7 +111,9 @@ export default class SelectTemplate extends React.Component<ISelectTemplateProps
                             {/* FIXME: maybe need to move to Templates page */}
                             <Templates Templatetype={this.state.Templatetype}
                                 setModalVisible={this.setModalVisible.bind(this)}
-                                nextStep={this.props.nextStep} />
+                                nextStep={this.props.nextStep} 
+                                setTodo={this.props.setTodo.bind(this)}
+                                />
                             <View style={styles.buttonContainer}>
                                 <TouchableOpacity
                                     onPress={() => {
@@ -148,7 +151,7 @@ const styles = StyleSheet.create({
     },
     modalContent: {
         backgroundColor: 'white',
-        padding: 30,
+        padding: 10,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 4,

@@ -3,7 +3,7 @@ import {
     Text,
     View,
     TouchableOpacity,
-    StyleSheet
+    StyleSheet,
 } from 'react-native';
 import { Card, ListItem, List } from 'react-native-elements'
 
@@ -16,6 +16,7 @@ interface ITemplatesProps {
     Templatetype: string,
     setModalVisible: (visible) => void
     nextStep: () => void
+    setTodo: (templatetodo) => void
 }
 
 interface ITemplatesStates {
@@ -58,24 +59,26 @@ export default class Templates extends React.Component<ITemplatesProps, ITemplat
                 indicator={this._renderDotIndicator()}
             >
                 <View style={{ backgroundColor: 'cadetblue' }}>
-                    <Card title="Basic">
-                        {
-                            this.renderType()[0].itemlist.map((item, i) => {
-                                return (
-                                    <ListItem
-                                        key={i}
-                                        title={item}
-                                        hideChevron={true}
-                                    />
-                                );
-                            })
-                        }
-                    </Card>
+                    <ScrollView>
+                        <Card title="Basic">
+                            {
+                                this.renderType()[0].itemlist.map((item, i) => {
+                                    return (
+                                        <ListItem
+                                            key={i}
+                                            title={item}
+                                            hideChevron={true}
+                                        />
+                                    );
+                                })
+                            }
+                        </Card>
+                    </ScrollView>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity
                             onPress={() => {
                                 this.props.nextStep();
-
+                                this.props.setTodo(this.renderType()[0].itemlist)
                             }}>
                             <View style={styles.button}>
                                 <Text style={styles.buttonText}>Select</Text>
@@ -84,23 +87,26 @@ export default class Templates extends React.Component<ITemplatesProps, ITemplat
                     </View>
                 </View>
                 <View style={{ backgroundColor: 'cornflowerblue' }}>
-                    <Card title="Supreme">
-                        {
-                            this.renderType()[1].itemlist.map((item, i) => {
-                                return (
-                                    <ListItem
-                                        key={i}
-                                        title={item}
-                                        hideChevron={true}
-                                    />
-                                );
-                            })
-                        }
-                    </Card>
+                    <ScrollView>
+                        <Card title="Supreme">
+                            {
+                                this.renderType()[1].itemlist.map((item, i) => {
+                                    return (
+                                        <ListItem
+                                            key={i}
+                                            title={item}
+                                            hideChevron={true}
+                                        />
+                                    );
+                                })
+                            }
+                        </Card>
+                    </ScrollView>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity
                             onPress={() => {
                                 this.props.nextStep();
+                                this.props.setTodo(this.renderType()[1].itemlist)
                             }}>
                             <View style={styles.button}>
                                 <Text style={styles.buttonText}>Select</Text>
@@ -143,6 +149,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#d15953',
         padding: 12,
         margin: 16,
+        marginBottom: 25,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 8,

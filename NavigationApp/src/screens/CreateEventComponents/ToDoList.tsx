@@ -22,6 +22,7 @@ interface ToDoItem {
 interface IToDoListProps {
   id: number,
   itemlist: string[]
+  todotemplate: string[]
 }
 
 interface IToDoListStates {
@@ -45,6 +46,18 @@ export default class ToDoList extends React.Component<IToDoListProps, IToDoListS
     }
   }
 
+  componentWillMount() {
+    const newList = this.props.todotemplate.map(item => {
+      return (
+        {
+          id: Date.now(),
+          Name: item,
+          Quantity: '0',
+        }
+      )
+    });
+    this.setState({ List: newList });
+  }
 
   public renderToDoItem = () => {
     this.setState({
