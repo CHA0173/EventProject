@@ -81,7 +81,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
         }
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     }
-
+    
     nextStep() {
         this.setState({
             step: this.state.step + 1
