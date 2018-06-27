@@ -98,9 +98,16 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
     }
 
     todoTemplate = []
-
-    setTodo(todotemplate) {
+    setTodoTemplate(todotemplate) {
         this.todoTemplate = todotemplate
+    }
+
+    setTodo(list){
+        const newEvent = {...this.state.event}
+        newEvent.todo = list
+        this.setState({
+            event: newEvent
+        })
     }
 
     onNavigatorEvent = (event) => {
@@ -274,7 +281,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                 })
                 return <SelectTemplate nextStep={this.nextStep.bind(this)}
                     prevStep={this.prevStep.bind(this)}
-                    setTodo={this.setTodo.bind(this)} />
+                    setTodoTemplate={this.setTodoTemplate.bind(this)} />
 
             case 3:
                 this.props.navigator.setTitle({
@@ -295,6 +302,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                 return <ToDoList    id={1} 
                                     itemlist={[]} 
                                     todotemplate={this.todoTemplate}
+                                    setTodo={this.setTodo.bind(this)}
                         /> //FIXME: 
 
             case 4:

@@ -16,7 +16,7 @@ interface ITemplatesProps {
     Templatetype: string,
     setModalVisible: (visible) => void
     nextStep: () => void
-    setTodo: (templatetodo) => void
+    setTodoTemplate: (templatetodo) => void
 }
 
 interface ITemplatesStates {
@@ -78,7 +78,7 @@ export default class Templates extends React.Component<ITemplatesProps, ITemplat
                         <TouchableOpacity
                             onPress={() => {
                                 this.props.nextStep();
-                                this.props.setTodo(this.renderType()[0].itemlist)
+                                this.props.setTodoTemplate(this.renderType()[0].itemlist)
                             }}>
                             <View style={styles.button}>
                                 <Text style={styles.buttonText}>Select</Text>
@@ -106,7 +106,7 @@ export default class Templates extends React.Component<ITemplatesProps, ITemplat
                         <TouchableOpacity
                             onPress={() => {
                                 this.props.nextStep();
-                                this.props.setTodo(this.renderType()[1].itemlist)
+                                this.props.setTodoTemplate(this.renderType()[1].itemlist)
                             }}>
                             <View style={styles.button}>
                                 <Text style={styles.buttonText}>Select</Text>

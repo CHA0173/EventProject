@@ -7,10 +7,12 @@ import {
   Button,
   TextInput,
   ScrollView,
+  Dimensions
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { junkBoat, birthdayParty } from './ToDoTemplates'; 
+import { junkBoat, birthdayParty } from './ToDoTemplates';
 
+const { height } = Dimensions.get('window')
 
 
 interface ToDoItem {
@@ -23,6 +25,7 @@ interface IToDoListProps {
   id: number,
   itemlist: string[]
   todotemplate: string[]
+  setTodo: (list) => void
 }
 
 interface IToDoListStates {
@@ -59,6 +62,10 @@ export default class ToDoList extends React.Component<IToDoListProps, IToDoListS
     this.setState({ List: newList });
   }
 
+  componentDidMount() {
+    this.props.setTodo(this.state.List)
+  }
+
   public renderToDoItem = () => {
     this.setState({
       List: this.state.List.concat({
@@ -70,7 +77,6 @@ export default class ToDoList extends React.Component<IToDoListProps, IToDoListS
       Name: '',
       Quantity: '',
     })
-
   }
 
 
@@ -106,7 +112,7 @@ export default class ToDoList extends React.Component<IToDoListProps, IToDoListS
           </TouchableOpacity>
         </View>
 
-        <View style={{ flex: 1, margin: 20, padding: 20, paddingBottom: 0, marginBottom: 40, borderRadius: 10, borderColor: 'gray', borderWidth: 1, height: 400 }}>
+        <View style={{ flex: 1, margin: 20, padding: 20, paddingBottom: 0, marginBottom: 40, borderRadius: 10, borderColor: 'gray', borderWidth: 1, height: height - 200 }}>
           <View >
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text>Action</Text>
