@@ -14,7 +14,6 @@ import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elemen
 
 import StepIndicator from 'react-native-step-indicator';
 
-import Description from './CreateEventComponents/Description';
 import SelectTemplate from './CreateEventComponents/SelectTemplate';
 import ToDoList from './CreateEventComponents/ToDoList';
 import Confirmation from './CreateEventComponents/Confirmation';
