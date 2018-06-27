@@ -18,7 +18,7 @@ interface ISelectTemplateProps {
     prevStep: () => void
 }
 interface ISelectTemplateState {
-    type: string,
+    Templatetype: string,
     modalVisible: boolean
 }
 
@@ -26,7 +26,7 @@ export default class SelectTemplate extends React.Component<ISelectTemplateProps
     constructor(props: ISelectTemplateProps) {
         super(props);
         this.state = {
-            type: '0',
+            Templatetype: '0',
             modalVisible: false,
         }
     }
@@ -35,8 +35,8 @@ export default class SelectTemplate extends React.Component<ISelectTemplateProps
         this.setState({ modalVisible: visible });
     }
 
-    setType(type) {
-        this.setState({ type: type })
+    setType(Templatetype) {
+        this.setState({ Templatetype: Templatetype })
     }
 
     render() {
@@ -72,7 +72,7 @@ export default class SelectTemplate extends React.Component<ISelectTemplateProps
                     featured
                     height={130}
                     imageContainerStyle={{ borderBottomWidth: 3, borderBottomColor: 'white' }}
-                    onPress={() => this.setState({ type: 'meetup' })}
+                    onPress={() => this.setState({ Templatetype: 'meetup' })}
                 />
                 <Tile
                     imageSrc={require('../../img/movie.jpg')}
@@ -80,7 +80,7 @@ export default class SelectTemplate extends React.Component<ISelectTemplateProps
                     featured
                     height={130}
                     imageContainerStyle={{ borderBottomWidth: 3, borderBottomColor: 'white' }}
-                    onPress={() => this.setState({ type: 'movie' })}
+                    onPress={() => this.setState({ Templatetype: 'movie' })}
                 />
                 <Tile
                     imageSrc={require('../../img/custom.png')}
@@ -98,7 +98,8 @@ export default class SelectTemplate extends React.Component<ISelectTemplateProps
                 >
                     <View style={styles.modalContent}>
                         <View>
-                            <Templates type={this.state.type} />
+                            {/* FIXME: maybe need to move to Templates page */}
+                            <Templates Templatetype={this.state.Templatetype} />
                             <View style={styles.buttonContainer}>
                                 <TouchableHighlight
                                     onPress={() => {

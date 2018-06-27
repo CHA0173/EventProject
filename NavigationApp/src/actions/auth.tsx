@@ -1,4 +1,5 @@
 import * as actionTypes from './types';
+import axios from 'axios';
 
 export const auth_start = () => {
   return {
@@ -27,7 +28,9 @@ export const get_event_start = () => {
 }
 
 export const store_event_basic_info = (data) => {
-
+  return {
+    type: actionTypes.
+  }
 } 
 
 export const store_event_todo_list = (data) => {

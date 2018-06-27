@@ -240,7 +240,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                         }
                     ]
                 })
-                return <ToDoList />
+                return <ToDoList />//FIXME: ToDoList props!
 
             case 4:
                 this.props.navigator.setTitle({

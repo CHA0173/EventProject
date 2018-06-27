@@ -7,13 +7,14 @@ const initialState = {
 }
 
 export const authReducer = (state = initialState, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case actionTypes.AUTH_START:
-      return {...state, loading: true}
+      return { ...state, loading: true }
     case actionTypes.AUTH_SUCCESS:
-      return {...state, id: action.id, loading: false}
+      return { ...state, id: action.id, loading: false }
     case actionTypes.AUTH_FAILURE:
-      return {...state, error: action.err, loading: false}
+      return { ...state, error: action.err, loading: false }
     default:
       return state
+  }
 }
