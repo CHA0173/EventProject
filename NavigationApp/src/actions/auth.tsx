@@ -23,30 +23,13 @@ export const auth_fail = (err) => {
   }
 }
 
-// ==============================  GET EVENT
+// ==============================  GET EVENT (search)
 export const get_event_start = () => {
   return {
     type: actionTypes.GET_EVENT_START
   }
 }
 
-// export const store_event_basic_info = (data) => {
-//   return {
-//     type: actionTypes.
-//   }
-// } 
-
-export const store_event_todo_list = (data) => {
-
-}
-
-export const store_event_attendee = (data) => {
-
-}
-
-export const store_event_discussion = (data) => {
-
-}
 
 export const auth_get_event_success = (data) => {
   return {
@@ -72,6 +55,43 @@ export const get_event = (token) => {
     }).catch((err) => {
       console.log(err)
       dispatch(auth_get_event_fail(err))
+    })
+  }
+}
+
+
+// ==============================  GET EVENT (view)
+export const get_view_start = () => {
+  return {
+    type: actionTypes.GET_VIEW_START
+  }
+}
+
+
+export const auth_get_view_success = (data) => {
+  return {
+    type: actionTypes.GET_VIEW_SUCCESS,
+    events: data.data
+  }
+}
+
+export const auth_get_view_fail = (err) => {
+  return {
+    type: actionTypes.GET_VIEW_FAILURE,
+    err: err
+  }
+}
+
+export const get_view = (token) => {
+  return (dispatch: any) => {
+    const AuthStr = 'Bearer '.concat(token);
+    // dispatch(get_view_start())
+    axios.get(`https://hivent.xyz/api/users`, { headers: { Authorization: AuthStr } }).then((event) => {
+      console.log("users", event.data);
+      dispatch(auth_get_view_success(event))
+    }).catch((err) => {
+      console.log(err)
+      dispatch(auth_get_view_fail(err))
     })
   }
 }
@@ -102,30 +122,22 @@ export const get_user = (token) => {
     // dispatch(auth_get_user_start())
     console.log('ABC', AuthStr)
     axios.get(`https://hivent.xyz/api/users`, { headers: { Authorization: AuthStr } }).then((user) => {
-      
-      console.log(user)
-      console.log('321')
-
+      console.log("auth user", user)
       dispatch(auth_get_user_success(user))
-
     }).catch((err) => {
-      console.log(err)
       dispatch(auth_get_user_fail(err))
     })
   }
 }
-
 
 // ================================== GET AUTH
 export const auth = (email, password) => {
   return (dispatch: any) => {
     dispatch(auth_start())
     axios.post('https://hivent.xyz/api/auth/local', { email: email, password: password }).then((data) => {
-      console.log(data)
       dispatch(get_event(data.data.token))
-      console.log('123')
+      dispatch(get_view(data.data.token))
       dispatch(get_user(data.data.token))
-      console.log('456')
       dispatch(auth_success(data))
     }).catch((err) => {
       dispatch(auth_fail(err))

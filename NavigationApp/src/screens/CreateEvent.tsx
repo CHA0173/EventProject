@@ -23,7 +23,6 @@ import Confirmation from './CreateEventComponents/Confirmation';
 
 import { createStore } from 'redux'
 import { connect } from 'react-redux'
-import reducer from '../reducers/createReducer'
 import { PixelRatio } from 'react-native';
 import { Ievent, Itodo } from '../models/events';
 import { Navigator } from 'react-native-navigation';
@@ -31,7 +30,6 @@ import { Navigator } from 'react-native-navigation';
 const ImagePicker = require('react-native-image-picker');
 const { width } = Dimensions.get('window')
 
-const store = createStore(reducer)
 
 interface ICreateEventProps {
     navigator: any,
