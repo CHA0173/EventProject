@@ -9,6 +9,7 @@ export default class SignUpService {
   //Completed
   addUser(data: any) {
     console.log("data",data)
+    // let hash = bcrypt.hashPassword(data.password)
     return this.knex("users")
     .insert({
       name: data.name,

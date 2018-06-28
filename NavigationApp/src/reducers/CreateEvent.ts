@@ -1,9 +1,9 @@
 import { ADD_EVENT, EDIT_EVENT, DELETE_EVENT, IEventAction } from '../actions/CreateEvent';
-import * as events from '../models/events';
+import { Ievent } from '../models/events';
 
 
 export interface IeventState {
-  events: events.Ievent[]
+  events: Ievent[]
 }
 
 const initialState = {
@@ -12,7 +12,7 @@ const initialState = {
 
 const EventReducer = (state: IeventState = initialState, action: IEventAction) => {
   switch (action.type) {
-    case ADD_EVENT: 
+    case ADD_EVENT: {
       const events = state.events.concat(
         [
           {
@@ -31,6 +31,24 @@ const EventReducer = (state: IeventState = initialState, action: IEventAction) =
         ]
       );
       return { ...state, events: events }
+    }
+    case EDIT_EVENT: {
+      const events = state.events.filter(event => event.id !== action.id);
+      events.push({
+        id: action.id,
+        name: action.name,
+        description: action.description,
+        datetime: action.datetime,
+        photo: action.photo,
+        address: action.address,
+        private_event: action.private_event,
+        deposit: action.deposit,
+        todo: action.todo,
+        attendees: action.attendees,
+        discussion: action.discussion,
+  });
+  return { ...state, events: events }
+    }
     default:
       return state
   }

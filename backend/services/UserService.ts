@@ -1,6 +1,7 @@
 import * as Knex from 'knex';
 import { default as joinjs } from 'join-js';
 
+
 export default class UserService {
   private resultMaps: Array<Object>;
 
@@ -75,6 +76,8 @@ export default class UserService {
         })
         .where("users.id", userid)
         .then(result => {
+          console.log("result", result)
+
           return joinjs.mapOne(
             result,
             this.resultMaps,
@@ -88,6 +91,7 @@ export default class UserService {
   }
 
   getByEmail(email: string, password: string) {
+    
     return this.knex("users")
       .select("id")
       .first()

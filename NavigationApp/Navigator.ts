@@ -72,7 +72,7 @@ Navigation.registerComponent('CreateEventScreen', () => CreateEvent, store, Prov
   ]
 })
 
-// vvvvv Landing page vvvvv
+// // vvvvv Landing page vvvvv
 Navigation.startSingleScreenApp({
   screen: {
     screen: 'StartScreen', // unique ID registered with Navigation.registerScreen

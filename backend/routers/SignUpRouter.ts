@@ -1,6 +1,7 @@
 import * as express       from 'express';
-// import * as bcrypt        from  'bcrypt';
 import SignUpService      from '../services/SignUpService';
+
+
 
 
 

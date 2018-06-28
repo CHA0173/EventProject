@@ -89,6 +89,7 @@ export default class AuthRouter {
   //         res.sendStatus(401);
   //     }2
   // }
-}
+// }
 
 //https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${accessToken}
+}
