@@ -16,6 +16,7 @@ export default class EventService {
         idProperty: 'id',
         properties: ['name', 'description', 'datetime', 'photo', 'address', 'private', 'deposit'],
         collections: [
+          // { name: 'events_users', mapId: 'events_usersMap', columnPrefix: 'events_users_' },
           { name: 'todo', mapId: 'todoMap', columnPrefix: 'todo_' },
           { name: 'attendees', mapId: 'attendeesMap', columnPrefix: 'attendees_' },
           { name: 'discussion', mapId: 'discussionMap', columnPrefix: 'discussion_' }
@@ -37,7 +38,7 @@ export default class EventService {
       {
         mapId: 'attendeesMap',
         idProperty: 'id',
-        properties: ['name', 'photo']
+        properties: ['name', 'photo' ,'creator']
       },
       {
         mapId: 'discussionMap',
@@ -75,7 +76,7 @@ export default class EventService {
 
   //Completed
   async remove(eventid: number, userid: number) {
-    console.log("eventid", eventid, "userid", userid)
+    // console.log("eventid", eventid, "userid", userid)
     return this.knex.transaction(async (trx) => {
       try {
         const creator = await this.isCreator(eventid, userid);
@@ -90,7 +91,7 @@ export default class EventService {
             .join("events", "todo.events_id", "events.id")
             .where("events.id", eventid)
             .first();
-          console.log("todo.id", toDo.id)
+          // console.log("todo.id", toDo.id)
           await trx("todo")
             .where("id", toDo.id)
             .update("isactive", false);
@@ -115,7 +116,7 @@ export default class EventService {
           return true;
         } else {
 
-          console.log("User is NOT the CREATOR")
+          // console.log("User is NOT the CREATOR")
           return trx("events_users")
             .where("events_id", eventid)
             .andWhere("users_id", userid)
@@ -134,8 +135,8 @@ export default class EventService {
   //Completed
   async create(data: any /*,file: Express.Multer.File*/) {
     //why does async need to be called twice?
-    console.log("entered create")
-    console.log("data", data)
+    // console.log("entered create")
+    // console.log("data", data)
     return this.knex.transaction(async (trx) => {
       try {
         const eventid = await trx("events")
@@ -189,7 +190,7 @@ export default class EventService {
           return eventid[0];
         
       } catch (e) {
-        console.log(e)
+        // console.log(e)
         return -1;
 
       }
@@ -232,7 +233,7 @@ export default class EventService {
                   completed: item.completed
                 })
                 .catch(err => {
-                  console.log(err);
+                  // console.log(err);
                 })
             })
           return true
@@ -246,7 +247,7 @@ export default class EventService {
 
   //Completed
   joinEvent(body: any) {
-    console.log("body", body)
+    // console.log("body", body)
     return this.knex.transaction(async (trx) => {
       try {
         await trx("events_users")
@@ -287,7 +288,7 @@ export default class EventService {
         "events.private     as event_private",
         "events.deposit     as event_deposit",
 
-        // "events_users.creator ",
+        "events_users.creator as attendees_creator",
 
         "todo.id            as todo_id",
         "todo.type          as todo_type",
@@ -316,12 +317,13 @@ export default class EventService {
       .leftJoin("users as itemusers", "items.users_id", "itemusers.id")
       .join("users", "events_users.users_id", "users.id")
       .where("events.id", eid)
-      .andWhere('events.id',"events_users.events_id")
+      // .whereIn('events.id',this.knex.select('events_id').from('events_users'))
       // .andWhere("events_users.creator",true)
       .andWhere("events.isactive", true)
       .andWhere("items.isactive", true)
       .andWhere("discussion.isactive", true)
       .then(result => {
+        console.log(joinjs.mapOne(result, this.resultMaps, 'eventMap', 'event_'))
         return (result && result.length > 0) ? joinjs.mapOne(result, this.resultMaps, 'eventMap', 'event_') : {};
       })
   }
@@ -340,14 +342,16 @@ export default class EventService {
   //   "events_users.creator"
   //   )
   //   .join("events_users","events.id","events_users.events_id")
+  //   .join("users","users.id","events_users.users_id")
   //   .where("events.id","events_users.events_id")
+  //   // .andwhere("ev","")
   //   .andWhere("events_users.creator",true);
   // }
 
 
   //Completed
   getByName(name: string) {
-    console.log("search parameter:", name)
+    // console.log("search parameter:", name)
     return this.knex("events")
       .select("events.id as events_id", "events.name", "events.photo", "events.datetime")
       .where("events.name", "ilike", `%${name}%`)
@@ -363,7 +367,7 @@ export default class EventService {
   }
 
   addComment(body: any) {
-    console.log("body", body)
+    // console.log("body", body)
     return this.knex.transaction(async (trx) => {
       try {
         await trx("discussion")
