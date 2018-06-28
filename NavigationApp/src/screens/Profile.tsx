@@ -84,7 +84,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
 
 
       // You can also display the image using data:
-      const source = { uri: 'data:image/jpeg;base64,' + response.data };
+      const source = { uri: 'data:image/jpeg;base64,' + response.data }; 
 
       // const header = {
       //   method: 'post',
@@ -92,7 +92,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
       //     'Accept': 'application/json'
       //   }
       // }
-      axios.post('url', { photo: source })
+      axios.put('https://hivent.xyz/api/users', { photo: source }) //FIXME: unauth
 
       this.setState({
         avatarSource: source

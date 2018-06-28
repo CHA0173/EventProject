@@ -23,7 +23,7 @@ export const auth_fail = (err) => {
   }
 }
 
-// ==============================  GET EVENT
+// ==============================  GET EVENT (search)
 export const get_event_start = () => {
   return {
     type: actionTypes.GET_EVENT_START
@@ -36,17 +36,17 @@ export const get_event_start = () => {
 //   }
 // } 
 
-export const store_event_todo_list = (data) => {
+// export const store_event_todo_list = (data) => {
 
-}
+// }
 
-export const store_event_attendee = (data) => {
+// export const store_event_attendee = (data) => {
 
-}
+// }
 
-export const store_event_discussion = (data) => {
+// export const store_event_discussion = (data) => {
 
-}
+// }
 
 export const auth_get_event_success = (data) => {
   return {
@@ -114,7 +114,6 @@ export const get_user = (token) => {
     })
   }
 }
-
 
 // ================================== GET AUTH
 export const auth = (email, password) => {

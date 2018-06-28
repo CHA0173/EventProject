@@ -30,6 +30,7 @@ interface ISearchProps {
   fetchEvents: () => string[],
   get_event: () => void,
   events: Ievent[],
+  text: string,
 };
 
 interface ISearchState {
@@ -46,7 +47,7 @@ class Search extends React.Component<ISearchProps, ISearchState> {
     this.state = {
       text: '',
       // data: [],
-      event: [],
+      event: this.props.events,
       isFetching: true
     }
   }
@@ -65,7 +66,7 @@ class Search extends React.Component<ISearchProps, ISearchState> {
   }
 
   public filter(text) {//insert axios get to backend
-    const newData = this.props.events.filter(function (item) {
+    const newData = this.props.events.filter(function (item) { //FIXME: 
       const itemData = item.name.toUpperCase()
       const textData = text.toUpperCase()
       return itemData.indexOf(textData) > -1
@@ -80,7 +81,7 @@ class Search extends React.Component<ISearchProps, ISearchState> {
   public deleteData() {
     this.setState({
       text: '',
-      event: [],
+      event: this.props.events,
     });
   };
 
@@ -120,7 +121,7 @@ class Search extends React.Component<ISearchProps, ISearchState> {
             style={styles.searchIcon}
           />
           <TextInput
-            value={this.state.text}
+            value={this.props.text}
             onChangeText={(text) => this.filter(text)}
             style={styles.input}
             placeholder='Search'
@@ -149,8 +150,8 @@ class Search extends React.Component<ISearchProps, ISearchState> {
         </View>
         <ScrollView>
           <FlatList
-            style={styles.flatstyle}
-            data={this.props.events}
+            style={styles.flatstyle} 
+            data={this.state.event} //FIXME:
             renderItem={({ item }) => this.renderItem(item)}
             // keyExtractor={item => item.id.toString()} 
           />
