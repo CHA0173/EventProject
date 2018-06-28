@@ -16,44 +16,63 @@ import {
 const { width, height } = Dimensions.get('window');
 import { Navigator } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { fakedata } from './fakeData';
+// import { fakedata } from './fakeData';
+// import { auth } from '../actions/auth';
+
 
 import { connect } from 'react-redux'
 import { fetchingEvents } from '../actions'
+import { Ievent } from '../models/events' 
+import { get_event } from '../actions/auth';
 
 interface ISearchProps {
-  navigator: Navigator;
-  fetchEvents: () => string[]
+  navigator: Navigator,
+  fetchEvents: () => string[],
+  get_event: () => void,
+  events: Ievent[],
 };
 
 interface ISearchState {
   text: string,
-  data: any,
-  events: object,
+  // data: any,
+  event: Ievent[],
   isFetching: boolean
 }
 
-export default class Search extends React.Component<ISearchProps, ISearchState> {
+class Search extends React.Component<ISearchProps, ISearchState> {
   constructor(props: ISearchProps) {
     super(props);
 
     this.state = {
       text: '',
-      data: fakedata,
-      events: {},
+      // data: [],
+      event: [],
       isFetching: true
+    }
+  }
+  onNavigatorEvent(event) {
+    // handle a deep link
+    if (event.type == 'DeepLink') {
+      const parts = event.link.split('/'); // Link parts
+      // const payload = event.payload; // (optional) The payload
+
+      if (parts[0] == 'search') {
+        this.props.navigator.push({
+          screen: 'SearchTabScreen'
+        })// handle the link somehow, usually run a this.props.navigator command
+      }
     }
   }
 
   public filter(text) {//insert axios get to backend
-    const newData = fakedata.filter(function (item) {
+    const newData = this.props.events.filter(function (item) {
       const itemData = item.name.toUpperCase()
       const textData = text.toUpperCase()
       return itemData.indexOf(textData) > -1
     });
 
     this.setState({
-      data: newData,
+      event: newData,
       text: text,
     });
   };
@@ -61,7 +80,7 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
   public deleteData() {
     this.setState({
       text: '',
-      data: fakedata,
+      event: [],
     });
   };
 
@@ -78,8 +97,9 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
         })
       }}>
         <View>
-          <Image style={styles.image} source={{ uri: item.img }} />
+          <Image style={styles.image} source={{ uri: item.photo }} />
           <Text style={{ color: 'white', margin: 20 }}>{item.name}</Text>
+          <Text style={{ color: 'white' }}>{item.datetime}</Text>
         </View>
       </TouchableWithoutFeedback>
     )
@@ -130,9 +150,9 @@ export default class Search extends React.Component<ISearchProps, ISearchState> 
         <ScrollView>
           <FlatList
             style={styles.flatstyle}
-            data={fakedata}
+            data={this.props.events}
             renderItem={({ item }) => this.renderItem(item)}
-            keyExtractor={item => item.id.toString()} 
+            // keyExtractor={item => item.events_id.toString()} 
           />
         </ScrollView>
       </View>
@@ -195,8 +215,16 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    events: state
+    events: state.getEventReducer.events
   }
 }
 
-// export default connect(mapStateToProps, { fetchingEvents })(Search)
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    // get_event: () => dispatch(get_event())
+  }
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(Search)
