@@ -29,7 +29,7 @@ export default class ViewEvent extends React.Component<IViewEventProps, {}> {
 
     static renderNavbarButton() {
         const navbarButton = [[{
-            title: 'Edit', // for a textual button, provide the button title (label)
+            icon: require('../img/edit.png'),
             id: 'edit', // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
             disabled: true, // optional, used to disable the button (appears faded and doesn't interact)
             disableIconTint: true, // optional, by default the image colors are overridden and tinted to navBarButtonColor, set to true to keep the original image colors
@@ -38,7 +38,7 @@ export default class ViewEvent extends React.Component<IViewEventProps, {}> {
             buttonFontWeight: '600', // Set font weight for the button (can also be used in setButtons function to set different button style programatically)
           }],
           [{
-            title: 'Join', // for a textual button, provide the button title (label)
+            icon: require('../img/join.png'),
             id: 'join', // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
             disabled: true, // optional, used to disable the button (appears faded and doesn't interact)
             disableIconTint: true, // optional, by default the image colors are overridden and tinted to navBarButtonColor, set to true to keep the original image colors

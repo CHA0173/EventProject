@@ -4,9 +4,6 @@ buildscript {
         maven { url 'https://plugins.gradle.org/m2/' } // Gradle Plugin Portal 
     }
     dependencies {
-      // jacob testing
-        classpath 'com.google.gms:google-services:4.0.0'
-      // jacob testing ^^
         classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.10.0, 0.99.99]'
     }
 }

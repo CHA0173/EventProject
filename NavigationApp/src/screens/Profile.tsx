@@ -12,124 +12,84 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
   Switch,
+  Button
 } from 'react-native';
 const { width, height } = Dimensions.get('window')
 
 import { Navigator } from 'react-native-navigation';
-import { Card } from 'react-native-elements';
+import { Card, CheckBox } from 'react-native-elements';
 import { TodoData } from './fakeData';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 const ImagePicker = require('react-native-image-picker');
 
 
-const EventData = [{
-  id: 1,
-  name: 'Boat Party',
-  image: require('../img/boatparty.jpg'),
-  description: 'Wanna meet some sexy ladies this weekend? Join and bring enough cash!',
-  location: 'sai kung',
-  price: 'HKD300',
-  todo: {
-    food: [{
-      name: 'cake',
-      quantity: '2'
-    }, {
-      name: 'apple',
-      quantity: '3'
-    }],
-    drink: [{
-      name: 'water',
-      quantity: '12'
-    }, {
-      name: 'coke',
-      quantity: '5'
-    }]
-  }
-}, {
-  id: 2,
-  name: 'Boat Party',
-  image: require('../img/boatparty.jpg'),
-  description: 'Wanna meet some sexy ladies this weekend? Join and bring enough cash!',
-  location: 'sai kung',
-  price: 'HKD300',
-  todo: {
-    food: [{
-      name: 'cake',
-      quantity: '2'
-    }, {
-      name: 'apple',
-      quantity: '3'
-    }],
-    drink: [{
-      name: 'water',
-      quantity: '12'
-    }, {
-      name: 'coke',
-      quantity: '5'
-    }]
-  }
-}, {
-  id: 3,
-  name: 'Boat Party',
-  image: require('../img/boatparty.jpg'),
-  description: 'Wanna meet some sexy ladies this weekend? Join and bring enough cash!',
-  location: 'sai kung',
-  price: 'HKD300',
-  todo: {
-    food: [{
-      name: 'cake',
-      quantity: '2'
-    }, {
-      name: 'apple',
-      quantity: '3'
-    }],
-    drink: [{
-      name: 'water',
-      quantity: '12'
-    }, {
-      name: 'coke',
-      quantity: '5'
-    }]
-  }
-}]
+const userProfile = {
+  "id": 1,
+  "name": "Alex",
+  "photo": null,
+  "events": [
+    {
+      "id": 1,
+      "name": "UpdateTest2",
+      "datetime": "2018-07-21T09:00:00.000Z",
+      "photo": null,
+      "creator": true
+    },
+    {
+      "id": 2,
+      "name": "Mary's Wedding",
+      "datetime": "2018-09-20T10:00:00.000Z",
+      "photo": null,
+      "creator": false
+    }
+  ],
+  "items": [
+    {
+      "id": 6,
+      "name": "ceremonial tea",
+      "quantity": 1,
+      "completed": false,
+      "itemEventId": 2
+    },
+    {
+      "id": 1,
+      "name": "Test2",
+      "quantity": 100,
+      "completed": true,
+      "itemEventId": 1
+    }
+  ]
+}
 
+interface IUserProfile {
+  id: number,
+  name: string,
+  photo: string,
+  events: object[],
+  items: object[]
+}
 
 interface IProfileProps {
-  navigator: Navigator;
+  navigator: Navigator,
+  userProfile: IUserProfile
 };
 
 interface IProfileState {
   avatarSource: any,
-  itemdata: any,
-  eventdata: any,
-  isActive: boolean
+  eventAttended: number,
+  todo: number
 }
 
-export default class Profile extends React.Component<IProfileProps, IProfileState> {
+class Profile extends React.Component<IProfileProps, IProfileState> {
   constructor(props: IProfileProps) {
     super(props)
 
     this.state = {
       avatarSource: null,
-      itemdata: TodoData,
-      eventdata: EventData,
-      isActive: false,
-      // isActive: TodoData.isActive,
-    }
-  }
- 
-  onNavigatorEvent(event) {
-    // handle a deep link
-    if (event.type == 'DeepLink') {
-      const parts = event.link.split('/'); // Link parts
-      // const payload = event.payload; // (optional) The payload
-
-      if (parts[0] == 'profile') {
-        this.props.navigator.push({
-          screen: 'ProfileTabScreen'// handle the link somehow, usually run a this.props.navigator command
-        })
-      }
+      eventAttended: 0,
+      todo: 0,
     }
   }
 
@@ -150,17 +110,17 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
 
       // const source = { uri: response.uri };
 
-      
+
       // You can also display the image using data:
       const source = { uri: 'data:image/jpeg;base64,' + response.data };
-      
+
       // const header = {
       //   method: 'post',
       //   headers: {
       //     'Accept': 'application/json'
       //   }
       // }
-      axios.post('url', {photo: source})
+      axios.post('url', { photo: source })
 
       this.setState({
         avatarSource: source
@@ -169,160 +129,120 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
     );
   }
 
-  public renderTodoItem(item) { //FIXME: need to send back the data(uri/ base64) to backend  
+  public renderTodoItem(item) { //FIXME: need to send back the data(uri/ base64) to backend
+    let eventId = item.itemEventId
+    let event = userProfile.events.find(event => event.id == eventId)
     return (
-      <View style={{ borderColor: 'gray', borderWidth: 1, margin: 10 }}>
-        <TouchableOpacity onPress={() => {
-          this.props.navigator.push({
-            screen: 'ViewEventScreen',
-            title: item.eventname,
-            navigatorStyle: { tabBarHidden: true },
-            passProps: {
-              selectedItem: item.item
-            }
-          })
-        }}>
-          <View style={{ marginHorizontal: 10 }}>
-            <Text>{item.item}</Text>
-            <Text>{item.quality}</Text>
-            <Text>{item.eventname}</Text>
+      <View style={{ borderWidth: 1, padding: 10, margin: 10, borderRadius: 5 }}>
+        <Text>
+          {event.datetime.match(/\d{4}-[01]\d-[0-3]\d/)}
+        </Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <View>
+            <Text>
+              {item.name}
+            </Text>
+            <Text>
+              at {event.name}
+            </Text>
           </View>
-        </TouchableOpacity>
-        <View>
-          <TouchableWithoutFeedback>
-            <Switch
-              onValueChange={value => {
-                this.setState({
-                  isActive: value
-                })
-                item.isActive = value
-              }}
-
-              value={item.isActive}
+          <View>
+            <CheckBox
+              center
+              iconRight={true}
+              title={`Qty: ${item.quantity}`}
+              checked={item.completed}
             />
-          </TouchableWithoutFeedback>
+          </View>
         </View>
       </View>
     )
   }
 
-  public renderEventItem(item) {
-    return (
-      <TouchableOpacity onPress={() => {
-        this.props.navigator.push({
-          screen: 'ViewEventScreen',
-          title: item.name,
-          navigatorStyle: { tabBarHidden: true },
-          passProps: {
-            selectedItem: item.item
-          }
-        })
-      }}>
-        <Card
-          title={item.name}
-          image={item.image}>
-          <Text style={{ marginBottom: 10 }}>
-            {item.description}
+  componentWillMount() {
+    this.props.navigator.setTitle({ title: userProfile.name })
+  }
+
+  componentDidMount() {
+    const now = Date.now();
+    const eventAttended = userProfile.events.reduce((count: number, event: any) => {
+      const eventdate = Date.parse(event.datetime);
+      return (eventdate > now) ? count += 1 : count += 0;
+    }, 0);
+
+    this.setState({ eventAttended });
+  }
+
+  public renderEventHistory(item) {
+    let eventdate = Date.parse(item.datetime)
+    let now = Date.now()
+    if (eventdate > now) {
+      return (
+        <View style={{ borderWidth: 1, padding: 10, margin: 10, borderRadius: 5 }}>
+          <Text>
+            {item.name}
           </Text>
-        </Card>
-      </TouchableOpacity>
-    )
+        </View>
+      )
+    }
   }
 
   render() {
+    const { eventAttended } = this.state;
 
     return (
-      <View>
-        <ScrollView>
-          <View style={{ borderBottomWidth: 1, borderColor: '#3a3a3a' }}>
-            <View style={{ justifyContent: 'space-between', alignItems: 'center', margin: 20, flexDirection: 'row', maxWidth: 300 }}>
-              <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
-                <View style={[styles.avatar, styles.avatarContainer]}>
-                  {this.state.avatarSource === null  ? <Text>Select a Photo</Text> :
-                    <Image style={styles.avatar} source={this.state.avatarSource} />
-                  }
-                </View>
-              </TouchableOpacity>
-              <View style={{ justifyContent: 'space-between' }}>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' , paddingHorizontal: 20}}>
-                  <Text style={{ fontSize: 20 }}>{TodoData.length}</Text>
-                  <Text style={{ fontSize: 20 }}>{EventData.length}</Text>
-                </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 5 }}>
-                  <Text style={{ color: 'gray' }}>ToDo</Text>
-                  <Text style={{ color: 'gray' }}>Event</Text>
-                </View>
-                <Text style={{ fontSize: 20, margin: 5 }}> user.displayname</Text>
+      <ScrollView>
+        <View style={{ flex: 1, alignItems: 'center', margin: 20, marginHorizontal: 40, flexDirection: 'row'}}>
+          <View style={{ flex: 1 }}>
+            <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
+              <View style={[styles.avatar, styles.avatarContainer]}>
+                {this.state.avatarSource === null ? <Text>Select a Photo</Text> :
+                  <Image style={styles.avatar} source={this.state.avatarSource} />
+                }
               </View>
-            </View>
+            </TouchableOpacity>
           </View>
-          <View>
-            <Text style={{ width: width, borderWidth: 1 }}>To Do List</Text>
-            <FlatList
-              style={{ marginHorizontal: 10 }}
-              data={TodoData}
-              renderItem={({ item }) => this.renderTodoItem(item)}
-              keyExtractor={item => item.id.toString()} 
-            />
+          <View style={{ flex: 1, alignItems: 'center' }}>
+            <Text style={{ fontSize: 36, margin: 5 }}>{eventAttended}</Text>
+            <Text style={{ fontSize: 14, color: 'grey' }}>To-do</Text>
           </View>
-          <View>
-            <Text style={{ width: width, borderWidth: 1, marginVertical: 20 }}>Event History</Text>
-            <FlatList
-              style={{ marginHorizontal: 10 }}
-              data={EventData}
-              renderItem={({ item }) => this.renderEventItem(item)}
-              keyExtractor={item => item.id.toString()}
-            />
+          <View style={{ flex: 1, alignItems: 'center' }}>
+            <Text style={{ fontSize: 36, margin: 5 }}>{eventAttended}</Text>
+            <Text style={{ fontSize: 14, color: 'grey' }}>Attended</Text>
           </View>
-        </ScrollView>
-      </View>
-      // render() {
-      //   return (
-      //     <View style={styles.container}>
-      //       <View>
-
-      //       </View>
-
-      //       <FlatList
-      //         data={[{ id: 1, name: '' }]}
-      //         renderItem={(data) => (
-      //           <TouchableOpacity key={data.item.id} onPress={() =>
-      //             this.props.navigator.push({
-      //               screen: 'InfoPushedScreen',
-      //               title: 'This is for ' + data.item.name,
-      //               passProps: {
-      //                 selectedItem: data.item
-      //               }
-      //             })}>
-      //             <Text style={styles.welcome}>
-      //               Name: {data.item.name}
-      //             </Text>
-      //           </TouchableOpacity>
-      //         )}>
-      //       </FlatList>
-      //       <Text style={styles.instructions}>
-      //         To get started, edit Profile.js
-      //       </Text>
-      //       <Text style={styles.instructions}>
-      //         {instructions}
-      //       </Text>
-      //     </View>
+        </View>
+        <View>
+          <Button title='To-do List' onPress={() => { }} />
+          <FlatList
+            style={{ marginHorizontal: 10 }}
+            data={userProfile.items}
+            renderItem={({ item }) => this.renderTodoItem(item)}
+            keyExtractor={item => item.id.toString()}
+          />
+          <Button title='Event History' onPress={() => { }} />
+          <FlatList
+            style={{ marginHorizontal: 10 }}
+            data={userProfile.events}
+            renderItem={({ item }) => this.renderEventHistory(item)}
+            keyExtractor={item => item.id.toString()}
+          />
+        </View>
+      </ScrollView>
     );
   }
 }
 
+
+const mapStateToProps = (state) => {
+  return {
+      events: state.event.events
+  }
+}
+
+export default connect(mapStateToProps)(Profile)
+
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
   avatarContainer: {
     borderColor: '#9B9B9B',
     borderWidth: 1 / PixelRatio.get(),

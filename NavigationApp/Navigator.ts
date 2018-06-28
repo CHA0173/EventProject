@@ -1,9 +1,6 @@
 import { Navigation } from 'react-native-navigation';
 import { store } from './src/store';
 import { Provider } from 'react-redux';
-//trying deeplink
-import { AppRegistry } from 'react-native';
-
 
 // import App from './App';
 import Start from './src/screens/Start';
@@ -75,7 +72,7 @@ Navigation.registerComponent('CreateEventScreen', () => CreateEvent, store, Prov
   ]
 })
 
-// vvvvv Landing page vvvvv
+// // vvvvv Landing page vvvvv
 Navigation.startSingleScreenApp({
   screen: {
     screen: 'StartScreen', // unique ID registered with Navigation.registerScreen

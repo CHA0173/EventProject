@@ -7,10 +7,11 @@ import {
   FlatList,
   ScrollView,
 } from 'react-native';
-import { Card, ListItem, Icon, ButtonGroup } from 'react-native-elements';
+import { Card, ListItem, ButtonGroup } from 'react-native-elements';
 import { Navigator, NavigatorButton } from 'react-native-navigation';
 import { Ievent } from '../models/events';
 import { connect } from 'react-redux'
+
 
 interface IEventsProps {
   navigator: Navigator,
@@ -24,7 +25,7 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
   static navigatorButtons = {
     rightButtons: [
       {
-        title: 'Create',
+        icon: require('../img/plus.png'),
         id: 'create'
       }
     ]
@@ -43,22 +44,11 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
     this.setState({ selectedIndex })
   }
 
-  
-
   onNavigatorEvent(event) {
     if (event.type == 'NavBarButtonPress') {
       if (event.id == 'create') {
         this.props.navigator.push({
           screen: 'CreateEventScreen'
-        })
-      }
-    }
-    if(event.type == 'DeepLink'){
-      const parts = event.link.split('/');
-
-      if (parts[0] == 'events'){
-        this.props.navigator.push({
-          screen: 'EventsTabScreen'
         })
       }
     }
