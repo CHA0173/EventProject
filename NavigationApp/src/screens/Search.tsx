@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    events: state.GET_EVENT_REDUCER.events
+    events: state.getEvent.events
   }
 }
 

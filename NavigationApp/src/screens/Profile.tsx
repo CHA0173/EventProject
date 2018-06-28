@@ -18,68 +18,32 @@ const { width, height } = Dimensions.get('window')
 
 import { Navigator } from 'react-native-navigation';
 import { Card, CheckBox } from 'react-native-elements';
-import { TodoData } from './fakeData';
+import { Iuser } from '../models/users'
 import axios from 'axios';
+
 import { connect } from 'react-redux';
 
 const ImagePicker = require('react-native-image-picker');
 
 
-const userProfile = {
-  "id": 1,
-  "name": "Alex",
-  "photo": null,
-  "events": [
-    {
-      "id": 1,
-      "name": "UpdateTest2",
-      "datetime": "2018-07-21T09:00:00.000Z",
-      "photo": null,
-      "creator": true
-    },
-    {
-      "id": 2,
-      "name": "Mary's Wedding",
-      "datetime": "2018-09-20T10:00:00.000Z",
-      "photo": null,
-      "creator": false
-    }
-  ],
-  "items": [
-    {
-      "id": 6,
-      "name": "ceremonial tea",
-      "quantity": 1,
-      "completed": false,
-      "itemEventId": 2
-    },
-    {
-      "id": 1,
-      "name": "Test2",
-      "quantity": 100,
-      "completed": true,
-      "itemEventId": 1
-    }
-  ]
-}
-
 interface IUserProfile {
-  id: number,
-  name: string,
-  photo: string,
-  events: object[],
-  items: object[]
+  user: Iuser
 }
 
 interface IProfileProps {
   navigator: Navigator,
-  userProfile: IUserProfile
+  userProfile: IUserProfile,
+
+  addUser: (user: Iuser)=> void,
+  user: Iuser,
 };
 
 interface IProfileState {
   avatarSource: any,
   eventAttended: number,
-  todo: number
+  todo: number,
+
+  user: Iuser
 }
 
 class Profile extends React.Component<IProfileProps, IProfileState> {
@@ -90,7 +54,15 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
       avatarSource: null,
       eventAttended: 0,
       todo: 0,
+      user: {
+        id: -1,
+        name: '',
+        photo: '',
+        events: [],
+        items: [],
+      }
     }
+    
   }
 
   public selectPhotoTapped = () => {
@@ -130,48 +102,45 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
   }
 
   public renderTodoItem(item) { //FIXME: need to send back the data(uri/ base64) to backend
-    let eventId = item.itemEventId
-    let event = userProfile.events.find(event => event.id == eventId)
+    let eventId = item.itemEventId;
+    let event = this.props.user.events.find(e => e.id == eventId);
     return (
-      <View style={{ borderWidth: 1, padding: 10, margin: 10, borderRadius: 5 }}>
-        <Text>
-          {event.datetime.match(/\d{4}-[01]\d-[0-3]\d/)}
-        </Text>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <View>
+        event &&
+          <View style={{ borderWidth: 1, padding: 10, margin: 10, borderRadius: 5 }}>
             <Text>
-              {item.name}
+              {event.datetime.match(/\d{4}-[01]\d-[0-3]\d/)}
             </Text>
-            <Text>
-              at {event.name}
-            </Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <View>
+                <Text>
+                  {item.name}
+                </Text>
+                <Text>
+                  at {event.name}
+                </Text>
+              </View>
+              <View>
+                <CheckBox
+                  center
+                  iconRight={true}
+                  title={`Qty: ${item.quantity}`}
+                  checked={item.completed}
+                />
+              </View>
+            </View>
           </View>
-          <View>
-            <CheckBox
-              center
-              iconRight={true}
-              title={`Qty: ${item.quantity}`}
-              checked={item.completed}
-            />
-          </View>
-        </View>
-      </View>
     )
   }
 
-  componentWillMount() {
-    this.props.navigator.setTitle({ title: userProfile.name })
-  }
+  // componentDidMount() {
+  //   const now = Date.now();
+  //   const eventAttended = this.props.user.events.reduce((count: number, event: any) => {
+  //     const eventdate = Date.parse(event.datetime);
+  //     return (eventdate > now) ? count += 1 : count += 0;
+  //   }, 0);
 
-  componentDidMount() {
-    const now = Date.now();
-    const eventAttended = userProfile.events.reduce((count: number, event: any) => {
-      const eventdate = Date.parse(event.datetime);
-      return (eventdate > now) ? count += 1 : count += 0;
-    }, 0);
-
-    this.setState({ eventAttended });
-  }
+  //   this.setState({ eventAttended });
+  // }
 
   public renderEventHistory(item) {
     let eventdate = Date.parse(item.datetime)
@@ -190,6 +159,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
   render() {
     const { eventAttended } = this.state;
 
+    this.props.navigator.setTitle({ title: this.props.user.name })
     return (
       <ScrollView>
         <View style={{ flex: 1, alignItems: 'center', margin: 20, marginHorizontal: 40, flexDirection: 'row'}}>
@@ -215,14 +185,14 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
           <Button title='To-do List' onPress={() => { }} />
           <FlatList
             style={{ marginHorizontal: 10 }}
-            data={userProfile.items}
+            data={this.props.user.items}
             renderItem={({ item }) => this.renderTodoItem(item)}
             keyExtractor={item => item.id.toString()}
           />
           <Button title='Event History' onPress={() => { }} />
           <FlatList
             style={{ marginHorizontal: 10 }}
-            data={userProfile.events}
+            data={this.props.user.events}
             renderItem={({ item }) => this.renderEventHistory(item)}
             keyExtractor={item => item.id.toString()}
           />
@@ -235,7 +205,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
 
 const mapStateToProps = (state) => {
   return {
-      events: state.event.events
+      user: state.getUser.user
   }
 }
 
