@@ -2,6 +2,8 @@ import * as express     from 'express';
 import * as bodyParser  from 'body-parser';
 import * as cors        from 'cors';
 import * as Knex        from 'knex';
+// import * as passport    from 'passport';
+
 
 import * as Knexfile    from './knexfile';
 import config           from './config';

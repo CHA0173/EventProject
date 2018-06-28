@@ -58,7 +58,7 @@ export default class Info extends React.Component<IInfoProps, {}> {
                     style={{ width: width, height: 300 }}
                     source={this.props.event.photo}
                 />
-                <List containerStyle={{borderWidth: 10, borderTopWidth: 10}}>
+                <List containerStyle={{borderWidth: 0, borderTopWidth: 0, margin: 20}}>
                     {
                         this.basicInfoList.map((item, i) => (
                             <ListItem
@@ -66,7 +66,7 @@ export default class Info extends React.Component<IInfoProps, {}> {
                                 title={item.title}
                                 leftIcon={{ name: item.icon }}
                                 hideChevron={true}
-                                containerStyle={{borderBottomWidth: 0.5, borderTopWidth: 0.5}}
+                                containerStyle={{borderBottomWidth: 0, borderTopWidth: 0}}
                             />
                         ))
                     }

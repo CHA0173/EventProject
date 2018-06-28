@@ -1,149 +1,136 @@
 [{
-    "type":"boat party",
+    "event_name": "Alex's birthday boat",
     "name": "champagne bottles",
     "quantity": 5,
     "isactive": true,
-    "user": "Peter",
+    "user": "Alex",
     "completed": false
 
 },
 {
-    "type":"boat party",
+    "event_name": "Alex's birthday boat",
     "name": "birthday cake",
     "quantity": 10,
     "isactive": true,
-    "user": "Paul",
+    "user": "Brad",
     "completed": false
 
 },
 {
-    "type":"boat party",
+    "event_name": "Alex's birthday boat",
     "name": "portable speakers",
     "quantity": 1,
     "isactive": true,
-    "user": "Mary",
+    "user": "Jacob",
     "completed": false
 
 },
 {
-   "type":"boat party",
+    "event_name": "Alex's birthday boat",
     "name": "poker set",
     "quantity": 1,
     "isactive": true,
     "user": "Alex",
     "completed": false
 
-},
-{
-   "type":"wedding",
+},{
+    "event_name": "Alex's birthday boat",
+    "name":"Inflatable Toys",
+    "quantity":"1",
+    "isactive":true,
+    "completed": false
+},{
+    "event_name": "Mary's Wedding",
     "name": "wedding cake",
     "quantity": 1,
     "isactive": true,
-    "user": "Mary",
-    "completed": false
+    "user": "Stephen",
+    "completed": true
 
 },
 {
-   "type":"wedding",
+    "event_name": "Mary's Wedding",
     "name": "ceremonial tea",
     "quantity": 1,
     "isactive": true,
-    "user": "Alex",
     "completed": false
 },
 {
-   "type":"wedding",
+    "event_name": "Mary's Wedding",
     "name": "ribbon decorations",
     "quantity": 10,
     "isactive": true,
-    "user": "Peter",
+    "user": "Brad",
     "completed": false
 },
 {
-   "type":"wedding",
+    "event_name": "Mary's Wedding",
     "name": "cameraman",
     "quantity": 1,
     "isactive": true,
-    "user": "Paul",
+    "user": "Stephen",
     "completed": false
 },{
-    "type":"boat party",
-    "package":"basic",
-    "name":"soft drink 12pack",
-    "quantity":"3",
-    "isactive":true,
-    "user": "sample",
-    "completed": false
-},{
-    "type":"boat party",
-    "package":"basic",
+    "event_name": "Mary's Wedding",
     "name":"light snacks",
     "quantity":"15",
     "isactive":true,
-    "user": "sample",
+    "user": "Brad",
     "completed": false
 },{
-    "type":"boat party",
-    "package":"basic",
+    "event_name": "Beach Camp",
     "name":"pack of cards",
     "quantity":"2",
     "isactive":true,
-    "user": "sample",
-    "completed": false
+    "user": "Brad",
+    "completed": true
 },{
-    "type":"boat party",
+    "event_name":"Beach Camp",
+    "name":"bunsen burner",
+    "quantity":"1",
+    "isactive":true,
+    "user": "Brad",
+    "completed": true
+},{
+    "event_name": "Picnic in Tai Tam",
     "package":"basic",
-    "name":"cheap liquor bottles",
-    "quantity":"8",
+    "name":"soft drink 12pack",
+    "quantity":"5",
     "isactive":true,
-    "user": "sample",
+    "user": "Jacob",
     "completed": false
 },{
-    "type":"boat party",
-    "package":"deluxe",
-    "name":"craft beer 6packs",
-    "quantity":"10",
-    "isactive":true,
-    "user": "sample",
-    "completed": false
-},{
-    "type":"boat party",
-    "package":"deluxe",
-    "name":"poker set",
-    "quantity":"1",
-    "isactive":true,
-    "user": "sample",
-    "completed": false
-},{
-    "type":"boat party",
-    "package":"deluxe",
-    "name":"cupcakes",
-    "quantity":"1",
-    "isactive":true,
-    "user": "sample",
-    "completed": false
-},{
-    "type":"boat party",
-    "package":"supreme",
+    "event_name": "Picnic in Tai Tam",
     "name":"champagne bottles",
     "quantity":"10",
+    "user":"Stephen",
     "isactive":true,
-    "user": "sample"
+    "completed": true
 },{
-    "type":"boat party",
-    "package":"supreme",
+    "event_name": "Accelerate Grad Party",
     "name":"cigars",
     "quantity":"10",
     "isactive":true,
-    "user": "sample",
     "completed": false
 },{
-    "type":"boat party",
-    "package":"supreme",
+    "event_name": "Accelerate Grad Party",
     "name":"box of macarons",
     "quantity":"5",
     "isactive":true,
-    "user": "sample",
+    "completed": false
+},{
+    "event_name": "Accelerate Grad Party",
+    "name":"cheap liquor bottles",
+    "quantity":"20",
+    "isactive":true,
+    "user": "Lucas",
+    "completed": false
+},{
+    "event_name": "Accelerate Grad Party",
+    "name":"craft beer 6packs",
+    "quantity":"10",
+    "isactive":true,
+    "user": "Alex",
     "completed": false
 }
 ]

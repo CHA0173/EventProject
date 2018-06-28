@@ -162,7 +162,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
     this.props.navigator.setTitle({ title: this.props.user.name })
     return (
       <ScrollView>
-        <View style={{ flex: 1, alignItems: 'center', margin: 20, marginHorizontal: 40, flexDirection: 'row'}}>
+        <View style={{ flex: 1, alignItems: 'center', padding: 20, paddingHorizontal: 40, flexDirection: 'row'}}>
           <View style={{ flex: 1 }}>
             <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
               <View style={[styles.avatar, styles.avatarContainer]}>
@@ -173,11 +173,11 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
             </TouchableOpacity>
           </View>
           <View style={{ flex: 1, alignItems: 'center' }}>
-            <Text style={{ fontSize: 36, margin: 5 }}>{eventAttended}</Text>
+            <Text style={{ fontSize: 36, padding: 5 }}>{eventAttended}</Text>
             <Text style={{ fontSize: 14, color: 'grey' }}>To-do</Text>
           </View>
           <View style={{ flex: 1, alignItems: 'center' }}>
-            <Text style={{ fontSize: 36, margin: 5 }}>{eventAttended}</Text>
+            <Text style={{ fontSize: 36, padding: 5 }}>{eventAttended}</Text>
             <Text style={{ fontSize: 14, color: 'grey' }}>Attended</Text>
           </View>
         </View>

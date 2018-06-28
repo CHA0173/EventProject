@@ -10,7 +10,6 @@ import {
   Dimensions
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { junkBoat, birthdayParty } from './ToDoTemplates';
 
 const { height } = Dimensions.get('window')
 
