@@ -23,7 +23,7 @@ export default class UserService {
       {
         mapId: "eventsMap",
         idProperty: "id",
-        properties: ["name", "datetime", "photo"],
+        properties: ["name", "datetime", "photo", "creator"],
       },
       {
         mapId: "itemsMap",
@@ -50,6 +50,7 @@ export default class UserService {
           "events.name        as events_name",
           "events.datetime    as events_datetime",
           "events.photo       as events_photo",
+          "events_users.creator as events_creator", 
           "items.id           as items_id",
           "items.name         as items_name",
           "items.quantity     as items_quantity",

@@ -8,8 +8,6 @@ import SignUpService    from '../services/SignUpService';
 import UserRouter       from './UserRouter';
 import UserService      from '../services/UserService';
 
-import TemplateRouter   from './TemplateRouter';
-import TemplateService  from '../services/TemplateService';
 
 import EventRouter      from './EventRouter';
 import EventService     from '../services/EventService';
@@ -24,12 +22,10 @@ export default class ApiRouter {
     constructor(
         private jwtAuth:any,
         private userService: UserService, 
-        private templateService: TemplateService, 
         private eventService: EventService,
         private signupService: SignUpService) {
         
         this.eventService = eventService;
-        this.templateService = templateService;
         this.userService = userService;
         this.signupService = signupService;
     }
@@ -40,13 +36,11 @@ export default class ApiRouter {
         const authRouter     = new AuthRouter(this.userService);
         const signupRouter   = new SignUpRouter(this.signupService);
         const userRouter     = new UserRouter(this.userService);
-        const templateRouter = new TemplateRouter(this.templateService);
 
         router.use("/auth", authRouter.getRouter());//returns with jwt token
         router.use("/signup", signupRouter.getRouter());
         router.use("/users", this.jwtAuth.authenticate(), userRouter.getRouter());      //grabs user's profile
         router.use("/events", this.jwtAuth.authenticate(), eventRouter.getRouter());         //grabs user's events
-        router.use("/templates", this.jwtAuth.authenticate(), templateRouter.getRouter());   //grabs user's events
         return router;
 
         //test script3
