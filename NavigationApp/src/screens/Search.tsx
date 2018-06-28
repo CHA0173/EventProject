@@ -152,7 +152,7 @@ class Search extends React.Component<ISearchProps, ISearchState> {
             style={styles.flatstyle}
             data={this.props.events}
             renderItem={({ item }) => this.renderItem(item)}
-            // keyExtractor={item => item.events_id.toString()} 
+            // keyExtractor={item => item.id.toString()} 
           />
         </ScrollView>
       </View>
@@ -215,16 +215,10 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    events: state.getEventReducer.events
+    events: state.GET_EVENT_REDUCER.events
   }
 }
 
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    // get_event: () => dispatch(get_event())
-  }
-}
 
-
-export default connect(mapStateToProps,mapDispatchToProps)(Search)
+export default connect(mapStateToProps)(Search)

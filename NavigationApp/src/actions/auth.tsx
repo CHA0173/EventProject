@@ -62,7 +62,6 @@ export const auth_get_event_fail = (err) => {
 export const get_event = (token) => {
   return (dispatch: any) => {
     const AuthStr = 'Bearer '.concat(token);
-    alert('A')
     dispatch(get_event_start())
     axios.get('https://hivent.xyz/api/events', { headers: { Authorization: AuthStr } }).then((event) => {
       console.log(event)
