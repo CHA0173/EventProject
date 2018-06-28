@@ -14,18 +14,46 @@ import Info from './ViewEventComponents/Info'
 import ToDoList from './ViewEventComponents/ToDoList'
 import Attendees from './ViewEventComponents/Attendees'
 import Discussion from './ViewEventComponents/Discussion'
-// import { fakeEvent1 } from './fakeData'
+import { Ievent } from '../models/events'
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+
 interface IViewEventProps {
-    name: string
+    item: Ievent
 }
 
 
-export default class ViewEvent extends React.Component<{}, {}> {
-    constructor(props: {}) {
+export default class ViewEvent extends React.Component<IViewEventProps, {}> {
+
+    static renderNavbarButton() {
+        const navbarButton = [[{
+            title: 'Edit', // for a textual button, provide the button title (label)
+            id: 'edit', // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
+            disabled: true, // optional, used to disable the button (appears faded and doesn't interact)
+            disableIconTint: true, // optional, by default the image colors are overridden and tinted to navBarButtonColor, set to true to keep the original image colors
+            buttonColor: 'blue', // Optional, iOS only. Set color for the button (can also be used in setButtons function to set different button style programatically)
+            buttonFontSize: 14, // Set font size for the button (can also be used in setButtons function to set different button style programatically)
+            buttonFontWeight: '600', // Set font weight for the button (can also be used in setButtons function to set different button style programatically)
+          }],
+          [{
+            title: 'Join', // for a textual button, provide the button title (label)
+            id: 'join', // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
+            disabled: true, // optional, used to disable the button (appears faded and doesn't interact)
+            disableIconTint: true, // optional, by default the image colors are overridden and tinted to navBarButtonColor, set to true to keep the original image colors
+            buttonColor: 'blue', // Optional, iOS only. Set color for the button (can also be used in setButtons function to set different button style programatically)
+            buttonFontSize: 14, // Set font size for the button (can also be used in setButtons function to set different button style programatically)
+            buttonFontWeight: '600', // Set font weight for the button (can also be used in setButtons function to set different button style programatically)
+          }]]
+          return navbarButton[0]
+    }
+
+    static navigatorButtons = {
+        rightButtons: ViewEvent.renderNavbarButton()
+    }
+
+    constructor(props: IViewEventProps) {
         super(props);
     }
     _renderTitleIndicator() {
@@ -48,7 +76,7 @@ export default class ViewEvent extends React.Component<{}, {}> {
                     pagerStyle={{ marginTop: 50 }}
                 >
                     <View style={{ backgroundColor: 'cadetblue' }}>
-                        <Info />
+                        <Info event={this.props.item} />
                     </View>
                     <View style={{ backgroundColor: 'cornflowerblue' }}>
                         <ToDoList />

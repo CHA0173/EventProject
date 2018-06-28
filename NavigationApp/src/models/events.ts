@@ -17,8 +17,8 @@ export interface Ievent {
 
 export interface Itodo {
   id: number,
-  type: string,
-  items: Iitem[]
+  Name: string,
+  Quantity: string
 }
 
 export interface Iitem {

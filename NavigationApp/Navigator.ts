@@ -76,9 +76,9 @@ Navigation.registerComponent('CreateEventScreen', () => CreateEvent, store, Prov
 })
 
 // vvvvv Landing page vvvvv
-// Navigation.startSingleScreenApp({
-//   screen: {
-//     screen: 'StartScreen', // unique ID registered with Navigation.registerScreen
-//     navigatorStyle: {navBarHidden: true}, // override the navigator style for the screen, see "Styling the navigator" below (optional)
-//   }
-// });
+Navigation.startSingleScreenApp({
+  screen: {
+    screen: 'StartScreen', // unique ID registered with Navigation.registerScreen
+    navigatorStyle: {navBarHidden: true}, // override the navigator style for the screen, see "Styling the navigator" below (optional)
+  }
+});

@@ -13,23 +13,29 @@ import {
 const { width, height } = Dimensions.get("window")
 import { Button } from 'react-native-elements'
 import { Navigator, Navigation } from 'react-native-navigation';
+import { connect } from 'react-redux';
+import { auth } from '../actions/auth';
 
 interface IStartProps {
-  navigator: Navigator
+  navigator: Navigator,
+  token: string,
+  auth: (email: string, password: string) => void,
 }
 
 interface IStartState {
   renderStart: boolean,
-  text: string
+  email: string,
+  password: string
 }
 
 
-export default class Start extends React.Component<IStartProps, IStartState> {
+class Start extends React.Component<IStartProps, IStartState> {
   constructor(props: IStartProps) {
     super(props)
     this.state = {
       renderStart: false,
-      text: ''
+      email: '',
+      password: ''
     }
     setTimeout(() => {
       this.setState({
@@ -37,7 +43,46 @@ export default class Start extends React.Component<IStartProps, IStartState> {
       })
     }, 2000);
   }
+
   renderStart = () => {
+    if(this.props.token) {
+      Navigation.startTabBasedApp({
+        tabs: [
+          {
+            label: 'Search',
+            screen: 'SearchTabScreen', // this is a registered name for a screen
+            icon: require('../img/search.png'),
+            selectedIcon: require('../img/search.png'), // iOS only
+            title: 'SearchBar',
+            navigatorStyle: { navBarTitleTextCentered: true, navBarHidden: true}
+          },
+          {
+            label: 'Events',
+            screen: 'EventsTabScreen',
+            icon: require('../img/Calendar1.png'),
+            selectedIcon: require('../img/Calendar1.png'), // iOS only
+            title: 'Events',
+            navigatorStyle: { navBarTitleTextCentered: true }
+          },
+          {
+            label: 'Notification',
+            screen: 'NotificationTabScreen',
+            icon: require('../img/notification3.png'),
+            selectedIcon: require('../img/notification3.png'), // iOS only
+            title: 'Notification',
+            navigatorStyle: { navBarTitleTextCentered: true }
+          },
+          {
+            label: 'Profile',
+            screen: 'ProfileTabScreen',
+            icon: require('../img/profile.png'),
+            selectedIcon: require('../img/profile.png'), // iOS only
+            title: 'Profile',
+            navigatorStyle: { navBarTitleTextCentered: true }
+          }
+        ]
+      })
+    }
     if (this.state.renderStart) {
       return (
         <View style={{ backgroundColor: 'white', flex: 1 }}>
@@ -57,13 +102,13 @@ export default class Start extends React.Component<IStartProps, IStartState> {
             <TextInput
               style={{ marginBottom: 20, height: 40, width: 300 }}
               placeholder="Email"
-              onChangeText={(text) => this.setState({ text })}
+              onChangeText={(text) => this.setState({ email: text })}
             />
 
             <TextInput
               style={{ marginBottom: 20, height: 40, width: 300 }}
               placeholder="Password"
-              onChangeText={(text) => this.setState({ text })}
+              onChangeText={(text) => this.setState({ password: text })}
             />
           </View>
           <View style={{ margin: 10, justifyContent: 'center', alignItems: 'center' }}>
@@ -72,42 +117,8 @@ export default class Start extends React.Component<IStartProps, IStartState> {
               title='Login'
               buttonStyle={{width: 300, borderRadius: 25, backgroundColor: '#d15953', marginBottom: 20}}
               onPress={() => {
-                Navigation.startTabBasedApp({
-                  tabs: [
-                    {
-                      label: 'Search',
-                      screen: 'SearchTabScreen', // this is a registered name for a screen
-                      icon: require('../img/search.png'),
-                      selectedIcon: require('../img/search.png'), // iOS only
-                      title: 'SearchBar',
-                      navigatorStyle: { navBarTitleTextCentered: true, navBarHidden: true}
-                    },
-                    {
-                      label: 'Events',
-                      screen: 'EventsTabScreen',
-                      icon: require('../img/Calendar1.png'),
-                      selectedIcon: require('../img/Calendar1.png'), // iOS only
-                      title: 'Events',
-                      navigatorStyle: { navBarTitleTextCentered: true }
-                    },
-                    {
-                      label: 'Notification',
-                      screen: 'NotificationTabScreen',
-                      icon: require('../img/notification3.png'),
-                      selectedIcon: require('../img/notification3.png'), // iOS only
-                      title: 'Notification',
-                      navigatorStyle: { navBarTitleTextCentered: true }
-                    },
-                    {
-                      label: 'Profile',
-                      screen: 'ProfileTabScreen',
-                      icon: require('../img/profile.png'),
-                      selectedIcon: require('../img/profile.png'), // iOS only
-                      title: 'Profile',
-                      navigatorStyle: { navBarTitleTextCentered: true }
-                    }
-                  ]
-                })
+                this.props.auth(this.state.email, this.state.password)
+                
               }}
             />
               <Button
@@ -143,3 +154,17 @@ export default class Start extends React.Component<IStartProps, IStartState> {
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    token: state.authReducer.token
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    auth: (email, password) => dispatch(auth(email, password))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Start);

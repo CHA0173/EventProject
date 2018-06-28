@@ -280,6 +280,8 @@ export default class EventService {
         "events.private     as event_private",
         "events.deposit     as event_deposit",
 
+        // "events_users.creator ",
+
         "todo.id            as todo_id",
         "todo.type          as todo_type",
 
@@ -307,6 +309,8 @@ export default class EventService {
       .leftJoin("users as itemusers", "items.users_id", "itemusers.id")
       .join("users", "events_users.users_id", "users.id")
       .where("events.id", eid)
+      .andWhere('events.id',"events_users.events_id")
+      // .andWhere("events_users.creator",true)
       .andWhere("events.isactive", true)
       .andWhere("items.isactive", true)
       .andWhere("discussion.isactive", true)
@@ -314,6 +318,24 @@ export default class EventService {
         return (result && result.length > 0) ? joinjs.mapOne(result, this.resultMaps, 'eventMap', 'event_') : {};
       })
   }
+
+  // getEventCreator(){
+  //   return this.knex('events')
+  //   .select( 
+  //   "events.id          as event_id",
+  //   "events.name        as event_name",
+  //   "events.description as event_description",
+  //   "events.datetime    as event_datetime",
+  //   "events.photo       as event_photo",
+  //   "events.address     as event_address",
+  //   "events.private     as event_private",
+  //   "events.deposit     as event_deposit",
+  //   "events_users.creator"
+  //   )
+  //   .join("events_users","events.id","events_users.events_id")
+  //   .where("events.id","events_users.events_id")
+  //   .andWhere("events_users.creator",true);
+  // }
 
 
   //Completed

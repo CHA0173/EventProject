@@ -25,7 +25,7 @@ import { createStore } from 'redux'
 import { connect } from 'react-redux'
 import reducer from '../reducers/createReducer'
 import { PixelRatio } from 'react-native';
-import { Ievent } from '../models/events';
+import { Ievent, Itodo } from '../models/events';
 import { Navigator } from 'react-native-navigation';
 
 const ImagePicker = require('react-native-image-picker');
@@ -94,6 +94,19 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
     prevStep() {
         this.setState({
             step: this.state.step - 1
+        })
+    }
+
+    todoTemplate = []
+    setTodoTemplate(todotemplate) {
+        this.todoTemplate = todotemplate
+    }
+
+    setTodo(list){
+        const newEvent = {...this.state.event}
+        newEvent.todo = list
+        this.setState({
+            event: newEvent
         })
     }
 
@@ -214,7 +227,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
 
                         <FormLabel labelStyle={styles.labelText}>Date</FormLabel>
                         <DatePicker
-                            style={{ width: 350 }}
+                            style={{ width: width - 40, marginHorizontal: 20 }}
                             date={this.state.event.datetime}
                             mode="datetime"
                             placeholder="select date"
@@ -223,21 +236,16 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                             maxDate="2020-06-01"
                             confirmBtnText="Confirm"
                             cancelBtnText="Cancel"
+                            showIcon={false}
                             customStyles={{
-                                dateIcon: {
-                                    position: 'absolute',
-                                    left: 0,
-                                    top: 4,
-                                    marginLeft: 0
-                                },
                                 dateInput: {
-                                    marginLeft: 36
+                                    borderWidth: 0,
+                                    borderBottomWidth: 1.3
                                 }
-                                // ... You can check the source to find the other keys.
                             }}
                             onDateChange={(date) => {
                                 this.setState({
-                                    event: { ...this.state.event, dateTime: date }
+                                    event: { ...this.state.event, datetime: date }
                                 })
                             }}
                         />
@@ -272,7 +280,8 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                     ]
                 })
                 return <SelectTemplate nextStep={this.nextStep.bind(this)}
-                    prevStep={this.prevStep.bind(this)} />
+                    prevStep={this.prevStep.bind(this)}
+                    setTodoTemplate={this.setTodoTemplate.bind(this)} />
 
             case 3:
                 this.props.navigator.setTitle({
@@ -290,7 +299,11 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                         }
                     ]
                 })
-                return <ToDoList id={1} itemlist={[]} /> //FIXME: 
+                return <ToDoList    id={1} 
+                                    itemlist={[]} 
+                                    todotemplate={this.todoTemplate}
+                                    setTodo={this.setTodo.bind(this)}
+                        /> //FIXME: 
 
             case 4:
                 this.props.navigator.setTitle({

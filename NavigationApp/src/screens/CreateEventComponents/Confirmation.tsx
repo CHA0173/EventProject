@@ -25,7 +25,7 @@ export default class Confirmation extends React.Component<IConfirmationProps, {}
 
     private = this.props.event.private_event ? 'Private' : 'Public'
 
-    list = [
+    basicInfoList = [
         {
             title: this.private,
             icon: 'lock'
@@ -47,6 +47,7 @@ export default class Confirmation extends React.Component<IConfirmationProps, {}
             icon: 'attach-money'
         }
     ]
+
     render() {
         return (
             <View>
@@ -56,11 +57,23 @@ export default class Confirmation extends React.Component<IConfirmationProps, {}
                 />
                 <List containerStyle={{borderWidth: 10, borderTopWidth: 10}}>
                     {
-                        this.list.map((item, i) => (
+                        this.basicInfoList.map((item, i) => (
                             <ListItem
                                 key={i}
                                 title={item.title}
                                 leftIcon={{ name: item.icon }}
+                                hideChevron={true}
+                                containerStyle={{borderBottomWidth: 0.5, borderTopWidth: 0.5}}
+                            />
+                        ))
+                    }
+                </List>
+                <List containerStyle={{borderWidth: 10, borderTopWidth: 10}}>
+                    {
+                        this.props.event.todo.map((item, i) => (
+                            <ListItem
+                                key={i}
+                                title={item.Name}
                                 hideChevron={true}
                                 containerStyle={{borderBottomWidth: 0.5, borderTopWidth: 0.5}}
                             />

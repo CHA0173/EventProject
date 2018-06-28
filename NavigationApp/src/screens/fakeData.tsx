@@ -200,7 +200,7 @@ const ToDoItem = [{
   "name": "poker set",
   "quantity": 1,
   "isactive": true,
-  "user": "Alex",
+  "user": "",
   "completed": false
 
 },
@@ -220,7 +220,7 @@ const ToDoItem = [{
   "name": "ceremonial tea",
   "quantity": 1,
   "isactive": true,
-  "user": "Alex",
+  "user": "",
   "completed": false
 },
 {
@@ -238,7 +238,7 @@ const ToDoItem = [{
   "name": "cameraman",
   "quantity": 1,
   "isactive": true,
-  "user": "Paul",
+  "user": "",
   "completed": false
 }, {
   id: 9,
@@ -256,7 +256,7 @@ const ToDoItem = [{
   "name": "light snacks",
   "quantity": "15",
   "isactive": true,
-  "user": "sample",
+  "user": "",
   "completed": false
 }, {
   id: 11,
