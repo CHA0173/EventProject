@@ -10,11 +10,13 @@ import { Card, ListItem, ButtonGroup } from 'react-native-elements';
 import { Navigator, NavigatorButton } from 'react-native-navigation';
 import { Iuser, Ievents } from '../models/users';
 import { connect } from 'react-redux'
+import axios from 'axios';
 
 
 interface IEventsProps {
   navigator: Navigator,
   user: Iuser,
+  token: string,
 };
 
 interface IEventsStates {
@@ -36,8 +38,8 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
     this.state = {
       selectedIndex: 0
     }
-    // this.updateIndex = this.updateIndex.bind(this)
-    // this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+    this.updateIndex = this.updateIndex.bind(this)
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
   updateIndex(selectedIndex) {
@@ -55,38 +57,45 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
   }
 
   render() {
-    // const buttons = ['Upcoming', 'Created']
+    const buttons = ['Upcoming', 'Created']
+    console.log('this.props.user.events', this.props)
     return (
       <View style={{ flex: 1 }}>
-        {/* <ButtonGroup
+        <ButtonGroup
           onPress={this.updateIndex}
           selectedIndex={this.state.selectedIndex}
           buttons={buttons}
           containerStyle={{ height: 30 }}
-        /> */}
+        />
         <ScrollView style={{ flex: 1 }}>
-
           <FlatList
             data={this.props.user.events}
             renderItem={(event) => {
               return (
                 <View>
-                  <TouchableOpacity onPress={() => this.props.navigator.push({
-                    screen: 'ViewEventScreen',
-                    title: event.item.name,
-                    navigatorStyle: { tabBarHidden: true },
-                    passProps: { item: event }
-                  })}>
-                      <Card
-                        title={event.item.name}
-                        // image={event.item.photo}
-                        >
-                      
-                          <Text style={{ marginBottom: 10 }}>
-                            {event.item.datetime}
-                          </Text>
-                      
-                      </Card>
+
+                  <TouchableOpacity onPress={() => {
+                    const AuthStr = 'Bearer '.concat(this.props.token);
+                    axios.get(`https://hivent.xyz/api/events/${event.item.id}`, { headers: { Authorization: AuthStr } }).then((data) => {
+                      console.log('data', data.data)
+                      this.props.navigator.push({
+                        screen: 'ViewEventScreen',
+                        title: event.item.name,
+                        navigatorStyle: { tabBarHidden: true },
+                        passProps: { item: data.data }
+                      })
+                    })
+                  }}>
+                    <Card
+                      title={event.item.name}
+                      image={{uri:event.item.photo}}
+                    >
+
+                      <Text style={{ marginBottom: 10 }}>
+                        {event.item.datetime}
+                      </Text>
+
+                    </Card>
                   </TouchableOpacity>
                 </View>
               )
@@ -102,7 +111,8 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.getView.events
+    user: state.getView.events,
+    token: state.authReducer.token,
   }
 }
 

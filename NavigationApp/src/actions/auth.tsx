@@ -59,6 +59,41 @@ export const get_event = (token) => {
   }
 }
 
+// ==============================  GET VIEWEVENT (View)
+export const get_viewevent_start = () => {
+  return {
+    type: actionTypes.GET_VIEWEVENT_START
+  }
+}
+
+
+export const auth_get_viewevent_success = (data) => {
+  return {
+    type: actionTypes.GET_VIEWEVENT_SUCCESS,
+    events: data.data
+  }
+}
+
+export const auth_get_viewevent_fail = (err) => {
+  return {
+    type: actionTypes.GET_VIEWEVENT_FAILURE,
+    err: err
+  }
+}
+
+export const get_viewevent = (token, id) => {
+  return (dispatch: any) => {
+    const AuthStr = 'Bearer '.concat(token);
+    dispatch(get_viewevent_start())
+    axios.get(`https://hivent.xyz/api/events/${id}`, { headers: { Authorization: AuthStr } }).then((event) => {
+      console.log(event)
+      dispatch(auth_get_viewevent_success(event))
+    }).catch((err) => {
+      console.log(err)
+      dispatch(auth_get_viewevent_fail(err))
+    })
+  }
+}
 
 // ==============================  GET EVENT (view)
 export const get_view_start = () => {
