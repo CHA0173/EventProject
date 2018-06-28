@@ -50,6 +50,19 @@ class Search extends React.Component<ISearchProps, ISearchState> {
       isFetching: true
     }
   }
+  onNavigatorEvent(event) {
+    // handle a deep link
+    if (event.type == 'DeepLink') {
+      const parts = event.link.split('/'); // Link parts
+      // const payload = event.payload; // (optional) The payload
+
+      if (parts[0] == 'search') {
+        this.props.navigator.push({
+          screen: 'SearchTabScreen'
+        })// handle the link somehow, usually run a this.props.navigator command
+      }
+    }
+  }
 
   public filter(text) {//insert axios get to backend
     const newData = this.props.events.filter(function (item) {

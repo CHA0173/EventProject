@@ -15,5 +15,10 @@ export default {
         name: process.env.DB_NAME,
         user: process.env.DB_USERNAME,
         password: process.env.DB_PASSWORD
+    },
+    google : {
+      clientID: '327182754672-ffk85ruc413vc4oscot3puja8eevtc39.apps.googleusercontent.com',
+      clientSecret: 'nWKm6nkkGI52xXaH6i9Kpplv',
+      callbackURL: 'http://localhost:8080/auth/google/callback',
     }
 }

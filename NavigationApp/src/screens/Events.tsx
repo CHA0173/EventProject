@@ -43,11 +43,22 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
     this.setState({ selectedIndex })
   }
 
+  
+
   onNavigatorEvent(event) {
     if (event.type == 'NavBarButtonPress') {
       if (event.id == 'create') {
         this.props.navigator.push({
           screen: 'CreateEventScreen'
+        })
+      }
+    }
+    if(event.type == 'DeepLink'){
+      const parts = event.link.split('/');
+
+      if (parts[0] == 'events'){
+        this.props.navigator.push({
+          screen: 'EventsTabScreen'
         })
       }
     }

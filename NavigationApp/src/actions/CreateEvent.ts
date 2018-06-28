@@ -21,7 +21,7 @@ export interface IAddEventAction {
   deposit: string,
   todo: events.Itodo[],
   attendees: events.Iattendees[],
-  discussion: events.Idiscussion[],
+  discussion: events.Idiscussion[]
 }
 
 export const EDIT_EVENT = 'EDIT_EVENT';
@@ -113,7 +113,7 @@ export function editEvent(
 export function deleteEvent(id: number): IDeleteEventAction {
   return {
     type: DELETE_EVENT,
-    id
+    id 
   }
 }
 
