@@ -25,7 +25,7 @@ export default class EventService {
       {
         mapId: 'todoMap',
         idProperty: 'id',
-        properties: ['type'],
+        // properties: ['type'],
         collections: [
           { name: 'items', mapId: 'itemsMap', columnPrefix: 'items_' },
         ]
@@ -157,9 +157,8 @@ export default class EventService {
           const toDoId = await trx("todo")
             .insert({
               events_id: eventid[0],
-              type: data.todo_type,
-              isactive: true,
-              template: false
+              // type: data.todo_type,
+              isactive: true
             }).returning("id");
 
           const items = data.items.map((item: any) => {
@@ -291,7 +290,6 @@ export default class EventService {
         "events_users.creator as attendees_creator",
 
         "todo.id            as todo_id",
-        "todo.type          as todo_type",
 
         "items.id           as items_id",
         "items.name         as items_name",
@@ -323,7 +321,7 @@ export default class EventService {
       .andWhere("items.isactive", true)
       .andWhere("discussion.isactive", true)
       .then(result => {
-        console.log(joinjs.mapOne(result, this.resultMaps, 'eventMap', 'event_'))
+        // console.log(joinjs.mapOne(result, this.resultMaps, 'eventMap', 'event_'))
         return (result && result.length > 0) ? joinjs.mapOne(result, this.resultMaps, 'eventMap', 'event_') : {};
       })
   }
