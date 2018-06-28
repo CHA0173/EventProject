@@ -23,12 +23,11 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux'
 import { fetchingEvents } from '../actions'
 import { Ievent } from '../models/events' 
-import { get_event } from '../actions/auth';
 
 interface ISearchProps {
   navigator: Navigator,
   fetchEvents: () => string[],
-  get_event: () => void,
+
   events: Ievent[],
   text: string,
 };
@@ -66,9 +65,10 @@ class Search extends React.Component<ISearchProps, ISearchState> {
   }
 
   public filter(text) {//insert axios get to backend
-    const newData = this.props.events.filter(function (item) { //FIXME: 
+    const newData = this.props.events.slice().filter(function (item) { //FIXME: 
       const itemData = item.name.toUpperCase()
       const textData = text.toUpperCase()
+      console.log("itemData", itemData, "textData", textData);
       return itemData.indexOf(textData) > -1
     });
 
@@ -121,7 +121,7 @@ class Search extends React.Component<ISearchProps, ISearchState> {
             style={styles.searchIcon}
           />
           <TextInput
-            value={this.props.text}
+            value={this.state.text}
             onChangeText={(text) => this.filter(text)}
             style={styles.input}
             placeholder='Search'

@@ -12,6 +12,7 @@ export interface Ievents {
   id: number,
   name: string,
   datetime: string,
+  photo: any,
   creator: boolean,
 }
 

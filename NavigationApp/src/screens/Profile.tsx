@@ -65,7 +65,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
     
   }
 
-  public selectPhotoTapped = () => {
+  public selectPhotoTapped = (token) => {
     const options = {
       quality: 1.0,
       maxWidth: 500,
@@ -92,7 +92,9 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
       //     'Accept': 'application/json'
       //   }
       // }
-      axios.put('https://hivent.xyz/api/users', { photo: source }) //FIXME: unauth
+      const AuthStr = 'Bearer '.concat(token);
+
+      axios.put('https://hivent.xyz/api/users', {headers: { Authorization: AuthStr }, photo: source} ) //FIXME: unauth
 
       this.setState({
         avatarSource: source
@@ -101,7 +103,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
     );
   }
 
-  public renderTodoItem(item) { //FIXME: need to send back the data(uri/ base64) to backend
+  public renderTodoItem(item) { 
     let eventId = item.itemEventId;
     let event = this.props.user.events.find(e => e.id == eventId);
     return (
@@ -158,7 +160,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
 
   render() {
     const { eventAttended } = this.state;
-
+    console.log("this.props.user", this.props);
     this.props.navigator.setTitle({ title: this.props.user.name })
     return (
       <ScrollView>

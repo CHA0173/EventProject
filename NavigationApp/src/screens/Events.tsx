@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {
-  StyleSheet,
   Text,
   View,
   TouchableOpacity,
@@ -9,14 +8,15 @@ import {
 } from 'react-native';
 import { Card, ListItem, ButtonGroup } from 'react-native-elements';
 import { Navigator, NavigatorButton } from 'react-native-navigation';
-import { Ievent } from '../models/events';
+import { Iuser, Ievents } from '../models/users';
 import { connect } from 'react-redux'
 
 
 interface IEventsProps {
   navigator: Navigator,
-  events: Ievent[]
+  user: Iuser,
 };
+
 interface IEventsStates {
   selectedIndex: number
 };
@@ -36,8 +36,8 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
     this.state = {
       selectedIndex: 0
     }
-    this.updateIndex = this.updateIndex.bind(this)
-    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+    // this.updateIndex = this.updateIndex.bind(this)
+    // this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
   updateIndex(selectedIndex) {
@@ -55,19 +55,19 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
   }
 
   render() {
-    const buttons = ['Upcoming', 'Created']
-
+    // const buttons = ['Upcoming', 'Created']
     return (
-      <View style={{flex: 1}}>
-        <ButtonGroup
+      <View style={{ flex: 1 }}>
+        {/* <ButtonGroup
           onPress={this.updateIndex}
           selectedIndex={this.state.selectedIndex}
           buttons={buttons}
           containerStyle={{ height: 30 }}
-        />
-        <ScrollView style={{flex: 1}}>
+        /> */}
+        <ScrollView style={{ flex: 1 }}>
+
           <FlatList
-            data={this.props.events}
+            data={this.props.user.events}
             renderItem={(event) => {
               return (
                 <View>
@@ -75,21 +75,25 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
                     screen: 'ViewEventScreen',
                     title: event.item.name,
                     navigatorStyle: { tabBarHidden: true },
-                    passProps: {item: event}
+                    passProps: { item: event }
                   })}>
-                    <Card
-                      title={event.item.name}
-                      image={event.item.photo}>
-                      <Text style={{ marginBottom: 10 }}>
-                        {event.item.description}
-                      </Text>
-                    </Card>
+                      <Card
+                        title={event.item.name}
+                        // image={event.item.photo}
+                        >
+                      
+                          <Text style={{ marginBottom: 10 }}>
+                            {event.item.datetime}
+                          </Text>
+                      
+                      </Card>
                   </TouchableOpacity>
                 </View>
               )
             }}
             keyExtractor={data => data.id.toString()}
           />
+
         </ScrollView>
       </View>
     )
@@ -98,27 +102,9 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
 
 const mapStateToProps = (state) => {
   return {
-      events: state.event.events
+    user: state.getView.events
   }
 }
 
-export default connect(mapStateToProps)(Events)
+export default connect(mapStateToProps)(Events);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
