@@ -163,7 +163,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
     return (
       <ScrollView>
         <View style={{ flex: 1, alignItems: 'center', padding: 20, paddingHorizontal: 40, flexDirection: 'row'}}>
-          <View style={{ flex: 1 }}>
+          <View style={{ flexGrow: 1 }}>
             <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
               <View style={[styles.avatar, styles.avatarContainer]}>
                 {this.state.avatarSource === null ? <Text>Select a Photo</Text> :
@@ -172,11 +172,11 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
               </View>
             </TouchableOpacity>
           </View>
-          <View style={{ flex: 1, alignItems: 'center' }}>
+          <View style={{ flexGrow: 1, alignItems: 'center' }}>
             <Text style={{ fontSize: 36, padding: 5 }}>{eventAttended}</Text>
             <Text style={{ fontSize: 14, color: 'grey' }}>To-do</Text>
           </View>
-          <View style={{ flex: 1, alignItems: 'center' }}>
+          <View style={{ flexGrow: 1, alignItems: 'center' }}>
             <Text style={{ fontSize: 36, padding: 5 }}>{eventAttended}</Text>
             <Text style={{ fontSize: 14, color: 'grey' }}>Attended</Text>
           </View>
