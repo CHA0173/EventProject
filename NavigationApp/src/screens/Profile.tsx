@@ -92,24 +92,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
       todo: 0,
     }
   }
- 
-  onNavigatorEvent(event) {
-    // handle a deep link
-    if (event.type == 'DeepLink') {
-      const parts = event.link.split('/'); // Link parts
-      // const payload = event.payload; // (optional) The payload
 
-<<<<<<< HEAD
-=======
-      if (parts[0] == 'profile') {
-        this.props.navigator.push({
-          screen: 'ProfileTabScreen'// handle the link somehow, usually run a this.props.navigator command
-        })
-      }
-    }
-  }
-
->>>>>>> 43e71e59f0476f70665ff383451dd053effeda9e
   public selectPhotoTapped = () => {
     const options = {
       quality: 1.0,
