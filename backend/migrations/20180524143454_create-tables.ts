@@ -30,10 +30,7 @@ exports.up = (knex: Knex) => {
             todo.increments();
             todo.integer("events_id").unsigned();
             todo.foreign("events_id").references("events.id");
-            todo.string("type");
-            todo.string("package");
             todo.timestamps(false, true);
-            todo.boolean("template");
             todo.boolean("isactive");
         })
     }).then(() => {
@@ -42,7 +39,6 @@ exports.up = (knex: Knex) => {
             items.increments();
             items.string("name");
             items.integer("quantity");
-            items.string("package");
             items.boolean("completed");
             items.integer("users_id").unsigned();
             items.foreign("users_id").references("users.id");
@@ -84,23 +80,3 @@ exports.down = (knex: Knex) => {
         .then(() => knex.schema.dropTable("users"));
 
 }
-
-
-// ^^^^^^^^JSON DISCUSSION OBJECT CREATION^^^^^^^^^^
-// class JsonArrayTest extends Model {
-//     static get tableName() {
-//         return "capstone"
-//     }
-
-//     static get jsonSchema() {
-//         return {
-//             type: "object",
-//             properties: {
-//                 discussion: {
-//                     user: "user",
-//                     comment: "comment"
-//                 }
-//             }
-//         }
-//     }
-// }

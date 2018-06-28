@@ -6,43 +6,43 @@
 },
 {
     "event": "Alex's birthday boat",
-    "user": "Peter",
+    "user": "Jacob",
     "creator": false,
     "isactive": true
 },
 {
     "event": "Alex's birthday boat",
-    "user": "Paul",
+    "user": "Brad",
     "creator": false,
     "isactive": true
 },
 {
     "event": "Alex's birthday boat",
-    "user": "Mary",
+    "user": "Stephen",
     "creator": false,
     "isactive": true
 },
 {
     "event": "Mary's Wedding",
-    "user": "Mary",
+    "user": "Stephen",
     "creator": true,
     "isactive": true
 },
 {
     "event": "Mary's Wedding",
-    "user": "Alex",
+    "user": "Lucas",
     "creator": false,
     "isactive": true
 },
 {
     "event": "Mary's Wedding",
-    "user": "Peter",
+    "user": "Jacob",
     "creator": false,
     "isactive": true
 },
 {
     "event": "Mary's Wedding",
-    "user": "Paul",
+    "user": "Brad",
     "creator": false,
     "isactive": true
 }
