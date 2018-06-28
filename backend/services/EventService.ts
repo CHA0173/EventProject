@@ -75,11 +75,11 @@ export default class EventService {
 
 
   //Completed
-  async remove(eventid: number, userid: number) {
-    // console.log("eventid", eventid, "userid", userid)
+  async remove(user: any, eventid: number) {
+    console.log("eventid", eventid, "userid", user.id)
     return this.knex.transaction(async (trx) => {
       try {
-        const creator = await this.isCreator(eventid, userid);
+        const creator = await this.isCreator(eventid, user.id);
         if (creator) {
           await trx("events")
             .select("events.isactive")
@@ -110,7 +110,7 @@ export default class EventService {
 
           await trx("events_users")
             .where("events_users.events_id", eventid)
-            .where("events_users.users_id", userid)
+            .where("events_users.users_id", user.id)
             .update("isactive", false);
 
           return true;
@@ -119,24 +119,24 @@ export default class EventService {
           // console.log("User is NOT the CREATOR")
           return trx("events_users")
             .where("events_id", eventid)
-            .andWhere("users_id", userid)
+            .andWhere("users_id", user.id)
             .update("isactive", false)
             .then((nothingmore) => {
               return true
             })
-
         }
       } catch (e) {
+        console.log(e)
         return false;
       }
     });
   }
 
   //Completed
-  async create(data: any /*,file: Express.Multer.File*/) {
-    //why does async need to be called twice?
+  async create(user:any, data: any) {
+
     // console.log("entered create")
-    // console.log("data", data)
+    console.log("data", data)
     return this.knex.transaction(async (trx) => {
       try {
         const eventid = await trx("events")
@@ -146,13 +146,13 @@ export default class EventService {
             datetime: data.datetime,
             photo: data.photo,//can insert base64 of photo here directly, no need to use multer/file buffer
             address: data.address,
-            private: true,
+            private: false,
             deposit: data.deposit,
             isactive: true
           }).returning("id");
 
           const listExist = data.items
-
+          console.log("eventid", eventid, "listExist", listExist)
         if (listExist && listExist.length > 0) {
           const toDoId = await trx("todo")
             .insert({
@@ -175,21 +175,19 @@ export default class EventService {
 
           await trx("events_users")
             .insert({
-              users_id: data.userid,
+              users_id: user.id,
               events_id: eventid[0],
               creator: true,
               isactive: true
             }).returning("events_id");
 
-          // if (file) {
-          //   await this.writeFile(eventid[0], file.originalname, file, trx);
-          // }
+
           return eventid[0];
         } 
           return eventid[0];
         
       } catch (e) {
-        // console.log(e)
+        console.log(e)
         return -1;
 
       }
@@ -245,13 +243,14 @@ export default class EventService {
   }
 
   //Completed
-  joinEvent(body: any) {
+  joinEvent(user: any, body: any) {
     // console.log("body", body)
+    console.log("userid", user)
     return this.knex.transaction(async (trx) => {
       try {
         await trx("events_users")
           .insert({
-            users_id: body.user_id,
+            users_id: user.id,
             events_id: body.eventid,
             creator: false,
             isactive: true
@@ -364,13 +363,13 @@ export default class EventService {
       .where("events.isactive", true);
   }
 
-  addComment(body: any) {
+  addComment(user:any, body: any) {
     // console.log("body", body)
     return this.knex.transaction(async (trx) => {
       try {
         await trx("discussion")
           .insert({
-            users_id: body.userid,
+            users_id: user.id,
             events_id: body.eventid,
             comment: body.comment,
             isactive: true

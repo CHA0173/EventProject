@@ -14,21 +14,21 @@ export default class UserRouter {
 
     getRouter() {
         let router = express.Router();
-        router.get("/:id", this.getById);
-        router.post("/:id", this.updatePhoto);
+        router.get("/", this.getById);
+        router.post("/", this.updatePhoto);
         return router;
     }
 
 
     getById = (req: express.Request, res: express.Response) => { 
-
-        return this.userService.getEventsById(req.params.id)
+        console.log("req.user", req.user)
+        return this.userService.getEventsById(req.user)
             .then((data) => res.json(data))
             .catch((err: express.Errback) => res.status(500).json(err));
     }
 
     updatePhoto = (req: express.Request, res: express.Response) => { 
-        return this.userService.updateById(req.body)
+        return this.userService.updateById(req.user, req.body)
             .then((data) => res.json(data))
             .catch((err: express.Errback) => res.status(500).json(err));
     }

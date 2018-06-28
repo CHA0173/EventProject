@@ -2,6 +2,9 @@ import * as fs from "fs-extra";
 import * as Knex from "knex"
 import * as path from "path";
 
+//To run on server, run
+// ./node_modeules/knex/bin/cli.js <knex command>
+
 exports.seed = (knex: Knex) => {
   // Deletes ALL existing entries
   return knex("events_users").del().then(() => {

@@ -37,8 +37,8 @@ export default class UserService {
     return this.knex("users").where("users.id", userId);
   }
 
-  getEventsById(userid: any) {
-    console.log("userid", userid)
+  getEventsById(user: any) {
+    console.log("userid", user.id)
     const self = this
     return (
       this.knex("users")
@@ -74,7 +74,7 @@ export default class UserService {
           this.on("todo.events_id", "eItem.id")
           .andOn("todo.isactive", self.knex.raw(true));
         })
-        .where("users.id", userid)
+        .where("users.id", user.id)
         .then(result => {
           console.log("result", result)
 
@@ -103,11 +103,11 @@ export default class UserService {
 
   }
 
-  async updateById(body:any) {
+  async updateById(user:any, body:any) {
     return this.knex.transaction(async (trx) => {
         try {
           await trx("users")
-          .where("users.id", body.userid)
+          .where("users.id", user.id)
           .update({
             photo: body.photo
           })
