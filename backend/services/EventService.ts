@@ -163,8 +163,8 @@ export default class EventService {
 
           const items = data.items.map((item: any) => {
             return {
-              name: item.name,
-              quantity: item.quantity,
+              name: item.Name,
+              quantity: item.Quantity,
               todo_id: toDoId[0],
               isactive: true,
               completed: false
