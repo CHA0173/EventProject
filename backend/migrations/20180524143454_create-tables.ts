@@ -16,7 +16,7 @@ exports.up = (knex: Knex) => {
             events.increments();
             events.string("name");
             events.string("description");
-            events.string("photo");
+            events.text("photo");
             events.timestamp("datetime");
             events.string("address");
             events.specificType("location", "POINT");
