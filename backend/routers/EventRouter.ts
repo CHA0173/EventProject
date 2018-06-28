@@ -32,7 +32,7 @@ export default class EventRouter {
 
   
   comment = (req:express.Request, res:express.Response) => {
-    return this.eventService.addComment(req.body)
+    return this.eventService.addComment(req.user, req.body)
       .then((data) => res.json(data))
     .catch((err: express.Errback) => res.status(500).json(err))
   }
@@ -44,7 +44,7 @@ export default class EventRouter {
 }
 
   joinEvent = (req:express.Request, res:express.Response) => {
-    return this.eventService.joinEvent(req.body)
+    return this.eventService.joinEvent(req.user, req.body )
       .then((data) => res.json(data))
     .catch((err: express.Errback) => res.status(500).json(err))
   }
@@ -68,7 +68,7 @@ export default class EventRouter {
   // }
 
   create = (req: express.Request, res: express.Response) => {
-  return this.eventService.create(req.body)
+  return this.eventService.create(req.user, req.body)
       .then((data:any) => res.json(data))
       .catch((err: express.Errback) => res.status(500).json(err))
   }
@@ -80,7 +80,7 @@ export default class EventRouter {
   }
 
   delete = (req: express.Request, res: express.Response) => {
-    return this.eventService.remove(req.params.eventid, req.body.userid)
+    return this.eventService.remove(req.user, req.params.eventid)
       .then((data) => res.json(data))
       .catch((err: express.Errback) => res.status(500).json(err))
   }
