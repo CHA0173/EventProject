@@ -11,9 +11,9 @@ import {
   Dimensions,
   ScrollView,
   TouchableWithoutFeedback,
-  Switch,
-  Button
+  Switch
 } from 'react-native';
+import { Button } from 'react-native-elements'
 const { width, height } = Dimensions.get('window')
 
 import { Navigator } from 'react-native-navigation';
@@ -34,7 +34,7 @@ interface IProfileProps {
   navigator: Navigator,
   userProfile: IUserProfile,
 
-  addUser: (user: Iuser)=> void,
+  addUser: (user: Iuser) => void,
   user: Iuser,
 };
 
@@ -62,7 +62,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
         items: [],
       }
     }
-    
+
   }
 
   public selectPhotoTapped = () => {
@@ -105,30 +105,30 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
     let eventId = item.itemEventId;
     let event = this.props.user.events.find(e => e.id == eventId);
     return (
-        event &&
-          <View style={{ borderWidth: 1, padding: 10, margin: 10, borderRadius: 5 }}>
+      event &&
+      <View style={{ borderWidth: 0, padding: 10, margin: 10, borderRadius: 5, backgroundColor: '#fffef9' }}>
+        <Text>
+          {event.datetime.match(/\d{4}-[01]\d-[0-3]\d/)}
+        </Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <View>
             <Text>
-              {event.datetime.match(/\d{4}-[01]\d-[0-3]\d/)}
+              {item.name}
             </Text>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <View>
-                <Text>
-                  {item.name}
-                </Text>
-                <Text>
-                  at {event.name}
-                </Text>
-              </View>
-              <View>
-                <CheckBox
-                  center
-                  iconRight={true}
-                  title={`Qty: ${item.quantity}`}
-                  checked={item.completed}
-                />
-              </View>
-            </View>
+            <Text>
+              at {event.name}
+            </Text>
           </View>
+          <View>
+            <CheckBox
+              center
+              iconRight={true}
+              title={`Qty: ${item.quantity}`}
+              checked={item.completed}
+            />
+          </View>
+        </View>
+      </View>
     )
   }
 
@@ -147,7 +147,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
     let now = Date.now()
     if (eventdate > now) {
       return (
-        <View style={{ borderWidth: 1, padding: 10, margin: 10, borderRadius: 5 }}>
+        <View style={{ borderWidth: 0, padding: 10, margin: 10, borderRadius: 5, backgroundColor: '#fffef9' }}>
           <Text>
             {item.name}
           </Text>
@@ -162,7 +162,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
     this.props.navigator.setTitle({ title: this.props.user.name })
     return (
       <ScrollView>
-        <View style={{ flex: 1, alignItems: 'center', padding: 20, paddingHorizontal: 40, flexDirection: 'row'}}>
+        <View style={{ flex: 1, alignItems: 'center', padding: 20, paddingHorizontal: 40, flexDirection: 'row' }}>
           <View style={{ flexGrow: 1 }}>
             <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
               <View style={[styles.avatar, styles.avatarContainer]}>
@@ -173,23 +173,23 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
             </TouchableOpacity>
           </View>
           <View style={{ flexGrow: 1, alignItems: 'center' }}>
-            <Text style={{ fontSize: 36, padding: 5 }}>{eventAttended}</Text>
             <Text style={{ fontSize: 14, color: 'grey' }}>To-do</Text>
+            <Text style={{ fontSize: 36, padding: 5 }}>{eventAttended}</Text>
           </View>
           <View style={{ flexGrow: 1, alignItems: 'center' }}>
-            <Text style={{ fontSize: 36, padding: 5 }}>{eventAttended}</Text>
             <Text style={{ fontSize: 14, color: 'grey' }}>Attended</Text>
+            <Text style={{ fontSize: 36, padding: 5 }}>{eventAttended}</Text>
           </View>
         </View>
         <View>
-          <Button title='To-do List' onPress={() => { }} />
+          <Button icon={{ name: 'view-list' }} title='To-do List' disabledStyle={{ backgroundColor: '#d15953' }} disabled onPress={() => { }} />
           <FlatList
             style={{ marginHorizontal: 10 }}
             data={this.props.user.items}
             renderItem={({ item }) => this.renderTodoItem(item)}
             keyExtractor={item => item.id.toString()}
           />
-          <Button title='Event History' onPress={() => { }} />
+          <Button icon={{ name: 'local-library' }} title='Event History' disabledStyle={{ backgroundColor: '#004263' }} disabled onPress={() => { }} />
           <FlatList
             style={{ marginHorizontal: 10 }}
             data={this.props.user.events}
@@ -205,7 +205,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
 
 const mapStateToProps = (state) => {
   return {
-      user: state.getUser.user
+    user: state.getUser.user
   }
 }
 

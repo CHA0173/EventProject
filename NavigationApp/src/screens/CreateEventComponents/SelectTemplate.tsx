@@ -48,7 +48,7 @@ export default class SelectTemplate extends React.Component<ISelectTemplateProps
                     imageSrc={require('../../img/birthday.jpg')}
                     title="Birthday Party"
                     featured
-                    height={160}
+                    height={200}
                     imageContainerStyle={{ borderBottomWidth: 1.5, borderBottomColor: 'white' }}
                     onPress={() => {
                         this.setModalVisible(true);
@@ -60,7 +60,7 @@ export default class SelectTemplate extends React.Component<ISelectTemplateProps
                     imageSrc={require('../../img/junkboat.jpg')}
                     title="Junk Boat Party"
                     featured
-                    height={160}
+                    height={200}
                     imageContainerStyle={{ borderBottomWidth: 1.5, borderBottomColor: 'white' }}
                     onPress={() => {
                         this.setModalVisible(true);
@@ -72,7 +72,7 @@ export default class SelectTemplate extends React.Component<ISelectTemplateProps
                     imageSrc={require('../../img/meetup.jpg')}
                     title="Meet Up"
                     featured
-                    height={160}
+                    height={200}
                     imageContainerStyle={{ borderBottomWidth: 1.5, borderBottomColor: 'white' }}
                     onPress={() => {
                         this.setModalVisible(true);
@@ -84,7 +84,7 @@ export default class SelectTemplate extends React.Component<ISelectTemplateProps
                     imageSrc={require('../../img/movie.jpg')}
                     title="Movie night"
                     featured
-                    height={160}
+                    height={200}
                     imageContainerStyle={{ borderBottomWidth: 1.5, borderBottomColor: 'white' }}
                     onPress={() => {
                         this.setModalVisible(true);
@@ -96,7 +96,7 @@ export default class SelectTemplate extends React.Component<ISelectTemplateProps
                     imageSrc={require('../../img/custom.png')}
                     title="Custom"
                     featured
-                    height={160}
+                    height={200}
                     imageContainerStyle={{ borderBottomWidth: 1.5, borderBottomColor: 'white' }}
                     onPress={() => this.props.nextStep()}
                 />

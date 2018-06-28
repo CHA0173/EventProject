@@ -5,7 +5,8 @@ import {
   Text,
   TextInput,
   Button,
-  Alert
+  Alert,
+  Image
 } from 'react-native';
 
 import { Navigator } from 'react-native-navigation';
@@ -30,9 +31,7 @@ export default class LogIn extends React.Component<LogInProps, LogInState> {
   public render() {
     return (
       <View style={{ backgroundColor: 'transparent', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ fontSize: 100, color: 'black', flex: 0.4 }}>
-          YouIn
-        </Text>
+        <Image source={require('../img/Wevent.png')}/>
         <View style={{ marginTop: 50, marginBottom: 50 }}>
           <TextInput
             style={{ height: 40, width: 300 }}

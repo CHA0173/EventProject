@@ -71,6 +71,9 @@ export default class ViewEvent extends React.Component<IViewEventProps, {}> {
                         <Info event={this.props.item} />
                     </View>
                     <View style={{ backgroundColor: 'cornflowerblue' }}>
+                        <Text>
+                            Click # to take responsibility for the item 
+                        </Text>
                         <ToDoList event={this.props.item} />
                     </View>
                     <View style={{ backgroundColor: '#1AA094' }}>
