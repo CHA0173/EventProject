@@ -5,7 +5,7 @@ import {
     TouchableOpacity,
     StyleSheet,
 } from 'react-native';
-import { Card, ListItem, List } from 'react-native-elements'
+import { Card, ListItem, List, Icon } from 'react-native-elements'
 
 import { junkBoat, birthdayParty, meetUp, movieNight } from '../CreateEventComponents/ToDoTemplates'
 
@@ -60,7 +60,7 @@ export default class Templates extends React.Component<ITemplatesProps, ITemplat
             >
                 <View style={{ backgroundColor: 'cadetblue' }}>
                     <ScrollView>
-                        <Card title="Basic">
+                        <Card title={this.renderType()[0].title}>
                             {
                                 this.renderType()[0].itemlist.map((item, i) => {
                                     return (
@@ -68,6 +68,14 @@ export default class Templates extends React.Component<ITemplatesProps, ITemplat
                                             key={i}
                                             title={item}
                                             hideChevron={true}
+                                            containerStyle={{ borderBottomWidth: 0 }}
+                                            leftIcon={<Icon
+                                                name='hashtag'
+                                                type='font-awesome'
+                                                color='#e54d16'
+                                                size={20}
+                                                iconStyle={{ marginRight: 10 }}
+                                            />}
                                         />
                                     );
                                 })
@@ -88,7 +96,7 @@ export default class Templates extends React.Component<ITemplatesProps, ITemplat
                 </View>
                 <View style={{ backgroundColor: 'cornflowerblue' }}>
                     <ScrollView>
-                        <Card title="Supreme">
+                        <Card title={this.renderType()[1].title}>
                             {
                                 this.renderType()[1].itemlist.map((item, i) => {
                                     return (
@@ -96,6 +104,14 @@ export default class Templates extends React.Component<ITemplatesProps, ITemplat
                                             key={i}
                                             title={item}
                                             hideChevron={true}
+                                            containerStyle={{ borderBottomWidth: 0 }}
+                                            leftIcon={<Icon
+                                                name='hashtag'
+                                                type='font-awesome'
+                                                color='#e54d16'
+                                                size={20}
+                                                iconStyle={{ marginRight: 10 }}
+                                            />}
                                         />
                                     );
                                 })
@@ -114,22 +130,19 @@ export default class Templates extends React.Component<ITemplatesProps, ITemplat
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View style={{ backgroundColor: 'grey' }}>
-                    <Text>
-                        Custom
-                    </Text>
+                <View style={{ backgroundColor: '#dddddd', justifyContent: 'center', alignItems: 'center' }}>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity
                             onPress={() => {
                                 this.props.nextStep();
                             }}>
                             <View style={styles.button}>
-                                <Text style={styles.buttonText}>Select</Text>
+                                <Text style={styles.buttonText}>Create Custom To-do List</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
                 </View>
-            </IndicatorViewPager>
+            </IndicatorViewPager >
         )
     }
     render() {

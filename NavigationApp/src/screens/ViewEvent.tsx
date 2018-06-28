@@ -32,19 +32,11 @@ export default class ViewEvent extends React.Component<IViewEventProps, {}> {
             icon: require('../img/edit.png'),
             id: 'edit', // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
             disabled: true, // optional, used to disable the button (appears faded and doesn't interact)
-            disableIconTint: true, // optional, by default the image colors are overridden and tinted to navBarButtonColor, set to true to keep the original image colors
-            buttonColor: 'blue', // Optional, iOS only. Set color for the button (can also be used in setButtons function to set different button style programatically)
-            buttonFontSize: 14, // Set font size for the button (can also be used in setButtons function to set different button style programatically)
-            buttonFontWeight: '600', // Set font weight for the button (can also be used in setButtons function to set different button style programatically)
           }],
           [{
             icon: require('../img/join.png'),
             id: 'join', // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
             disabled: true, // optional, used to disable the button (appears faded and doesn't interact)
-            disableIconTint: true, // optional, by default the image colors are overridden and tinted to navBarButtonColor, set to true to keep the original image colors
-            buttonColor: 'blue', // Optional, iOS only. Set color for the button (can also be used in setButtons function to set different button style programatically)
-            buttonFontSize: 14, // Set font size for the button (can also be used in setButtons function to set different button style programatically)
-            buttonFontWeight: '600', // Set font weight for the button (can also be used in setButtons function to set different button style programatically)
           }]]
           return navbarButton[0]
     }
@@ -79,7 +71,7 @@ export default class ViewEvent extends React.Component<IViewEventProps, {}> {
                         <Info event={this.props.item} />
                     </View>
                     <View style={{ backgroundColor: 'cornflowerblue' }}>
-                        <ToDoList />
+                        <ToDoList event={this.props.item} />
                     </View>
                     <View style={{ backgroundColor: '#1AA094' }}>
                         <Attendees />
