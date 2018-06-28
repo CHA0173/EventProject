@@ -8,7 +8,7 @@ exports.up = (knex: Knex) => {
         users.string("email").unique();
         users.string("name").unique();
         users.string("password");
-        users.string("photo");
+        users.text("photo","longtext");
         users.boolean("isactive");
     }).then(() => {
 
