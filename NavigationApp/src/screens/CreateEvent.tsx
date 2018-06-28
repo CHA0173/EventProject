@@ -8,10 +8,12 @@ import {
     StyleSheet,
     Dimensions,
     Image,
-    TextInput
+    DatePickerAndroid,
+    TouchableWithoutFeedback
 } from 'react-native';
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
-
+import DatePicker from 'react-native-datepicker';
+import { addEvent } from '../actions/CreateEvent';
 
 import StepIndicator from 'react-native-step-indicator';
 
@@ -23,32 +25,32 @@ import { createStore } from 'redux'
 import { connect } from 'react-redux'
 import reducer from '../reducers/createReducer'
 import { PixelRatio } from 'react-native';
+import { Ievent, Itodo } from '../models/events';
+import { Navigator } from 'react-native-navigation';
 
 const ImagePicker = require('react-native-image-picker');
 const { width } = Dimensions.get('window')
 
-
 const store = createStore(reducer)
 
 interface ICreateEventProps {
-    navigator: any
-}
-
-interface IEvent {
-    private: boolean,
-    name: string,
-    description: string,
-    address: string,
-    deposit: string,
-    ImgSource: any,
-    uri: string
+    navigator: any,
+    createEvent: (
+        id: number,
+        name: string,
+        description: string,
+        datetime: string,
+        photo: any,
+        address: string,
+        private_event: boolean,
+        deposit: string, ) => void,
+        events: any
 }
 
 interface ICreateEventState {
     step: number
-    event: IEvent
-    type: string[]
-    todolist: object[]
+    event: Ievent
+
 }
 
 class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> {
@@ -62,20 +64,24 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
 
     constructor(props: ICreateEventProps) {
         super(props);
+
         this.state = {
             step: 1,
             event: {
-                private: false,
+                id: 0,
                 name: '',
                 description: '',
+                datetime: '',
+                photo: null,
                 address: '',
+                private_event: false,
                 deposit: '',
-                ImgSource: null,
-                uri: '',
-            },
-            type: [],
-            todolist: []
+                todo: [],
+                attendees: [],
+                discussion: [],
+            }
         }
+
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     }
 
@@ -91,7 +97,20 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
         })
     }
 
-    onNavigatorEvent(event) {
+    todoTemplate = []
+    setTodoTemplate(todotemplate) {
+        this.todoTemplate = todotemplate
+    }
+
+    setTodo(list){
+        const newEvent = {...this.state.event}
+        newEvent.todo = list
+        this.setState({
+            event: newEvent
+        })
+    }
+
+    onNavigatorEvent = (event) => {
         if (event.type == 'NavBarButtonPress') {
             if (event.id == 'next') {
                 this.setState({
@@ -101,12 +120,26 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                 this.setState({
                     step: this.state.step - 1
                 })
-            } else if (event.id === 'done') {
-                alert('HI')
+            } else if (event.id === 'done') { //FIXME:
+                this.props.createEvent(
+                    this.state.event.id,
+                    this.state.event.name,
+                    this.state.event.description,
+                    this.state.event.datetime,
+                    this.state.event.photo,
+                    this.state.event.address,
+                    this.state.event.private_event,
+                    this.state.event.deposit,
+                )
+                // alert(JSON.stringify(this.props.events))
+                this.props.navigator.resetTo({
+                    screen: 'EventsTabScreen',
+                    title: 'Events',
+                    navigatorStyle: { navBarTitleTextCentered: true }
+                })
             }
         }
     }
-
 
     renderComponent(step) {
         switch (step) {
@@ -132,28 +165,28 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                                     justifyContent: 'center',
                                     alignItems: 'center',
                                     width: width,
-                                    height: 300
+                                    height: 230
 
                                 }}>
-                                    {this.state.event.ImgSource === null ? <Text>Select a Photo</Text> :
-                                        <Image source={this.state.event.ImgSource} style={{
+                                    {this.state.event.photo === null ? <Text>Select a Photo</Text> :
+                                        <Image source={this.state.event.photo} style={{
                                             width: width,
-                                            height: 300
+                                            height: 230
                                         }} />
                                     }
                                 </View>
                             </TouchableOpacity>
                         </View>
                         <View style={{ justifyContent: 'space-between', flexDirection: 'row', margin: 10, paddingHorizontal: 10 }}>
-                            <Text>Private</Text>
-                            {this.state.event.private ?
-                                <Text style={{color: 'red'}}>Now your Event will be private</Text> : null
+                            <Text style={styles.labelText}>Private</Text>
+                            {this.state.event.private_event ?
+                                <Text style={{ color: 'red' }}>Now your Event will be private</Text> : null
                             }
                             <Switch
-                                value={this.state.event.private}
+                                value={this.state.event.private_event}
                                 onValueChange={(value) => {
                                     const newPrivate = { ...this.state.event }
-                                    newPrivate.private = value
+                                    newPrivate.private_event = value
 
                                     this.setState({
                                         event: newPrivate
@@ -161,7 +194,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                                 }}
                             />
                         </View>
-                        <FormLabel>Name</FormLabel>
+                        <FormLabel labelStyle={styles.labelText}>Name</FormLabel>
 
                         <FormInput
                             defaultValue={this.state.event.name}
@@ -172,7 +205,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                                 this.setState({ event: newName })
                             }} />
 
-                        <FormLabel>Description</FormLabel>
+                        <FormLabel labelStyle={styles.labelText}>Description</FormLabel>
                         <FormInput
                             defaultValue={this.state.event.description}
                             onChangeText={(text) => {
@@ -182,7 +215,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                                 this.setState({ event: newDescription })
                             }} />
 
-                        <FormLabel>Address</FormLabel>
+                        <FormLabel labelStyle={styles.labelText}>Address</FormLabel>
                         <FormInput
                             defaultValue={this.state.event.address}
                             onChangeText={(text) => {
@@ -191,6 +224,31 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
 
                                 this.setState({ event: newAddress })
                             }} />
+
+                        <FormLabel labelStyle={styles.labelText}>Date</FormLabel>
+                        <DatePicker
+                            style={{ width: width - 40, marginHorizontal: 20 }}
+                            date={this.state.event.datetime}
+                            mode="datetime"
+                            placeholder="select date"
+                            format="YYYY-MM-DD HH:mm"
+                            minDate="2018-06-29"
+                            maxDate="2020-06-01"
+                            confirmBtnText="Confirm"
+                            cancelBtnText="Cancel"
+                            showIcon={false}
+                            customStyles={{
+                                dateInput: {
+                                    borderWidth: 0,
+                                    borderBottomWidth: 1.3
+                                }
+                            }}
+                            onDateChange={(date) => {
+                                this.setState({
+                                    event: { ...this.state.event, datetime: date }
+                                })
+                            }}
+                        />
 
                         <FormLabel>Deposit</FormLabel>
                         <FormInput
@@ -222,7 +280,8 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                     ]
                 })
                 return <SelectTemplate nextStep={this.nextStep.bind(this)}
-                    prevStep={this.prevStep.bind(this)} />
+                    prevStep={this.prevStep.bind(this)}
+                    setTodoTemplate={this.setTodoTemplate.bind(this)} />
 
             case 3:
                 this.props.navigator.setTitle({
@@ -240,7 +299,11 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                         }
                     ]
                 })
-                return <ToDoList />
+                return <ToDoList    id={1} 
+                                    itemlist={[]} 
+                                    todotemplate={this.todoTemplate}
+                                    setTodo={this.setTodo.bind(this)}
+                        /> //FIXME: 
 
             case 4:
                 this.props.navigator.setTitle({
@@ -256,7 +319,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                             title: 'Prev',
                             id: 'prev'
                         }
-                        
+
                     ]
                 })
                 return <Confirmation event={this.state.event} />
@@ -283,7 +346,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
             // axios.post('url', { photo: source })
 
             const newImgSource = { ...this.state.event }
-            newImgSource.ImgSource = source
+            newImgSource.photo = source
             this.setState({
                 event: newImgSource
             });
@@ -299,10 +362,47 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
     }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
     return {
-        step: state.step
+        events: state.event.events
     }
 }
 
-export default connect(mapStateToProps, null)(CreateEvent)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        createEvent: (id,
+            name,
+            description,
+            datetime,
+            photo,
+            address,
+            private_event,
+            deposit,
+            todo,
+            attendees,
+            discussion, ) => dispatch(addEvent(id,
+                name,
+                description,
+                datetime,
+                photo,
+                address,
+                private_event,
+                deposit,
+                todo,
+                attendees,
+                discussion, ))
+    }
+}
+
+
+
+const styles = StyleSheet.create({
+    labelText: {
+        fontSize: 14,
+        color: 'black',
+        fontWeight: '400'
+    }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateEvent)
+

@@ -29,7 +29,7 @@ export default class LogIn extends React.Component<LogInProps, LogInState> {
 
   public render() {
     return (
-      <View style={{ backgroundColor: 'yellow', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{ backgroundColor: 'transparent', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text style={{ fontSize: 100, color: 'black', flex: 0.4 }}>
           YouIn
         </Text>

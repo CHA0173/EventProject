@@ -101,7 +101,6 @@ interface IProfileProps {
 
 interface IProfileState {
   avatarSource: any,
-  uri: string,
   itemdata: any,
   eventdata: any,
   isActive: boolean
@@ -113,7 +112,6 @@ export default class Profile extends React.Component<IProfileProps, IProfileStat
 
     this.state = {
       avatarSource: null,
-      uri: '',
       itemdata: TodoData,
       eventdata: EventData,
       isActive: false,

@@ -1,4 +1,5 @@
 import * as actionTypes from './types';
+import axios from 'axios';
 
 export const auth_start = () => {
   return {
@@ -6,10 +7,10 @@ export const auth_start = () => {
   }
 }
 
-export const auth_success = (id) => {
+export const auth_success = (token) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
-    id: id
+    token: token
   }
 }
 
@@ -26,9 +27,11 @@ export const get_event_start = () => {
   }
 }
 
-export const store_event_basic_info = (data) => {
-
-} 
+// export const store_event_basic_info = (data) => {
+//   return {
+//     type: actionTypes.
+//   }
+// } 
 
 export const store_event_todo_list = (data) => {
   
@@ -56,12 +59,12 @@ export const auth_get_event_fail = (err) => {
 }
 
 export const auth = (email, password) => {
-  return dispatch => {
+  return (dispatch: any) => {
     dispatch(auth_start())
-    axios.post('url', {email: email, password: password}).then((data) => {
-      dispatch(auth_success(data.id))
+    axios.post('https://hivent.xyz/api/auth/local', {email: email, password: password}).then((data) => {
+      dispatch(auth_success(data))
       dispatch(get_event_start())
-      axios.get('url').then((event) => {
+      axios.get('https://hivent.xyz/api/events').then((event) => {
         dispatch(auth_get_event_success(event))
       }).catch((err) => {
         dispatch(auth_get_event_fail(err))

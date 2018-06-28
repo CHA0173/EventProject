@@ -1,4 +1,4 @@
-# YouIn? App
+# WEvent App
 Event organization made painless
 
 ## Group member
@@ -283,5 +283,22 @@ Now we can show the image to Confirmation page
 ### Changed
 -  editing confirmation.tsx
     - will show the data from event info
+
+---
+## version 0.7 June 27, 2018 (Lucas)
+
+Now we can show the image to Confirmation page
+
+### Added
+- routes/services
+    - addComment ("/events/<eventid>/comment")
+    - joinEvent     ("/events/<eventid>/join")
+    - uploaded backend to production
+    
+
+    
+### Changed
+- moved searchRouter to eventRouter ("/events/search?=<query>")
+
 
 ---

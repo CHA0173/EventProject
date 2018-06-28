@@ -15,10 +15,11 @@ import { stepButtons } from '../../styles'
 
 interface ISelectTemplateProps {
     nextStep: () => void,
-    prevStep: () => void
+    prevStep: () => void,
+    setTodoTemplate: (templatetodo) => void
 }
 interface ISelectTemplateState {
-    type: string,
+    Templatetype: string,
     modalVisible: boolean
 }
 
@@ -26,7 +27,7 @@ export default class SelectTemplate extends React.Component<ISelectTemplateProps
     constructor(props: ISelectTemplateProps) {
         super(props);
         this.state = {
-            type: '0',
+            Templatetype: '0',
             modalVisible: false,
         }
     }
@@ -35,59 +36,68 @@ export default class SelectTemplate extends React.Component<ISelectTemplateProps
         this.setState({ modalVisible: visible });
     }
 
-    setType(type) {
-        this.setState({ type: type })
+    setType(Templatetype) {
+        this.setState({ Templatetype: Templatetype })
     }
 
     render() {
         return (
             <View>
                 <Tile
+                    titleStyle={{ marginTop: 25 }}
                     imageSrc={require('../../img/birthday.jpg')}
                     title="Birthday Party"
                     featured
-                    height={130}
-                    imageContainerStyle={{ borderBottomWidth: 3, borderBottomColor: 'white' }}
+                    height={160}
+                    imageContainerStyle={{ borderBottomWidth: 1.5, borderBottomColor: 'white' }}
                     onPress={() => {
                         this.setModalVisible(true);
-                        this.setType('birthdayParty'
-                        )
+                        this.setType('birthdayParty')
                     }}
                 />
                 <Tile
+                    titleStyle={{ marginTop: 25 }}
                     imageSrc={require('../../img/junkboat.jpg')}
                     title="Junk Boat Party"
                     featured
-                    height={130}
-                    imageContainerStyle={{ borderBottomWidth: 3, borderBottomColor: 'white' }}
+                    height={160}
+                    imageContainerStyle={{ borderBottomWidth: 1.5, borderBottomColor: 'white' }}
                     onPress={() => {
                         this.setModalVisible(true);
-                        this.setType('junkboat'
-                        )
+                        this.setType('junkBoat')
                     }}
                 />
                 <Tile
+                    titleStyle={{ marginTop: 25 }}
                     imageSrc={require('../../img/meetup.jpg')}
                     title="Meet Up"
                     featured
-                    height={130}
-                    imageContainerStyle={{ borderBottomWidth: 3, borderBottomColor: 'white' }}
-                    onPress={() => this.setState({ type: 'meetup' })}
+                    height={160}
+                    imageContainerStyle={{ borderBottomWidth: 1.5, borderBottomColor: 'white' }}
+                    onPress={() => {
+                        this.setModalVisible(true);
+                        this.setType('meetUp')
+                    }}
                 />
                 <Tile
+                    titleStyle={{ marginTop: 25 }}
                     imageSrc={require('../../img/movie.jpg')}
                     title="Movie night"
                     featured
-                    height={130}
-                    imageContainerStyle={{ borderBottomWidth: 3, borderBottomColor: 'white' }}
-                    onPress={() => this.setState({ type: 'movie' })}
+                    height={160}
+                    imageContainerStyle={{ borderBottomWidth: 1.5, borderBottomColor: 'white' }}
+                    onPress={() => {
+                        this.setModalVisible(true);
+                        this.setType('movieNight')
+                    }}
                 />
                 <Tile
+                    titleStyle={{ marginTop: 25 }}
                     imageSrc={require('../../img/custom.png')}
                     title="Custom"
                     featured
-                    height={130}
-                    imageContainerStyle={{ borderBottomWidth: 3, borderBottomColor: 'white' }}
+                    height={160}
+                    imageContainerStyle={{ borderBottomWidth: 1.5, borderBottomColor: 'white' }}
                     onPress={() => this.props.nextStep()}
                 />
 
@@ -98,39 +108,25 @@ export default class SelectTemplate extends React.Component<ISelectTemplateProps
                 >
                     <View style={styles.modalContent}>
                         <View>
-                            <Templates type={this.state.type} />
+                            {/* FIXME: maybe need to move to Templates page */}
+                            <Templates Templatetype={this.state.Templatetype}
+                                setModalVisible={this.setModalVisible.bind(this)}
+                                nextStep={this.props.nextStep} 
+                                setTodoTemplate={this.props.setTodoTemplate.bind(this)}
+                                />
                             <View style={styles.buttonContainer}>
-                                <TouchableHighlight
+                                <TouchableOpacity
                                     onPress={() => {
-                                        this.setModalVisible(!this.state.modalVisible);
+                                        this.setModalVisible(false);
                                     }}>
-                                    <View style={styles.button}>
-                                        <Text>Back</Text>
+                                    <View style={styles.buttonBack}>
+                                        <Text style={styles.buttonText}>Back</Text>
                                     </View>
-                                </TouchableHighlight>
-                                <TouchableHighlight
-                                    onPress={() => {
-                                        this.props.nextStep();
-                                    }}>
-                                    <View style={styles.button}>
-                                        <Text>Select</Text>
-                                    </View>
-                                </TouchableHighlight>
+                                </TouchableOpacity>
                             </View>
                         </View>
                     </View>
                 </Modal>
-
-
-
-                {/* <View style={stepButtons.container}>
-                    <View style={stepButtons.button}>
-                        <Button title="prev" onPress={this.props.prevStep} />
-                    </View>
-                    <View style={stepButtons.button}>
-                        <Button title="next" onPress={this.props.nextStep} />
-                    </View>
-                </View> */}
             </View>
         )
     }
@@ -144,25 +140,28 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    button: {
-        backgroundColor: 'lightblue',
+    buttonBack: {
+        backgroundColor: '#999999',
         padding: 12,
         margin: 16,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 4,
-        borderColor: 'rgba(0, 0, 0, 0.1)',
+        borderRadius: 8,
+        width: 250
     },
     modalContent: {
         backgroundColor: 'white',
-        padding: 22,
+        padding: 10,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 4,
         borderColor: 'rgba(0, 0, 0, 0.1)',
     },
     buttonContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-around'
+        alignItems: 'center'
+    },
+    buttonText: {
+        fontSize: 15,
+        color: 'white'
     }
 });

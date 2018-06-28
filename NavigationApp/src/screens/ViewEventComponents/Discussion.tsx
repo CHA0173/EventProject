@@ -82,6 +82,7 @@ export default class Discussion extends React.Component<{}, IDiscussionStates> {
               </ScrollView>
             )
           }}
+          keyExtractor={data => data.massage}
         />
 
         <View style={{ backgroundColor: 'white' }}>
@@ -93,7 +94,6 @@ export default class Discussion extends React.Component<{}, IDiscussionStates> {
             })}
             placeholder='massage'
             keyboardAppearance='dark'
-            autoFocus={true}
             style={{ backgroundColor: 'transparent', width: '80%', marginHorizontal: 10 }}
           />
 

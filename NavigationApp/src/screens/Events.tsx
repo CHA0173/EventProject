@@ -9,16 +9,18 @@ import {
 } from 'react-native';
 import { Card, ListItem, Icon, ButtonGroup } from 'react-native-elements';
 import { Navigator, NavigatorButton } from 'react-native-navigation';
-import { event } from './fakeData'
+import { Ievent } from '../models/events';
+import { connect } from 'react-redux'
 
 interface IEventsProps {
-  navigator: Navigator;
+  navigator: Navigator,
+  events: Ievent[]
 };
 interface IEventsStates {
-  selectedIndex: number;
+  selectedIndex: number
 };
 
-export default class Events extends React.Component<IEventsProps, IEventsStates> {
+class Events extends React.Component<IEventsProps, IEventsStates> {
   static navigatorButtons = {
     rightButtons: [
       {
@@ -64,18 +66,19 @@ export default class Events extends React.Component<IEventsProps, IEventsStates>
         />
         <ScrollView style={{flex: 1}}>
           <FlatList
-            data={event}
+            data={this.props.events}
             renderItem={(event) => {
               return (
                 <View>
                   <TouchableOpacity onPress={() => this.props.navigator.push({
                     screen: 'ViewEventScreen',
                     title: event.item.name,
-                    navigatorStyle: { tabBarHidden: true }
+                    navigatorStyle: { tabBarHidden: true },
+                    passProps: {item: event}
                   })}>
                     <Card
                       title={event.item.name}
-                      image={event.item.image}>
+                      image={event.item.photo}>
                       <Text style={{ marginBottom: 10 }}>
                         {event.item.description}
                       </Text>
@@ -91,6 +94,14 @@ export default class Events extends React.Component<IEventsProps, IEventsStates>
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+      events: state.event.events
+  }
+}
+
+export default connect(mapStateToProps)(Events)
 
 const styles = StyleSheet.create({
   container: {
