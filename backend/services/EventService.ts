@@ -307,19 +307,19 @@ export default class EventService {
         "discussion.comment  as discussion_comment"
 
       )
-      .join("todo", "todo.events_id", "events.id")
-      .join("items", "items.todo_id", "todo.id")
-      .join("events_users", "events_users.events_id", "events.id")
+      .leftJoin("todo", "todo.events_id", "events.id")
+      .leftJoin("items", "items.todo_id", "todo.id")
+      .leftJoin("events_users", "events_users.events_id", "events.id")
       .leftJoin("discussion", "discussion.events_id", "events.id")
       .leftJoin("users as discussionusers", "discussion.users_id", "discussionusers.id")
       .leftJoin("users as itemusers", "items.users_id", "itemusers.id")
-      .join("users", "events_users.users_id", "users.id")
+      .leftJoin("users", "events_users.users_id", "users.id")
       .where("events.id", eid)
       // .whereIn('events.id',this.knex.select('events_id').from('events_users'))
       // .andWhere("events_users.creator",true)
-      .andWhere("events.isactive", true)
-      .andWhere("items.isactive", true)
-      .andWhere("discussion.isactive", true)
+      // .andWhere("events.isactive", true)
+      // .andWhere("items.isactive", true)
+      // .andWhere("discussion.isactive", true)
       .then(result => {
         // console.log(joinjs.mapOne(result, this.resultMaps, 'eventMap', 'event_'))
         return (result && result.length > 0) ? joinjs.mapOne(result, this.resultMaps, 'eventMap', 'event_') : {};
