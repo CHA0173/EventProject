@@ -20,7 +20,7 @@ exports.up = (knex: Knex) => {
             events.timestamp("datetime");
             events.string("address");
             events.specificType("location", "POINT");
-            events.boolean("private");
+            events.boolean("private_event");
             events.decimal("deposit");
             events.boolean("isactive");
         })

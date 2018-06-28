@@ -14,7 +14,7 @@ export default class EventService {
       {
         mapId: 'eventMap',
         idProperty: 'id',
-        properties: ['name', 'description', 'datetime', 'photo', 'address', 'private', 'deposit'],
+        properties: ['name', 'description', 'datetime', 'photo', 'address', 'private_event', 'deposit'],
         collections: [
           // { name: 'events_users', mapId: 'events_usersMap', columnPrefix: 'events_users_' },
           { name: 'todo', mapId: 'todoMap', columnPrefix: 'todo_' },
@@ -146,7 +146,7 @@ export default class EventService {
             datetime: data.datetime,
             photo: data.photo,//can insert base64 of photo here directly, no need to use multer/file buffer
             address: data.address,
-            private: false,
+            private_event: false,
             deposit: data.deposit,
             isactive: true
           }).returning("id");
@@ -208,7 +208,7 @@ export default class EventService {
             datetime:    body.event.datetime,
             photo:       body.event.photo,
             address:     body.event.address,
-            private:     body.event.private,
+            private_event:     body.event.private_event,
             deposit:     body.event.deposit
           })
         //why use if to confirm update changes?
@@ -283,7 +283,7 @@ export default class EventService {
         "events.datetime    as event_datetime",
         "events.photo       as event_photo",
         "events.address     as event_address",
-        "events.private     as event_private",
+        "events.private_event    as event_private_event",
         "events.deposit     as event_deposit",
 
         "events_users.creator as attendees_creator",
