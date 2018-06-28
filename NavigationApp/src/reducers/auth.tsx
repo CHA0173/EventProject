@@ -1,5 +1,6 @@
 import * as actionTypes from '../actions/types';
 
+
 const initialState = {
   loading: false,
   token: null,
@@ -18,3 +19,4 @@ export const authReducer = (state = initialState, action) => {
       return state
   }
 }
+
