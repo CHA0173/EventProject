@@ -11,86 +11,58 @@ import {
   Dimensions,
   ScrollView,
   TouchableWithoutFeedback,
-  Switch,
-  Button
+  Switch
 } from 'react-native';
+import { Button } from 'react-native-elements'
 const { width, height } = Dimensions.get('window')
 
 import { Navigator } from 'react-native-navigation';
 import { Card, CheckBox } from 'react-native-elements';
-import { TodoData } from './fakeData';
+import { Iuser } from '../models/users'
 import axios from 'axios';
+
 import { connect } from 'react-redux';
 
 const ImagePicker = require('react-native-image-picker');
 
 
-const userProfile = {
-  "id": 1,
-  "name": "Alex",
-  "photo": null,
-  "events": [
-    {
-      "id": 1,
-      "name": "UpdateTest2",
-      "datetime": "2018-07-21T09:00:00.000Z",
-      "photo": null,
-      "creator": true
-    },
-    {
-      "id": 2,
-      "name": "Mary's Wedding",
-      "datetime": "2018-09-20T10:00:00.000Z",
-      "photo": null,
-      "creator": false
-    }
-  ],
-  "items": [
-    {
-      "id": 6,
-      "name": "ceremonial tea",
-      "quantity": 1,
-      "completed": false,
-      "itemEventId": 2
-    },
-    {
-      "id": 1,
-      "name": "Test2",
-      "quantity": 100,
-      "completed": true,
-      "itemEventId": 1
-    }
-  ]
-}
-
 interface IUserProfile {
-  id: number,
-  name: string,
-  photo: string,
-  events: object[],
-  items: object[]
+  user: Iuser
 }
 
 interface IProfileProps {
   navigator: Navigator,
-  userProfile: IUserProfile
+  userProfile: IUserProfile,
+
+  addUser: (user: Iuser) => void,
+  user: Iuser,
+  token: any,
 };
 
 interface IProfileState {
   avatarSource: any,
   eventAttended: number,
-  todo: number
+  todo: number,
+
+  user: Iuser
 }
 
 class Profile extends React.Component<IProfileProps, IProfileState> {
   constructor(props: IProfileProps) {
     super(props)
-
     this.state = {
-      avatarSource: null,
+      avatarSource: this.props.user.photo,
       eventAttended: 0,
       todo: 0,
+      user: {
+        id: -1,
+        name: '',
+        photo: '',
+        events: [],
+        items: [],
+      }
     }
+
   }
 
   public selectPhotoTapped = () => {
@@ -113,33 +85,43 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
 
       // You can also display the image using data:
       const source = { uri: 'data:image/jpeg;base64,' + response.data };
-
       // const header = {
       //   method: 'post',
       //   headers: {
       //     'Accept': 'application/json'
       //   }
       // }
-      axios.post('url', { photo: source })
+      const AuthStr = 'Bearer '.concat(this.props.token);
+
+      axios.post('https://hivent.xyz/api/users',{ photo: 'data:image/jpeg;base64,' + response.data } , { headers: { Authorization: AuthStr } }) //FIXME: unauth
+      // axios({
+      //   method: 'PUT',
+      //   url:'https://hivent.xyz/api/users',
+      //   header: { Authorization: AuthStr },
+      //   data: { photo: source}
+      // })
 
       this.setState({
-        avatarSource: source
+        avatarSource: source,
       });
+      console.log('photo source',source)
     }
     );
   }
 
-  public renderTodoItem(item) { //FIXME: need to send back the data(uri/ base64) to backend
-    let eventId = item.itemEventId
-    let event = userProfile.events.find(event => event.id == eventId)
+  public renderTodoItem(item) {
+    let eventId = item.itemEventId;
+
+    let event = this.props.user.events.find(e => e.id == eventId);
     return (
-      <View style={{ borderWidth: 1, padding: 10, margin: 10, borderRadius: 5 }}>
+      event &&
+      <View style={{ borderWidth: 0, padding: 10, margin: 10, borderRadius: 5, backgroundColor: '#ffffff' }}>
         <Text>
           {event.datetime.match(/\d{4}-[01]\d-[0-3]\d/)}
         </Text>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <View>
-            <Text>
+            <Text style={{fontSize: 18, color: 'black'}}>
               {item.name}
             </Text>
             <Text>
@@ -159,26 +141,22 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
     )
   }
 
-  componentWillMount() {
-    this.props.navigator.setTitle({ title: userProfile.name })
-  }
+  // componentDidMount() {
+  //   const now = Date.now();
+  //   const eventAttended = this.props.user.events.reduce((count: number, event: any) => {
+  //     const eventdate = Date.parse(event.datetime);
+  //     return (eventdate > now) ? count += 1 : count += 0;
+  //   }, 0);
 
-  componentDidMount() {
-    const now = Date.now();
-    const eventAttended = userProfile.events.reduce((count: number, event: any) => {
-      const eventdate = Date.parse(event.datetime);
-      return (eventdate > now) ? count += 1 : count += 0;
-    }, 0);
-
-    this.setState({ eventAttended });
-  }
+  //   this.setState({ eventAttended });
+  // }
 
   public renderEventHistory(item) {
     let eventdate = Date.parse(item.datetime)
     let now = Date.now()
     if (eventdate > now) {
       return (
-        <View style={{ borderWidth: 1, padding: 10, margin: 10, borderRadius: 5 }}>
+        <View style={{ borderWidth: 0, padding: 10, margin: 10, borderRadius: 5, backgroundColor: '#ffffff' }}>
           <Text>
             {item.name}
           </Text>
@@ -189,40 +167,45 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
 
   render() {
     const { eventAttended } = this.state;
-
+    console.log("this.props.user", this.props);
+    this.props.navigator.setTitle({ title: this.props.user.name })
     return (
       <ScrollView>
-        <View style={{ flex: 1, alignItems: 'center', margin: 20, marginHorizontal: 40, flexDirection: 'row'}}>
-          <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, alignItems: 'center', padding: 20, paddingHorizontal: 40, flexDirection: 'row' }}>
+          <View style={{ flexGrow: 1 }}>
             <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
               <View style={[styles.avatar, styles.avatarContainer]}>
-                {this.state.avatarSource === null ? <Text>Select a Photo</Text> :
-                  <Image style={styles.avatar} source={this.state.avatarSource} />
+                {
+                  !this.props.user.photo ? <Text>Select a Photo</Text> :
+                  <Image style={styles.avatar} source={
+                    this.state.avatarSource && this.state.avatarSource !== '' ? 
+                    this.state.avatarSource : {uri: this.props.user.photo}
+                }/> 
                 }
               </View>
             </TouchableOpacity>
           </View>
-          <View style={{ flex: 1, alignItems: 'center' }}>
-            <Text style={{ fontSize: 36, margin: 5 }}>{eventAttended}</Text>
+          <View style={{ flexGrow: 1, alignItems: 'center' }}>
             <Text style={{ fontSize: 14, color: 'grey' }}>To-do</Text>
+            <Text style={{ fontSize: 36, padding: 5 }}>{eventAttended}</Text>
           </View>
-          <View style={{ flex: 1, alignItems: 'center' }}>
-            <Text style={{ fontSize: 36, margin: 5 }}>{eventAttended}</Text>
+          <View style={{ flexGrow: 1, alignItems: 'center' }}>
             <Text style={{ fontSize: 14, color: 'grey' }}>Attended</Text>
+            <Text style={{ fontSize: 36, padding: 5 }}>{eventAttended}</Text>
           </View>
         </View>
         <View>
-          <Button title='To-do List' onPress={() => { }} />
+          <Button icon={{ name: 'view-list' }} title='To-do List' disabledStyle={{ backgroundColor: '#d15953' }} disabled onPress={() => { }} />
           <FlatList
             style={{ marginHorizontal: 10 }}
-            data={userProfile.items}
+            data={this.props.user.items}
             renderItem={({ item }) => this.renderTodoItem(item)}
             keyExtractor={item => item.id.toString()}
           />
-          <Button title='Event History' onPress={() => { }} />
+          <Button icon={{ name: 'local-library' }} title='Event History' disabledStyle={{ backgroundColor: '#004263' }} disabled onPress={() => { }} />
           <FlatList
             style={{ marginHorizontal: 10 }}
-            data={userProfile.events}
+            data={this.props.user.events}
             renderItem={({ item }) => this.renderEventHistory(item)}
             keyExtractor={item => item.id.toString()}
           />
@@ -235,7 +218,8 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
 
 const mapStateToProps = (state) => {
   return {
-      events: state.event.events
+    user: state.getUser.user,
+    token: state.authReducer.token,
   }
 }
 

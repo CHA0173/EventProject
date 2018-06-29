@@ -1,22 +1,24 @@
 import * as React from 'react';
 import {
-  StyleSheet,
   Text,
   View,
   TouchableOpacity,
   FlatList,
   ScrollView,
 } from 'react-native';
-import { Card, ListItem, ButtonGroup } from 'react-native-elements';
+import { Card, ListItem, ButtonGroup, Icon } from 'react-native-elements';
 import { Navigator, NavigatorButton } from 'react-native-navigation';
-import { Ievent } from '../models/events';
+import { Iuser, Ievents } from '../models/users';
 import { connect } from 'react-redux'
+import axios from 'axios';
 
 
 interface IEventsProps {
   navigator: Navigator,
-  events: Ievent[]
+  user: Iuser,
+  token: string,
 };
+
 interface IEventsStates {
   selectedIndex: number
 };
@@ -56,33 +58,44 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
 
   render() {
     const buttons = ['Upcoming', 'Created']
-
+    console.log('this.props.user.events', this.props)
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <ButtonGroup
           onPress={this.updateIndex}
           selectedIndex={this.state.selectedIndex}
           buttons={buttons}
           containerStyle={{ height: 30 }}
         />
-        <ScrollView style={{flex: 1}}>
+        <ScrollView style={{ flex: 1 }}>
           <FlatList
-            data={this.props.events}
+            data={this.props.user.events}
             renderItem={(event) => {
               return (
                 <View>
-                  <TouchableOpacity onPress={() => this.props.navigator.push({
-                    screen: 'ViewEventScreen',
-                    title: event.item.name,
-                    navigatorStyle: { tabBarHidden: true },
-                    passProps: {item: event}
-                  })}>
+
+                  <TouchableOpacity onPress={() => {
+                    const AuthStr = 'Bearer '.concat(this.props.token);
+                    axios.get(`https://hivent.xyz/api/events/${event.item.id}`, { headers: { Authorization: AuthStr } }).then((data) => {
+                      console.log('data', data.data)
+                      this.props.navigator.push({
+                        screen: 'ViewEventScreen',
+                        title: event.item.name,
+                        navigatorStyle: { tabBarHidden: true },
+                        passProps: { item: data.data }
+                      })
+                    })
+                  }}>
                     <Card
                       title={event.item.name}
-                      image={event.item.photo}>
-                      <Text style={{ marginBottom: 10 }}>
-                        {event.item.description}
+                      image={{uri:event.item.photo}}
+                    >
+                    <View style={{flexDirection: 'row'}}>
+                      <Icon name='date-range' color='#ac6264' containerStyle={{marginHorizontal: 20}}/>
+                      <Text style={{ fontSize: 20 }}>
+                        {event.item.datetime.match(/\d{4}-[01]\d-[0-3]\d/)}
                       </Text>
+                    </View>
                     </Card>
                   </TouchableOpacity>
                 </View>
@@ -90,6 +103,7 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
             }}
             keyExtractor={data => data.id.toString()}
           />
+
         </ScrollView>
       </View>
     )
@@ -98,27 +112,10 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
 
 const mapStateToProps = (state) => {
   return {
-      events: state.event.events
+    user: state.getView.events,
+    token: state.authReducer.token,
   }
 }
 
-export default connect(mapStateToProps)(Events)
+export default connect(mapStateToProps)(Events);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});

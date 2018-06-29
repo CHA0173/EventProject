@@ -23,13 +23,16 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux'
 import { fetchingEvents } from '../actions'
 import { Ievent } from '../models/events' 
-import { get_event } from '../actions/auth';
+import { get_viewevent } from '../actions/auth';
 
 interface ISearchProps {
   navigator: Navigator,
   fetchEvents: () => string[],
-  get_event: () => void,
+  get_viewevent: (token, id) => void,
+
+  token: any,
   events: Ievent[],
+  text: string,
 };
 
 interface ISearchState {
@@ -46,7 +49,7 @@ class Search extends React.Component<ISearchProps, ISearchState> {
     this.state = {
       text: '',
       // data: [],
-      event: [],
+      event: this.props.events,
       isFetching: true
     }
   }
@@ -65,9 +68,11 @@ class Search extends React.Component<ISearchProps, ISearchState> {
   }
 
   public filter(text) {//insert axios get to backend
-    const newData = this.props.events.filter(function (item) {
+    console.log("serach this.props.events", this.props)
+    const newData = this.props.events.slice().filter(function (item) { //FIXME: 
       const itemData = item.name.toUpperCase()
       const textData = text.toUpperCase()
+      console.log("itemData", itemData, "textData", textData);
       return itemData.indexOf(textData) > -1
     });
 
@@ -80,11 +85,12 @@ class Search extends React.Component<ISearchProps, ISearchState> {
   public deleteData() {
     this.setState({
       text: '',
-      event: [],
+      event: this.props.events,
     });
   };
 
   public renderItem(item) {
+    console.log("search item", item, this.props.events)
     return (
       <TouchableWithoutFeedback onPress={() => {
         this.props.navigator.push({
@@ -92,7 +98,8 @@ class Search extends React.Component<ISearchProps, ISearchState> {
           title: item.name,
           navigatorStyle: {tabBarHidden: true} ,
           passProps: {
-            selectedItem: item.item
+            item: this.props.events.find(e => e.id === item.id),
+            eventId: item.events_id
           }
         })
       }}>
@@ -105,9 +112,7 @@ class Search extends React.Component<ISearchProps, ISearchState> {
     )
   }
 
-  // componentDidMount() {
-  //   this.props.fetchEvents();
-  // }
+
 
   render() {
     return (
@@ -125,7 +130,7 @@ class Search extends React.Component<ISearchProps, ISearchState> {
             style={styles.input}
             placeholder='Search'
             keyboardAppearance='dark'
-            autoFocus={false}
+
           />
           {this.state.text ?
             <TouchableWithoutFeedback onPress={() => this.deleteData()}>
@@ -149,8 +154,8 @@ class Search extends React.Component<ISearchProps, ISearchState> {
         </View>
         <ScrollView>
           <FlatList
-            style={styles.flatstyle}
-            data={this.props.events}
+            style={styles.flatstyle} 
+            data={this.state.event} //FIXME:
             renderItem={({ item }) => this.renderItem(item)}
             // keyExtractor={item => item.id.toString()} 
           />
@@ -215,10 +220,15 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    events: state.GET_EVENT_REDUCER.events
+    events: state.getEvent.events,
+    token: state.authReducer.token,
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    get_viewevent: (token, id) => dispatch(get_viewevent(token, id))
+  }
+}
 
-
-export default connect(mapStateToProps)(Search)
+export default connect(mapStateToProps, mapDispatchToProps)(Search)

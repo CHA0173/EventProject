@@ -4,12 +4,18 @@ import { searchEventsReducers } from "./reducers/searchEventsReducers";
 import  EventReducer  from './reducers/CreateEvent';
 import { authReducer } from "./reducers/auth";
 import { GET_EVENT_REDUCER } from './reducers/getEvent';
+import { userReducer } from "./reducers/getUser";
+import { viewReducer } from "./reducers/getView";
+import { getEventReducer } from "./reducers/getViewEvent";
 
 
 
 export const store = createStore(combineReducers({
     event: EventReducer,
     authReducer: authReducer,
-    GET_EVENT_REDUCER: GET_EVENT_REDUCER
+    getEvent: GET_EVENT_REDUCER,
+    getUser: userReducer,
+    getView: viewReducer,
+    getViewEvent: getEventReducer,
 }),
 applyMiddleware(thunk));

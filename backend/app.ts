@@ -24,7 +24,7 @@ const jwtAuth         = jwtStrategy(userService);
 const apiRouter       = new ApiRouter(jwtAuth, userService, eventService, signupService);
 
 app.use(bodyParser.urlencoded({extended:true}))
-app.use(bodyParser.json({ limit: '20mb'}))
+app.use(bodyParser.json({limit: '50mb'}))
 app.use(cors());
 app.use(jwtAuth.initialize());
 app.use(express.static("public"));

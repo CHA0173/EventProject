@@ -26,7 +26,8 @@ export default class Info extends React.Component<IInfoProps, {}> {
         super(props)
     }
 
-    private = this.props.event.private_event ? 'Private' : 'Public'
+    private = true ? 'Private' : 'Public';
+    datetime = `${this.props.event.datetime.match(/\d{4}-[01]\d-[0-3]\d/)}, start at ${this.props.event.datetime.match(/[\d]{2}:[\d]{2}/)}`;
 
     basicInfoList = [
         {
@@ -42,7 +43,7 @@ export default class Info extends React.Component<IInfoProps, {}> {
             icon: 'location-on'
         },
         {
-            title: this.props.event.datetime,
+            title: this.datetime,
             icon: 'date-range'
         },
         {
@@ -58,15 +59,15 @@ export default class Info extends React.Component<IInfoProps, {}> {
                     style={{ width: width, height: 300 }}
                     source={this.props.event.photo}
                 />
-                <List containerStyle={{borderWidth: 10, borderTopWidth: 10}}>
+                <List containerStyle={{borderWidth: 0, borderTopWidth: 0, margin: 20}}>
                     {
                         this.basicInfoList.map((item, i) => (
                             <ListItem
                                 key={i}
                                 title={item.title}
-                                leftIcon={{ name: item.icon }}
+                                leftIcon={{ name: item.icon, color: '#004263' }}
                                 hideChevron={true}
-                                containerStyle={{borderBottomWidth: 0.5, borderTopWidth: 0.5}}
+                                containerStyle={{borderBottomWidth: 0, borderTopWidth: 0}}
                             />
                         ))
                     }

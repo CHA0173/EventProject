@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
 import DatePicker from 'react-native-datepicker';
-import { addEvent } from '../actions/CreateEvent';
+import { addEvent, remoteAddEvent } from '../actions/CreateEvent';
 
 import StepIndicator from 'react-native-step-indicator';
 
@@ -23,7 +23,6 @@ import Confirmation from './CreateEventComponents/Confirmation';
 
 import { createStore } from 'redux'
 import { connect } from 'react-redux'
-import reducer from '../reducers/createReducer'
 import { PixelRatio } from 'react-native';
 import { Ievent, Itodo } from '../models/events';
 import { Navigator } from 'react-native-navigation';
@@ -31,19 +30,22 @@ import { Navigator } from 'react-native-navigation';
 const ImagePicker = require('react-native-image-picker');
 const { width } = Dimensions.get('window')
 
-const store = createStore(reducer)
 
 interface ICreateEventProps {
     navigator: any,
+    token: any,
     createEvent: (
-        id: number,
+        token: any,
         name: string,
         description: string,
         datetime: string,
         photo: any,
         address: string,
         private_event: boolean,
-        deposit: string, ) => void,
+        deposit: string,
+        todo: any,
+        attendees: any,
+         ) => void,
         events: any
 }
 
@@ -103,7 +105,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
     }
 
     setTodo(list){
-        const newEvent = {...this.state.event}
+        const newEvent = this.state.event;
         newEvent.todo = list
         this.setState({
             event: newEvent
@@ -121,8 +123,9 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                     step: this.state.step - 1
                 })
             } else if (event.id === 'done') { //FIXME:
+                console.log('create event token', this.props, this.state)
                 this.props.createEvent(
-                    this.state.event.id,
+                    this.props.token,
                     this.state.event.name,
                     this.state.event.description,
                     this.state.event.datetime,
@@ -130,6 +133,8 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
                     this.state.event.address,
                     this.state.event.private_event,
                     this.state.event.deposit,
+                    this.state.event.todo,
+                    this.state.event.attendees,
                 )
                 // alert(JSON.stringify(this.props.events))
                 this.props.navigator.resetTo({
@@ -169,7 +174,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
 
                                 }}>
                                     {this.state.event.photo === null ? <Text>Select a Photo</Text> :
-                                        <Image source={this.state.event.photo} style={{
+                                        <Image source={{uri:this.state.event.photo}} style={{
                                             width: width,
                                             height: 230
                                         }} />
@@ -346,7 +351,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
             // axios.post('url', { photo: source })
 
             const newImgSource = { ...this.state.event }
-            newImgSource.photo = source
+            newImgSource.photo = 'data:image/jpeg;base64,' + response.data
             this.setState({
                 event: newImgSource
             });
@@ -364,13 +369,15 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
 
 const mapStateToProps = (state) => {
     return {
-        events: state.event.events
+        events: state.event.events,
+        token: state.authReducer.token,
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        createEvent: (id,
+        createEvent: (
+            token,
             name,
             description,
             datetime,
@@ -380,7 +387,8 @@ const mapDispatchToProps = (dispatch) => {
             deposit,
             todo,
             attendees,
-            discussion, ) => dispatch(addEvent(id,
+            discussion, ) => dispatch(remoteAddEvent(
+                token,
                 name,
                 description,
                 datetime,
@@ -390,7 +398,7 @@ const mapDispatchToProps = (dispatch) => {
                 deposit,
                 todo,
                 attendees,
-                discussion, ))
+                discussion))
     }
 }
 

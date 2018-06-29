@@ -14,44 +14,67 @@ import Info from './ViewEventComponents/Info'
 import ToDoList from './ViewEventComponents/ToDoList'
 import Attendees from './ViewEventComponents/Attendees'
 import Discussion from './ViewEventComponents/Discussion'
-import { Ievent } from '../models/events'
+import { Ievent } from '../models/events';
+import { Iuser } from '../models/users'
+import { connect } from 'react-redux';
+import { get_viewevent } from '../actions/auth'
+import { IviewEventsState } from '../reducers/getViewEvent';
+import axios from 'axios';
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 
+// interface IViewEventProps {
+//     item: Ievent
+// }
+
 interface IViewEventProps {
-    item: Ievent
+  events: any;
+  user: Iuser;
+  item: Ievent;
+  token: any;
+  eventId: number;
+}
+
+interface IViewEventsState {
+    event: any
 }
 
 
-export default class ViewEvent extends React.Component<IViewEventProps, {}> {
+class ViewEvent extends React.Component<IViewEventProps, IViewEventsState> {
+
 
     static renderNavbarButton() {
         const navbarButton = [[{
             icon: require('../img/edit.png'),
             id: 'edit', // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
             disabled: true, // optional, used to disable the button (appears faded and doesn't interact)
-            disableIconTint: true, // optional, by default the image colors are overridden and tinted to navBarButtonColor, set to true to keep the original image colors
-            buttonColor: 'blue', // Optional, iOS only. Set color for the button (can also be used in setButtons function to set different button style programatically)
-            buttonFontSize: 14, // Set font size for the button (can also be used in setButtons function to set different button style programatically)
-            buttonFontWeight: '600', // Set font weight for the button (can also be used in setButtons function to set different button style programatically)
           }],
           [{
             icon: require('../img/join.png'),
             id: 'join', // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
             disabled: true, // optional, used to disable the button (appears faded and doesn't interact)
-            disableIconTint: true, // optional, by default the image colors are overridden and tinted to navBarButtonColor, set to true to keep the original image colors
-            buttonColor: 'blue', // Optional, iOS only. Set color for the button (can also be used in setButtons function to set different button style programatically)
-            buttonFontSize: 14, // Set font size for the button (can also be used in setButtons function to set different button style programatically)
-            buttonFontWeight: '600', // Set font weight for the button (can also be used in setButtons function to set different button style programatically)
           }]]
-          return navbarButton[0]
+          return navbarButton[1]
     }
 
     static navigatorButtons = {
         rightButtons: ViewEvent.renderNavbarButton()
     }
+
+    // componentWillMount() {
+    //     const AuthStr = 'Bearer '.concat(this.props.token);
+
+    //     console.log("View Event AuthStr", AuthStr, this.props.eventId)
+    //     axios.get(`https://hivent.xyz/api/events/${this.props.eventId}`, { headers: { Authorization: AuthStr } }).then((event) => {
+    //         console.log("View Event event", event)
+    //         this.setState({event: event.data})
+    //     }).catch((err) => {
+    //         console.log(err)
+    //     })
+    // }
 
     constructor(props: IViewEventProps) {
         super(props);
@@ -75,23 +98,36 @@ export default class ViewEvent extends React.Component<IViewEventProps, {}> {
                     indicator={this._renderTitleIndicator()}
                     pagerStyle={{ marginTop: 50 }}
                 >
-                    <View style={{ backgroundColor: 'cadetblue' }}>
-                        <Info event={this.props.item} />
+                    <View style={{ backgroundColor: '#bed0db' }}>
+                       <Info event={this.props.item}/> 
                     </View>
-                    <View style={{ backgroundColor: 'cornflowerblue' }}>
-                        <ToDoList />
+                    <View style={{ backgroundColor: '#bed0db' }}>
+                        <ToDoList event={this.props.item}/> 
                     </View>
-                    <View style={{ backgroundColor: '#1AA094' }}>
-                        <Attendees />
-                    </View>
-                    <View style={{ backgroundColor: 'yellow' }}>
-                        <Discussion />
+                    <View style={{ backgroundColor: '#bed0db' }}>
+                        <Attendees event={this.props.item}/> 
+                    </View> 
+                    <View style={{ backgroundColor: '#bed0db' }}>
+                        <Discussion event={this.props.item}/> 
                     </View>
                 </IndicatorViewPager>
             </View>
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    console.log("view event events", state.getViewEvent.events)
+    return {
+      events: state.getViewEvent.events,
+      user: state.getViewEvent.user,
+      token: state.authReducer.token
+    }
+  }
+  
+  
+  export default connect(mapStateToProps)(ViewEvent);
+
 
 const styles = StyleSheet.create({
     indicatorContainer: {
@@ -107,12 +143,12 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     indicatorSelectedText: {
-        color: 'orange',
+        color: '#ea8f8a',
         width: windowWidth / 4,
         textAlign: 'center',
     },
     selectedBorderStyle: {
         height: 3,
-        backgroundColor: 'orange'
+        backgroundColor: '#9ab4cc'
     }
 });

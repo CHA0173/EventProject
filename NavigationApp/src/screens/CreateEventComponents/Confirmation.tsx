@@ -9,7 +9,7 @@ import {
     StyleSheet
 } from 'react-native';
 import { Ievent } from '../../models/events'
-import { FormLabel, FormInput, List, ListItem } from 'react-native-elements'
+import { FormLabel, FormInput, List, ListItem, Icon } from 'react-native-elements'
 
 const { width } = Dimensions.get('window')
 
@@ -55,27 +55,35 @@ export default class Confirmation extends React.Component<IConfirmationProps, {}
                     style={{ width: width, height: 300 }}
                     source={this.props.event.photo}
                 />
-                <List containerStyle={{borderWidth: 10, borderTopWidth: 10}}>
+                <List containerStyle={{borderWidth: 1, borderTopWidth: 1, margin: 20}}>
                     {
                         this.basicInfoList.map((item, i) => (
                             <ListItem
                                 key={i}
                                 title={item.title}
-                                leftIcon={{ name: item.icon }}
+                                leftIcon={{ name: item.icon, color: '#123456' }}
                                 hideChevron={true}
-                                containerStyle={{borderBottomWidth: 0.5, borderTopWidth: 0.5}}
+                                containerStyle={{borderBottomWidth: 0, borderTopWidth: 0}}
                             />
                         ))
                     }
                 </List>
-                <List containerStyle={{borderWidth: 10, borderTopWidth: 10}}>
+                <List containerStyle={{borderWidth: 1, borderTopWidth: 1, margin: 20}}>
                     {
-                        this.props.event.todo.map((item, i) => (
+                        this.props.event.todo.map((item: any, i) => (
                             <ListItem
                                 key={i}
                                 title={item.Name}
                                 hideChevron={true}
-                                containerStyle={{borderBottomWidth: 0.5, borderTopWidth: 0.5}}
+                                containerStyle={{borderBottomWidth: 0, borderTopWidth: 0}}
+                                leftIcon={<Icon
+                                    name='hashtag'
+                                    type='font-awesome'
+                                    color='#e54d16'
+                                    size={15}
+                                    iconStyle={{ marginRight: 10 }}
+                                />}
+                                badge={{value: item.Quantity}}
                             />
                         ))
                     }
