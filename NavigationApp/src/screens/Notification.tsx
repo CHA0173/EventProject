@@ -41,8 +41,8 @@ export default class Notification extends React.Component<NotificationProps> {
             data={[{
               id: 1,
               user: 'Lucas',
-              event: 'Sex Party',
-              eventImg: 'https://dummyimage.com/600x400/000000/fff.png&text=Sex'
+              event: 'Meet Up',
+              eventImg: 'https://dummyimage.com/600x400/000000/fff.png&text=Meetup'
             }, {
               id: 2,
               user: 'Brad',
@@ -52,7 +52,7 @@ export default class Notification extends React.Component<NotificationProps> {
             renderItem={(data) => {
               return (
                 <TouchableOpacity
-                  style={{ borderBottomWidth: 0.5, }}
+                  style={{ backgroundColor: 'white'}}
                   onPress={() => this.props.navigator.push({
                     screen: 'ViewEventScreen',
                     title: data.item.event,
@@ -70,15 +70,11 @@ export default class Notification extends React.Component<NotificationProps> {
               )
             }}
             keyExtractor={data => data.id.toString()} 
+            style= {{margin: 10, flex: 1}}
+  
           />
         </TouchableOpacity>
       </View>
     )
   }
 }
-
-const styles = StyleSheet.create({
-  FlatListStyle: {
-
-  }
-});

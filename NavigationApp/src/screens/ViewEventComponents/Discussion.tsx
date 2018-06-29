@@ -76,12 +76,12 @@ export default class Discussion extends React.Component<IDiscussionProps, IDiscu
           renderItem={(data) => {
             return (
               <ScrollView>
-                <View style={{ marginHorizontal: 20, marginTop: 10, borderRadius: 25, borderWidth: 1, padding: 10, backgroundColor: '#ffffcc' }}>
+                <View style={{ marginHorizontal: 20, marginTop: 10, borderRadius: 10, borderWidth: 0, padding: 10, backgroundColor: '#ffffff' }}>
                   <View style={{ marginHorizontal: 10 }}>
-                    <Text style={{ fontSize: 20 }}>{data.item.name}</Text>
+                    <Text style={{ fontSize: 16 }}>{data.item.name}</Text>
                   </View>
-                  <View style={{ marginHorizontal: 20, padding: 20 }}>
-                    <Text>{data.item.comment}</Text>
+                  <View style={{ marginHorizontal: 20, padding:5 }}>
+                    <Text style={{ fontSize: 20, color: '#630815' }}>{data.item.comment}</Text>
                   </View>
                 </View>
               </ScrollView>

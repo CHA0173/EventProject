@@ -6,7 +6,7 @@ import {
   FlatList,
   ScrollView,
 } from 'react-native';
-import { Card, ListItem, ButtonGroup } from 'react-native-elements';
+import { Card, ListItem, ButtonGroup, Icon } from 'react-native-elements';
 import { Navigator, NavigatorButton } from 'react-native-navigation';
 import { Iuser, Ievents } from '../models/users';
 import { connect } from 'react-redux'
@@ -90,11 +90,12 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
                       title={event.item.name}
                       image={{uri:event.item.photo}}
                     >
-
-                      <Text style={{ marginBottom: 10 }}>
-                        {event.item.datetime}
+                    <View style={{flexDirection: 'row'}}>
+                      <Icon name='date-range' color='#ac6264' containerStyle={{marginHorizontal: 20}}/>
+                      <Text style={{ fontSize: 20 }}>
+                        {event.item.datetime.match(/\d{4}-[01]\d-[0-3]\d/)}
                       </Text>
-
+                    </View>
                     </Card>
                   </TouchableOpacity>
                 </View>

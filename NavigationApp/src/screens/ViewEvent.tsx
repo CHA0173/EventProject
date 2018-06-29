@@ -57,7 +57,7 @@ class ViewEvent extends React.Component<IViewEventProps, IViewEventsState> {
             id: 'join', // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
             disabled: true, // optional, used to disable the button (appears faded and doesn't interact)
           }]]
-          return navbarButton[0]
+          return navbarButton[1]
     }
 
     static navigatorButtons = {
@@ -98,16 +98,16 @@ class ViewEvent extends React.Component<IViewEventProps, IViewEventsState> {
                     indicator={this._renderTitleIndicator()}
                     pagerStyle={{ marginTop: 50 }}
                 >
-                    <View style={{ backgroundColor: 'cadetblue' }}>
+                    <View style={{ backgroundColor: '#bed0db' }}>
                        <Info event={this.props.item}/> 
                     </View>
-                    <View style={{ backgroundColor: 'cornflowerblue' }}>
+                    <View style={{ backgroundColor: '#bed0db' }}>
                         <ToDoList event={this.props.item}/> 
                     </View>
-                    <View style={{ backgroundColor: '#1AA094' }}>
+                    <View style={{ backgroundColor: '#bed0db' }}>
                         <Attendees event={this.props.item}/> 
                     </View> 
-                    <View style={{ backgroundColor: 'yellow' }}>
+                    <View style={{ backgroundColor: '#bed0db' }}>
                         <Discussion event={this.props.item}/> 
                     </View>
                 </IndicatorViewPager>
@@ -143,12 +143,12 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     indicatorSelectedText: {
-        color: 'orange',
+        color: '#ea8f8a',
         width: windowWidth / 4,
         textAlign: 'center',
     },
     selectedBorderStyle: {
         height: 3,
-        backgroundColor: 'orange'
+        backgroundColor: '#9ab4cc'
     }
 });

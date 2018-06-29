@@ -25,36 +25,38 @@ class ToDoList extends React.Component<IToDoListProps, {}> {
 
   render() {
     return (
-      <List containerStyle={{ borderWidth: 1, borderTopWidth: 1, margin: 20 }}>
-        {
-          this.props.event.todo.map((item, i) => (
-            <ListItem
-              key={i}
-              title={item.items[i].name}
-              hideChevron={true}
-              containerStyle={{ borderBottomWidth: 0, borderTopWidth: 0 }}
-              leftIcon={this.props.event.todo[0].items[i].user_name==null? <Icon
-                name='hashtag'
-                type='font-awesome'
-                color='#e54d16'
-                size={15}
-                iconStyle={{ marginRight: 10 }}
-              />: <Icon
-              name='flag'
-              type='font-awesome'
-              color='#273960'
-              size={15}
-              iconStyle={{ marginRight: 10 }}
-            /> }
-              leftIconOnPress={()=>{
+      <View>
+        <List containerStyle={{ borderWidth: 1, borderTopWidth: 1, margin: 20 }}>
+          {
+            this.props.event.todo[0].items.map((item, i) => (
+              <ListItem
+                key={i}
+                title={item.name}
+                hideChevron={true}
+                containerStyle={{ borderBottomWidth: 0, borderTopWidth: 0 }}
+                leftIcon={this.props.event.todo[0].items[i].user_name == null ? <Icon
+                  name='hashtag'
+                  type='font-awesome'
+                  color='#e54d16'
+                  size={15}
+                  iconStyle={{ marginRight: 10 }}
+                /> : <Icon
+                    name='flag'
+                    type='font-awesome'
+                    color='#273960'
+                    size={15}
+                    iconStyle={{ marginRight: 10 }}
+                  />}
+                leftIconOnPress={() => {
 
-              }}
+                }}
 
-              badge={{ value: item.items[i].quantity,textStyle: { color: this.props.event.todo[0].items[i].completed? 'black': 'white' }, containerStyle: { backgroundColor: this.props.event.todo[0].items[i].completed? '#0dd80d': 'grey' }}}
-            />
-          ))
-        }
-      </List>
+                badge={{ value: item.quantity, textStyle: { color: this.props.event.todo[0].items[i].completed ? 'black' : 'white' }, containerStyle: { backgroundColor: this.props.event.todo[0].items[i].completed ? '#0dd80d' : 'grey' } }}
+              />
+            ))
+          }
+        </List>
+      </View>
     )
   }
 }
