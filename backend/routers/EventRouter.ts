@@ -58,7 +58,7 @@ export default class EventRouter {
   getById = (req: express.Request, res: express.Response) => {
     return this.eventService.getById(req.params.eventid)
       .then((data) => res.json(data))
-      .catch((err: express.Errback) => res.status(500).json(err))
+      .catch((err: express.Errback) => { console.log("err", err); res.status(500).json(err) })
   }
 
   // getUpcoming = (req: express.Request, res: express.Response) => { 
