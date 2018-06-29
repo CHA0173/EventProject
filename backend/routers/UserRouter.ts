@@ -19,7 +19,6 @@ export default class UserRouter {
         return router;
     }
 
-
     getById = (req: express.Request, res: express.Response) => { 
         console.log("req.user", req.user)
         return this.userService.getEventsById(req.user)
