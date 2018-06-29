@@ -70,7 +70,7 @@ export default class Confirmation extends React.Component<IConfirmationProps, {}
                 </List>
                 <List containerStyle={{borderWidth: 1, borderTopWidth: 1, margin: 20}}>
                     {
-                        this.props.event.todo.map((item, i) => (
+                        this.props.event.todo.map((item: any, i) => (
                             <ListItem
                                 key={i}
                                 title={item.Name}

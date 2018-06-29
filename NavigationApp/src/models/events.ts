@@ -17,11 +17,10 @@ export interface Ievent {
 
 export interface Itodo {
   id: number,
-  Name: string,
-  Quantity: string
+  items: Iitems[],
 }
 
-export interface Iitem {
+export interface Iitems {
   id: number,
   name: string,
   quantity: number,

@@ -34,8 +34,9 @@ interface IProfileProps {
   navigator: Navigator,
   userProfile: IUserProfile,
 
-  addUser: (user: Iuser)=> void,
+  addUser: (user: Iuser) => void,
   user: Iuser,
+  token: any,
 };
 
 interface IProfileState {
@@ -49,9 +50,8 @@ interface IProfileState {
 class Profile extends React.Component<IProfileProps, IProfileState> {
   constructor(props: IProfileProps) {
     super(props)
-
     this.state = {
-      avatarSource: null,
+      avatarSource: this.props.user.photo,
       eventAttended: 0,
       todo: 0,
       user: {
@@ -62,10 +62,10 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
         items: [],
       }
     }
-    
+
   }
 
-  public selectPhotoTapped = (token) => {
+  public selectPhotoTapped = () => {
     const options = {
       quality: 1.0,
       maxWidth: 500,
@@ -84,53 +84,60 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
 
 
       // You can also display the image using data:
-      const source = { uri: 'data:image/jpeg;base64,' + response.data }; 
-
+      const source = { uri: 'data:image/jpeg;base64,' + response.data };
       // const header = {
       //   method: 'post',
       //   headers: {
       //     'Accept': 'application/json'
       //   }
       // }
-      const AuthStr = 'Bearer '.concat(token);
+      const AuthStr = 'Bearer '.concat(this.props.token);
 
-      axios.put('https://hivent.xyz/api/users', {headers: { Authorization: AuthStr }, photo: source} ) //FIXME: unauth
+      axios.post('https://hivent.xyz/api/users',{ photo: 'data:image/jpeg;base64,' + response.data } , { headers: { Authorization: AuthStr } }) //FIXME: unauth
+      // axios({
+      //   method: 'PUT',
+      //   url:'https://hivent.xyz/api/users',
+      //   header: { Authorization: AuthStr },
+      //   data: { photo: source}
+      // })
 
       this.setState({
-        avatarSource: source
+        avatarSource: source,
       });
+      console.log('photo source',source)
     }
     );
   }
 
-  public renderTodoItem(item) { 
+  public renderTodoItem(item) {
     let eventId = item.itemEventId;
+
     let event = this.props.user.events.find(e => e.id == eventId);
     return (
-        event &&
-          <View style={{ borderWidth: 1, padding: 10, margin: 10, borderRadius: 5 }}>
+      event &&
+      <View style={{ borderWidth: 1, padding: 10, margin: 10, borderRadius: 5 }}>
+        <Text>
+          {event.datetime.match(/\d{4}-[01]\d-[0-3]\d/)}
+        </Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <View>
             <Text>
-              {event.datetime.match(/\d{4}-[01]\d-[0-3]\d/)}
+              {item.name}
             </Text>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <View>
-                <Text>
-                  {item.name}
-                </Text>
-                <Text>
-                  at {event.name}
-                </Text>
-              </View>
-              <View>
-                <CheckBox
-                  center
-                  iconRight={true}
-                  title={`Qty: ${item.quantity}`}
-                  checked={item.completed}
-                />
-              </View>
-            </View>
+            <Text>
+              at {event.name}
+            </Text>
           </View>
+          <View>
+            <CheckBox
+              center
+              iconRight={true}
+              title={`Qty: ${item.quantity}`}
+              checked={item.completed}
+            />
+          </View>
+        </View>
+      </View>
     )
   }
 
@@ -164,12 +171,16 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
     this.props.navigator.setTitle({ title: this.props.user.name })
     return (
       <ScrollView>
-        <View style={{ flex: 1, alignItems: 'center', padding: 20, paddingHorizontal: 40, flexDirection: 'row'}}>
+        <View style={{ flex: 1, alignItems: 'center', padding: 20, paddingHorizontal: 40, flexDirection: 'row' }}>
           <View style={{ flexGrow: 1 }}>
             <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
               <View style={[styles.avatar, styles.avatarContainer]}>
-                {this.state.avatarSource === null ? <Text>Select a Photo</Text> :
-                  <Image style={styles.avatar} source={this.state.avatarSource} />
+                {
+                  !this.props.user.photo ? <Text>Select a Photo</Text> :
+                  <Image style={styles.avatar} source={
+                    this.state.avatarSource && this.state.avatarSource !== '' ? 
+                    this.state.avatarSource : {uri: this.props.user.photo}
+                }/> 
                 }
               </View>
             </TouchableOpacity>
@@ -207,7 +218,8 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
 
 const mapStateToProps = (state) => {
   return {
-      user: state.getUser.user
+    user: state.getUser.user,
+    token: state.authReducer.token,
   }
 }
 
