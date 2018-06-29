@@ -300,10 +300,12 @@ export default class EventService {
         "users.id           as attendees_id",
         "users.name         as attendees_name",
         "users.photo        as attendees_photo",
+        // "events_users.paid_deposit as attendees_pay_dep", 
 
         "discussion.id      as discussion_id",
         "discussionusers.name as discussion_name",
-        "discussion.comment  as discussion_comment"
+        "discussion.comment  as discussion_comment",
+        // "discussion.timestamps as discussion_timestamp"
 
       )
       .leftJoin("todo", "todo.events_id", "events.id")

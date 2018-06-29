@@ -55,6 +55,7 @@ exports.up = (knex: Knex) => {
             eventsUsers.integer("events_id").unsigned();
             eventsUsers.foreign("events_id").references("events.id");
             eventsUsers.boolean("creator");
+            eventsUsers.boolean("paid_deposit");
             eventsUsers.boolean("isactive");
         })
     }).then(() => {
