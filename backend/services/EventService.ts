@@ -52,7 +52,7 @@ export default class EventService {
       {
         mapId: 'parentMap',
         properties: ['name'],
-        collections: [ {name: 'event', mapId: 'eventMap', columnPrefix: 'event_'} ]
+        collections: [ {name: 'events', mapId: 'eventsMap', columnPrefix: 'event_'} ]
       },
       {
         mapId: 'eventMap',
