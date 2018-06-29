@@ -18,6 +18,8 @@ import { Ievent } from '../models/events';
 import { Iuser } from '../models/users'
 import { connect } from 'react-redux';
 import { get_viewevent } from '../actions/auth'
+import { IviewEventsState } from '../reducers/getViewEvent';
+import axios from 'axios';
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -29,13 +31,20 @@ const windowHeight = Dimensions.get('window').height;
 // }
 
 interface IViewEventProps {
-  event: Ievent,
-  user: Iuser,
-  item: Ievent
+  events: any;
+  user: Iuser;
+  item: Ievent;
+  token: any;
+  eventId: number;
+}
+
+interface IViewEventsState {
+    event: any
 }
 
 
-class ViewEvent extends React.Component<IViewEventProps, {}> {
+class ViewEvent extends React.Component<IViewEventProps, IViewEventsState> {
+
 
     static renderNavbarButton() {
         const navbarButton = [[{
@@ -55,6 +64,18 @@ class ViewEvent extends React.Component<IViewEventProps, {}> {
         rightButtons: ViewEvent.renderNavbarButton()
     }
 
+    // componentWillMount() {
+    //     const AuthStr = 'Bearer '.concat(this.props.token);
+
+    //     console.log("View Event AuthStr", AuthStr, this.props.eventId)
+    //     axios.get(`https://hivent.xyz/api/events/${this.props.eventId}`, { headers: { Authorization: AuthStr } }).then((event) => {
+    //         console.log("View Event event", event)
+    //         this.setState({event: event.data})
+    //     }).catch((err) => {
+    //         console.log(err)
+    //     })
+    // }
+
     constructor(props: IViewEventProps) {
         super(props);
     }
@@ -70,7 +91,6 @@ class ViewEvent extends React.Component<IViewEventProps, {}> {
         />;
     }
     render() {
-        console.log("this.props.event", this.props.item)
         return (
             <View style={{ flex: 1 }}>
                 <IndicatorViewPager
@@ -79,16 +99,16 @@ class ViewEvent extends React.Component<IViewEventProps, {}> {
                     pagerStyle={{ marginTop: 50 }}
                 >
                     <View style={{ backgroundColor: 'cadetblue' }}>
-                        <Info event={this.props.item} />
+                       <Info event={this.props.item}/> 
                     </View>
                     <View style={{ backgroundColor: 'cornflowerblue' }}>
-                        <ToDoList event={this.props.item} />
+                        <ToDoList event={this.props.item}/> 
                     </View>
                     <View style={{ backgroundColor: '#1AA094' }}>
-                        <Attendees event={this.props.item}/>
-                    </View>
+                        <Attendees event={this.props.item}/> 
+                    </View> 
                     <View style={{ backgroundColor: 'yellow' }}>
-                        { this.props.item ? <Discussion event={this.props.item}/> : null}
+                        <Discussion event={this.props.item}/> 
                     </View>
                 </IndicatorViewPager>
             </View>
@@ -97,20 +117,16 @@ class ViewEvent extends React.Component<IViewEventProps, {}> {
 }
 
 const mapStateToProps = (state) => {
+    console.log("view event events", state.getViewEvent.events)
     return {
-      events: state.getView.events,
+      events: state.getViewEvent.events,
       user: state.getViewEvent.user,
-    }
-  }
-  
-  const mapDispatchToProps = (dispatch) => {
-    return {
-      get_viewevent: (token, id) => dispatch(get_viewevent(token, id))
+      token: state.authReducer.token
     }
   }
   
   
-  export default connect(mapStateToProps, mapDispatchToProps)(ViewEvent);
+  export default connect(mapStateToProps)(ViewEvent);
 
 
 const styles = StyleSheet.create({
