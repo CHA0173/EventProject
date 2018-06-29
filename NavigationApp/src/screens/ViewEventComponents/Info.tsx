@@ -26,7 +26,7 @@ export default class Info extends React.Component<IInfoProps, {}> {
         super(props)
     }
 
-    private = this.props.event.private_event ? 'Private' : 'Public'
+    private = true ? 'Private' : 'Public'
 
     basicInfoList = [
         {

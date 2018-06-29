@@ -108,13 +108,13 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
     let event = this.props.user.events.find(e => e.id == eventId);
     return (
       event &&
-      <View style={{ borderWidth: 0, padding: 10, margin: 10, borderRadius: 5, backgroundColor: '#fffef9' }}>
+      <View style={{ borderWidth: 0, padding: 10, margin: 10, borderRadius: 5, backgroundColor: '#ffffff' }}>
         <Text>
           {event.datetime.match(/\d{4}-[01]\d-[0-3]\d/)}
         </Text>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <View>
-            <Text>
+            <Text style={{fontSize: 18, color: 'black'}}>
               {item.name}
             </Text>
             <Text>
@@ -149,7 +149,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
     let now = Date.now()
     if (eventdate > now) {
       return (
-        <View style={{ borderWidth: 0, padding: 10, margin: 10, borderRadius: 5, backgroundColor: '#fffef9' }}>
+        <View style={{ borderWidth: 0, padding: 10, margin: 10, borderRadius: 5, backgroundColor: '#ffffff' }}>
           <Text>
             {item.name}
           </Text>

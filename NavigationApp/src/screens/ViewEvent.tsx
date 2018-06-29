@@ -21,7 +21,7 @@ const windowHeight = Dimensions.get('window').height;
 
 
 interface IViewEventProps {
-    item: Ievent
+    event: Ievent
 }
 
 
@@ -68,13 +68,13 @@ export default class ViewEvent extends React.Component<IViewEventProps, {}> {
                     pagerStyle={{ marginTop: 50 }}
                 >
                     <View style={{ backgroundColor: 'cadetblue' }}>
-                        <Info event={this.props.item} />
+                        <Info event={this.props.event} />
                     </View>
                     <View style={{ backgroundColor: 'cornflowerblue' }}>
                         <Text>
                             Click # to take responsibility for the item 
                         </Text>
-                        <ToDoList event={this.props.item} />
+                        <ToDoList event={this.props.event} />
                     </View>
                     <View style={{ backgroundColor: '#1AA094' }}>
                         <Attendees />
