@@ -359,8 +359,53 @@ export default class EventService {
   //Completed
   getAll() {
     return this.knex("events")
-      .select("events.id as events_id", "events.name", "events.photo", "events.datetime")
-      .where("events.isactive", true);
+    .select(
+      "events.id          as event_id",
+      "events.name        as event_name",
+      "events.description as event_description",
+      "events.datetime    as event_datetime",
+      "events.photo       as event_photo",
+      "events.address     as event_address",
+      "events.private_event    as event_private_event",
+      "events.deposit     as event_deposit",
+
+      "events_users.creator as attendees_creator",
+
+      "todo.id            as todo_id",
+
+      "items.id           as items_id",
+      "items.name         as items_name",
+      "items.quantity     as items_quantity",
+      "items.users_id      as items_user_id",
+      "itemusers.name     as items_user_name",
+      "items.completed    as items_completed",
+
+      "users.id           as attendees_id",
+      "users.name         as attendees_name",
+      "users.photo        as attendees_photo",
+
+      "discussion.id      as discussion_id",
+      "discussionusers.name as discussion_name",
+      "discussion.comment  as discussion_comment"
+
+    )
+    .leftJoin("todo", "todo.events_id", "events.id")
+    .leftJoin("items", "items.todo_id", "todo.id")
+    .leftJoin("events_users", "events_users.events_id", "events.id")
+    .leftJoin("discussion", "discussion.events_id", "events.id")
+    .leftJoin("users as discussionusers", "discussion.users_id", "discussionusers.id")
+    .leftJoin("users as itemusers", "items.users_id", "itemusers.id")
+    .leftJoin("users", "events_users.users_id", "users.id")
+    // .where("events.id", eid)
+    // .whereIn('events.id',this.knex.select('events_id').from('events_users'))
+    // .andWhere("events_users.creator",true)
+    // .andWhere("events.isactive", true)
+    // .andWhere("items.isactive", true)
+    // .andWhere("discussion.isactive", true)
+    .then(result => {
+      // console.log(joinjs.mapOne(result, this.resultMaps, 'eventMap', 'event_'))
+      return (result && result.length > 0) ? joinjs.mapOne(result, this.resultMaps, 'eventMap', 'event_') : {};
+    })
   }
 
   addComment(user:any, body: any) {
