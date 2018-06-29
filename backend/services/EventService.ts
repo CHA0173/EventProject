@@ -139,15 +139,16 @@ export default class EventService {
     console.log("data", data)
     return this.knex.transaction(async (trx) => {
       try {
+        console.log("")
         const eventid = await trx("events")
           .insert({
-            name: data.event_name,
-            description: data.description,
-            datetime: data.datetime,
-            photo: data.photo,//can insert base64 of photo here directly, no need to use multer/file buffer
+            name: data.event_name ,
+            description: data.description || null,
+            datetime: data.datetime ,
+            photo: data.photo || null,//can insert base64 of photo here directly, no need to use multer/file buffer
             address: data.address,
-            privateG: false,
-            deposit: data.deposit,
+            private_event: false,
+            deposit: data.deposit || null,
             isactive: true
           }).returning("id");
 
