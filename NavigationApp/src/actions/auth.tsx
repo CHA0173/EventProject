@@ -34,7 +34,7 @@ export const get_event_start = () => {
 export const auth_get_event_success = (data) => {
   return {
     type: actionTypes.GET_EVENT_SUCCESS,
-    events: data.data
+    events: data.events
   }
 }
 
@@ -49,9 +49,9 @@ export const get_event = (token) => {
   return (dispatch: any) => {
     const AuthStr = 'Bearer '.concat(token);
     dispatch(get_event_start())
-    axios.get('https://hivent.xyz/api/events', { headers: { Authorization: AuthStr } }).then((event) => {
-      console.log(event)
-      dispatch(auth_get_event_success(event))
+    axios.get('https://hivent.xyz/api/events', { headers: { Authorization: AuthStr } }).then((event: any) => {
+      console.log('auth get event.events',event)
+      dispatch(auth_get_event_success(event.data))
     }).catch((err) => {
       console.log(err)
       dispatch(auth_get_event_fail(err))
@@ -84,9 +84,9 @@ export const auth_get_viewevent_fail = (err) => {
 export const get_viewevent = (token, id) => {
   return (dispatch: any) => {
     const AuthStr = 'Bearer '.concat(token);
-    dispatch(get_viewevent_start())
-    axios.get(`https://hivent.xyz/api/events/${id}`, { headers: { Authorization: AuthStr } }).then((event) => {
-      console.log(event)
+    // dispatch(get_viewevent_start())
+    axios.get(`https://hivent.xyz/api/events/${id}`, { headers: { Authorization: AuthStr } }).then((event: any) => {
+      console.log("get view events" , event)
       dispatch(auth_get_viewevent_success(event))
     }).catch((err) => {
       console.log(err)

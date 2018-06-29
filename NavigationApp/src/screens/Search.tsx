@@ -23,11 +23,14 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux'
 import { fetchingEvents } from '../actions'
 import { Ievent } from '../models/events' 
+import { get_viewevent } from '../actions/auth';
 
 interface ISearchProps {
   navigator: Navigator,
   fetchEvents: () => string[],
+  get_viewevent: (token, id) => void,
 
+  token: any,
   events: Ievent[],
   text: string,
 };
@@ -65,6 +68,7 @@ class Search extends React.Component<ISearchProps, ISearchState> {
   }
 
   public filter(text) {//insert axios get to backend
+    console.log("serach this.props.events", this.props)
     const newData = this.props.events.slice().filter(function (item) { //FIXME: 
       const itemData = item.name.toUpperCase()
       const textData = text.toUpperCase()
@@ -86,6 +90,7 @@ class Search extends React.Component<ISearchProps, ISearchState> {
   };
 
   public renderItem(item) {
+    console.log("search item", item, this.props.events)
     return (
       <TouchableWithoutFeedback onPress={() => {
         this.props.navigator.push({
@@ -93,7 +98,8 @@ class Search extends React.Component<ISearchProps, ISearchState> {
           title: item.name,
           navigatorStyle: {tabBarHidden: true} ,
           passProps: {
-            selectedItem: item.item
+            item: this.props.events.find(e => e.id === item.id),
+            eventId: item.events_id
           }
         })
       }}>
@@ -106,9 +112,7 @@ class Search extends React.Component<ISearchProps, ISearchState> {
     )
   }
 
-  // componentDidMount() {
-  //   this.props.fetchEvents();
-  // }
+
 
   render() {
     return (
@@ -126,7 +130,7 @@ class Search extends React.Component<ISearchProps, ISearchState> {
             style={styles.input}
             placeholder='Search'
             keyboardAppearance='dark'
-            autoFocus={false}
+
           />
           {this.state.text ?
             <TouchableWithoutFeedback onPress={() => this.deleteData()}>
@@ -216,10 +220,15 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    events: state.getEvent.events
+    events: state.getEvent.events,
+    token: state.authReducer.token,
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    get_viewevent: (token, id) => dispatch(get_viewevent(token, id))
+  }
+}
 
-
-export default connect(mapStateToProps)(Search)
+export default connect(mapStateToProps, mapDispatchToProps)(Search)
