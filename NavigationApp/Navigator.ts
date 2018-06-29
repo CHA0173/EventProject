@@ -35,42 +35,42 @@ Navigation.registerComponent('CreateEventScreen', () => CreateEvent, store, Prov
 
 
 //TEMP USE, easier access to main screen for testing
-  Navigation.startTabBasedApp({
-  tabs: [
-    {
-      label: 'Search',
-      screen: 'SearchTabScreen', // this is a registered name for a screen
-      icon: require('./src/img/search.png'),
-      selectedIcon: require('./src/img/search.png'), // iOS only
-      title: 'SearchBar',
-      navigatorStyle: { navBarTitleTextCentered: true, navBarHidden: true}
-    },
-    {
-      label: 'Events',
-      screen: 'EventsTabScreen',
-      icon: require('./src/img/Calendar1.png'),
-      selectedIcon: require('./src/img/Calendar1.png'), // iOS only
-      title: 'Events',
-      navigatorStyle: { navBarTitleTextCentered: true }
-    },
-    {
-      label: 'Notification',
-      screen: 'NotificationTabScreen',
-      icon: require('./src/img/notification3.png'),
-      selectedIcon: require('./src/img/notification3.png'), // iOS only
-      title: 'Notification',
-      navigatorStyle: { navBarTitleTextCentered: true }
-    },
-    {
-      label: 'Profile',
-      screen: 'ProfileTabScreen',
-      icon: require('./src/img/profile.png'),
-      selectedIcon: require('./src/img/profile.png'), // iOS only
-      title: 'Profile',
-      navigatorStyle: { navBarTitleTextCentered: true }
-    }
-  ]
-})
+//   Navigation.startTabBasedApp({
+//   tabs: [
+//     {
+//       label: 'Search',
+//       screen: 'SearchTabScreen', // this is a registered name for a screen
+//       icon: require('./src/img/search.png'),
+//       selectedIcon: require('./src/img/search.png'), // iOS only
+//       title: 'SearchBar',
+//       navigatorStyle: { navBarTitleTextCentered: true, navBarHidden: true}
+//     },
+//     {
+//       label: 'Events',
+//       screen: 'EventsTabScreen',
+//       icon: require('./src/img/Calendar1.png'),
+//       selectedIcon: require('./src/img/Calendar1.png'), // iOS only
+//       title: 'Events',
+//       navigatorStyle: { navBarTitleTextCentered: true }
+//     },
+//     {
+//       label: 'Notification',
+//       screen: 'NotificationTabScreen',
+//       icon: require('./src/img/notification3.png'),
+//       selectedIcon: require('./src/img/notification3.png'), // iOS only
+//       title: 'Notification',
+//       navigatorStyle: { navBarTitleTextCentered: true }
+//     },
+//     {
+//       label: 'Profile',
+//       screen: 'ProfileTabScreen',
+//       icon: require('./src/img/profile.png'),
+//       selectedIcon: require('./src/img/profile.png'), // iOS only
+//       title: 'Profile',
+//       navigatorStyle: { navBarTitleTextCentered: true }
+//     }
+//   ]
+// })
 
 // // vvvvv Landing page vvvvv
 Navigation.startSingleScreenApp({

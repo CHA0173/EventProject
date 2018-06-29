@@ -49,20 +49,20 @@ class Start extends React.Component<IStartProps, IStartState> {
       Navigation.startTabBasedApp({
         tabs: [
           {
-            label: 'Search',
-            screen: 'SearchTabScreen', // this is a registered name for a screen
-            icon: require('../img/search.png'),
-            selectedIcon: require('../img/search.png'), // iOS only
-            title: 'SearchBar',
-            navigatorStyle: { navBarTitleTextCentered: true, navBarHidden: true}
-          },
-          {
             label: 'Events',
             screen: 'EventsTabScreen',
             icon: require('../img/Calendar1.png'),
             selectedIcon: require('../img/Calendar1.png'), // iOS only
             title: 'Events',
             navigatorStyle: { navBarTitleTextCentered: true }
+          },
+          {
+            label: 'Search',
+            screen: 'SearchTabScreen', // this is a registered name for a screen
+            icon: require('../img/search.png'),
+            selectedIcon: require('../img/search.png'), // iOS only
+            title: 'SearchBar',
+            navigatorStyle: { navBarTitleTextCentered: true, navBarHidden: true}
           },
           {
             label: 'Notification',

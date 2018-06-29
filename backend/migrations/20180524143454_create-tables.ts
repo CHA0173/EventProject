@@ -8,7 +8,7 @@ exports.up = (knex: Knex) => {
         users.string("email").unique();
         users.string("name").unique();
         users.string("password");
-        users.string("photo");
+        users.text("photo","longtext");
         users.boolean("isactive");
     }).then(() => {
 
@@ -16,11 +16,11 @@ exports.up = (knex: Knex) => {
             events.increments();
             events.string("name");
             events.string("description");
-            events.string("photo");
+            events.text("photo");
             events.timestamp("datetime");
             events.string("address");
             events.specificType("location", "POINT");
-            events.boolean("private");
+            events.boolean("private_event");
             events.decimal("deposit");
             events.boolean("isactive");
         })

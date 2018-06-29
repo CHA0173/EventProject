@@ -18,19 +18,19 @@ import {
 
 //deeplink trying
 import { Navigator } from 'react-native-navigation';
-import { StackNavigator }               from 'react-navigation';
+// import { StackNavigator } from 'react-navigation';
 import Events from './src/screens/Events';
 import Search from './src/screens/Search';
 import Profile from './src/screens/Profile';
-const NavigationApp = StackNavigator({
-  Events: { screen: Events ,
-            path: 'events'} ,
-  Search: { screen: Search },         
-  Profile :{ screen: Profile ,
-            path: 'profile'}
-});
+// const NavigationApp = StackNavigator({
+//   Events: { screen: Events ,
+//             path: 'events'} ,
+//   Search: { screen: Search },         
+//   Profile :{ screen: Profile ,
+//             path: 'profile'}
+// });
 const prefix = Platform.OS== 'android' ? 'WEvent://WEvent/' : 'WEvent://';
-const MainApp = () => <NavigationApp uriPrefix={prefix} />;
+// const MainApp = () => <NavigationApp uriPrefix={prefix} />;
 
 //^^deep link trying
 
@@ -45,6 +45,7 @@ type Props = {
   navigator: Navigator;
 };
 
+console.disableYellowBox = true;
 export default class App extends React.Component<Props> {
   render() {
     return (

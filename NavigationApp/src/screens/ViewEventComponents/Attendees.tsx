@@ -9,40 +9,20 @@ import {
 } from 'react-native'
 import { Card, ListItem } from 'react-native-elements'
 
-const AttendeesList = [
-    {
-        "id": 1,
-        "name": "Alex",
-        "photo": null,
-        "creator": true
-    },
-    {
-        "id": 3,
-        "name": "Jacob",
-        "photo": null,
-        "creator": false
-    },
-    {
-        "id": 2,
-        "name": "Brad",
-        "photo": null,
-        "creator": false
-    },
-    {
-        "id": 5,
-        "name": "Stephen",
-        "photo": null,
-        "creator": false
-    }
-]
+import { Ievent } from '../../models/events';
+import { Iuser } from '../../models/users';
 
-export default class Attendees extends React.Component<{}, {}> {
+interface IAttendeesProps {
+    event: Ievent,
+  }
+
+export default class Attendees extends React.Component<IAttendeesProps, {}> {
     render() {
         return (
             <View>
                 <Card containerStyle={{ padding: 0 }} >
                     {
-                        AttendeesList.map((u, i) => {
+                        this.props.event.attendees.map((u, i) => {
                             return (
                                 <ListItem
                                     key={i}
@@ -54,6 +34,28 @@ export default class Attendees extends React.Component<{}, {}> {
                             );
                         })
                     }
+                {/* <FlatList
+                //     data={this.props.event.attendees}
+                //     renderItem={(data) => {
+                //         return (
+                //             <ScrollView>
+                //                 <TouchableOpacity style={{ borderBottomWidth: 0.5, backgroundColor: 'white'}}>
+                //                     <View style={{ justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', margin: 10, marginHorizontal: 30 }}>
+
+                //                             <Image
+                //                                 style={{ borderRadius: 75, width: 70, height: 70, }}
+                //                                 source={{ uri: data.item.photo }}
+                //                             />
+
+                //                             <Text style={{ marginHorizontal: 20, padding: 10, fontSize: 20, textAlign: 'center' }}>
+                //                                 {data.item.name}
+                //                             </Text>
+                                       
+                //                     </View>
+                //                 </TouchableOpacity>
+                //             </ScrollView>
+                //         )
+                //     } */}
                 </Card>
             </View >
         )

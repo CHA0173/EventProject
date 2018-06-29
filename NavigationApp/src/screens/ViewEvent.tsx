@@ -14,18 +14,28 @@ import Info from './ViewEventComponents/Info'
 import ToDoList from './ViewEventComponents/ToDoList'
 import Attendees from './ViewEventComponents/Attendees'
 import Discussion from './ViewEventComponents/Discussion'
-import { Ievent } from '../models/events'
+import { Ievent } from '../models/events';
+import { Iuser } from '../models/users'
+import { connect } from 'react-redux';
+import { get_viewevent } from '../actions/auth'
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 
+// interface IViewEventProps {
+//     item: Ievent
+// }
+
 interface IViewEventProps {
-    event: Ievent
+  event: Ievent,
+  user: Iuser,
+  item: Ievent
 }
 
 
-export default class ViewEvent extends React.Component<IViewEventProps, {}> {
+class ViewEvent extends React.Component<IViewEventProps, {}> {
 
     static renderNavbarButton() {
         const navbarButton = [[{
@@ -60,6 +70,7 @@ export default class ViewEvent extends React.Component<IViewEventProps, {}> {
         />;
     }
     render() {
+        console.log("this.props.event", this.props.item)
         return (
             <View style={{ flex: 1 }}>
                 <IndicatorViewPager
@@ -77,16 +88,33 @@ export default class ViewEvent extends React.Component<IViewEventProps, {}> {
                         <ToDoList event={this.props.event} />
                     </View>
                     <View style={{ backgroundColor: '#1AA094' }}>
-                        <Attendees />
+                        <Attendees event={this.props.item}/>
                     </View>
                     <View style={{ backgroundColor: 'yellow' }}>
-                        <Discussion />
+                        { this.props.item ? <Discussion event={this.props.item}/> : null}
                     </View>
                 </IndicatorViewPager>
             </View>
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+      events: state.getView.events,
+      user: state.getViewEvent.user,
+    }
+  }
+  
+  const mapDispatchToProps = (dispatch) => {
+    return {
+      get_viewevent: (token, id) => dispatch(get_viewevent(token, id))
+    }
+  }
+  
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(ViewEvent);
+
 
 const styles = StyleSheet.create({
     indicatorContainer: {

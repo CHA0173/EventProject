@@ -1,4 +1,6 @@
 import './Navigator'
+console.disableYellowBox = true;
+
 
 //ONE SIGNAL INITIALIZATION
 // import React, { Component } from 'react';
