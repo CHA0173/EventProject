@@ -55,7 +55,7 @@ export default class EventService {
         collections: [ {name: 'events', mapId: 'eventsMap', columnPrefix: 'event_'} ]
       },
       {
-        mapId: 'eventMap',
+        mapId: 'eventsMap',
         idProperty: 'id',
         properties: ['name', 'description', 'datetime', 'photo', 'address', 'private_event', 'deposit'],
         collections: [
