@@ -39,7 +39,7 @@ export default class ApiRouter {
 
         router.use("/auth", authRouter.getRouter());//returns with jwt token
         router.use("/signup", signupRouter.getRouter());
-        router.use("/users", this.jwtAuth.authenticate("local"), userRouter.getRouter());      //grabs user's profile
+        router.use("/users", this.jwtAuth.authenticate(), userRouter.getRouter());      //grabs user's profile
         router.use("/events", this.jwtAuth.authenticate(), eventRouter.getRouter());         //grabs user's events
         return router;
 

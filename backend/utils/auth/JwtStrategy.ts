@@ -10,7 +10,7 @@ export default (userService: UserService) => {
         jwtFromRequest  : PassportJWT.ExtractJwt.fromAuthHeaderAsBearerToken()
     }, async (payload, done) => { 
         const user = await userService.getById(payload.id);
-        console.log("JWT User: ", user)
+        // console.log("JWT User: ", user)
         return (user) ? done(null, {id: user[0].id}) : done(new Error("User not found"), null);
     });
 
