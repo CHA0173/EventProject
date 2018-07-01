@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
 import DatePicker from 'react-native-datepicker';
-import { addEvent, remoteAddEvent } from '../actions/CreateEvent';
+import { addEvent, remoteAddEvent } from '../actions/Event';
 
 import StepIndicator from 'react-native-step-indicator';
 
