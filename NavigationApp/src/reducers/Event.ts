@@ -63,8 +63,8 @@ const EventReducer = (state: IeventState = initialState, action) => {
       console.log(newStateEvents[eventIndex])
       console.log([action.token, action.eventId, action.toDoItemId, action.userId ,action.userName])
 
-      newStateEvents[eventIndex].todo[0].items[action.toDoItemId].user_id = action.userId,
-      newStateEvents[eventIndex].todo[0].items[action.toDoItemId].user_name = action.userName
+      newStateEvents[eventIndex].todo[0].items.find(item => item.id == action.toDoItemId).user_id = action.userId,
+      newStateEvents[eventIndex].todo[0].items.find(item => item.id == action.toDoItemId).user_name = action.userName
 
       return { ...state, events: newStateEvents }
 
