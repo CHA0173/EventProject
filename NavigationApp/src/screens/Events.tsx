@@ -58,6 +58,7 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
 
   render() {
     const buttons = ['Upcoming', 'Created']
+    const filterEventCardOption = [true||false, true]
     console.log('this.props.user.events', this.props)
     return (
       <View style={{ flex: 1 }}>
@@ -69,11 +70,10 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
         />
         <ScrollView style={{ flex: 1 }}>
           <FlatList
-            data={this.props.user.events}
+            data={!this.state.selectedIndex? this.props.user.events : this.props.user.events.filter(event=> event.creator == true)}
             renderItem={(event) => {
               return (
                 <View>
-
                   <TouchableOpacity onPress={() => {
                     const AuthStr = 'Bearer '.concat(this.props.token);
                     axios.get(`https://hivent.xyz/api/events/${event.item.id}`, { headers: { Authorization: AuthStr } }).then((data) => {
@@ -82,6 +82,7 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
                         screen: 'ViewEventScreen',
                         title: event.item.name,
                         navigatorStyle: { tabBarHidden: true },
+                        
                         passProps: { item: data.data }
                       })
                     })

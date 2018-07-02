@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
 import * as events from '../models/events'
+import * as actionType from '../actions/types'
 import { get_view, get_event, get_user } from './auth';
 
 export interface Ievent {
@@ -118,6 +119,7 @@ export function deleteEvent(id: number): IDeleteEventAction {
   }
 }
 
+// ====== add event
 export function remoteAddEvent(
   token: any,
   name: string,
@@ -139,12 +141,12 @@ export function remoteAddEvent(
       description: description,
       datetime: datetime,
       photo: photo,
-      address:address,
-      private_event:private_event,
-      deposit:deposit,
+      address: address,
+      private_event: private_event,
+      deposit: deposit,
       items: todo,
       attendees: attendees,
-      discussion:discussion,
+      discussion: discussion,
     }, { headers: { Authorization: AuthStr } }).then(res => {
       dispatch(
         addEvent(
@@ -160,12 +162,89 @@ export function remoteAddEvent(
           attendees,
           discussion));
 
-          dispatch(get_view(token))
-          dispatch(get_user(token))
-          dispatch(get_event(token))
+      dispatch(get_view(token))
+      dispatch(get_user(token))
+      dispatch(get_event(token))
     }).catch((err) => {
       console.log("add event error", err)
     }
     )
   }
 }
+
+
+// ===== edit event
+
+export function remoteEditEvent(
+  token: any,
+  id: number,
+  name: string,
+  description: string,
+  datetime: string,
+  photo: any,
+  address: string,
+  private_event: boolean,
+  deposit: string,
+  todo: events.Itodo[],
+  attendees: events.Iattendees[],
+  discussion: events.Idiscussion[],
+) {
+  return (dispatch: Dispatch<any>) => {
+
+    const AuthStr = 'Bearer '.concat(token);
+    axios.put(`https://hivent.xyz/api/events/${id}`, {
+      token,
+      name,
+      description,
+      datetime,
+      photo,
+      address,
+      private_event,
+      deposit,
+      todo,
+      attendees,
+      discussion,
+    }, { headers: { Authorization: AuthStr } }).then(res => {
+      dispatch(
+        editEvent(
+          res.data.id,
+          name,
+          description,
+          datetime,
+          photo,
+          address,
+          private_event,
+          deposit,
+          todo,
+          attendees,
+          discussion,
+        ))
+      dispatch(get_view(token))
+      dispatch(get_user(token))
+      dispatch(get_event(token))
+    }).catch(err => {
+      console.log('edit event', err)
+    })
+  }
+}
+
+export const assign_item = (token, eventId, toDoItemId, userName) => {
+  return {
+    type: actionType.ASSIGN_TODOITEM,
+    token: token,
+    eventId: eventId,
+    toDoItemId: toDoItemId,
+    userName: userName,
+  }
+}
+
+export const assign_todoitem = (token, eventId, toDoItemId, userName) => {
+  return (dispatch: Dispatch) => {
+    dispatch(assign_item(token, eventId, toDoItemId, userName))
+
+    const AuthStr = 'Bearer '.concat(token);
+    axios.put(`https://hivent.xyz/api/events/${eventId}`,{ headers: { Authorization: AuthStr } })
+    
+  }
+}
+

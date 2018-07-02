@@ -23,6 +23,12 @@ export const auth_fail = (err) => {
   }
 }
 
+export const clear_token = () => {
+  return {
+    type: actionTypes.CLEAR_TOKEN
+  }
+}
+
 // ==============================  GET EVENT (search)
 export const get_event_start = () => {
   return {
