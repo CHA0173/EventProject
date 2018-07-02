@@ -71,6 +71,7 @@ class ViewEvent extends React.Component<IViewEventProps, IViewEventsState> {
         />;
     }
     render() {
+        console.log(this.props.item)
         return (
             <View style={{ flex: 1 }}>
                 <IndicatorViewPager

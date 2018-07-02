@@ -7,6 +7,7 @@ import { GET_EVENT_REDUCER } from './reducers/getEvent';
 import { userReducer } from "./reducers/getUser";
 import { viewReducer } from "./reducers/getView";
 import { getEventReducer } from "./reducers/getViewEvent";
+import { assignToDoItemReducer } from "./reducers/assignToDoItem";
 
 
 
@@ -17,5 +18,6 @@ export const store = createStore(combineReducers({
     getUser: userReducer,
     getView: viewReducer,
     getViewEvent: getEventReducer,
+    // assignToDoItemReducer: assignToDoItemReducer,
 }),
 applyMiddleware(thunk));
