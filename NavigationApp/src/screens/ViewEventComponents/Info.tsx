@@ -2,9 +2,9 @@ import * as React from 'react'
 import {
     View,
     Text,
-    Image,
     ScrollView,
-    Dimensions
+    Dimensions,
+    Button
 } from 'react-native'
 
 import {
@@ -13,16 +13,18 @@ import {
 } from 'react-native-elements'
 
 import { Ievent } from '../../models/events'
+import { Iuser } from '../../models/users';
 
 const { width } = Dimensions.get('window')
 
 interface IInfoProps {
     event: Ievent
+    user: Iuser
 }
 
 
 export default class Info extends React.Component<IInfoProps, {}> {
-    constructor(props: IInfoProps){
+    constructor(props: IInfoProps) {
         super(props)
     }
 
@@ -52,14 +54,23 @@ export default class Info extends React.Component<IInfoProps, {}> {
         }
     ]
 
+    renderActionButton() {
+        const userId = this.props.user.id
+        const creator = this.props.event.attendees.find(attendee => attendee.creator == true)
+        const userInEvent = this.props.event.attendees.some(attendee => attendee.id == userId)
+        if (userId == creator.id) {
+            return <Button title='Delete Event' onPress={() => { }} />
+        } else if (userInEvent) {
+            return <Button title='Quit' onPress={() => { }} />
+        } else if (!userInEvent) {
+            return <Button title='Join this event' onPress={() => { }} />
+        }
+    }
+
     render() {
         return (
             <View>
-                <Image
-                    style={{ width: width, height: 300 }}
-                    source={this.props.event.photo}
-                />
-                <List containerStyle={{borderWidth: 0, borderTopWidth: 0, margin: 20}}>
+                <List containerStyle={{ borderWidth: 0, borderTopWidth: 0, margin: 20 }}>
                     {
                         this.basicInfoList.map((item, i) => (
                             <ListItem
@@ -67,11 +78,12 @@ export default class Info extends React.Component<IInfoProps, {}> {
                                 title={item.title}
                                 leftIcon={{ name: item.icon, color: '#004263' }}
                                 hideChevron={true}
-                                containerStyle={{borderBottomWidth: 0, borderTopWidth: 0}}
+                                containerStyle={{ borderBottomWidth: 0, borderTopWidth: 0 }}
                             />
                         ))
                     }
                 </List>
+                {this.renderActionButton()}
             </View>
         )
     }

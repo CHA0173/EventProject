@@ -111,9 +111,13 @@ class ToDoList extends React.Component<IToDoListProps, {}> {
 const mapStateToProps = (state) => {
   return {
     // events: state.getView.events,
+<<<<<<< HEAD
     user: state.getUser.user,
     token: state.authReducer.token,
     allEvents: state.event.events
+=======
+    user: state.getViewEvent.user,
+>>>>>>> eb4a719f7bb589358678b6597e7f0c73bf0b8043
   }
 }
 

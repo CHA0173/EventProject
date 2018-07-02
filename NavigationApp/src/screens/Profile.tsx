@@ -20,7 +20,7 @@ import { Navigator } from 'react-native-navigation';
 import { Card, CheckBox } from 'react-native-elements';
 import { Iuser } from '../models/users'
 import axios from 'axios';
-
+import {clear_token} from '../actions/auth';
 import { connect } from 'react-redux';
 
 const ImagePicker = require('react-native-image-picker');
@@ -33,7 +33,7 @@ interface IUserProfile {
 interface IProfileProps {
   navigator: Navigator,
   userProfile: IUserProfile,
-
+  clearToken: () => void,
   addUser: (user: Iuser) => void,
   user: Iuser,
   token: any,
@@ -48,6 +48,26 @@ interface IProfileState {
 }
 
 class Profile extends React.Component<IProfileProps, IProfileState> {
+  static navigatorButtons = {
+    rightButtons: [
+      {
+        icon: require('../img/exit-512.png'),
+        id: 'logout'
+      }
+    ]
+  };
+  onNavigatorEvent(event) {
+    if (event.type == 'NavBarButtonPress') {
+      if (event.id == 'logout') {
+        this.props.clearToken()
+        this.props.navigator.resetTo({
+          screen: 'StartScreen',
+          navigatorStyle: { navBarHidden: true, tabBarHidden: true }
+      })
+      }
+    }
+  }
+
   constructor(props: IProfileProps) {
     super(props)
     this.state = {
@@ -62,7 +82,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
         items: [],
       }
     }
-
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
   public selectPhotoTapped = () => {
@@ -168,7 +188,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
   render() {
     const { eventAttended } = this.state;
     console.log("this.props.user", this.props);
-    this.props.navigator.setTitle({ title: this.props.user.name })
+    // this.props.navigator.setTitle({ title: this.props.user.name })
     return (
       <ScrollView>
         <View style={{ flex: 1, alignItems: 'center', padding: 20, paddingHorizontal: 40, flexDirection: 'row' }}>
@@ -223,7 +243,13 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(Profile)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    clearToken: () => dispatch(clear_token())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)
 
 
 const styles = StyleSheet.create({

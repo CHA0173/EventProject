@@ -108,6 +108,7 @@ class Start extends React.Component<IStartProps, IStartState> {
             <TextInput
               style={{ marginBottom: 20, height: 40, width: 300 }}
               placeholder="Password"
+              secureTextEntry
               onChangeText={(text) => this.setState({ password: text })}
             />
           </View>

@@ -31,11 +31,11 @@ const windowHeight = Dimensions.get('window').height;
 // }
 
 interface IViewEventProps {
-  events: any;
-  user: Iuser;
-  item: Ievent;
-  token: any;
-  eventId: number;
+    events: any;
+    user: Iuser;
+    item: Ievent;
+    token: any;
+    eventId: number;
 }
 
 interface IViewEventsState {
@@ -44,26 +44,6 @@ interface IViewEventsState {
 
 
 class ViewEvent extends React.Component<IViewEventProps, IViewEventsState> {
-
-
-    static renderNavbarButton() {
-        const navbarButton = [[{
-            icon: require('../img/edit.png'),
-            id: 'edit', // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
-            disabled: true, // optional, used to disable the button (appears faded and doesn't interact)
-          }],
-          [{
-            icon: require('../img/join.png'),
-            id: 'join', // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
-            disabled: true, // optional, used to disable the button (appears faded and doesn't interact)
-          }]]
-          return navbarButton[1]
-    }
-
-    static navigatorButtons = {
-        rightButtons: ViewEvent.renderNavbarButton()
-    }
-
     // componentWillMount() {
     //     const AuthStr = 'Bearer '.concat(this.props.token);
 
@@ -100,16 +80,17 @@ class ViewEvent extends React.Component<IViewEventProps, IViewEventsState> {
                     pagerStyle={{ marginTop: 50 }}
                 >
                     <View style={{ backgroundColor: '#bed0db' }}>
-                       <Info event={this.props.item}/> 
+                        <Info event={this.props.item}
+                                user={this.props.user} />
                     </View>
                     <View style={{ backgroundColor: '#bed0db' }}>
-                        <ToDoList event={this.props.item}/> 
+                        <ToDoList event={this.props.item} />
                     </View>
                     <View style={{ backgroundColor: '#bed0db' }}>
-                        <Attendees event={this.props.item}/> 
-                    </View> 
+                        <Attendees event={this.props.item} />
+                    </View>
                     <View style={{ backgroundColor: '#bed0db' }}>
-                        <Discussion event={this.props.item}/> 
+                        <Discussion event={this.props.item} />
                     </View>
                 </IndicatorViewPager>
             </View>
@@ -120,14 +101,14 @@ class ViewEvent extends React.Component<IViewEventProps, IViewEventsState> {
 const mapStateToProps = (state) => {
     console.log("view event events", state.getViewEvent.events)
     return {
-      events: state.getViewEvent.events,
-      user: state.getViewEvent.user,
-      token: state.authReducer.token
+        events: state.getViewEvent.events,
+        user: state.getUser.user,
+        token: state.authReducer.token
     }
-  }
-  
-  
-  export default connect(mapStateToProps)(ViewEvent);
+}
+
+
+export default connect(mapStateToProps)(ViewEvent);
 
 
 const styles = StyleSheet.create({
