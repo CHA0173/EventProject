@@ -1,4 +1,4 @@
-import { ADD_EVENT, EDIT_EVENT, DELETE_EVENT, IEventAction } from '../actions/CreateEvent';
+import { ADD_EVENT, EDIT_EVENT, DELETE_EVENT, IEventAction } from '../actions/Event';
 import { Ievent } from '../models/events';
 
 
@@ -7,7 +7,8 @@ export interface IeventState {
 }
 
 const initialState = {
-  events: []
+  events: [],
+  loading: false,
 }
 
 const EventReducer = (state: IeventState = initialState, action: IEventAction) => {
@@ -30,7 +31,7 @@ const EventReducer = (state: IeventState = initialState, action: IEventAction) =
           }
         ]
       );
-      return { ...state, events: events }
+      return { ...state, events: events ,loading: true}
     }
     case EDIT_EVENT: {
       const events = state.events.filter(event => event.id !== action.id);
@@ -47,7 +48,7 @@ const EventReducer = (state: IeventState = initialState, action: IEventAction) =
         attendees: action.attendees,
         discussion: action.discussion,
   });
-  return { ...state, events: events }
+       return { ...state, events: events, loding: false }
     }
     default:
       return state

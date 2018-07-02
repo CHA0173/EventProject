@@ -17,7 +17,8 @@ export default class UserService {
         properties: ["name", "photo"],
         collections: [
           { name: "events", mapId: "eventsMap", columnPrefix: "events_" },
-          { name: "items", mapId: "itemsMap", columnPrefix: "items_" }
+          { name: "items", mapId: "itemsMap", columnPrefix: "items_" },
+          { name: "notes", mapId: "notesMap", columnPrefix: "notes_" }
         ]
       },
       {
@@ -29,6 +30,11 @@ export default class UserService {
         mapId: "itemsMap",
         idProperty: "id",
         properties: ["name", "quantity", "completed", "itemEventId"]
+      },
+      {
+        mapId: "notesMap",
+        idProperty: "id",
+        properties: ["note", "timestamp", "events_id"]
       }
     ];
   }
@@ -55,8 +61,11 @@ export default class UserService {
           "items.name         as items_name",
           "items.quantity     as items_quantity",
           "items.completed    as items_completed",
-          "eItem.id           as items_itemEventId"
-        )
+          "eItem.id           as items_itemEventId",
+          "notifications.note as notes_note",
+          "notications.events_id as notes_event_id",
+          "notifications.created_at as notes_timestamp",
+        ) 
          .leftJoin("events_users", "events_users.users_id", "users.id")
         .leftJoin("events", function() {
           this.on("events.id", "events_users.events_id").andOn(
@@ -73,6 +82,9 @@ export default class UserService {
          .leftJoin("events as eItem", function() {
           this.on("todo.events_id", "eItem.id")
           .andOn("todo.isactive", self.knex.raw(true));
+        })
+        .leftJoin("notifications", function() {           //GET NOTIFICATIONS by UserID
+          this.on("notifications.users_id", "users.id")
         })
         .where("users.id", user.id)
         .then(result => {

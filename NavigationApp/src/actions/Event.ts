@@ -118,6 +118,7 @@ export function deleteEvent(id: number): IDeleteEventAction {
   }
 }
 
+// ====== add event
 export function remoteAddEvent(
   token: any,
   name: string,
@@ -139,12 +140,12 @@ export function remoteAddEvent(
       description: description,
       datetime: datetime,
       photo: photo,
-      address:address,
-      private_event:private_event,
-      deposit:deposit,
+      address: address,
+      private_event: private_event,
+      deposit: deposit,
       items: todo,
       attendees: attendees,
-      discussion:discussion,
+      discussion: discussion,
     }, { headers: { Authorization: AuthStr } }).then(res => {
       dispatch(
         addEvent(
@@ -160,12 +161,67 @@ export function remoteAddEvent(
           attendees,
           discussion));
 
-          dispatch(get_view(token))
-          dispatch(get_user(token))
-          dispatch(get_event(token))
+      dispatch(get_view(token))
+      dispatch(get_user(token))
+      dispatch(get_event(token))
     }).catch((err) => {
       console.log("add event error", err)
     }
     )
+  }
+}
+
+
+// ===== edit event
+
+export function remoteEditEvent(
+  token: any,
+  name: string,
+  description: string,
+  datetime: string,
+  photo: any,
+  address: string,
+  private_event: boolean,
+  deposit: string,
+  todo: events.Itodo[],
+  attendees: events.Iattendees[],
+  discussion: events.Idiscussion[],
+) {
+  return (dispatch: Dispatch<any>) => {
+
+    const AuthStr = 'Bearer '.concat(token);
+    axios.post(`https://hivent.xyz/api/events`, {
+      token,
+      name,
+      description,
+      datetime,
+      photo,
+      address,
+      private_event,
+      deposit,
+      todo,
+      attendees,
+      discussion,
+    }, { headers: { Authorization: AuthStr } }).then(res => {
+      dispatch(
+        editEvent(
+          res.data.id,
+          name,
+          description,
+          datetime,
+          photo,
+          address,
+          private_event,
+          deposit,
+          todo,
+          attendees,
+          discussion,
+        ))
+      dispatch(get_view(token))
+      dispatch(get_user(token))
+      dispatch(get_event(token))
+    }).catch(err => {
+      console.log('edit event', err)
+    })
   }
 }

@@ -115,7 +115,47 @@ export default class EventService {
       .andWhere("users_id", userid)
   }
 
+  eventName(eventid:number) {
+    return this.knex("events")
+      .select("name")
+      .first()
+      .where("id", eventid)
+      .returning("name")
+  }
 
+  inviter(userid:number) {
+    return this.knex("users")
+      .select("name")
+      .first()
+      .where("id", userid)
+      .returning("name")
+  }
+
+  async invite(userid: any, event_id:any, body:any) {
+    console.log("userid", userid, "event_id", event_id, "body", body)
+    return this.knex.transaction(async (trx) => {
+      
+      try {
+        const eventName = await this.eventName(event_id)
+        const inviter = await this.inviter(userid.id)
+        let inviteNote = `You've been invited to ${eventName.name} by ${inviter.name}!`
+        console.log("eventName", eventName, "inviter", inviter)
+        console.log(inviteNote) 
+        await trx("notifications")
+          .insert({
+            note: inviteNote,
+            events_id: event_id,
+            users_id: body.invite_id, //CREATE INVITATION,
+            isactive:true
+          })
+
+        return true
+      }catch(e) {
+        console.log(e)
+        return false
+      }
+    })
+  }
 
   //Completed
   async remove(user: any, eventid: number) {
@@ -205,7 +245,7 @@ export default class EventService {
               isactive: true
             }).returning("id");
 
-          const items = data.items.map((item: any) => {
+          const items = data.items.map((item:any) => {
             return {
               name: item.Name,
               quantity: item.Quantity,
@@ -306,15 +346,6 @@ export default class EventService {
     })
   }
 
-  //Completed
-  // getUpcomingByUserId(userid: number) {
-  //   return this.knex("events")
-  //     .select("events.id as events_id", "events.name as events_name", "events.datetime", "events.photo")
-  //     .join("events_users", "events_users.events_id", "events.id")
-  //     .join("users", "events_users.users_id", "users.id")
-  //     .where("users.id", userid)
-  //     .andWhere("events.isactive", true)
-  // }
 
   //Completed
   getById(eid: number) {
@@ -344,10 +375,12 @@ export default class EventService {
         "users.id           as attendees_id",
         "users.name         as attendees_name",
         "users.photo        as attendees_photo",
+        // "events_users.paid_deposit as attendees_pay_dep", 
 
         "discussion.id      as discussion_id",
         "discussionusers.name as discussion_name",
-        "discussion.comment  as discussion_comment"
+        "discussion.comment  as discussion_comment",
+        // "discussion.timestamps as discussion_timestamp"
 
       )
       .leftJoin("todo", "todo.events_id", "events.id")
@@ -369,25 +402,6 @@ export default class EventService {
       })
   }
 
-  // getEventCreator(){
-  //   return this.knex('events')
-  //   .select( 
-  //   "events.id          as event_id",
-  //   "events.name        as event_name",
-  //   "events.description as event_description",
-  //   "events.datetime    as event_datetime",
-  //   "events.photo       as event_photo",
-  //   "events.address     as event_address",
-  //   "events.private     as event_private",
-  //   "events.deposit     as event_deposit",
-  //   "events_users.creator"
-  //   )
-  //   .join("events_users","events.id","events_users.events_id")
-  //   .join("users","users.id","events_users.users_id")
-  //   .where("events.id","events_users.events_id")
-  //   // .andwhere("ev","")
-  //   .andWhere("events_users.creator",true);
-  // }
 
 
   //Completed

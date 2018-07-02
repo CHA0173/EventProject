@@ -11,7 +11,6 @@ exports.up = (knex: Knex) => {
         users.text("photo","longtext");
         users.boolean("isactive");
     }).then(() => {
-
         return knex.schema.createTable("events", (events) => {
             events.increments();
             events.string("name");
@@ -25,7 +24,6 @@ exports.up = (knex: Knex) => {
             events.boolean("isactive");
         })
     }).then(() => {
-
         return knex.schema.createTable("todo", (todo) => {
             todo.increments();
             todo.integer("events_id").unsigned();
@@ -34,7 +32,6 @@ exports.up = (knex: Knex) => {
             todo.boolean("isactive");
         })
     }).then(() => {
-
         return knex.schema.createTable("items", (items) => {
             items.increments();
             items.string("name");
@@ -45,7 +42,6 @@ exports.up = (knex: Knex) => {
             items.integer("todo_id").unsigned();
             items.foreign("todo_id").references("todo.id");
             items.boolean("isactive");
-
         })
     }).then(() => {
         return knex.schema.createTable("events_users", (eventsUsers) => {
@@ -55,6 +51,7 @@ exports.up = (knex: Knex) => {
             eventsUsers.integer("events_id").unsigned();
             eventsUsers.foreign("events_id").references("events.id");
             eventsUsers.boolean("creator");
+            eventsUsers.boolean("paid_deposit");
             eventsUsers.boolean("isactive");
         })
     }).then(() => {
@@ -68,12 +65,24 @@ exports.up = (knex: Knex) => {
             discussion.boolean("isactive");
             discussion.string("comment");
         })
+    }).then(() => {
+        return knex.schema.createTable("notifications", (notification) => {
+            notification.increments();
+            notification.integer("users_id").unsigned();
+            notification.foreign("users_id").references("users.id");
+            notification.integer("events_id").unsigned();
+            notification.foreign("events_id").references("events.id");
+            notification.timestamps(false, true);
+            notification.boolean("isactive");
+            notification.string("note");
+        })
     })
 }
 
 exports.down = (knex: Knex) => {
-    return knex.schema.dropTable("discussion")
-        .then(() =>knex.schema.dropTable("events_users"))
+    return knex.schema.dropTable("notifications")
+        .then(() => knex.schema.dropTable("discussion"))
+        .then(() => knex.schema.dropTable("events_users"))
         .then(() => knex.schema.dropTable("items"))
         .then(() => knex.schema.dropTable("todo"))
         .then(() => knex.schema.dropTable("events"))
