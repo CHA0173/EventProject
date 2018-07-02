@@ -82,6 +82,7 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
                         screen: 'ViewEventScreen',
                         title: event.item.name,
                         navigatorStyle: { tabBarHidden: true },
+                        
                         passProps: { item: data.data }
                       })
                     })

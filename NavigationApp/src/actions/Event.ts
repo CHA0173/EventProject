@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
 import * as events from '../models/events'
+import * as actionType from '../actions/types'
 import { get_view, get_event, get_user } from './auth';
 
 export interface Ievent {
@@ -176,6 +177,7 @@ export function remoteAddEvent(
 
 export function remoteEditEvent(
   token: any,
+  id: number,
   name: string,
   description: string,
   datetime: string,
@@ -190,7 +192,7 @@ export function remoteEditEvent(
   return (dispatch: Dispatch<any>) => {
 
     const AuthStr = 'Bearer '.concat(token);
-    axios.post(`https://hivent.xyz/api/events`, {
+    axios.put(`https://hivent.xyz/api/events/${id}`, {
       token,
       name,
       description,
@@ -225,3 +227,24 @@ export function remoteEditEvent(
     })
   }
 }
+
+export const assign_item = (token, eventId, toDoItemId, userName) => {
+  return {
+    type: actionType.ASSIGN_TODOITEM,
+    token: token,
+    eventId: eventId,
+    toDoItemId: toDoItemId,
+    userName: userName,
+  }
+}
+
+export const assign_todoitem = (token, eventId, toDoItemId, userName) => {
+  return (dispatch: Dispatch) => {
+    dispatch(assign_item(token, eventId, toDoItemId, userName))
+
+    const AuthStr = 'Bearer '.concat(token);
+    axios.put(`https://hivent.xyz/api/events/${eventId}`,{ headers: { Authorization: AuthStr } })
+    
+  }
+}
+

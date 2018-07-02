@@ -1,5 +1,5 @@
 import './Navigator'
-console.disableYellowBox = true;
+// console.disableYellowBox = true;
 
 
 //ONE SIGNAL INITIALIZATION
