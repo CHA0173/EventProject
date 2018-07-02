@@ -58,7 +58,7 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
 
   render() {
     const buttons = ['Upcoming', 'Created']
-    const filterEventCardOption = [true||false, true]
+    const filterEventCardOption = [true || false, true]
     console.log('this.props.user.events', this.props)
     return (
       <View style={{ flex: 1 }}>
@@ -66,11 +66,14 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
           onPress={this.updateIndex}
           selectedIndex={this.state.selectedIndex}
           buttons={buttons}
-          containerStyle={{ height: 30 }}
+          containerStyle={{ marginTop: 10, height: 30, backgroundColor: 'transparent'}}
+          textStyle={{ fontSize: 12 }}
+          buttonStyle={{ backgroundColor: 'transparent' }}
+          
         />
         <ScrollView style={{ flex: 1 }}>
           <FlatList
-            data={!this.state.selectedIndex? this.props.user.events : this.props.user.events.filter(event=> event.creator == true)}
+            data={!this.state.selectedIndex ? this.props.user.events : this.props.user.events.filter(event => event.creator == true)}
             renderItem={(event) => {
               return (
                 <View>
@@ -87,15 +90,20 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
                     })
                   }}>
                     <Card
+                      containerStyle={{
+                        borderRadius: 10, 
+                        margin: 20,
+                        elevation: 20
+                      }}
                       title={event.item.name}
-                      image={{uri:event.item.photo}}
+                      image={{ uri: event.item.photo }}
                     >
-                    <View style={{flexDirection: 'row'}}>
-                      <Icon name='date-range' color='#ac6264' containerStyle={{marginHorizontal: 20}}/>
-                      <Text style={{ fontSize: 20 }}>
-                        {event.item.datetime.match(/\d{4}-[01]\d-[0-3]\d/)}
-                      </Text>
-                    </View>
+                      <View style={{ flexDirection: 'row' }}>
+                        <Icon name='date-range' color='#ac6264' containerStyle={{ marginHorizontal: 20 }} />
+                        <Text style={{ fontSize: 20 }}>
+                          {event.item.datetime.match(/\d{4}-[01]\d-[0-3]\d/)}
+                        </Text>
+                      </View>
                     </Card>
                   </TouchableOpacity>
                 </View>
@@ -105,7 +113,7 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
           />
 
         </ScrollView>
-      </View>
+      </View >
     )
   }
 }
