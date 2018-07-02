@@ -13,7 +13,7 @@ import { Iuser } from '../../models/users'
 import { connect } from 'react-redux';
 import { get_viewevent } from '../../actions/auth';
 import axios from 'axios';
-import { remoteEditEvent } from '../../actions/Event';
+// import { remoteEditEvent } from '../../actions/Event';
 import { assign_todoitem } from '../../actions/Event';
 
 interface IToDoListProps {
@@ -23,7 +23,7 @@ interface IToDoListProps {
   data: any,
   // event:any,
   // remoteEditEvent: () => void,
-  assign_todoitem: (token,eventId, toDoItemId, userName) => void,
+  assign_todoitem: (token,eventId, toDoItemId, userId, userName) => void,
 }
 
 
@@ -34,11 +34,11 @@ class ToDoList extends React.Component<IToDoListProps, {}> {
 
   render() {
     console.log( this.props)
+    const lengthOfToDoList = this.props.event.todo[0].items.length
     return (
       <View>
         <List containerStyle={{ borderWidth: 1, borderTopWidth: 1, margin: 20 }}>
           {
-            
             this.props.event.todo[0].items.map((item, i) => (
               <ListItem
                 key={i}
@@ -68,7 +68,7 @@ class ToDoList extends React.Component<IToDoListProps, {}> {
                         { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
                         {
                           text: 'OK', onPress: () =>  {
-                            this.props.assign_todoitem(this.props.token, this.props.event.id, i, this.props.user.name)
+                            this.props.assign_todoitem(this.props.token, this.props.event.id, lengthOfToDoList - i - 1, this.props.user.id, this.props.user.name)
                             this.forceUpdate()
                           }
                           //   const username = this.props.user.name
@@ -111,47 +111,16 @@ class ToDoList extends React.Component<IToDoListProps, {}> {
 const mapStateToProps = (state) => {
   return {
     // events: state.getView.events,
-<<<<<<< HEAD
     user: state.getUser.user,
     token: state.authReducer.token,
     allEvents: state.event.events
-=======
-    user: state.getViewEvent.user,
->>>>>>> eb4a719f7bb589358678b6597e7f0c73bf0b8043
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     get_viewevent: (token, id) => dispatch(get_viewevent(token, id)),
-    // remoteEditEvent: (
-    //   token,
-    //   id,
-    //   name,
-    //   description,
-    //   datetime,
-    //   photo,
-    //   address,
-    //   private_event,
-    //   deposit,
-    //   todo,
-    //   attendees,
-    //   discussion,
-    // ) => dispatch(remoteEditEvent(
-    //   token,
-    //   id,
-    //   name,
-    //   description,
-    //   datetime,
-    //   photo,
-    //   address,
-    //   private_event,
-    //   deposit,
-    //   todo,
-    //   attendees,
-    //   discussion,
-    // )),
-    assign_todoitem: (token, eventId, toDoItemId, userName) => dispatch(assign_todoitem( token,eventId, toDoItemId, userName)) 
+    assign_todoitem: (token, eventId, toDoItemId, userId, userName) => dispatch(assign_todoitem( token,eventId, toDoItemId, userId,  userName)) 
   }
 }
 

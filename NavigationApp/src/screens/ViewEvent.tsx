@@ -85,6 +85,7 @@ class ViewEvent extends React.Component<IViewEventProps, IViewEventsState> {
                     </View>
                     <View style={{ backgroundColor: '#bed0db' }}>
                         <ToDoList event={this.props.item} />
+                        {console.log("viewevent",this.props)}
                     </View>
                     <View style={{ backgroundColor: '#bed0db' }}>
                         <Attendees event={this.props.item} />
@@ -99,9 +100,9 @@ class ViewEvent extends React.Component<IViewEventProps, IViewEventsState> {
 }
 
 const mapStateToProps = (state) => {
-    console.log("view event events", state.getViewEvent.events)
+    // console.log("view event events", state.getViewEvent.events)
     return {
-        events: state.getViewEvent.events,
+        // events: state.getViewEvent.events,
         user: state.getUser.user,
         token: state.authReducer.token
     }
