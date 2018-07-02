@@ -72,6 +72,7 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
           
         />
         <ScrollView style={{ flex: 1 }}>
+        {console.log(this.props)}
           <FlatList
             data={!this.state.selectedIndex ? this.props.user.events : this.props.user.events.filter(event => event.creator == true)}
             renderItem={(event) => {
