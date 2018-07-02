@@ -15,7 +15,7 @@ export default class EventService {
       {
         mapId: 'eventMap',
         idProperty: 'id',
-        properties: ['name', 'description', 'datetime', 'photo', 'address', 'private_event', 'deposit'],
+        properties: ['name', 'description', 'datetime', 'photo', 'address', 'private_event', 'deposit', 'creator'],
         collections: [
           // { name: 'events_users', mapId: 'events_usersMap', columnPrefix: 'events_users_' },
           { name: 'todo', mapId: 'todoMap', columnPrefix: 'todo_' },
