@@ -175,76 +175,102 @@ export function remoteAddEvent(
 
 // ===== edit event
 
-export function remoteEditEvent(
-  token: any,
-  id: number,
-  name: string,
-  description: string,
-  datetime: string,
-  photo: any,
-  address: string,
-  private_event: boolean,
-  deposit: string,
-  todo: events.Itodo[],
-  attendees: events.Iattendees[],
-  discussion: events.Idiscussion[],
-) {
-  return (dispatch: Dispatch<any>) => {
+// export function remoteEditEvent(
+//   token: any,
+//   id: number,
+//   name: string,
+//   description: string,
+//   datetime: string,
+//   photo: any,
+//   address: string,
+//   private_event: boolean,
+//   deposit: string,
+//   todo: events.Itodo[],
+//   attendees: events.Iattendees[],
+//   discussion: events.Idiscussion[],
+// ) {
+//   return (dispatch: Dispatch<any>) => {
 
-    const AuthStr = 'Bearer '.concat(token);
-    axios.put(`https://hivent.xyz/api/events/${id}`, {
-      token,
-      name,
-      description,
-      datetime,
-      photo,
-      address,
-      private_event,
-      deposit,
-      todo,
-      attendees,
-      discussion,
-    }, { headers: { Authorization: AuthStr } }).then(res => {
-      dispatch(
-        editEvent(
-          res.data.id,
-          name,
-          description,
-          datetime,
-          photo,
-          address,
-          private_event,
-          deposit,
-          todo,
-          attendees,
-          discussion,
-        ))
-      dispatch(get_view(token))
-      dispatch(get_user(token))
-      dispatch(get_event(token))
-    }).catch(err => {
-      console.log('edit event', err)
-    })
-  }
-}
+//     const AuthStr = 'Bearer '.concat(token);
+//     axios.put(`https://hivent.xyz/api/events/${id}`, {
+//       token,
+//       name,
+//       description,
+//       datetime,
+//       photo,
+//       address,
+//       private_event,
+//       deposit,
+//       todo,
+//       attendees,
+//       discussion,
+//     }, { headers: { Authorization: AuthStr } }).then(res => {
+//       dispatch(
+//         editEvent(
+//           res.data.id,
+//           name,
+//           description,
+//           datetime,
+//           photo,
+//           address,
+//           private_event,
+//           deposit,
+//           todo,
+//           attendees,
+//           discussion,
+//         ))
+//       dispatch(get_view(token))
+//       dispatch(get_user(token))
+//       dispatch(get_event(token))
+//     }).catch(err => {
+//       console.log('edit event', err)
+//     })
+//   }
+// }
 
-export const assign_item = (token, eventId, toDoItemId, userName) => {
+export const assign_item = (token, eventId, toDoItemId, userId, userName) => {
   return {
     type: actionType.ASSIGN_TODOITEM,
     token: token,
     eventId: eventId,
     toDoItemId: toDoItemId,
+    userId: userId,
     userName: userName,
   }
 }
 
-export const assign_todoitem = (token, eventId, toDoItemId, userName) => {
+export const assign_todoitem = (token, eventId, toDoItemId, userId, userName) => {
   return (dispatch: Dispatch) => {
-    dispatch(assign_item(token, eventId, toDoItemId, userName))
-
+    dispatch(assign_item(token, eventId, toDoItemId, userId, userName))
     const AuthStr = 'Bearer '.concat(token);
-    axios.put(`https://hivent.xyz/api/events/${eventId}`,{ headers: { Authorization: AuthStr } })
-    
+    axios.put(`https://hivent.xyz/api/events/${eventId}`, {
+      event: {
+        id: eventId,
+        private: false,
+      },
+      todo: [{
+        id: toDoItemId,
+        user_id: userId,
+      }]
+    }, { headers: { Authorization: AuthStr } })
+
   }
 }
+
+// export const assign_todoitem = (token, eventId, toDoItemId, userId, userName) => {
+//   return (dispatch: Dispatch) => {
+//     dispatch(assign_item(token, eventId, toDoItemId, userId, userName))
+//     const AuthStr = 'Bearer '.concat(token);
+//     axios.put(`https://hivent.xyz/api/events/1`, {
+//       event: {
+//         private: false,
+//       },
+//       todo: [{
+//         id: 1,
+//         user_id: 2,
+//       }]
+//     }, { headers: { Authorization: AuthStr } })
+
+//   }
+// }
 
