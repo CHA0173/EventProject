@@ -61,7 +61,7 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
     const filterEventCardOption = [true || false, true]
     console.log('this.props.user.events', this.props)
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: '#b5b7b4' }}>
         <ButtonGroup
           onPress={this.updateIndex}
           selectedIndex={this.state.selectedIndex}
