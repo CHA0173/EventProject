@@ -128,7 +128,7 @@ export const get_view = (token) => {
     const AuthStr = 'Bearer '.concat(token);
     // dispatch(get_view_start())
     axios.get(`https://hivent.xyz/api/users`, { headers: { Authorization: AuthStr } }).then((event) => {
-      console.log("users", event.data);
+      console.log("users", event);
       dispatch(auth_get_view_success(event))
     }).catch((err) => {
       console.log(err)
@@ -182,6 +182,7 @@ export const auth = (email, password) => {
       dispatch(auth_success(data))
     }).catch((err) => {
       dispatch(auth_fail(err))
+      console.log(err)
     })
   }
 }

@@ -256,21 +256,3 @@ export const assign_todoitem = (token, eventId, toDoItemId, userId, userName) =>
 
   }
 }
-
-// export const assign_todoitem = (token, eventId, toDoItemId, userId, userName) => {
-//   return (dispatch: Dispatch) => {
-//     dispatch(assign_item(token, eventId, toDoItemId, userId, userName))
-//     const AuthStr = 'Bearer '.concat(token);
-//     axios.put(`https://hivent.xyz/api/events/1`, {
-//       event: {
-//         private: false,
-//       },
-//       todo: [{
-//         id: 1,
-//         user_id: 2,
-//       }]
-//     }, { headers: { Authorization: AuthStr } })
-
-//   }
-// }
-

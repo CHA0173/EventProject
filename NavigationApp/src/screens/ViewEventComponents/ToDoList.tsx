@@ -68,7 +68,7 @@ class ToDoList extends React.Component<IToDoListProps, {}> {
                         { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
                         {
                           text: 'OK', onPress: () =>  {
-                            this.props.assign_todoitem(this.props.token, this.props.event.id, lengthOfToDoList - i - 1, this.props.user.id, this.props.user.name)
+                            this.props.assign_todoitem(this.props.token, this.props.event.id, this.props.event.todo[0].items[i].id, this.props.user.id, this.props.user.name)
                             this.forceUpdate()
                           }
                           //   const username = this.props.user.name
