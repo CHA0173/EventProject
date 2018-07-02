@@ -33,6 +33,7 @@ export interface Iattendees {
   id: number,
   name: string,
   photo: string,
+  creator: boolean
 }
 
 export interface Idiscussion {

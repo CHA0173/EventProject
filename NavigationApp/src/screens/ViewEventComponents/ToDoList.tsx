@@ -63,7 +63,7 @@ class ToDoList extends React.Component<IToDoListProps, {}> {
 
 const mapStateToProps = (state) => {
   return {
-    events: state.getView.events,
+    // events: state.getView.events,
     user: state.getViewEvent.user,
   }
 }
