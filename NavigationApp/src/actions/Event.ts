@@ -3,6 +3,7 @@ import { Dispatch } from 'redux';
 import * as events from '../models/events'
 import * as actionType from '../actions/types'
 import { get_view, get_event, get_user } from './auth';
+import Attendees from '../screens/ViewEventComponents/Attendees';
 
 export interface Ievent {
   evnets: events.Ievent[]
@@ -270,7 +271,7 @@ export const complete_item = (token, eventId, toDoItemId, userId, itemCompleted)
 
 export const complete_todoitem = (token, eventId, toDoItemId, userId, itemComplete) => {
   return (dispatch: Dispatch) => {
-    let condition = itemComplete? false: true
+    let condition = itemComplete ? false : true
     dispatch(complete_item(token, eventId, toDoItemId, userId, itemComplete))
     const AuthStr = 'Bearer '.concat(token);
     axios.put(`https://hivent.xyz/api/events/${eventId}`, {
@@ -283,5 +284,49 @@ export const complete_todoitem = (token, eventId, toDoItemId, userId, itemComple
         completed: condition,
       }]
     }, { headers: { Authorization: AuthStr } })
+  }
+}
+
+// ========= JOIN EVENT
+export const user_join_event = (userId, eventsId) => {
+  return {
+    type: actionType.JOIN_EVENT,
+    userId,
+    eventsId,
+  }
+}
+
+export const join_event = (token, userId, eventsId) => {
+  return (dispatch) => {
+    dispatch(user_join_event(userId, eventsId))
+    const AuthStr = 'Bearer '.concat(token);
+    axios.post('https://www.hivent.xyz/api/events/join', {
+      token,
+      userId,
+      eventsId,
+    }, { headers: { Authorization: AuthStr } })
+  }
+}
+
+// ========== LEFT EVENT
+export const user_left_event = (userId) => {
+  return {
+    type: actionType.LEFT_EVENT,
+    userId,
+  }
+}
+
+export const left_event = (token, eventId, userId) => {
+  return (dispatch) => {
+    dispatch(user_left_event(userId))
+    const AuthStr = 'Bearer '.concat(token);
+    axios({
+      url: `https://www.hivent.xyz/api/events/${eventId}`,
+      method: 'delete',
+      data: {
+        token, userId
+      },
+      headers: { Authorization: AuthStr }
+    })
   }
 }
