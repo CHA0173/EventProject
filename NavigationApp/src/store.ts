@@ -1,5 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
-import thunk from 'redux-thunk'
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 import { searchEventsReducers } from "./reducers/searchEventsReducers";
 import  EventReducer  from './reducers/Event';
 import { authReducer } from "./reducers/auth";
@@ -19,4 +20,4 @@ export const store = createStore(combineReducers({
     getViewEvent: getEventReducer,
     // assignToDoItemReducer: assignToDoItemReducer,
 }),
-applyMiddleware(thunk));
+applyMiddleware(thunk, logger));

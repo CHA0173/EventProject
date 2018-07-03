@@ -57,6 +57,7 @@ export const get_event = (token) => {
     dispatch(get_event_start())
     axios.get('https://hivent.xyz/api/events', { headers: { Authorization: AuthStr } }).then((event: any) => {
       console.log('auth get event.events',event)
+      dispatch(get_view(token))
       dispatch(auth_get_event_success(event.data))
     }).catch((err) => {
       console.log(err)
@@ -165,6 +166,7 @@ export const get_user = (token) => {
     console.log('ABC', AuthStr)
     axios.get(`https://hivent.xyz/api/users`, { headers: { Authorization: AuthStr } }).then((user) => {
       console.log("auth user", user)
+      dispatch(get_event(token))
       dispatch(auth_get_user_success(user))
       dispatch(get_view(token))
     }).catch((err) => {
@@ -178,6 +180,8 @@ export const auth = (email, password) => {
   return (dispatch: any) => {
     dispatch(auth_start())
     axios.post('https://hivent.xyz/api/auth/local', { email: email, password: password }).then((data) => {
+      // dispatch(get_event(data.data.token))
+      // dispatch(get_view(data.data.token))
       dispatch(get_user(data.data.token))
       dispatch(auth_success(data))
     }).catch((err) => {
