@@ -83,34 +83,34 @@ export function addEvent(
   }
 }
 
-export function editEvent(
-  id: number,
-  name: string,
-  description: string,
-  datetime: string,
-  photo: any,
-  address: string,
-  private_event: boolean,
-  deposit: string,
-  todo: events.Itodo[],
-  attendees: events.Iattendees[],
-  discussion: events.Idiscussion[],
-): IEditEventAction {
-  return {
-    type: EDIT_EVENT,
-    id,
-    name,
-    description,
-    datetime,
-    photo,
-    address,
-    private_event,
-    deposit,
-    todo,
-    attendees,
-    discussion,
-  }
-}
+// export function editEvent(
+//   id: number,
+//   name: string,
+//   description: string,
+//   datetime: string,
+//   photo: any,
+//   address: string,
+//   private_event: boolean,
+//   deposit: string,
+//   todo: events.Itodo[],
+//   attendees: events.Iattendees[],
+//   discussion: events.Idiscussion[],
+// ): IEditEventAction {
+//   return {
+//     type: EDIT_EVENT,
+//     id,
+//     name,
+//     description,
+//     datetime,
+//     photo,
+//     address,
+//     private_event,
+//     deposit,
+//     todo,
+//     attendees,
+//     discussion,
+//   }
+// }
 
 export function deleteEvent(id: number): IDeleteEventAction {
   return {
@@ -253,6 +253,35 @@ export const assign_todoitem = (token, eventId, toDoItemId, userId, userName) =>
         user_id: userId,
       }]
     }, { headers: { Authorization: AuthStr } })
+  }
+}
 
+
+export const complete_item = (token, eventId, toDoItemId, userId, itemCompleted) => {
+  return {
+    type: actionType.COMPLETE_TODOITEM,
+    token: token,
+    eventId: eventId,
+    toDoItemId: toDoItemId,
+    userId: userId,
+    itemCompleted: itemCompleted,
+  }
+}
+
+export const complete_todoitem = (token, eventId, toDoItemId, userId, itemComplete) => {
+  return (dispatch: Dispatch) => {
+    let condition = itemComplete? false: true
+    dispatch(complete_item(token, eventId, toDoItemId, userId, itemComplete))
+    const AuthStr = 'Bearer '.concat(token);
+    axios.put(`https://hivent.xyz/api/events/${eventId}`, {
+      event: {
+        id: eventId.id,
+        private: false,
+      },
+      todo: [{
+        id: toDoItemId.id,
+        completed: condition,
+      }]
+    }, { headers: { Authorization: AuthStr } })
   }
 }
