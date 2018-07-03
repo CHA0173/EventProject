@@ -87,7 +87,7 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
                         title: event.item.name,
                         navigatorStyle: { tabBarHidden: true },
                         
-                        passProps: { item: data.data }
+                        passProps: { eventIdFromBackend: data.data.id }
                       })
                     })
                   }}>
