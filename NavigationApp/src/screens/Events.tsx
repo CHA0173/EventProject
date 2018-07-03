@@ -60,24 +60,27 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
     const buttons = ['Upcoming', 'Created']
     const filterEventCardOption = [true || false, true]
     console.log('this.props.user.events', this.props)
+    const { user } = this.props;
+    const events = user.events ? user.events : [];
+
     return (
-      <View style={{ flex: 1, backgroundColor: '#b5b7b4' }}>
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
         <ButtonGroup
           onPress={this.updateIndex}
           selectedIndex={this.state.selectedIndex}
           buttons={buttons}
-          containerStyle={{ marginTop: 10, height: 30, backgroundColor: 'transparent'}}
+          containerStyle={{ marginTop: 10, height: 30, backgroundColor: 'transparent' }}
           textStyle={{ fontSize: 12 }}
           buttonStyle={{ backgroundColor: 'transparent' }}
-          
+
         />
         <ScrollView style={{ flex: 1 }}>
-        {console.log(this.props)}
+          {console.log(this.props)}
           <FlatList
-            data={!this.state.selectedIndex ? this.props.user.events : this.props.user.events.filter(event => event.creator == true)}
+            data={!this.state.selectedIndex ? events : events && events.filter(event => event.creator == true)}
             renderItem={(event) => {
               return (
-                <View>
+                <View style={{ backgroundColor: 'transparent' }}>
                   <TouchableOpacity onPress={() => {
                     const AuthStr = 'Bearer '.concat(this.props.token);
                     axios.get(`https://hivent.xyz/api/events/${event.item.id}`, { headers: { Authorization: AuthStr } }).then((data) => {
@@ -86,14 +89,14 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
                         screen: 'ViewEventScreen',
                         title: event.item.name,
                         navigatorStyle: { tabBarHidden: true },
-                        
+
                         passProps: { eventIdFromBackend: data.data.id }
                       })
                     })
                   }}>
                     <Card
                       containerStyle={{
-                        borderRadius: 10, 
+                        borderRadius: 10,
                         margin: 20,
                         elevation: 20
                       }}
@@ -101,8 +104,8 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
                       image={{ uri: event.item.photo }}
                     >
                       <View style={{ flexDirection: 'row' }}>
-                        <Icon name='date-range' color='#ac6264' containerStyle={{ marginHorizontal: 20 }} />
-                        <Text style={{ fontSize: 20 }}>
+                        <Icon name='date-range' color='#ac6264' containerStyle={{ marginHorizontal: 16 }} />
+                        <Text style={{ fontSize: 16 }}>
                           {event.item.datetime.match(/\d{4}-[01]\d-[0-3]\d/)}
                         </Text>
                       </View>
