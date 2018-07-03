@@ -116,7 +116,7 @@ class Start extends React.Component<IStartProps, IStartState> {
             <Button
               iconRight={{ name: 'input' }}
               title='Login'
-              buttonStyle={{ elevation: 10, width: 300, borderRadius: 25, backgroundColor: '#d15953' }}
+              buttonStyle={{ elevation: 3, width: 300, borderRadius: 25, backgroundColor: '#d15953' }}
               onPress={() => {
                 this.props.auth(this.state.email, this.state.password)
               }}
@@ -130,7 +130,7 @@ class Start extends React.Component<IStartProps, IStartState> {
                 })
               }}
               title='Sign up here'
-              buttonStyle={{ width: 300, borderRadius: 25, marginTop: 20, backgroundColor: '#f7eded', elevation: 10 }}
+              buttonStyle={{ width: 300, borderRadius: 25, marginTop: 20, backgroundColor: '#f7eded', elevation: 3 }}
               color='black'
             />
           </View>
