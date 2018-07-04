@@ -198,15 +198,13 @@ export default class EventService {
 
           return true;
         } else {
-
           // console.log("User is NOT the CREATOR")
-          return trx("events_users")
+          await trx("events_users")
             .where("events_id", eventid)
             .andWhere("users_id", user.id)
-            .update("isactive", false)
-            .then((nothingmore) => {
-              return true
-            })
+            .update("isactive", false);
+          
+          return true;
         }
       } catch (e) {
         console.log(e)

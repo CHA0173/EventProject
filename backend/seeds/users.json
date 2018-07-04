@@ -1,6 +1,6 @@
 [
   {
-    "email": "alex123@gamil.com",
+    "email": "alex123@gmail.com",
     "name": "Alex",
     "password": "asdf",
     "photo":
@@ -48,7 +48,7 @@
     "isactive": true
   },
   {
-    "email": "alice111@gamil.com",
+    "email": "alice111@gmail.com",
     "name": "Alice",
     "password": "asdf",
     "photo":
@@ -120,7 +120,7 @@
     "isactive": true
   },
   {
-    "email": "ivan777@gamil.com",
+    "email": "ivan777@gmail.com",
     "name": "Ivan",
     "password": "asdf",
     "photo":
