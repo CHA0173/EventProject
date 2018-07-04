@@ -10,10 +10,18 @@ export interface IeventState {
 const initialState = {
   events: [],
   loading: false,
+  error: null
 }
 
 const EventReducer = (state: IeventState = initialState, action) => {
   switch (action.type) {
+    case (actionType.GET_EVENT_START):
+      return { ...state, loading: true }
+    case (actionType.GET_EVENT_SUCCESS):
+      return { ...state, loading: false, events: action.events }
+    case (actionType.GET_EVENT_FAILURE):
+      return { ...state, loading: false, error: action.err }
+
     case ADD_EVENT: {
       const events = state.events.concat(
         [
@@ -34,8 +42,7 @@ const EventReducer = (state: IeventState = initialState, action) => {
       );
       return { ...state, events: events, loading: true }
     }
-    case (actionType.GET_EVENT_SUCCESS):
-      return { ...state, events: action.events }
+
 
     case actionType.ASSIGN_TODOITEM: {
       let eventIndex = null;

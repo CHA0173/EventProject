@@ -11,9 +11,6 @@ import { List, ListItem, Icon } from 'react-native-elements'
 import { Ievent } from '../../models/events';
 import { Iuser } from '../../models/users'
 import { connect } from 'react-redux';
-// import { get_viewevent } from '../../actions/auth';
-// import axios from 'axios';
-// import { remoteEditEvent } from '../../actions/Event';
 import { assign_todoitem } from '../../actions/Event';
 
 interface IToDoListProps {
@@ -21,8 +18,6 @@ interface IToDoListProps {
   user: Iuser,
   token: string,
   data: any,
-  // event:any,
-  // remoteEditEvent: () => void,
   assign_todoitem: (token,eventId, toDoItemId, userId, userName) => void,
   eventIdFromBackend: number
 }
@@ -89,7 +84,6 @@ class ToDoList extends React.Component<IToDoListProps, {}> {
 
 const mapStateToProps = (state) => {
   return {
-    // events: state.getView.events,
     user: state.getUser.user,
     token: state.authReducer.token,
     viewEventfromRedux: state.event.events,

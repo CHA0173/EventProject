@@ -56,7 +56,7 @@ export const get_event = (token) => {
     const AuthStr = 'Bearer '.concat(token);
     dispatch(get_event_start())
     axios.get('https://hivent.xyz/api/events', { headers: { Authorization: AuthStr } }).then((event: any) => {
-      console.log('auth get event.events',event)
+      console.log('auth get event.events', event)
       dispatch(auth_get_event_success(event.data))
     }).catch((err) => {
       console.log(err)
@@ -92,7 +92,7 @@ export const get_viewevent = (token, id) => {
     const AuthStr = 'Bearer '.concat(token);
     dispatch(get_viewevent_start())
     axios.get(`https://hivent.xyz/api/events/${id}`, { headers: { Authorization: AuthStr } }).then((event: any) => {
-      console.log("get view events" , event)
+      console.log("get view events", event)
       dispatch(auth_get_viewevent_success(event))
     }).catch((err) => {
       console.log(err)
@@ -104,7 +104,9 @@ export const get_viewevent = (token, id) => {
 
 // ========================================= GET USER
 export const auth_get_user_start = () => {
-  type: actionTypes.GET_USER_START
+  return {
+    type: actionTypes.GET_USER_START
+  }
 }
 
 export const auth_get_user_success = (data) => {
@@ -125,7 +127,7 @@ export const get_user = (token) => {
   return (dispatch: any) => {
     const AuthStr = 'Bearer '.concat(token);
 
-    // dispatch(auth_get_user_start())
+    dispatch(auth_get_user_start())
     console.log('ABC', AuthStr)
     axios.get(`https://hivent.xyz/api/users`, { headers: { Authorization: AuthStr } }).then((user) => {
       console.log("auth user", user)
@@ -142,8 +144,7 @@ export const auth = (email, password) => {
   return (dispatch: any) => {
     dispatch(auth_start())
     axios.post('https://hivent.xyz/api/auth/local', { email: email, password: password }).then((data) => {
-      // dispatch(get_event(data.data.token))
-      // dispatch(get_view(data.data.token))
+
       dispatch(get_user(data.data.token))
       dispatch(auth_success(data))
     }).catch((err) => {
