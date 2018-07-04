@@ -26,33 +26,33 @@ export interface IAddEventAction {
   discussion: events.Idiscussion[]
 }
 
-export const EDIT_EVENT = 'EDIT_EVENT';
-type EDIT_EVENT = typeof EDIT_EVENT;
+// export const EDIT_EVENT = 'EDIT_EVENT';
+// type EDIT_EVENT = typeof EDIT_EVENT;
 
-export interface IEditEventAction {
-  type: EDIT_EVENT;
-  id: number,
-  name: string,
-  description: string,
-  datetime: string,
-  photo: any,
-  address: string,
-  private_event: boolean,
-  deposit: string,
-  todo: events.Itodo[],
-  attendees: events.Iattendees[],
-  discussion: events.Idiscussion[],
-}
+// export interface IEditEventAction {
+//   type: EDIT_EVENT;
+//   id: number,
+//   name: string,
+//   description: string,
+//   datetime: string,
+//   photo: any,
+//   address: string,
+//   private_event: boolean,
+//   deposit: string,
+//   todo: events.Itodo[],
+//   attendees: events.Iattendees[],
+//   discussion: events.Idiscussion[],
+// }
 
-export const DELETE_EVENT = 'DELETE_EVENT';
-type DELETE_EVENT = typeof DELETE_EVENT;
+// export const DELETE_EVENT = 'DELETE_EVENT';
+// type DELETE_EVENT = typeof DELETE_EVENT;
 
-export interface IDeleteEventAction {
-  type: DELETE_EVENT;
-  id: number;
-}
+// export interface IDeleteEventAction {
+//   type: DELETE_EVENT;
+//   id: number;
+// }
 
-export type IEventAction = IAddEventAction | IEditEventAction | IDeleteEventAction;
+export type IEventAction = IAddEventAction ;
 
 export function addEvent(
   id: number,
