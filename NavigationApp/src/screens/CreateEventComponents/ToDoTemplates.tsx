@@ -2,11 +2,11 @@ const junkBoat = [
     {
         id: 1,
         title: "SmallBoat( 10-15 People)",
-        itemlist: ['soft drinks', 'cooked food', 'boardgame','beer','card game']
+        itemlist: ['Soft Drinks', 'Cooked Foods', 'Boardgame','Beer','Card Game']
     }, {
         id: 2,
         title: "Cruiser( 15-25 People )",
-        itemlist: ['wine', 'seafood', 'Sandwitches','BarTender','DJ','photographer','lifeguard','lighting','towels']
+        itemlist: ['Wine', 'Seafood', 'Sandwitches','Bartender','DJ','Photographer','Lighting','Towels']
     }
   ]
   
@@ -14,22 +14,22 @@ const junkBoat = [
     {
         id: 1,
         title: "Indoor",
-        itemlist: ['softDrinks', 'cake', 'candle','sushi','photographer','boardgame','show','beer',"speaker"]
+        itemlist: ['Soft Drinks', 'Cake', 'Candle','Sushi','Photographer','Boardgame','Entertainment Show','Beer',"Speaker"]
     }, {
         id: 2,
         title: 'Outdoor',
-        itemlist: ['wine', 'pizza', 'firework','entertainment show','2-3 photographer','cake','candle',"speaker"]
+        itemlist: ['Wine', 'Pizza', 'Firework','Entertainment Show','Photographers','Birthday Cake','Candle',"Speaker"]
     }
   ]
   const meetUp = [
     {
         id: 1,
         title: "Room",
-        itemlist: ['softDrinks', '~40 chairs', 'cooked foods','Guest speaker']
+        itemlist: ['Soft Drinks', 'Chairs', 'Cooked Foods','Guest Speaker']
     }, {
         id: 2,
         title: "Hall",
-        itemlist: ['wine', 'pizza',' servers','~100 chairs','Guest speaker','stand meeting table']
+        itemlist: ['Wine', 'Pizza',' Servers','~100 Chairs','Guest Speaker','stand meeting table']
     }
   ]
   const movieNight = [

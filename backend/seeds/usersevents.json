@@ -23,8 +23,14 @@
     "isactive": true
 },
 {
+  "event": "Alex's birthday boat",
+    "user": "Lucas",
+    "creator": false,
+    "isactive": true
+},
+{
     "event": "Mary's Wedding",
-    "user": "Stephen",
+    "user": "Mary",
     "creator": true,
     "isactive": true
 },
@@ -45,5 +51,228 @@
     "user": "Brad",
     "creator": false,
     "isactive": true
+},
+{
+  "event": "Mary's Wedding",
+  "user": "Martin",
+  "creator": false,
+  "isactive": true
+},
+{
+  "event": "Mary's Wedding",
+  "user": "Claudia",
+  "creator": false,
+  "isactive": true
+},
+{
+  "event": "Mary's Wedding",
+  "user": "Andrew",
+  "creator": false,
+  "isactive": true
+},
+{
+  "event": "Mary's Wedding",
+  "user": "Judith",
+  "creator": false,
+  "isactive": true
+},
+{
+    "event": "Beach Camp",
+    "user": "Brad",
+    "creator":true,
+    "isactive":true
+},
+{
+    "event": "Beach Camp",
+    "user": "Jacob",
+    "creator": false,
+    "isactive": true
+},
+{
+    "event":"Beach Camp",
+    "user":"Lucas",
+    "creator":false,
+    "isactive":true
+},
+{
+    "event":"Beach Camp",
+    "user": "Alex",
+    "creator": false,
+    "isactive":true
+},
+{
+    "event":"Accelerate Grad Party",
+    "user": "Alex",
+    "creator": true,
+    "isactive":true
+},
+{
+    "event":"Accelerate Grad Party",
+    "user": "Donna",
+    "creator": false,
+    "isactive":true
+},
+{
+  "event":"Accelerate Grad Party",
+  "user": "Jacob",
+  "creator": false,
+  "isactive":true
+},
+{
+  "event":"Accelerate Grad Party",
+  "user": "Lucas",
+  "creator": false,
+  "isactive":true
+},
+{
+  "event":"Accelerate Grad Party",
+  "user": "Stephen",
+  "creator": false,
+  "isactive":true
+},
+{
+  "event":"Accelerate Grad Party",
+  "user": "Brad",
+  "creator": false,
+  "isactive":true
+},
+{
+  "event":"Picnic in Tai Tam",
+  "user": "Mary",
+  "creator": true,
+  "isactive": true
+},
+{
+  "event":"Picnic in Tai Tam",
+  "user": "Lee",
+  "creator": false,
+  "isactive": true
+},
+{
+  "event":"Brad Become Man day",
+  "user": "Lavine",
+  "creator": true,
+  "isactive": true
+},
+{
+  "event":"Brad Become Man day",
+  "user": "Brad",
+  "creator": false,
+  "isactive":true
+},
+{
+  "event":"Brad Become Man day",
+  "user": "Jon",
+  "creator": false,
+  "isactive":true
+},
+{
+  "event":"Granny 70th Birthday",
+  "user": "Alice",
+  "creator": true,
+  "isactive": true
+},
+{
+  "event":"Granny 70th Birthday",
+  "user": "Gordon",
+  "creator": false,
+  "isactive": true
+},
+{
+  "event":"Granny 70th Birthday",
+  "user": "Leo",
+  "creator": false,
+  "isactive": true
+},
+{
+  "event":"My Sister Graduration party",
+  "user": "Alice",
+  "creator": true,
+  "isactive": true
+},
+{
+  "event":"My Sister Graduration party",
+  "user": "Ivan",
+  "creator": false,
+  "isactive": true
+},
+{
+  "event":"My Sister Graduration party",
+  "user": "Leo",
+  "creator": false,
+  "isactive": true
+},
+{
+  "event":"Accelerate Hiring Night 2018 -The Hive",
+  "user": "Alex",
+  "creator": true,
+  "isactive": true
+},
+{
+  
+  "event":"Accelerate Hiring Night 2018 -The Hive",
+  "user": "Donna",
+  "creator": false,
+  "isactive": true
+},
+{
+  "event":"Accelerate Hiring Night 2018 -The Hive",
+  "user": "Brad",
+  "creator": false,
+  "isactive": true
+},
+{
+  "event":"Accelerate Hiring Night 2018 -The Hive",
+  "user": "Jacob",
+  "creator": false,
+  "isactive": true
+},
+{
+  "event":"Accelerate Hiring Night 2018 -The Hive",
+  "user": "Lucas",
+  "creator": false,
+  "isactive": true
+},
+{
+  "event":"Accelerate Hiring Night 2018 -The Hive",
+  "user": "Stephen",
+  "creator": false,
+  "isactive": true
+},
+{
+  "event":"World Cup Final",
+  "user": "Jacob",
+  "creator": true,
+  "isactive": true
+},
+{
+  "event":"World Cup Final",
+  "user": "Jason",
+  "creator": false,
+  "isactive": true
+},
+{
+  "event":"World Cup Final",
+  "user": "Emily",
+  "creator": false,
+  "isactive": true
+},
+{
+  "event":"World Cup Final",
+  "user": "Eric",
+  "creator": false,
+  "isactive": true
+},
+{
+  "event":"World Cup Final",
+  "user": "Aston",
+  "creator": false,
+  "isactive": true
+},
+{
+  "event":"World Cup Final",
+  "user": "Brad",
+  "creator": false,
+  "isactive": true
 }
 ]

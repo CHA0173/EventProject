@@ -3,7 +3,7 @@
     "name": "champagne bottles",
     "quantity": 5,
     "isactive": true,
-    "user": "Alex",
+    "user": "Alex Lau",
     "completed": false
 
 },
@@ -12,7 +12,7 @@
     "name": "birthday cake",
     "quantity": 10,
     "isactive": true,
-    "user": "Brad",
+    "user": "Brad Wong",
     "completed": false
 
 },
@@ -21,7 +21,7 @@
     "name": "portable speakers",
     "quantity": 1,
     "isactive": true,
-    "user": "Jacob",
+    "user": "Jacob Chan",
     "completed": false
 
 },
@@ -30,7 +30,7 @@
     "name": "poker set",
     "quantity": 1,
     "isactive": true,
-    "user": "Alex",
+    "user": "Alex Lau",
     "completed": false
 
 },{
@@ -38,85 +38,106 @@
     "name":"Inflatable Toys",
     "quantity":"1",
     "isactive":true,
+    "user": "Gorden",
     "completed": false
 },{
     "event_name": "Mary's Wedding",
-    "name": "wedding cake",
+    "name": "Wedding cake",
     "quantity": 1,
     "isactive": true,
-    "user": "Stephen",
+    "user": "Stephen Chiang",
     "completed": true
 
-},
-{
-    "event_name": "Mary's Wedding",
-    "name": "ceremonial tea",
-    "quantity": 1,
-    "isactive": true,
-    "completed": false
-},
-{
+},{
     "event_name": "Mary's Wedding",
     "name": "ribbon decorations",
     "quantity": 10,
     "isactive": true,
-    "user": "Brad",
+    "user": "Brad Wong",
     "completed": false
-},
-{
+},{
     "event_name": "Mary's Wedding",
     "name": "cameraman",
     "quantity": 1,
     "isactive": true,
-    "user": "Stephen",
+    "user": "Stephen Chiang",
     "completed": false
 },{
     "event_name": "Mary's Wedding",
     "name":"light snacks",
     "quantity":"15",
     "isactive":true,
-    "user": "Brad",
+    "user": "Brad Wong",
     "completed": false
 },{
     "event_name": "Beach Camp",
     "name":"pack of cards",
     "quantity":"2",
     "isactive":true,
-    "user": "Brad",
+    "user": "Brad Wong",
     "completed": true
 },{
     "event_name":"Beach Camp",
     "name":"bunsen burner",
     "quantity":"1",
     "isactive":true,
-    "user": "Brad",
+    "user": "Brad Wong",
     "completed": true
 },{
+    "event_name":"Beach Camp",
+    "name":"snacker",
+    "quantity":"20",
+    "isactive":true,
+    "user": "Brad",
+    "completed":false
+},{
+    "event_name":"Beach Camp",
+    "name": "marshmallow",
+    "quantity":"5",
+    "isactive":true,
+    "user": "Brad",
+    "completed":false
+},{
     "event_name": "Picnic in Tai Tam",
-    "package":"basic",
     "name":"soft drink 12pack",
     "quantity":"5",
     "isactive":true,
-    "user": "Jacob",
+    "user": "Mary",
     "completed": false
 },{
     "event_name": "Picnic in Tai Tam",
     "name":"champagne bottles",
     "quantity":"10",
-    "user":"Stephen",
     "isactive":true,
+    "user":"Lee",
     "completed": true
+},{
+    "event_name": "Picnic in Tai Tam",
+    "name":"cheap liquor bottles",
+    "quantity":"15",
+    "isactive":true,
+    "user":"Lee",
+    "completed":true
+},{
+    "event_name": "Picnic in Tai Tam",
+    "name":"Marshmallow",
+    "quantity":"10",
+    "isactive":true,
+    "user": "Mary",
+    "completed": false
 },{
     "event_name": "Accelerate Grad Party",
     "name":"cigars",
     "quantity":"10",
     "isactive":true,
+    "user": "Stephen",
     "completed": false
 },{
     "event_name": "Accelerate Grad Party",
     "name":"box of macarons",
     "quantity":"5",
     "isactive":true,
+    "user": "Brad",
     "completed": false
 },{
     "event_name": "Accelerate Grad Party",
@@ -130,7 +151,133 @@
     "name":"craft beer 6packs",
     "quantity":"10",
     "isactive":true,
+    "user": "Alex Lau",
+    "completed": false
+},{
+    "event_name": "Accelerate Grad Party",
+    "name": "Taqueria",
+    "quantity":"1",
+    "isactive":true,
     "user": "Alex",
     "completed": false
+},{
+  "event_name": "Accelerate Grad Party",
+  "name": "Rum",
+  "quantity":"1",
+  "isactive":true,
+  "user": "Jacob",
+  "completed": false
+},{
+  "event_name": "Accelerate Grad Party",
+  "name": "Gin",
+  "quantity":"1",
+  "isactive":true,
+  "user": "Jacob",
+  "completed": false
+},{
+  "event_name": "Accelerate Grad Party",
+  "name": "Sake",
+  "quantity":"1",
+  "isactive":true,
+  "user": "Brad",
+  "completed": false
+},{
+  "event_name": "Brad Become Man day",
+  "name": "Beer",
+  "quantity":"10",
+  "isactive":true,
+  "user": "Lavine",
+  "completed": false
+},{
+  "event_name": "Brad Become Man day",
+  "name": "Chips",
+  "quantity":"5",
+  "isactive":true,
+  "user": "Lavine",
+  "completed": false
+},{
+  "event_name": "Brad Become Man day",
+  "name": "Cup Cake",
+  "quantity":"8",
+  "isactive":true,
+  "user": "Jon",
+  "completed": false
+},{
+  "event_name": "Granny 70th Birthday",
+  "name": "tea",
+  "quantity":"10",
+  "isactive":true,
+  "user": "Alice",
+  "completed": false
+},{
+  "event_name": "Granny 70th Birthday",
+  "name": "Peach Bun",
+  "quantity":"10",
+  "isactive":true,
+  "user": "Alice",
+  "completed": false
+},{
+  "event_name": "Granny 70th Birthday",
+  "name": "tea",
+  "quantity":"10",
+  "isactive":true,
+  "user": "Leo",
+  "completed": false
+},{
+  "event_name": "My Sister Graduration party",
+  "name": "tea",
+  "quantity":"10",
+  "isactive":true,
+  "user": "Leo",
+  "completed": false
+},{
+  "event_name": "Accelerate Hiring Night 2018 -The Hive",
+  "name": "Extension Cord",
+  "quantity":"7",
+  "isactive":true,
+  "user": "Donna",
+  "completed": false
+},{
+  "event_name": "Accelerate Hiring Night 2018 -The Hive",
+  "name": "flyer",
+  "quantity":"150",
+  "isactive":true,
+  "user": "Donna",
+  "completed": false
+},{
+  "event_name": "Accelerate Hiring Night 2018 -The Hive",
+  "name": "Foods",
+  "quantity":"60",
+  "isactive":true,
+  "user": "Donna",
+  "completed": false
+},{
+  "event_name": "Accelerate Hiring Night 2018 -The Hive",
+  "name": "Projector",
+  "quantity":"1",
+  "isactive":true,
+  "user": "Donna",
+  "completed": false
+},{
+  "event_name": "World Cup Final",
+  "name": "Chips",
+  "quantity":"10",
+  "isactive":true,
+  "user": "Jacob",
+  "completed": false
+},{
+  "event_name": "World Cup Final",
+  "name": "Beers",
+  "quantity":"12",
+  "isactive":true,
+  "user": "Aston",
+  "completed": false
+},{
+  "event_name": "World Cup Final",
+  "name": "Broad game",
+  "quantity":"10",
+  "isactive":true,
+  "user": "Eric",
+  "completed": false
 }
 ]

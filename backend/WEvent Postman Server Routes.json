@@ -1,0 +1,450 @@
+{
+	"info": {
+		"_postman_id": "f3c21a27-e87d-44ec-b01e-50e7658a824c",
+		"name": "Capstone Local",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Signup",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"test@test.com\",\n\t\"password\": \"asdf\",\n\t\"name\": \"TESTER\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Auth Token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "userid",
+						"value": "3",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "test@test.com",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "asdf",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/local",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"local"
+					]
+				},
+				"description": "use email and password to retrieve jwt token first, then use jwt token as bearer token to access other api calls"
+			},
+			"response": []
+		},
+		{
+			"name": "GET Events & Items by UserID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.plkfYqsnuNkp_SrCfyBEfXoQ9D_Wly7EXTOaqgzePR0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "userid",
+						"value": "3",
+						"disabled": true
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/api/users/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"users",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET by Name",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.plkfYqsnuNkp_SrCfyBEfXoQ9D_Wly7EXTOaqgzePR0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "name",
+						"value": "mandy",
+						"disabled": true
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/api/events/search?name=wedding",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"events",
+						"search"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "wedding"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET All Events",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.plkfYqsnuNkp_SrCfyBEfXoQ9D_Wly7EXTOaqgzePR0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:8080/api/events/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"events",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Event by ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.plkfYqsnuNkp_SrCfyBEfXoQ9D_Wly7EXTOaqgzePR0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "eid",
+						"value": "2",
+						"disabled": true
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/api/users/1?",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"users",
+						"1"
+					],
+					"query": [
+						{
+							"key": "eid",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Join Event",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.plkfYqsnuNkp_SrCfyBEfXoQ9D_Wly7EXTOaqgzePR0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userid\":   6,\n\t\"eventid\":  6\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/events/join",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"events",
+						"join"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST New Event",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.plkfYqsnuNkp_SrCfyBEfXoQ9D_Wly7EXTOaqgzePR0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"user_id\": \"6\",\n\t\"event_name\": \"test5\",\n\t\"address\": \"test address\",\n\t\"todo_type\": 2,\n\t\"description\": \"test description\",\n\t\"datetime\": \"2018-07-20 09:00:00\",\n\t\"photo\": \"\",\n\t\"deposit\": \"500\",\n\t\"private\": false,\n\t\"items\": [\n\t\t{\n\t\t\"item_name\": \"test item 1\",\n\t\t\"item_quantity\": 10\n\t\t},\n\t\t{\n\t\t\"item_name\": \"test item 2\",\n\t\t\"item_quantity\": 500\n\t\t},\n\t\t{\n\t\t\"item_name\": \"test item 3\",\n\t\t\"item_quantity\": 100\n\t\t},\n\t\t{\n\t\t\"item_name\": \"test item 4\",\n\t\t\"item_quantity\": 30\n\t\t}]\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/api/events",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"events"
+					]
+				},
+				"description": "/api/events"
+			},
+			"response": []
+		},
+		{
+			"name": "POST Comment to Event",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.plkfYqsnuNkp_SrCfyBEfXoQ9D_Wly7EXTOaqgzePR0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userid\":   2,\n\t\"eventid\":  1,\n\t\"comment\": \"testcomment 2\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/events/3/comment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"events",
+						"3",
+						"comment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE Event",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.plkfYqsnuNkp_SrCfyBEfXoQ9D_Wly7EXTOaqgzePR0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "eventid",
+						"value": "5",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userid\": 1,\n\t\"event\": {\n\t\t\"id\": 1,\n\t\t\"name\": \"Update1\",\n\t\t\"description\": \"Update Description\",\n\t\t\"datetime\": \"2018-07-21 09:00:00\",\n\t\t\"address\": \"Updated address\",\n\t\t\"private\": false,\n\t\t\"deposit\": 3333\n\t},\n\t\"todo\": [{\n\t\t\"id\": 1,\n\t\t\"name\": \"Updated Item\",\n\t\t\"quantity\": 100,\n\t\t\"user_id\": 1,\n\t\t\"completed\" : true\n\t}]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/events/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"events",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Event By ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6Nn0.koZXvLQKdAY5O7rzKyPm9u67Pb2R_TB88t5-2EkD6ew",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userid\": 1\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/api/events/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"events",
+						"1"
+					]
+				},
+				"description": "/api/events/:id"
+			},
+			"response": []
+		}
+	]
+}
