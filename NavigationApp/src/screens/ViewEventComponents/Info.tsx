@@ -30,15 +30,16 @@ interface IInfoProps {
 }
 
 interface IinfoState {
-    render: number
+    render: boolean
 }
 
 class Info extends React.Component<IInfoProps, IinfoState> {
     constructor(props: IInfoProps) {
         super(props)
         this.state = {
-            render: 0
+            render: true
         }
+        this.renderActionButton = this.renderActionButton.bind(this)
     }
 
     private = true ? 'Private' : 'Public';
@@ -67,12 +68,12 @@ class Info extends React.Component<IInfoProps, IinfoState> {
         }
     ]
 
-    renderActionButton() {
+    renderActionButton = () => {
         const userId = this.props.user.id
         const creator = this.props.event.attendees.find(attendee => attendee.creator == true)
         const userInEvent = this.props.event.attendees.some(attendee => attendee.id == userId)
         if (userId == creator.id) {
-            return <Button title='Delete Event' onPress={() => { 
+            return <Button title='Delete Event' onPress={() => {
                 this.props.left_event(this.props.token, this.props.user.id, this.props.event.id)
                 this.props.navigator.resetTo({
                     screen: 'EventsTabScreen',
@@ -80,57 +81,55 @@ class Info extends React.Component<IInfoProps, IinfoState> {
                     navigatorStyle: { navBarTitleTextCentered: true }
                 })
             }} />
-        } else if (userInEvent) {
-            return <Button title='Leave' onPress={() => { 
-                this.props.left_event(this.props.token, this.props.user.id, this.props.event.id)
-                this.props.navigator.resetTo({
-                    screen: 'EventsTabScreen',
-                    title: 'Events',
-                    navigatorStyle: { navBarTitleTextCentered: true }
-                })
-            }} />
-        } else if (!userInEvent) {
-            return <Button title='Join this event' onPress={() => {
-                this.props.join_event(this.props.token, this.props.user, this.props.event.id)
-                this.setState({
-                    render: this.state.render + 1
-                })
-             }} />
+        } else {
+            if (userInEvent) {
+                return <Button title='Leave' onPress={() => {
+                    this.props.left_event(this.props.token, this.props.user.id, this.props.event.id)
+                    this.props.navigator.resetTo({
+                        screen: 'EventsTabScreen',
+                        title: 'Events',
+                        navigatorStyle: { navBarTitleTextCentered: true }
+                    })
+                }} />
+            } else if (!userInEvent) {
+                return
+                <Button title='Join this event' onPress={() => {
+                    this.props.join_event(this.props.token, this.props.user, this.props.event.id)
+                }} />
+            }
+
         }
     }
 
-    render() {
-        return (
-            <View>
-                <List containerStyle={{ borderWidth: 0, borderTopWidth: 0, margin: 20 }}>
-                    {
-                        this.basicInfoList.map((item, i) => (
-                            <ListItem
-                                key={i}
-                                title={item.title}
-                                leftIcon={{ name: item.icon, color: '#004263' }}
-                                hideChevron={true}
-                                containerStyle={{ borderBottomWidth: 0, borderTopWidth: 0 }}
-                            />
-                        ))
-                    }
-                </List>
-                {this.renderActionButton()}
-                <Text>
-                    {this.state.render}
-                </Text>
-            </View>
-        )
-    }
+render() {
+    return (
+        <View>
+            <List containerStyle={{ borderWidth: 0, borderTopWidth: 0, margin: 20 }}>
+                {
+                    this.basicInfoList.map((item, i) => (
+                        <ListItem
+                            key={i}
+                            title={item.title}
+                            leftIcon={{ name: item.icon, color: '#004263' }}
+                            hideChevron={true}
+                            containerStyle={{ borderBottomWidth: 0, borderTopWidth: 0 }}
+                        />
+                    ))
+                }
+            </List>
+            {this.renderActionButton()}
+        </View>
+    )
+}
 }
 
 
 
 const mapStateToProps = (state) => {
     return {
-      token: state.authReducer.token,
+        token: state.authReducer.token,
     }
-  }
+}
 const mapDispatchToProps = (dispatch) => {
     return {
         join_event: (token, user, eventId) => dispatch(join_event(token, user, eventId)),
