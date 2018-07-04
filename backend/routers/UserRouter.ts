@@ -20,7 +20,7 @@ export default class UserRouter {
     }
 
     getById = (req: express.Request, res: express.Response) => { 
-        console.log("req.user", req.user)
+        // console.log("req.user", req.user)
         return this.userService.getEventsById(req.user)
             .then((data) => res.json(data))
             .catch((err: express.Errback) => res.status(500).json(err));

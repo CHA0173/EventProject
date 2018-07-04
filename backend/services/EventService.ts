@@ -139,8 +139,8 @@ export default class EventService {
         const eventName = await this.eventName(event_id)
         const inviter = await this.inviter(userid.id)
         let inviteNote = `You've been invited to ${eventName.name} by ${inviter.name}!`
-        console.log("eventName", eventName, "inviter", inviter)
-        console.log(inviteNote) 
+        // console.log("eventName", eventName, "inviter", inviter)
+        // console.log(inviteNote) 
         await trx("notifications")
           .insert({
             note: inviteNote,
@@ -217,10 +217,10 @@ export default class EventService {
   async create(user:any, data: any) {
 
     // console.log("entered create")
-    console.log("data", data)
+    // console.log("data", data)
     return this.knex.transaction(async (trx) => {
       try {
-        console.log("")
+        // console.log("")
         const eventid = await trx("events")
           .insert({
             name: data.event_name ,
@@ -234,7 +234,7 @@ export default class EventService {
           }).returning("id");
 
           const listExist = data.items
-          console.log("eventid", eventid, "listExist", listExist)
+          // console.log("eventid", eventid, "listExist", listExist)
         if (listExist && listExist.length > 0) {
           const toDoId = await trx("todo")
             .insert({

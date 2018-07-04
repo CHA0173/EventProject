@@ -44,7 +44,7 @@ export default class UserService {
   }
 
   getEventsById(user: any) {
-    console.log("userid", user.id)
+    // console.log("userid", user.id)
     const self = this
     return (
       this.knex("users")
@@ -88,7 +88,7 @@ export default class UserService {
         })
         .where("users.id", user.id)
         .then(result => {
-          console.log("result", result)
+          // console.log("result", result)
 
           return joinjs.mapOne(
             result,
