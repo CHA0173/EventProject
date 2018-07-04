@@ -2,7 +2,8 @@ import * as React from 'react'
 import {
     View,
     Dimensions,
-    Button
+    Button,
+    Text
 } from 'react-native'
 
 import {
@@ -28,10 +29,16 @@ interface IInfoProps {
     navigator: Navigator
 }
 
+interface IinfoState {
+    render: number
+}
 
-class Info extends React.Component<IInfoProps, {}> {
+class Info extends React.Component<IInfoProps, IinfoState> {
     constructor(props: IInfoProps) {
         super(props)
+        this.state = {
+            render: 0
+        }
     }
 
     private = true ? 'Private' : 'Public';
@@ -72,6 +79,9 @@ class Info extends React.Component<IInfoProps, {}> {
                     title: 'Events',
                     navigatorStyle: { navBarTitleTextCentered: true }
                 })
+                this.setState({
+                    render: this.state.render + 1
+                })
             }} />
         } else if (userInEvent) {
             return <Button title='Leave' onPress={() => { 
@@ -81,10 +91,16 @@ class Info extends React.Component<IInfoProps, {}> {
                     title: 'Events',
                     navigatorStyle: { navBarTitleTextCentered: true }
                 })
+                this.setState({
+                    render: this.state.render + 1
+                })
             }} />
         } else if (!userInEvent) {
             return <Button title='Join this event' onPress={() => {
                 this.props.join_event(this.props.token, this.props.user, this.props.event.id)
+                this.setState({
+                    render: this.state.render + 1
+                })
              }} />
         }
     }
@@ -106,6 +122,9 @@ class Info extends React.Component<IInfoProps, {}> {
                     }
                 </List>
                 {this.renderActionButton()}
+                <Text>
+                    {this.state.render}
+                </Text>
             </View>
         )
     }
