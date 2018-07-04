@@ -7,24 +7,6 @@
 },{
     "event": "Picnic in Tai Tam"
 },{
-<<<<<<< HEAD
-    "event": "Accelerate Grad Party"
-},
-{
-    "event": "Brad's Coming of Age Party"
-},
-{
-    "event": "Grandma's 70th birthday"
-},
-{
-    "event": "Lili's Graduation"
-},
-{
-    "event": "Accelerate Hiring Night 2018 at The Hive"
-},
-{
-    "event": "World Cup Final"
-=======
     "event": "Accelerate Grad Party",
     "isactive":true
 },{
@@ -42,7 +24,6 @@
 },{
     "event": "World Cup Final",
     "isactive":true
->>>>>>> 16e611dc84fcd5b3f1e967de232624f544865250
 }
 ]
 
