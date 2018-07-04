@@ -21,7 +21,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 import { connect } from 'react-redux'
-import { fetchingEvents } from '../actions'
 import { Ievent } from '../models/events' 
 import { get_viewevent } from '../actions/auth';
 import axios from 'axios';
@@ -91,7 +90,7 @@ class Search extends React.Component<ISearchProps, ISearchState> {
   };
 
   public renderItem(item) {
-    console.log("search item", item, this.props.events)
+
     return (
       <TouchableWithoutFeedback onPress={() => {
         const AuthStr = 'Bearer '.concat(this.props.token);
@@ -222,7 +221,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    events: state.getEvent.events,
+    events: state.event.events,
     token: state.authReducer.token,
   }
 }

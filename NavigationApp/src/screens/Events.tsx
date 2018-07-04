@@ -58,7 +58,7 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
 
   render() {
     const buttons = ['Upcoming', 'Created']
-    const filterEventCardOption = [true || false, true]
+    // const filterEventCardOption = [true || false, true]
     console.log('this.props.user.events', this.props)
     const { user } = this.props;
     const events = user.events ? user.events : [];
@@ -125,7 +125,7 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.getView.events,
+    user: state.getUser.user,
     token: state.authReducer.token,
   }
 }

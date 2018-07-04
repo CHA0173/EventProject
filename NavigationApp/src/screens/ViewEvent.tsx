@@ -113,7 +113,6 @@ class ViewEvent extends React.Component<IViewEventProps, IViewEventsState> {
 }
 
 const mapStateToProps = (state) => {
-    // console.log("view event events", state.getViewEvent.events)
     return {
         viewEventfromRedux: state.getViewEvent.events,
         isLoading: state.getViewEvent.loading,

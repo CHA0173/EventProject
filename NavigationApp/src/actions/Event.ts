@@ -2,8 +2,7 @@ import axios from 'axios';
 import { Dispatch } from 'redux';
 import * as events from '../models/events'
 import * as actionType from '../actions/types'
-import { get_view, get_event, get_user } from './auth';
-import Attendees from '../screens/ViewEventComponents/Attendees';
+import {  get_event, get_user } from './auth';
 
 export interface Ievent {
   evnets: events.Ievent[]
@@ -84,41 +83,7 @@ export function addEvent(
   }
 }
 
-// export function editEvent(
-//   id: number,
-//   name: string,
-//   description: string,
-//   datetime: string,
-//   photo: any,
-//   address: string,
-//   private_event: boolean,
-//   deposit: string,
-//   todo: events.Itodo[],
-//   attendees: events.Iattendees[],
-//   discussion: events.Idiscussion[],
-// ): IEditEventAction {
-//   return {
-//     type: EDIT_EVENT,
-//     id,
-//     name,
-//     description,
-//     datetime,
-//     photo,
-//     address,
-//     private_event,
-//     deposit,
-//     todo,
-//     attendees,
-//     discussion,
-//   }
-// }
 
-export function deleteEvent(id: number): IDeleteEventAction {
-  return {
-    type: DELETE_EVENT,
-    id
-  }
-}
 
 // ====== add event
 export function remoteAddEvent(
@@ -163,7 +128,6 @@ export function remoteAddEvent(
           attendees,
           discussion));
 
-      dispatch(get_view(token))
       dispatch(get_user(token))
       dispatch(get_event(token))
     }).catch((err) => {
@@ -174,60 +138,7 @@ export function remoteAddEvent(
 }
 
 
-// ===== edit event
 
-// export function remoteEditEvent(
-//   token: any,
-//   id: number,
-//   name: string,
-//   description: string,
-//   datetime: string,
-//   photo: any,
-//   address: string,
-//   private_event: boolean,
-//   deposit: string,
-//   todo: events.Itodo[],
-//   attendees: events.Iattendees[],
-//   discussion: events.Idiscussion[],
-// ) {
-//   return (dispatch: Dispatch<any>) => {
-
-//     const AuthStr = 'Bearer '.concat(token);
-//     axios.put(`https://hivent.xyz/api/events/${id}`, {
-//       token,
-//       name,
-//       description,
-//       datetime,
-//       photo,
-//       address,
-//       private_event,
-//       deposit,
-//       todo,
-//       attendees,
-//       discussion,
-//     }, { headers: { Authorization: AuthStr } }).then(res => {
-//       dispatch(
-//         editEvent(
-//           res.data.id,
-//           name,
-//           description,
-//           datetime,
-//           photo,
-//           address,
-//           private_event,
-//           deposit,
-//           todo,
-//           attendees,
-//           discussion,
-//         ))
-//       dispatch(get_view(token))
-//       dispatch(get_user(token))
-//       dispatch(get_event(token))
-//     }).catch(err => {
-//       console.log('edit event', err)
-//     })
-//   }
-// }
 
 export const assign_item = (token, eventId, toDoItemId, userId, userName) => {
   return {
