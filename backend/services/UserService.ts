@@ -66,7 +66,11 @@ export default class UserService {
           "notications.events_id as notes_event_id",
           "notifications.created_at as notes_timestamp",
         ) 
-         .leftJoin("events_users", "events_users.users_id", "users.id")
+         .leftJoin("events_users", 
+         function() {
+          this.on("events_users.users_id", "users.id").andOn(
+            "events_users.isactive",self.knex.raw(true));
+        })
         .leftJoin("events", function() {
           this.on("events.id", "events_users.events_id").andOn(
             "events.isactive",self.knex.raw(true));
