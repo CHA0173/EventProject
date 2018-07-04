@@ -228,7 +228,7 @@ export default class EventService {
             datetime: data.datetime,
             photo: data.photo || null,//can insert base64 of photo here directly, no need to use multer/file buffer
             address: data.address,
-            private_event: false,
+            private_event: data.private_event || false,
             deposit: data.deposit || null,
             isactive: true
           }).returning("id");
@@ -333,7 +333,7 @@ export default class EventService {
         await trx("events_users")
           .insert({
             users_id: user.id,
-            events_id: body.eventid,
+            events_id: body.event_Id,
             creator: false,
             isactive: true
           })
@@ -392,8 +392,8 @@ export default class EventService {
       .andWhere("events_users.isactive", true)
       // .whereIn('events.id',this.knex.select('events_id').from('events_users'))
       // .andWhere("events_users.creator",true)
-      // .andWhere("events.isactive", true)
-      // .andWhere("items.isactive", true)
+      .andWhere("events.isactive", true)
+      .andWhere("items.isactive", true)
       // .andWhere("discussion.isactive", true)
       .then(result => {
         // console.log(joinjs.mapOne(result, this.resultMaps, 'eventMap', 'event_'))
@@ -458,7 +458,7 @@ export default class EventService {
       // .where("events.id", eid)
       // .whereIn('events.id',this.knex.select('events_id').from('events_users'))
       // .andWhere("events_users.creator",true)
-      // .andWhere("events.isactive", true)
+      .andWhere("events.isactive", true)
       // .andWhere("items.isactive", true)
       // .andWhere("discussion.isactive", true)
       .then(result => {

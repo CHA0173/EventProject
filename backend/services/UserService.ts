@@ -78,7 +78,7 @@ export default class UserService {
           .leftJoin("items", function() {
           this.on("items.users_id", "users.id")
           .andOn("items.isactive", self.knex.raw(true));
-        })
+        })  
           .leftJoin("todo", function() {
           this.on("todo.id", "items.todo_id")
           .andOn("todo.isactive", self.knex.raw(true));
