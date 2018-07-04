@@ -389,6 +389,7 @@ export default class EventService {
       .leftJoin("users as itemusers", "items.users_id", "itemusers.id")
       .leftJoin("users", "events_users.users_id", "users.id")
       .where("events.id", eid)
+      .andWhere("events_users.isactive", true)
       // .whereIn('events.id',this.knex.select('events_id').from('events_users'))
       // .andWhere("events_users.creator",true)
       // .andWhere("events.isactive", true)
