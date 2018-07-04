@@ -139,8 +139,8 @@ export default class EventService {
         const eventName = await this.eventName(event_id)
         const inviter = await this.inviter(userid.id)
         let inviteNote = `You've been invited to ${eventName.name} by ${inviter.name}!`
-        console.log("eventName", eventName, "inviter", inviter)
-        console.log(inviteNote)
+        // console.log("eventName", eventName, "inviter", inviter)
+        // console.log(inviteNote) 
         await trx("notifications")
           .insert({
             note: inviteNote,
@@ -198,14 +198,13 @@ export default class EventService {
 
           return true;
         } else {
-
           // console.log("User is NOT the CREATOR")
           await trx("events_users")
             .where("events_id", eventid)
             .andWhere("users_id", user.id)
-            .update("isactive", false)
-          return true
-
+            .update("isactive", false);
+          
+          return true;
         }
       } catch (e) {
         console.log(e)
@@ -218,10 +217,10 @@ export default class EventService {
   async create(user: any, data: any) {
 
     // console.log("entered create")
-    console.log("data", data)
+    // console.log("data", data)
     return this.knex.transaction(async (trx) => {
       try {
-        console.log("")
+        // console.log("")
         const eventid = await trx("events")
           .insert({
             name: data.event_name,
@@ -234,9 +233,8 @@ export default class EventService {
             isactive: true
           }).returning("id");
 
-        const listExist = data.items
-        console.log("eventid", eventid, "listExist", listExist)
-        //if listExist array exists and is not empty
+          const listExist = data.items
+          // console.log("eventid", eventid, "listExist", listExist)
         if (listExist && listExist.length > 0) {
           const toDoId = await trx("todo")
             .insert({
@@ -391,6 +389,7 @@ export default class EventService {
       .leftJoin("users as itemusers", "items.users_id", "itemusers.id")
       .leftJoin("users", "events_users.users_id", "users.id")
       .where("events.id", eid)
+      .andWhere("events_users.isactive", true)
       // .whereIn('events.id',this.knex.select('events_id').from('events_users'))
       // .andWhere("events_users.creator",true)
       // .andWhere("events.isactive", true)

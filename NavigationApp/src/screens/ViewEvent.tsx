@@ -33,9 +33,12 @@ const windowHeight = Dimensions.get('window').height;
 interface IViewEventProps {
     events: any;
     user: Iuser;
-    item: Ievent;
+    viewEventfromRedux: Ievent;
     token: any;
     eventId: number;
+    get_viewevent: (token, id) => void,
+    eventIdFromBackend: number,
+    isLoading: boolean
 }
 
 interface IViewEventsState {
@@ -70,45 +73,61 @@ class ViewEvent extends React.Component<IViewEventProps, IViewEventsState> {
             itemStyle={{ width: windowWidth / 4 }}
         />;
     }
+
+    componentDidMount() {
+        this.props.get_viewevent(this.props.token, this.props.eventIdFromBackend)
+    }
     render() {
-        console.log(this.props.item)
-        return (
-            <View style={{ flex: 1 }}>
-                <IndicatorViewPager
-                    style={{ flex: 1, backgroundColor: 'white' }}
-                    indicator={this._renderTitleIndicator()}
-                    pagerStyle={{ marginTop: 50 }}
-                >
-                    <View style={{ backgroundColor: '#bed0db' }}>
-                        <Info event={this.props.item}
-                                user={this.props.user} />
-                    </View>
-                    <View style={{ backgroundColor: '#bed0db' }}>
-                        <ToDoList event={this.props.item} />
-                    </View>
-                    <View style={{ backgroundColor: '#bed0db' }}>
-                        <Attendees event={this.props.item} />
-                    </View>
-                    <View style={{ backgroundColor: '#bed0db' }}>
-                        <Discussion event={this.props.item} />
-                    </View>
-                </IndicatorViewPager>
-            </View>
-        )
+        console.log(this.props.viewEventfromRedux)
+        let content = 
+        <View>
+            <IndicatorViewPager
+                style={{ height: windowHeight - 200, backgroundColor: 'white' }}
+                indicator={this._renderTitleIndicator()}
+                pagerStyle={{ marginTop: 50 }}
+            >
+                <View style={{ backgroundColor: '#bed0db' }}>
+                    <Info event={this.props.viewEventfromRedux}
+                        user={this.props.user} />
+                </View>
+                <View style={{ backgroundColor: '#bed0db' }}>
+                    <ToDoList eventIdFromBackend={this.props.eventIdFromBackend}/>
+                    {console.log("viewevent", this.props)}
+                </View>
+                <View style={{ backgroundColor: '#bed0db' }}>
+                    <Attendees event={this.props.viewEventfromRedux} />
+                </View>
+                <View style={{ backgroundColor: '#bed0db' }}>
+                    <Discussion event={this.props.viewEventfromRedux} />
+                </View>
+            </IndicatorViewPager>
+        </View>
+        if (this.props.isLoading) {
+            content = <Text>Loading...</Text>;
+        }
+        return <View style={{ flex: 1 }}>{content}</View>;
+
     }
 }
 
 const mapStateToProps = (state) => {
-    console.log("view event events", state.getViewEvent.events)
+    // console.log("view event events", state.getViewEvent.events)
     return {
-        events: state.getViewEvent.events,
+        viewEventfromRedux: state.getViewEvent.events,
+        isLoading: state.getViewEvent.loading,
         user: state.getUser.user,
         token: state.authReducer.token
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        get_viewevent: (token, id) => dispatch(get_viewevent(token, id)),
+    }
+}
 
-export default connect(mapStateToProps)(ViewEvent);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ViewEvent);
 
 
 const styles = StyleSheet.create({

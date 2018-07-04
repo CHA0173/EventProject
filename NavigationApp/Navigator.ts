@@ -9,7 +9,6 @@ import SignUp from './src/screens/SignUp';
 import Search from './src/screens/Search';
 import Events from './src/screens/Events';
 import Profile from './src/screens/Profile';
-import Info from './src/screens/Info';
 import Menu from './src/screens/Menu';
 import Notification from './src/screens/Notification';
 import ViewEvent from './src/screens/ViewEvent';
@@ -29,7 +28,6 @@ Navigation.registerComponent('NotificationTabScreen', () => Notification, store,
 
 Navigation.registerComponent('LogInScreen', () => LogIn, store, Provider);
 Navigation.registerComponent('SignUpScreen', () => SignUp, store, Provider);
-Navigation.registerComponent('InfoPushedScreen', () => Info, store, Provider);
 Navigation.registerComponent('ViewEventScreen', () => ViewEvent, store, Provider);
 Navigation.registerComponent('CreateEventScreen', () => CreateEvent, store, Provider);
 

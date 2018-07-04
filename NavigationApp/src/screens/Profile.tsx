@@ -20,8 +20,10 @@ import { Navigator } from 'react-native-navigation';
 import { Card, CheckBox } from 'react-native-elements';
 import { Iuser } from '../models/users'
 import axios from 'axios';
-import {clear_token} from '../actions/auth';
+import { clear_token } from '../actions/auth';
 import { connect } from 'react-redux';
+import { complete_todoitem } from '../actions/Event';
+import { ASSIGN_TODOITEM_START } from '../actions/types';
 
 const ImagePicker = require('react-native-image-picker');
 
@@ -31,10 +33,11 @@ interface IUserProfile {
 }
 
 interface IProfileProps {
-  navigator: Navigator,
-  userProfile: IUserProfile,
-  clearToken: () => void,
-  addUser: (user: Iuser) => void,
+  navigator: Navigator;
+  userProfile: IUserProfile;
+  clearToken: () => void;
+  complete_todoitem: (token, eventId, toDoItemId, userId, itemComplete) => void;
+  // addUser: (user: Iuser) => void,
   user: Iuser,
   token: any,
 };
@@ -63,7 +66,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
         this.props.navigator.resetTo({
           screen: 'StartScreen',
           navigatorStyle: { navBarHidden: true, tabBarHidden: true }
-      })
+        })
       }
     }
   }
@@ -113,7 +116,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
       // }
       const AuthStr = 'Bearer '.concat(this.props.token);
 
-      axios.post('https://hivent.xyz/api/users',{ photo: 'data:image/jpeg;base64,' + response.data } , { headers: { Authorization: AuthStr } }) //FIXME: unauth
+      axios.post('https://hivent.xyz/api/users', { photo: 'data:image/jpeg;base64,' + response.data }, { headers: { Authorization: AuthStr } })
       // axios({
       //   method: 'PUT',
       //   url:'https://hivent.xyz/api/users',
@@ -124,7 +127,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
       this.setState({
         avatarSource: source,
       });
-      console.log('photo source',source)
+      console.log('photo source', source)
     }
     );
   }
@@ -141,7 +144,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
         </Text>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <View>
-            <Text style={{fontSize: 18, color: 'black'}}>
+            <Text style={{ fontSize: 18, color: 'black' }}>
               {item.name}
             </Text>
             <Text>
@@ -154,6 +157,17 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
               iconRight={true}
               title={`Qty: ${item.quantity}`}
               checked={item.completed}
+              onPress={() => {
+                this.props.complete_todoitem(
+                  this.props.token,
+                  this.props.user.events.find(event => event.id === item.itemEventId),
+                  this.props.user.items.find(it => it.id === item.id),
+                  this.props.user.id,
+                  item.completed,
+                )// FIXME:
+                this.forceUpdate()
+              }
+              }
             />
           </View>
         </View>
@@ -197,10 +211,10 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
               <View style={[styles.avatar, styles.avatarContainer]}>
                 {
                   !this.props.user.photo ? <Text>Select a Photo</Text> :
-                  <Image style={styles.avatar} source={
-                    this.state.avatarSource && this.state.avatarSource !== '' ? 
-                    this.state.avatarSource : {uri: this.props.user.photo}
-                }/> 
+                    <Image style={styles.avatar} source={
+                      this.state.avatarSource && this.state.avatarSource !== '' ?
+                        this.state.avatarSource : { uri: this.props.user.photo }
+                    } />
                 }
               </View>
             </TouchableOpacity>
@@ -245,7 +259,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    clearToken: () => dispatch(clear_token())
+    clearToken: () => dispatch(clear_token()),
+    complete_todoitem: (token, eventId, toDoItemId, userId, itemComplete) => dispatch(complete_todoitem(token, eventId, toDoItemId, userId, itemComplete))
   }
 }
 

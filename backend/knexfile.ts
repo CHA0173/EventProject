@@ -5,8 +5,6 @@ dotenv.config();
 // tslint:disable:object-literal-sort-keys
 module.exports = {
   development: {
-    debug: true,
-
     client: "postgresql",
     connection: {
       host: process.env.DB_HOST || "localhost",

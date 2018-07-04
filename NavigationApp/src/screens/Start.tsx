@@ -45,7 +45,7 @@ class Start extends React.Component<IStartProps, IStartState> {
   }
 
   renderStart = () => {
-    if(this.props.token) {
+    if (this.props.token) {
       Navigation.startTabBasedApp({
         tabs: [
           {
@@ -62,7 +62,7 @@ class Start extends React.Component<IStartProps, IStartState> {
             icon: require('../img/search.png'),
             selectedIcon: require('../img/search.png'), // iOS only
             title: 'SearchBar',
-            navigatorStyle: { navBarTitleTextCentered: true, navBarHidden: true}
+            navigatorStyle: { navBarTitleTextCentered: true, navBarHidden: true }
           },
           {
             label: 'Notification',
@@ -116,35 +116,35 @@ class Start extends React.Component<IStartProps, IStartState> {
             <Button
               iconRight={{ name: 'input' }}
               title='Login'
-              buttonStyle={{width: 300, borderRadius: 25, backgroundColor: '#d15953', marginBottom: 20}}
+              buttonStyle={{ elevation: 3, width: 300, borderRadius: 25, backgroundColor: '#d15953' }}
               onPress={() => {
                 this.props.auth(this.state.email, this.state.password)
-                
               }}
             />
-              <Button
-                onPress={() => {
-                  this.props.navigator.push({
-                    screen: 'SignUpScreen',
-                    title: 'SignUp',
-                    navigatorStyle: { navBarTitleTextCentered: true }
-                  })
-                }}
-                title='Sign up here'
-                buttonStyle={{width: 300, borderRadius: 25, backgroundColor: '#f7eded'}}
-                color='black'
-              />
+            <Button
+              onPress={() => {
+                this.props.navigator.push({
+                  screen: 'SignUpScreen',
+                  title: 'SignUp',
+                  navigatorStyle: { navBarTitleTextCentered: true }
+                })
+              }}
+              title='Sign up here'
+              buttonStyle={{ width: 300, borderRadius: 25, marginTop: 20, backgroundColor: '#f7eded', elevation: 3 }}
+              color='black'
+            />
           </View>
         </View>
       )
     } else {
       return (
-        <View style={{flex:1}}>
-            <Image  source={require('../img/startbackground.jpg')}
-                    style={{ 
-                      flex: 1,
-                      width: null,
-                      height: null,}} />
+        <View style={{ flex: 1 }}>
+          <Image source={require('../img/startbackground.jpg')}
+            style={{
+              flex: 1,
+              width: null,
+              height: null,
+            }} />
         </View>
       )
     }

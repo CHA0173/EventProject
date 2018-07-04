@@ -3,6 +3,7 @@ import { Dispatch } from 'redux';
 import * as events from '../models/events'
 import * as actionType from '../actions/types'
 import { get_view, get_event, get_user } from './auth';
+import Attendees from '../screens/ViewEventComponents/Attendees';
 
 export interface Ievent {
   evnets: events.Ievent[]
@@ -83,34 +84,34 @@ export function addEvent(
   }
 }
 
-export function editEvent(
-  id: number,
-  name: string,
-  description: string,
-  datetime: string,
-  photo: any,
-  address: string,
-  private_event: boolean,
-  deposit: string,
-  todo: events.Itodo[],
-  attendees: events.Iattendees[],
-  discussion: events.Idiscussion[],
-): IEditEventAction {
-  return {
-    type: EDIT_EVENT,
-    id,
-    name,
-    description,
-    datetime,
-    photo,
-    address,
-    private_event,
-    deposit,
-    todo,
-    attendees,
-    discussion,
-  }
-}
+// export function editEvent(
+//   id: number,
+//   name: string,
+//   description: string,
+//   datetime: string,
+//   photo: any,
+//   address: string,
+//   private_event: boolean,
+//   deposit: string,
+//   todo: events.Itodo[],
+//   attendees: events.Iattendees[],
+//   discussion: events.Idiscussion[],
+// ): IEditEventAction {
+//   return {
+//     type: EDIT_EVENT,
+//     id,
+//     name,
+//     description,
+//     datetime,
+//     photo,
+//     address,
+//     private_event,
+//     deposit,
+//     todo,
+//     attendees,
+//     discussion,
+//   }
+// }
 
 export function deleteEvent(id: number): IDeleteEventAction {
   return {
@@ -175,76 +176,157 @@ export function remoteAddEvent(
 
 // ===== edit event
 
-export function remoteEditEvent(
-  token: any,
-  id: number,
-  name: string,
-  description: string,
-  datetime: string,
-  photo: any,
-  address: string,
-  private_event: boolean,
-  deposit: string,
-  todo: events.Itodo[],
-  attendees: events.Iattendees[],
-  discussion: events.Idiscussion[],
-) {
-  return (dispatch: Dispatch<any>) => {
+// export function remoteEditEvent(
+//   token: any,
+//   id: number,
+//   name: string,
+//   description: string,
+//   datetime: string,
+//   photo: any,
+//   address: string,
+//   private_event: boolean,
+//   deposit: string,
+//   todo: events.Itodo[],
+//   attendees: events.Iattendees[],
+//   discussion: events.Idiscussion[],
+// ) {
+//   return (dispatch: Dispatch<any>) => {
 
-    const AuthStr = 'Bearer '.concat(token);
-    axios.put(`https://hivent.xyz/api/events/${id}`, {
-      token,
-      name,
-      description,
-      datetime,
-      photo,
-      address,
-      private_event,
-      deposit,
-      todo,
-      attendees,
-      discussion,
-    }, { headers: { Authorization: AuthStr } }).then(res => {
-      dispatch(
-        editEvent(
-          res.data.id,
-          name,
-          description,
-          datetime,
-          photo,
-          address,
-          private_event,
-          deposit,
-          todo,
-          attendees,
-          discussion,
-        ))
-      dispatch(get_view(token))
-      dispatch(get_user(token))
-      dispatch(get_event(token))
-    }).catch(err => {
-      console.log('edit event', err)
-    })
-  }
-}
+//     const AuthStr = 'Bearer '.concat(token);
+//     axios.put(`https://hivent.xyz/api/events/${id}`, {
+//       token,
+//       name,
+//       description,
+//       datetime,
+//       photo,
+//       address,
+//       private_event,
+//       deposit,
+//       todo,
+//       attendees,
+//       discussion,
+//     }, { headers: { Authorization: AuthStr } }).then(res => {
+//       dispatch(
+//         editEvent(
+//           res.data.id,
+//           name,
+//           description,
+//           datetime,
+//           photo,
+//           address,
+//           private_event,
+//           deposit,
+//           todo,
+//           attendees,
+//           discussion,
+//         ))
+//       dispatch(get_view(token))
+//       dispatch(get_user(token))
+//       dispatch(get_event(token))
+//     }).catch(err => {
+//       console.log('edit event', err)
+//     })
+//   }
+// }
 
-export const assign_item = (token, eventId, toDoItemId, userName) => {
+export const assign_item = (token, eventId, toDoItemId, userId, userName) => {
   return {
     type: actionType.ASSIGN_TODOITEM,
     token: token,
     eventId: eventId,
     toDoItemId: toDoItemId,
+    userId: userId,
     userName: userName,
   }
 }
 
-export const assign_todoitem = (token, eventId, toDoItemId, userName) => {
+export const assign_todoitem = (token, eventId, toDoItemId, userId, userName) => {
   return (dispatch: Dispatch) => {
-    dispatch(assign_item(token, eventId, toDoItemId, userName))
-
+    dispatch(assign_item(token, eventId, toDoItemId, userId, userName))
     const AuthStr = 'Bearer '.concat(token);
-    axios.put(`https://hivent.xyz/api/events/${eventId}`,{ headers: { Authorization: AuthStr } })
-    
+    axios.put(`https://hivent.xyz/api/events/${eventId}`, {
+      event: {
+        id: eventId,
+        private: false,
+      },
+      todo: [{
+        id: toDoItemId,
+        user_id: userId,
+      }]
+    }, { headers: { Authorization: AuthStr } })
   }
 }
 
+
+export const complete_item = (token, eventId, toDoItemId, userId, itemCompleted) => {
+  return {
+    type: actionType.COMPLETE_TODOITEM,
+    token: token,
+    eventId: eventId,
+    toDoItemId: toDoItemId,
+    userId: userId,
+    itemCompleted: itemCompleted,
+  }
+}
+
+export const complete_todoitem = (token, eventId, toDoItemId, userId, itemComplete) => {
+  return (dispatch: Dispatch) => {
+    let condition = itemComplete ? false : true
+    dispatch(complete_item(token, eventId, toDoItemId, userId, itemComplete))
+    const AuthStr = 'Bearer '.concat(token);
+    axios.put(`https://hivent.xyz/api/events/${eventId}`, {
+      event: {
+        id: eventId.id,
+        private: false,
+      },
+      todo: [{
+        id: toDoItemId.id,
+        completed: condition,
+      }]
+    }, { headers: { Authorization: AuthStr } })
+  }
+}
+
+// ========= JOIN EVENT
+export const user_join_event = (userId, eventsId) => {
+  return {
+    type: actionType.JOIN_EVENT,
+    userId,
+    eventsId,
+  }
+}
+
+export const join_event = (token, userId, eventsId) => {
+  return (dispatch) => {
+    dispatch(user_join_event(userId, eventsId))
+    const AuthStr = 'Bearer '.concat(token);
+    axios.post('https://www.hivent.xyz/api/events/join', {
+      token,
+      userId,
+      eventsId,
+    }, { headers: { Authorization: AuthStr } })
+  }
+}
+
+// ========== LEFT EVENT
+export const user_left_event = (userId) => {
+  return {
+    type: actionType.LEFT_EVENT,
+    userId,
+  }
+}
+
+export const left_event = (token, eventId, userId) => {
+  return (dispatch) => {
+    dispatch(user_left_event(userId))
+    const AuthStr = 'Bearer '.concat(token);
+    axios({
+      url: `https://www.hivent.xyz/api/events/${eventId}`,
+      method: 'delete',
+      data: {
+        token, userId
+      },
+      headers: { Authorization: AuthStr }
+    })
+  }
+}

@@ -2,12 +2,24 @@ import * as actionTypes from '../actions/types';
 import { Ievent } from '../models/events';
 
 export interface IviewEventsState {
-  events: Ievent[],
+  events: Ievent,
 }
 
 const initialState = {
-  loading: false,
-  events: [],
+  loading: true,
+  events: {
+    id: -1,
+    name: '',
+    description: '',
+    datetime: '',
+    photo: '',
+    address: '',
+    private_event: false,
+    deposit: '',
+    todo: [],
+    attendees: [],
+    discussion: [],
+  },
   error: null
 }
 
