@@ -301,7 +301,7 @@ export const join_event = (token, user, eventId) => {
     const userId = user.id
     dispatch(user_join_event(user, eventId))
     const AuthStr = 'Bearer '.concat(token);
-    axios.post('https://www.hivent.xyz/api/events/join', {
+    axios.post('https://hivent.xyz/api/events/join', {
       token,
       userId,
       eventId,
@@ -322,14 +322,10 @@ export const left_event = (token, userId, eventId) => {
   return (dispatch) => {
     dispatch(user_left_event( userId, eventId ))
     const AuthStr = 'Bearer '.concat(token);
-    axios({
-      method: 'delete',
-      url: `https://www.hivent.xyz/api/events/${eventId}`,
-      data: {
-        token, userId
-      },
-      headers: { Authorization: AuthStr }
-    }).catch(function (error) {
+    axios.delete(
+      `https://hivent.xyz/api/events/${eventId}`,
+     {headers: { Authorization: AuthStr }}
+    ).catch(function (error) {
       console.log(error);
     })
   }

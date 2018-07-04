@@ -2,7 +2,8 @@ import * as React from 'react'
 import {
     View,
     Dimensions,
-    Button
+    Button,
+    Text
 } from 'react-native'
 
 import {
@@ -16,6 +17,8 @@ import { connect } from 'react-redux';
 import { join_event } from '../../actions/Event'
 import { left_event } from '../../actions/Event'
 const { width } = Dimensions.get('window')
+import { Navigator } from 'react-native-navigation';
+
 
 interface IInfoProps {
     event: Ievent
@@ -23,12 +26,19 @@ interface IInfoProps {
     token: string
     join_event: (token, user, eventId) => void
     left_event: (token, userId, eventId) => void
+    navigator: Navigator
 }
 
+interface IinfoState {
+    render: number
+}
 
-class Info extends React.Component<IInfoProps, {}> {
+class Info extends React.Component<IInfoProps, IinfoState> {
     constructor(props: IInfoProps) {
         super(props)
+        this.state = {
+            render: 0
+        }
     }
 
     private = true ? 'Private' : 'Public';
@@ -62,14 +72,35 @@ class Info extends React.Component<IInfoProps, {}> {
         const creator = this.props.event.attendees.find(attendee => attendee.creator == true)
         const userInEvent = this.props.event.attendees.some(attendee => attendee.id == userId)
         if (userId == creator.id) {
-            return <Button title='Delete Event' onPress={() => { }} />
-        } else if (userInEvent) {
-            return <Button title='Quit' onPress={() => { 
+            return <Button title='Delete Event' onPress={() => { 
                 this.props.left_event(this.props.token, this.props.user.id, this.props.event.id)
+                this.props.navigator.resetTo({
+                    screen: 'EventsTabScreen',
+                    title: 'Events',
+                    navigatorStyle: { navBarTitleTextCentered: true }
+                })
+                this.setState({
+                    render: this.state.render + 1
+                })
+            }} />
+        } else if (userInEvent) {
+            return <Button title='Leave' onPress={() => { 
+                this.props.left_event(this.props.token, this.props.user.id, this.props.event.id)
+                this.props.navigator.resetTo({
+                    screen: 'EventsTabScreen',
+                    title: 'Events',
+                    navigatorStyle: { navBarTitleTextCentered: true }
+                })
+                this.setState({
+                    render: this.state.render + 1
+                })
             }} />
         } else if (!userInEvent) {
             return <Button title='Join this event' onPress={() => {
                 this.props.join_event(this.props.token, this.props.user, this.props.event.id)
+                this.setState({
+                    render: this.state.render + 1
+                })
              }} />
         }
     }
@@ -91,6 +122,9 @@ class Info extends React.Component<IInfoProps, {}> {
                     }
                 </List>
                 {this.renderActionButton()}
+                <Text>
+                    {this.state.render}
+                </Text>
             </View>
         )
     }

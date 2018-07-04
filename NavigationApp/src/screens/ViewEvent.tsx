@@ -39,6 +39,7 @@ interface IViewEventProps {
     get_viewevent: (token, id) => void,
     eventIdFromBackend: number,
     isLoading: boolean
+    navigator: Navigator
 }
 
 interface IViewEventsState {
@@ -88,7 +89,8 @@ class ViewEvent extends React.Component<IViewEventProps, IViewEventsState> {
             >
                 <View style={{ backgroundColor: '#bed0db' }}>
                     <Info event={this.props.viewEventfromRedux}
-                        user={this.props.user} />
+                        user={this.props.user}
+                        navigator={this.props.navigator} />
                 </View>
                 <View style={{ backgroundColor: '#bed0db' }}>
                     <ToDoList eventIdFromBackend={this.props.eventIdFromBackend}/>
