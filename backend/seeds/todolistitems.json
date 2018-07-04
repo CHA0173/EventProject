@@ -3,7 +3,7 @@
     "name": "champagne bottles",
     "quantity": 5,
     "isactive": true,
-    "user": "Alex",
+    "user": "Alex Lau",
     "completed": false
 
 },
@@ -12,7 +12,7 @@
     "name": "birthday cake",
     "quantity": 10,
     "isactive": true,
-    "user": "Brad",
+    "user": "Brad Wong",
     "completed": false
 
 },
@@ -21,7 +21,7 @@
     "name": "portable speakers",
     "quantity": 1,
     "isactive": true,
-    "user": "Jacob",
+    "user": "Jacob Chan",
     "completed": false
 
 },
@@ -30,7 +30,7 @@
     "name": "poker set",
     "quantity": 1,
     "isactive": true,
-    "user": "Alex",
+    "user": "Alex Lau",
     "completed": false
 
 },{
@@ -44,7 +44,7 @@
     "name": "wedding cake",
     "quantity": 1,
     "isactive": true,
-    "user": "Stephen",
+    "user": "Stephen Chiang",
     "completed": true
 
 },
@@ -60,7 +60,7 @@
     "name": "ribbon decorations",
     "quantity": 10,
     "isactive": true,
-    "user": "Brad",
+    "user": "Brad Wong",
     "completed": false
 },
 {
@@ -68,28 +68,28 @@
     "name": "cameraman",
     "quantity": 1,
     "isactive": true,
-    "user": "Stephen",
+    "user": "Stephen Chiang",
     "completed": false
 },{
     "event_name": "Mary's Wedding",
     "name":"light snacks",
     "quantity":"15",
     "isactive":true,
-    "user": "Brad",
+    "user": "Brad Wong",
     "completed": false
 },{
     "event_name": "Beach Camp",
     "name":"pack of cards",
     "quantity":"2",
     "isactive":true,
-    "user": "Brad",
+    "user": "Brad Wong",
     "completed": true
 },{
     "event_name":"Beach Camp",
     "name":"bunsen burner",
     "quantity":"1",
     "isactive":true,
-    "user": "Brad",
+    "user": "Brad Wong",
     "completed": true
 },{
     "event_name": "Picnic in Tai Tam",
@@ -97,13 +97,13 @@
     "name":"soft drink 12pack",
     "quantity":"5",
     "isactive":true,
-    "user": "Jacob",
+    "user": "Jacob Chan",
     "completed": false
 },{
     "event_name": "Picnic in Tai Tam",
     "name":"champagne bottles",
     "quantity":"10",
-    "user":"Stephen",
+    "user":"Stephen Chiang",
     "isactive":true,
     "completed": true
 },{
@@ -130,7 +130,7 @@
     "name":"craft beer 6packs",
     "quantity":"10",
     "isactive":true,
-    "user": "Alex",
+    "user": "Alex Lau",
     "completed": false
 }
 ]

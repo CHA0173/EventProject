@@ -39,7 +39,7 @@ export default class EventService {
       {
         mapId: 'attendeesMap',
         idProperty: 'id',
-        properties: ['name', 'photo' ,'creator']
+        properties: ['name', 'photo', 'creator']
       },
       {
         mapId: 'discussionMap',
@@ -52,7 +52,7 @@ export default class EventService {
       {
         mapId: 'parentMap',
         properties: ['name'],
-        collections: [ {name: 'events', mapId: 'eventsMap', columnPrefix: 'event_'} ]
+        collections: [{ name: 'events', mapId: 'eventsMap', columnPrefix: 'event_' }]
       },
       {
         mapId: 'eventsMap',
@@ -81,7 +81,7 @@ export default class EventService {
       {
         mapId: 'attendeesMap',
         idProperty: 'id',
-        properties: ['name', 'photo' ,'creator']
+        properties: ['name', 'photo', 'creator']
       },
       {
         mapId: 'discussionMap',
@@ -115,7 +115,7 @@ export default class EventService {
       .andWhere("users_id", userid)
   }
 
-  eventName(eventid:number) {
+  eventName(eventid: number) {
     return this.knex("events")
       .select("name")
       .first()
@@ -123,7 +123,7 @@ export default class EventService {
       .returning("name")
   }
 
-  inviter(userid:number) {
+  inviter(userid: number) {
     return this.knex("users")
       .select("name")
       .first()
@@ -131,26 +131,26 @@ export default class EventService {
       .returning("name")
   }
 
-  async invite(userid: any, event_id:any, body:any) {
+  async invite(userid: any, event_id: any, body: any) {
     console.log("userid", userid, "event_id", event_id, "body", body)
     return this.knex.transaction(async (trx) => {
-      
+
       try {
         const eventName = await this.eventName(event_id)
         const inviter = await this.inviter(userid.id)
         let inviteNote = `You've been invited to ${eventName.name} by ${inviter.name}!`
         console.log("eventName", eventName, "inviter", inviter)
-        console.log(inviteNote) 
+        console.log(inviteNote)
         await trx("notifications")
           .insert({
             note: inviteNote,
             events_id: event_id,
             users_id: body.invite_id, //CREATE INVITATION,
-            isactive:true
+            isactive: true
           })
 
         return true
-      }catch(e) {
+      } catch (e) {
         console.log(e)
         return false
       }
@@ -193,20 +193,19 @@ export default class EventService {
 
           await trx("events_users")
             .where("events_users.events_id", eventid)
-            .where("events_users.users_id", user.id)
+            .andWhere("events_users.users_id", user.id)
             .update("isactive", false);
 
           return true;
         } else {
 
           // console.log("User is NOT the CREATOR")
-          return trx("events_users")
+          await trx("events_users")
             .where("events_id", eventid)
             .andWhere("users_id", user.id)
             .update("isactive", false)
-            .then((nothingmore) => {
-              return true
-            })
+          return true
+
         }
       } catch (e) {
         console.log(e)
@@ -216,7 +215,7 @@ export default class EventService {
   }
 
   //Completed
-  async create(user:any, data: any) {
+  async create(user: any, data: any) {
 
     // console.log("entered create")
     console.log("data", data)
@@ -225,9 +224,9 @@ export default class EventService {
         console.log("")
         const eventid = await trx("events")
           .insert({
-            name: data.event_name ,
+            name: data.event_name,
             description: data.description || null,
-            datetime: data.datetime ,
+            datetime: data.datetime,
             photo: data.photo || null,//can insert base64 of photo here directly, no need to use multer/file buffer
             address: data.address,
             private_event: false,
@@ -235,17 +234,17 @@ export default class EventService {
             isactive: true
           }).returning("id");
 
-          const listExist = data.items
-          console.log("eventid", eventid, "listExist", listExist)
+        const listExist = data.items
+        console.log("eventid", eventid, "listExist", listExist)
+        //if listExist array exists and is not empty
         if (listExist && listExist.length > 0) {
           const toDoId = await trx("todo")
             .insert({
               events_id: eventid[0],
-              // type: data.todo_type,
               isactive: true
             }).returning("id");
 
-          const items = data.items.map((item:any) => {
+          const items = data.items.map((item: any) => {
             return {
               name: item.Name,
               quantity: item.Quantity,
@@ -267,9 +266,9 @@ export default class EventService {
 
 
           return eventid[0];
-        } 
-          return eventid[0];
-        
+        }
+        return eventid[0];
+
       } catch (e) {
         console.log(e)
         return -1;
@@ -284,42 +283,43 @@ export default class EventService {
     return this.knex.transaction(async (trx) => {
       try {
         //update event info data
-        const eventUpdateResult = await trx("events")
+        // const eventUpdateResult = 
+        await trx("events")
           .where("events.id", body.event.id)
           .update({
-            name:        body.event.name,
+            name: body.event.name,
             description: body.event.description,
-            datetime:    body.event.datetime,
-            photo:       body.event.photo,
-            address:     body.event.address,
-            private_event:     body.event.private,
-            deposit:     body.event.deposit
+            datetime: body.event.datetime,
+            photo: body.event.photo,
+            address: body.event.address,
+            private_event: body.event.private,
+            deposit: body.event.deposit
           })
         //why use if to confirm update changes?
-        if (eventUpdateResult) {
-          //awaits all mappings and updates to finish
-          await BlueBirdPromise.map(body.todo,
-            (item: {
-              id: number, name: string,
-              quantity: number, user_id: number,
-              isactive: boolean, completed: boolean
-            }) => {
-              return trx("items")
-                .where("id", item.id)
-                .update({
-                  name: item.name,
-                  quantity: item.quantity,
-                  users_id: item.user_id,
-                  isactive: item.isactive,
-                  completed: item.completed
-                })
-                .catch(err => {
-                  // console.log(err);
-                })
-            })
-          return true
-        }
-        return false
+        // if (eventUpdateResult) {
+        //awaits all mappings and updates to finish
+        await BlueBirdPromise.map(body.todo,
+          (item: {
+            id: number, name: string,
+            quantity: number, user_id: number,
+            isactive: boolean, completed: boolean
+          }) => {
+            return trx("items")
+              .where("id", item.id)
+              .update({
+                name: item.name,
+                quantity: item.quantity,
+                users_id: item.user_id,
+                isactive: item.isactive,
+                completed: item.completed
+              })
+              .catch(err => {
+                // console.log(err);
+              })
+          })
+        return true
+        // }
+        // return false
       } catch (err) {
         return false
       }
@@ -380,9 +380,9 @@ export default class EventService {
         "discussion.id      as discussion_id",
         "discussionusers.name as discussion_name",
         "discussion.comment  as discussion_comment",
-        // "discussion.timestamps as discussion_timestamp"
+      // "discussion.timestamps as discussion_timestamp"
 
-      )
+    )
       .leftJoin("todo", "todo.events_id", "events.id")
       .leftJoin("items", "items.todo_id", "todo.id")
       .leftJoin("events_users", "events_users.events_id", "events.id")
@@ -416,9 +416,6 @@ export default class EventService {
 
   //Completed
   getAll() {
-    // return this.knex("events")
-    //   .select("events.id as events_id", "events.name", "events.photo", "events.datetime")
-    //   .where("events.isactive", true);
 
     return this.knex("events")
       .select(
@@ -471,7 +468,7 @@ export default class EventService {
       })
   }
 
-  addComment(user:any, body: any) {
+  addComment(user: any, body: any) {
     // console.log("body", body)
     return this.knex.transaction(async (trx) => {
       try {
