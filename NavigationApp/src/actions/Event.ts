@@ -288,45 +288,49 @@ export const complete_todoitem = (token, eventId, toDoItemId, userId, itemComple
 }
 
 // ========= JOIN EVENT
-export const user_join_event = (userId, eventsId) => {
+export const user_join_event = (user, eventId) => {
   return {
     type: actionType.JOIN_EVENT,
-    userId,
-    eventsId,
+    user,
+    eventId,
   }
 }
 
-export const join_event = (token, userId, eventsId) => {
+export const join_event = (token, user, eventId) => {
   return (dispatch) => {
-    dispatch(user_join_event(userId, eventsId))
+    const userId = user.id
+    dispatch(user_join_event(user, eventId))
     const AuthStr = 'Bearer '.concat(token);
     axios.post('https://www.hivent.xyz/api/events/join', {
       token,
       userId,
-      eventsId,
+      eventId,
     }, { headers: { Authorization: AuthStr } })
   }
 }
 
 // ========== LEFT EVENT
-export const user_left_event = (userId) => {
+export const user_left_event = (userId, eventId) => {
   return {
     type: actionType.LEFT_EVENT,
-    userId,
+    userId: userId,
+    eventId: eventId,
   }
 }
 
-export const left_event = (token, eventId, userId) => {
+export const left_event = (token, userId, eventId) => {
   return (dispatch) => {
-    dispatch(user_left_event(userId))
+    dispatch(user_left_event( userId, eventId ))
     const AuthStr = 'Bearer '.concat(token);
     axios({
-      url: `https://www.hivent.xyz/api/events/${eventId}`,
       method: 'delete',
+      url: `https://www.hivent.xyz/api/events/${eventId}`,
       data: {
         token, userId
       },
       headers: { Authorization: AuthStr }
+    }).catch(function (error) {
+      console.log(error);
     })
   }
 }
