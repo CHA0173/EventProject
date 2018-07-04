@@ -393,7 +393,7 @@ export default class EventService {
       // .whereIn('events.id',this.knex.select('events_id').from('events_users'))
       // .andWhere("events_users.creator",true)
       .andWhere("events.isactive", true)
-      .andWhere("items.isactive", true || null)
+      // .andWhere("items.isactive", true || null)
       // .andWhere("discussion.isactive", true)
       .then(result => {
         // console.log(joinjs.mapOne(result, this.resultMaps, 'eventMap', 'event_'))
