@@ -228,7 +228,7 @@ export default class EventService {
             datetime: data.datetime,
             photo: data.photo || null,//can insert base64 of photo here directly, no need to use multer/file buffer
             address: data.address,
-            private_event: false,
+            private_event: data.private_event || false,
             deposit: data.deposit || null,
             isactive: true
           }).returning("id");
