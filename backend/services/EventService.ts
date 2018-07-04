@@ -333,7 +333,7 @@ export default class EventService {
         await trx("events_users")
           .insert({
             users_id: user.id,
-            events_id: body.eventid,
+            events_id: body.event_Id,
             creator: false,
             isactive: true
           })
