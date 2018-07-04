@@ -298,13 +298,12 @@ export const user_join_event = (user, eventId) => {
 
 export const join_event = (token, user, eventId) => {
   return (dispatch) => {
-    const userId = user.id
+    console.log(`user: ${user},  event-id: ${eventId}`);
     dispatch(user_join_event(user, eventId))
     const AuthStr = 'Bearer '.concat(token);
-    axios.post('https://hivent.xyz/api/events/join', {
+    axios.put('https://hivent.xyz/api/events/join', {
       token,
-      userId,
-      eventId,
+      event_Id: eventId,
     }, { headers: { Authorization: AuthStr } })
   }
 }

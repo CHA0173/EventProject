@@ -79,10 +79,7 @@ const EventReducer = (state: IeventState = initialState, action) => {
     }
 
     case actionType.JOIN_EVENT:{
-      let newEvent = state.events
-      console.log(newEvent.find(event => event.id === action.eventId).attendees);
-      console.log(action.user);
-      newEvent.find(event => event.id === action.eventId).attendees.concat(action.user)
+      let newEvent = state.events.find(event => event.id === action.eventId).attendees.concat(action.user)
 
       return { ...state, events: newEvent }
     }

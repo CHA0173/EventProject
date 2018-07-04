@@ -79,9 +79,6 @@ class Info extends React.Component<IInfoProps, IinfoState> {
                     title: 'Events',
                     navigatorStyle: { navBarTitleTextCentered: true }
                 })
-                this.setState({
-                    render: this.state.render + 1
-                })
             }} />
         } else if (userInEvent) {
             return <Button title='Leave' onPress={() => { 
@@ -90,9 +87,6 @@ class Info extends React.Component<IInfoProps, IinfoState> {
                     screen: 'EventsTabScreen',
                     title: 'Events',
                     navigatorStyle: { navBarTitleTextCentered: true }
-                })
-                this.setState({
-                    render: this.state.render + 1
                 })
             }} />
         } else if (!userInEvent) {

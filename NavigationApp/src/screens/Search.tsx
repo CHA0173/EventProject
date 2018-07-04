@@ -24,6 +24,7 @@ import { connect } from 'react-redux'
 import { fetchingEvents } from '../actions'
 import { Ievent } from '../models/events' 
 import { get_viewevent } from '../actions/auth';
+import axios from 'axios';
 
 interface ISearchProps {
   navigator: Navigator,
@@ -93,14 +94,15 @@ class Search extends React.Component<ISearchProps, ISearchState> {
     console.log("search item", item, this.props.events)
     return (
       <TouchableWithoutFeedback onPress={() => {
-        this.props.navigator.push({
-          screen: 'ViewEventScreen',
-          title: item.name,
-          navigatorStyle: {tabBarHidden: true} ,
-          passProps: {
-            item: this.props.events.find(e => e.id === item.id),
-            eventId: item.events_id
-          }
+        const AuthStr = 'Bearer '.concat(this.props.token);
+        axios.get(`https://hivent.xyz/api/events/${item.id}`, { headers: { Authorization: AuthStr } }).then((data) => {
+          console.log('data', data.data)
+          this.props.navigator.push({
+            screen: 'ViewEventScreen',
+            title: item.name,
+            navigatorStyle: { tabBarHidden: true },
+            passProps: { eventIdFromBackend: data.data.id }
+          })
         })
       }}>
         <View>
