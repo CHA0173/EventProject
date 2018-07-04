@@ -304,7 +304,7 @@ export const join_event = (token, user, eventId) => {
     axios.post('https://hivent.xyz/api/events/join', {
       token,
       userId,
-      eventId,
+      event_Id: eventId,
     }, { headers: { Authorization: AuthStr } })
   }
 }
