@@ -15,6 +15,7 @@ export default class UserRouter {
     getRouter() {
         let router = express.Router();
         router.get("/", this.getById);
+        router.get("/all", this.getAllUsers);
         router.post("/", this.updatePhoto);
         return router;
     }
@@ -22,6 +23,12 @@ export default class UserRouter {
     getById = (req: express.Request, res: express.Response) => { 
         // console.log("req.user", req.user)
         return this.userService.getEventsById(req.user)
+            .then((data) => res.json(data))
+            .catch((err: express.Errback) => res.status(500).json(err));
+    }
+
+    getAllUsers = (req: any, res: any) => { 
+        return this.userService.getAllUsers()
             .then((data) => res.json(data))
             .catch((err: express.Errback) => res.status(500).json(err));
     }

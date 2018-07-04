@@ -1,15 +1,11 @@
 [{
-    "event": "Alex's birthday boat",
-    "isactive": true
+    "event": "Alex's birthday boat"
 },{
-    "event": "Mary's Wedding",
-    "isactive": true
+    "event": "Mary's Wedding"
 },{
-    "event": "Beach Camp",
-    "isactive":true
+    "event": "Beach Camp"
 },{
-    "event": "Picnic in Tai Tam",
-    "isactive":true
+    "event": "Picnic in Tai Tam"
 },{
     "event": "Accelerate Grad Party",
     "isactive":true

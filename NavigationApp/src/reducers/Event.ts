@@ -53,7 +53,7 @@ const EventReducer = (state: IeventState = initialState, action) => {
     //   });
     //   return { ...state, events: events, loding: false }
     // }
-    case actionType.ASSIGN_TODOITEM:
+    case actionType.ASSIGN_TODOITEM: {
       let eventIndex = null;
       let newStateEvents = state.events;
       newStateEvents.forEach((ele, idx) => {
@@ -69,22 +69,33 @@ const EventReducer = (state: IeventState = initialState, action) => {
         newStateEvents[eventIndex].todo[0].items.find(item => item.id == action.toDoItemId).user_name = action.userName
 
       return { ...state, events: newStateEvents }
+    }
 
-    case actionType.COMPLETE_TODOITEM:
+    case actionType.COMPLETE_TODOITEM: {
       let newEvents = state.events;
       console.log('DDDD', newEvents.find(event => event.id === action.eventId.id))
       newEvents.find(event => event.id === action.eventId.id).todo[0].items.find(item => item.id == action.toDoItemId.id).completed = !action.itemCompleted
       return { ...state, events: newEvents }
+    }
 
-    case actionType.JOIN_EVENT:
-      state.events.find(event => event.id === action.eventsId).id
-      state.events.find(event => event.id === action.evevtsId).attendees == action.userId
-      return { ...state, events: state.events }
+    case actionType.JOIN_EVENT:{
+      let newEvent = state.events
+      console.log(newEvent.find(event => event.id === action.eventId).attendees);
+      console.log(action.user);
+      newEvent.find(event => event.id === action.eventId).attendees.concat(action.user)
 
-    // case actionType.LEFT_EVENT:
-    //   state.events.find(event => event.id === action.eventsId).id
-    //   state.e
-    //   return { ...state, events: state.events }
+      return { ...state, events: newEvent }
+    }
+
+    case actionType.LEFT_EVENT: {
+      let newEvent = state.events
+      let attendeeList = newEvent.find(event => event.id == action.eventId).attendees
+      console.log(attendeeList);
+      let attendeeIndex = attendeeList.indexOf(attendeeList.find(att => att.id == action.userId))
+      newEvent.find(event => event.id == action.eventId).attendees.splice(attendeeIndex, 1)
+      return { ...state, events: newEvent }
+
+    }
 
     default:
       return state

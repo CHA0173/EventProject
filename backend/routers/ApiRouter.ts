@@ -43,6 +43,10 @@ export default class ApiRouter {
         router.use("/events", this.jwtAuth.authenticate(), eventRouter.getRouter());         //grabs user's events
         return router;
 
+
+
+        //server up123423412312312
+
         //test script3
 
 

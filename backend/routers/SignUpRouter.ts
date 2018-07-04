@@ -14,6 +14,7 @@ export default class SignUpRouter {
   getRouter() {
       let router = express.Router();
       router.post("/", this.createUser);
+
       return router;
   }
 
@@ -22,4 +23,7 @@ export default class SignUpRouter {
           .then((data) => res.json(data))
           .catch((err: express.Errback) => res.status(500).json(err));
   }
+
+
+
 }

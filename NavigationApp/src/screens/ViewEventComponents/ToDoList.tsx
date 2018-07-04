@@ -40,7 +40,7 @@ class ToDoList extends React.Component<IToDoListProps, {}> {
       <View>
         <List containerStyle={{ borderWidth: 1, borderTopWidth: 1, margin: 20 }}>
           {
-            viewEventFromAllEvent.todo[0].items.map((item, i) => (
+            viewEventFromAllEvent.todo[0].items && viewEventFromAllEvent.todo[0].items.map((item, i) => (
               <ListItem
                 key={i}
                 title={item.name}

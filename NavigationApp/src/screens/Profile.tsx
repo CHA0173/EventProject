@@ -11,7 +11,8 @@ import {
   Dimensions,
   ScrollView,
   TouchableWithoutFeedback,
-  Switch
+  Switch,
+  Alert
 } from 'react-native';
 import { Button } from 'react-native-elements'
 const { width, height } = Dimensions.get('window')
@@ -62,11 +63,22 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
   onNavigatorEvent(event) {
     if (event.type == 'NavBarButtonPress') {
       if (event.id == 'logout') {
-        this.props.clearToken()
-        this.props.navigator.resetTo({
-          screen: 'StartScreen',
-          navigatorStyle: { navBarHidden: true, tabBarHidden: true }
-        })
+        Alert.alert(
+          'Logout',
+          'Are you sure',
+          [
+            { text: 'No', onPress: () => { } },
+            {
+              text: 'Yes', onPress: () => {
+                this.props.clearToken()
+                this.props.navigator.resetTo({
+                  screen: 'StartScreen',
+                  navigatorStyle: { navBarHidden: true, tabBarHidden: true }
+                })
+              }
+            },
+          ],
+        )
       }
     }
   }

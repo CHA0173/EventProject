@@ -1,8 +1,6 @@
 import * as React from 'react'
 import {
     View,
-    Text,
-    ScrollView,
     Dimensions,
     Button
 } from 'react-native'
@@ -14,16 +12,21 @@ import {
 
 import { Ievent } from '../../models/events'
 import { Iuser } from '../../models/users';
-
+import { connect } from 'react-redux';
+import { join_event } from '../../actions/Event'
+import { left_event } from '../../actions/Event'
 const { width } = Dimensions.get('window')
 
 interface IInfoProps {
     event: Ievent
     user: Iuser
+    token: string
+    join_event: (token, user, eventId) => void
+    left_event: (token, userId, eventId) => void
 }
 
 
-export default class Info extends React.Component<IInfoProps, {}> {
+class Info extends React.Component<IInfoProps, {}> {
     constructor(props: IInfoProps) {
         super(props)
     }
@@ -61,9 +64,13 @@ export default class Info extends React.Component<IInfoProps, {}> {
         if (userId == creator.id) {
             return <Button title='Delete Event' onPress={() => { }} />
         } else if (userInEvent) {
-            return <Button title='Quit' onPress={() => { }} />
+            return <Button title='Quit' onPress={() => { 
+                this.props.left_event(this.props.token, this.props.user.id, this.props.event.id)
+            }} />
         } else if (!userInEvent) {
-            return <Button title='Join this event' onPress={() => { }} />
+            return <Button title='Join this event' onPress={() => {
+                this.props.join_event(this.props.token, this.props.user, this.props.event.id)
+             }} />
         }
     }
 
@@ -88,3 +95,19 @@ export default class Info extends React.Component<IInfoProps, {}> {
         )
     }
 }
+
+
+
+const mapStateToProps = (state) => {
+    return {
+      token: state.authReducer.token,
+    }
+  }
+const mapDispatchToProps = (dispatch) => {
+    return {
+        join_event: (token, user, eventId) => dispatch(join_event(token, user, eventId)),
+        left_event: (token, userId, eventId) => dispatch(left_event(token, userId, eventId))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Info)
