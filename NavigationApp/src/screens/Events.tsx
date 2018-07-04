@@ -64,7 +64,7 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
     const events = user.events ? user.events : [];
 
     return (
-      <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <View style={{ flex: 1 }}>
         <ButtonGroup
           onPress={this.updateIndex}
           selectedIndex={this.state.selectedIndex}
@@ -89,7 +89,6 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
                         screen: 'ViewEventScreen',
                         title: event.item.name,
                         navigatorStyle: { tabBarHidden: true },
-
                         passProps: { eventIdFromBackend: data.data.id }
                       })
                     })
@@ -97,8 +96,9 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
                     <Card
                       containerStyle={{
                         borderRadius: 10,
-                        margin: 20,
-                        elevation: 20
+                        marginHorizontal: 20,
+                        marginVertical: 30,
+                        elevation: 8
                       }}
                       title={event.item.name}
                       image={{ uri: event.item.photo }}

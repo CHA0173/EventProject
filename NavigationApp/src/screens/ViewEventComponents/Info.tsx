@@ -14,6 +14,7 @@ import {
 
 import { Ievent } from '../../models/events'
 import { Iuser } from '../../models/users';
+import { connect } from 'react-redux';
 
 const { width } = Dimensions.get('window')
 
@@ -23,7 +24,7 @@ interface IInfoProps {
 }
 
 
-export default class Info extends React.Component<IInfoProps, {}> {
+class Info extends React.Component<IInfoProps, {}> {
     constructor(props: IInfoProps) {
         super(props)
     }
@@ -88,3 +89,10 @@ export default class Info extends React.Component<IInfoProps, {}> {
         )
     }
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return (dispatch) => {
+        
+    }
+}
+export default connect(null, mapDispatchToProps)(Info)
