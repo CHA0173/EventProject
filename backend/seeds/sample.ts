@@ -3,7 +3,7 @@ import * as Knex from "knex";
 import * as path from "path";
 
 //To run on server, run
-// ./node_modeules/knex/bin/cli.js <knex command>
+// ./node_modules/knex/bin/cli.js <knex command>
 exports.seed = (knex: Knex) => {
   const userList = fs.readJsonSync(
     path.join(__dirname, "users.json")
