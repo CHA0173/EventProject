@@ -36,23 +36,7 @@ const EventReducer = (state: IeventState = initialState, action) => {
     }
     case (actionType.GET_EVENT_SUCCESS):
       return { ...state, events: action.events }
-    // case EDIT_EVENT: {
-    //   const events = state.events.filter(events => events.id !== action.id);
-    //   events.push({
-    //     id: action.id,
-    //     name: action.name,
-    //     description: action.description,
-    //     datetime: action.datetime,
-    //     photo: action.photo,
-    //     address: action.address,
-    //     private_event: action.private_event,
-    //     deposit: action.deposit,
-    //     todo: action.todo,
-    //     attendees: action.attendees,
-    //     discussion: action.discussion,
-    //   });
-    //   return { ...state, events: events, loding: false }
-    // }
+
     case actionType.ASSIGN_TODOITEM: {
       let eventIndex = null;
       let newStateEvents = state.events;

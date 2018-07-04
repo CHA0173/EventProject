@@ -101,42 +101,6 @@ export const get_viewevent = (token, id) => {
   }
 }
 
-// ==============================  GET EVENT (view)
-export const get_view_start = () => {
-  return {
-    type: actionTypes.GET_VIEW_START
-  }
-}
-
-
-export const auth_get_view_success = (data) => {
-  return {
-    type: actionTypes.GET_VIEW_SUCCESS,
-    events: data.data
-  }
-}
-
-export const auth_get_view_fail = (err) => {
-  return {
-    type: actionTypes.GET_VIEW_FAILURE,
-    err: err
-  }
-}
-
-export const get_view = (token) => {
-  return (dispatch: any) => {
-    const AuthStr = 'Bearer '.concat(token);
-    // dispatch(get_view_start())
-    axios.get(`https://hivent.xyz/api/users`, { headers: { Authorization: AuthStr } }).then((event) => {
-      console.log("users", event);
-      dispatch(auth_get_view_success(event))
-      dispatch(get_event(token))
-    }).catch((err) => {
-      console.log(err)
-      dispatch(auth_get_view_fail(err))
-    })
-  }
-}
 
 // ========================================= GET USER
 export const auth_get_user_start = () => {
@@ -166,7 +130,7 @@ export const get_user = (token) => {
     axios.get(`https://hivent.xyz/api/users`, { headers: { Authorization: AuthStr } }).then((user) => {
       console.log("auth user", user)
       dispatch(auth_get_user_success(user))
-      dispatch(get_view(token))
+      dispatch(get_event(token))
     }).catch((err) => {
       dispatch(auth_get_user_fail(err))
     })
