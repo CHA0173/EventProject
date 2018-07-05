@@ -30,6 +30,8 @@ export default class ApiRouter {
         this.signupService = signupService;
     }
 
+    
+
     getRouter() {
         const router         = express.Router();
         const eventRouter    = new EventRouter(this.eventService)
