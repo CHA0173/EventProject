@@ -6,75 +6,83 @@ import {
   View,
   TouchableOpacity,
   FlatList,
-  Image
+  Image,
+  ScrollView
 } from 'react-native';
 import { Navigator } from 'react-native-navigation';
+import { connect } from 'react-redux';
+import { Iuser } from '../models/users';
+import axios from 'axios';
 
 interface NotificationProps {
   navigator: Navigator
+  user: Iuser
+  token: string
 }
 
-export default class Notification extends React.Component<NotificationProps> {
+class Notification extends React.Component<NotificationProps> {
+  constructor(props: NotificationProps) {
+    super(props)
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+  }
+  onNavigatorEvent(event) {
+    if (event.type == 'NavBarButtonPress') {
+      if (event.id == 'refresh') {
 
-  // public renderNotificationItem(item) {
-  //   return (
-  //     <TouchableOpacity onPress={() => this.props.navigator.push({
-  //       screen: 'EventsTabScreen',
-  //     })}>
-  //       <View>
-  //         <Text>
-  //           {data.item.user} created new event {data.item.event}
-  //         </Text>
-  //       </View>
-  //     </TouchableOpacity>
-  //   )
-  // }
+      }
+    }
+  }
 
-  public render() {
+  renderNotes(item) {
+    let datetime = '';
+    if (Object.keys(item).length > 0 && item.note) {
+      datetime = `${item.timestamp.match(/\d{4}-[01]\d-[0-3]\d/)}, at ${item.timestamp.match(/[\d]{2}:[\d]{2}/)}`;
+    }
     return (
-      <View>
-        <TouchableOpacity onPress={() => this.props.navigator.switchToTab({
-          tabIndex: 0
-        })}>
-          <FlatList
-
-            data={[{
-              id: 1,
-              user: 'Lucas',
-              event: 'Meet Up',
-              eventImg: 'https://dummyimage.com/600x400/000000/fff.png&text=Meetup'
-            }, {
-              id: 2,
-              user: 'Brad',
-              event: 'Boat Party',
-              eventImg: 'https://dummyimage.com/600x400/000000/fff.png&text=Boat'
-            }]}
-            renderItem={(data) => {
-              return (
-                <TouchableOpacity
-                  style={{ backgroundColor: 'white'}}
-                  onPress={() => this.props.navigator.push({
-                    screen: 'ViewEventScreen',
-                    title: data.item.event,
-                  })}>
-                  <View style={{ justifyContent: 'space-between', flexDirection: 'row', margin: 10 }}>
-                    <Image
-                      style={{ borderRadius: 75, width: 70, height: 70, }}
-                      source={{ uri: data.item.eventImg }}
-                    />
-                    <Text style={{ marginHorizontal: 20, padding: 10 }}>
-                      {data.item.user} created new event {data.item.event}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              )
-            }}
-            keyExtractor={data => data.id.toString()} 
-            style= {{margin: 10, flex: 1}}
-  
-          />
-        </TouchableOpacity>
+      // <TouchableOpacity onPress={() => {
+      //   const AuthStr = 'Bearer '.concat(this.props.token);
+      //   axios.get(`https://hivent.xyz/api/events/${event.item.id}`, { headers: { Authorization: AuthStr } }).then((data) => {
+      //     console.log('data', data.data)
+      //     this.props.navigator.push({
+      //       screen: 'ViewEventScreen',
+      //       title: event.item.name,
+      //       navigatorStyle: { tabBarHidden: true },
+      //       passProps: { eventIdFromBackend: data.data.id }
+      //     })
+      //   })
+      // }}>
+      <View style={{ padding: 10, margin: 10, }}>
+        <Text>{item.note}</Text>
+        <Text>{datetime}</Text>
       </View>
+      // {/* </TouchableOpacity> */}
+    )
+  }
+  public render() {
+    let { notes } = this.props.user
+    let content = <View><Text> You don't have any invitations yet</Text></View>
+    if (Object.keys(notes).length > 1) {
+      content = <View style={{ backgroundColor: '#7d899a' }}>
+        <ScrollView>
+          <FlatList
+            data={notes}
+            renderItem={({ item }) => this.renderNotes(item)}
+          />
+        </ScrollView>
+      </View>
+    }
+
+    return (
+      <View>{content}</View>
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.getUser.user,
+    token: state.authReducer.token,
+  }
+}
+
+export default connect(mapStateToProps)(Notification)

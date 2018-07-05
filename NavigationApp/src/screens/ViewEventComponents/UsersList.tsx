@@ -129,17 +129,17 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#093339"
+        backgroundColor: "#093339",
     },
     cardContainerStyle: {
         flex: 1,
         flexDirection: "row",
-        justifyContent: "space-between",
         margin: 8,
         marginHorizontal: 20,
         backgroundColor: "#4e8087",
         padding: 10,
-        borderRadius: 10
+        borderRadius: 10,
+        elevation: 3
     },
     faceImageStyle: {
         width: 65,
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
         color: "white",
         textAlign: "left",
         fontSize: 20,
-        marginRight: 100,
+        marginLeft: 45,
         marginTop: 15
     }
 });

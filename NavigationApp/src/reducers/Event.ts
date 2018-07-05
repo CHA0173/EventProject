@@ -1,4 +1,4 @@
-import { ADD_EVENT, EDIT_EVENT, DELETE_EVENT, IEventAction } from '../actions/Event';
+import { ADD_EVENT, IEventAction } from '../actions/Event';
 import * as actionType from '../actions/types'
 import { Ievent } from '../models/events';
 

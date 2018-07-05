@@ -64,15 +64,15 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
     const events = user.events ? user.events : [];
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: '#7d899a' }}>
         <ButtonGroup
           onPress={this.updateIndex}
           selectedIndex={this.state.selectedIndex}
           buttons={buttons}
-          containerStyle={{ marginTop: 10, height: 30, backgroundColor: 'transparent' }}
-          textStyle={{ fontSize: 12 }}
-          buttonStyle={{ backgroundColor: 'transparent' }}
-
+          selectedTextStyle={{color: 'white', backgroundColor: '#d15953'}}
+          containerStyle={{ marginTop: 10, height: 30, backgroundColor: 'white', borderWidth: 0, elevation: 3 }}
+          textStyle={{ fontSize: 14 }}
+          selectedButtonStyle={{backgroundColor: '#d15953'}}
         />
         <ScrollView style={{ flex: 1 }}>
           {console.log(this.props)}
@@ -95,10 +95,11 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
                   }}>
                     <Card
                       containerStyle={{
-                        borderRadius: 10,
                         marginHorizontal: 20,
                         marginVertical: 30,
-                        elevation: 8
+                        elevation: 3,
+                        borderRadius: 8,
+                        borderWidth: 0
                       }}
                       title={event.item.name}
                       image={{ uri: event.item.photo }}
