@@ -176,7 +176,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
                   this.props.user.items.find(it => it.id === item.id),
                   this.props.user.id,
                   item.completed,
-                )// FIXME:
+                )
                 this.forceUpdate()
               }
               }

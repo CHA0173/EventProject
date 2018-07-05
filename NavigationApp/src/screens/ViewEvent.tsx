@@ -102,7 +102,7 @@ class ViewEvent extends React.Component<IViewEventProps, IViewEventsState> {
                             navigator={this.props.navigator} />
                     </View>
                     <View style={{ backgroundColor: '#bed0db' }}>
-                        <Discussion event={this.props.viewEventfromRedux} />
+                        <Discussion  eventIdFromBackend={this.props.eventIdFromBackend} />
                     </View>
                 </IndicatorViewPager>
             </View>
