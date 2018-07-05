@@ -41,13 +41,7 @@ exports.seed = (knex: Knex) => {
     await Promise.all(toDos);
 
     // Insert Items
-    const items = itemList.reduce((result: any[], item: any, index: number) => {
-      if (index % 3 === 0) {
-        return result.concat(createItem(trx, item))
-      } else {
-        return result
-      }
-    }, []);
+    const items = itemList.reduce((result: any[], item: any, index: number) => result.concat(createItem(trx, item, index)), []);
     await Promise.all(items);
 
     // Insert UserEvents
@@ -113,7 +107,7 @@ const volunteer = (trx: any, user: any) => {
           .first();
 };
 
-const createItem = async (trx: any, item: any) => {
+const createItem = async (trx: any, item: any, index: number) => {
   const todo = await trx("todo")
                       .select("todo.id")
                       .where("events.name", item.event_name)
@@ -127,7 +121,7 @@ const createItem = async (trx: any, item: any) => {
         name: item.name,
         quantity: item.quantity,
         isactive: true,
-        users_id: u.id,
+        users_id: (index % 2 === 0) ? u.id : null,
         todo_id: todo.id,
         completed: item.completed
       });
