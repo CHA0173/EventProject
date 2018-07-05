@@ -3,7 +3,7 @@
     "name": "champagne bottles",
     "quantity": 5,
     "isactive": true,
-    "user": "Alex Lau",
+    "user": "Alex",
     "completed": false
 
 },
@@ -12,7 +12,7 @@
     "name": "birthday cake",
     "quantity": 10,
     "isactive": true,
-    "user": "Brad Wong",
+    "user": "Brad",
     "completed": false
 
 },
@@ -42,7 +42,7 @@
     "name": "Wedding cake",
     "quantity": 1,
     "isactive": true,
-    "user": "Stephen Chiang",
+    "user": "Stephen",
     "completed": true
 
 },{
@@ -56,14 +56,14 @@
     "name": "cameraman",
     "quantity": 1,
     "isactive": true,
-    "user": "Stephen Chiang",
+    "user": "Stephen",
     "completed": false
 },{
     "event_name": "Mary's Wedding",
     "name":"light snacks",
     "quantity":"15",
     "isactive":true,
-    "user": "Brad Wong",
+    "user": "Brad",
     "completed": false
 },{
     "event_name": "Beach Camp",

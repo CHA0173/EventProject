@@ -115,7 +115,9 @@ const createItem = async (trx: any, item: any, index: number) => {
                       .first();
 
   if (item.user) {
+    
     const u = await volunteer(trx, item.user);
+    console.log("todo", todo)
     if (u) {
       return trx("items").insert({
         name: item.name,
