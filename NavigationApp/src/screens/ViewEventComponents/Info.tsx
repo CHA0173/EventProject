@@ -80,33 +80,33 @@ class Info extends React.Component<IInfoProps, IinfoState> {
                 buttonStyle={{ elevation: 3, width: 300, borderRadius: 25, backgroundColor: '#d15953', marginTop: 20 }}
                 onPress={() => {
                     this.props.left_event(this.props.token, this.props.user.id, this.props.event.id)
-                    this.props.navigator.resetTo({
-                        screen: 'EventsTabScreen',
-                        title: 'Events',
-                        navigatorStyle: { navBarTitleTextCentered: true }
-                    })
+                    // this.props.navigator.resetTo({
+                    //     screen: 'EventsTabScreen',
+                    //     title: 'Events',
+                    //     navigatorStyle: { navBarTitleTextCentered: true }
+                    // })
                 }} />
         } else if (userInEvent) {
             return <Button title='Leave'
                 buttonStyle={{ elevation: 3, width: 300, borderRadius: 25, backgroundColor: '#d15953', marginTop: 20 }}
                 onPress={() => {
                     this.props.left_event(this.props.token, this.props.user.id, this.props.event.id)
-                    this.props.navigator.resetTo({
-                        screen: 'EventsTabScreen',
-                        title: 'Events',
-                        navigatorStyle: { navBarTitleTextCentered: true }
-                    })
+                    // this.props.navigator.resetTo({
+                    //     screen: 'EventsTabScreen',
+                    //     title: 'Events',
+                    //     navigatorStyle: { navBarTitleTextCentered: true }
+                    // })
                 }} />
         } else {
             return <Button title='Join this event'
                 buttonStyle={{ elevation: 3, width: 300, borderRadius: 25, backgroundColor: '#7d899a', marginTop: 20 }}
                 onPress={() => {
                     this.props.join_event(this.props.token, this.props.user, this.props.event.id)
-                    this.props.navigator.resetTo({
-                        screen: 'EventsTabScreen',
-                        title: 'Events',
-                        navigatorStyle: { navBarTitleTextCentered: true }
-                    })
+                    // this.props.navigator.resetTo({
+                    //     screen: 'EventsTabScreen',
+                    //     title: 'Events',
+                    //     navigatorStyle: { navBarTitleTextCentered: true }
+                    // })
                 }} />
         }
     }
