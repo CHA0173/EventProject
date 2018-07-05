@@ -36,7 +36,7 @@ export default class EventRouter {
   }
   
   comment = (req:express.Request, res:express.Response) => {
-    return this.eventService.addComment(req.user, req.body)
+    return this.eventService.addComment(req.user, req.body, req.params.eventid)
       .then((data) => res.json(data))
     .catch((err: express.Errback) => res.status(500).json(err))
   }

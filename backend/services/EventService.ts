@@ -467,14 +467,15 @@ export default class EventService {
       })
   }
 
-  addComment(user: any, body: any) {
+  async addComment(user: any, body: any, eventid:any) {
     // console.log("body", body)
+    console.log("eventid", eventid)
     return this.knex.transaction(async (trx) => {
       try {
         await trx("discussion")
           .insert({
             users_id: user.id,
-            events_id: body.eventid,
+            events_id: eventid,
             comment: body.comment,
             isactive: true
           })

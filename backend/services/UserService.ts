@@ -63,8 +63,8 @@ export default class UserService {
           "items.completed    as items_completed",
           "eItem.id           as items_itemEventId",
           "invite.note as notes_note",
-          // "notifications.events_id as notes_event_id",
-          // "invite.created_at as notes_timestamp",
+          "invite.events_id as notes_event_id",
+          "invite.created_at as notes_timestamp",
         ) 
          .leftJoin("events_users", 
          function() {
