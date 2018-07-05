@@ -12,16 +12,24 @@ import { Card, ListItem } from 'react-native-elements'
 
 import { Ievent } from '../../models/events';
 import { Iuser } from '../../models/users';
+import { Navigator } from 'react-native-navigation';
+
 
 interface IAttendeesProps {
     event: Ievent,
+    navigator: Navigator
 }
 
 export default class Attendees extends React.Component<IAttendeesProps, {}> {
     render() {
         return (
             <View>
-                <Button title='Invite' onPress={() => { }} />
+                <Button title='Invite' onPress={() => { 
+                    this.props.navigator.push({
+                        screen: 'UsersListScreen',
+                        title: 'Users List'
+                      })
+                }} />
                 <ScrollView>
                     <Card containerStyle={{ padding: 0 }} >
                         {

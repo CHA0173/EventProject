@@ -81,46 +81,47 @@ class Info extends React.Component<IInfoProps, IinfoState> {
                     navigatorStyle: { navBarTitleTextCentered: true }
                 })
             }} />
+        } else if (userInEvent) {
+            return <Button title='Leave' onPress={() => {
+                this.props.left_event(this.props.token, this.props.user.id, this.props.event.id)
+                this.props.navigator.resetTo({
+                    screen: 'EventsTabScreen',
+                    title: 'Events',
+                    navigatorStyle: { navBarTitleTextCentered: true }
+                })
+            }} />
         } else {
-            if (userInEvent) {
-                return <Button title='Leave' onPress={() => {
-                    this.props.left_event(this.props.token, this.props.user.id, this.props.event.id)
-                    this.props.navigator.resetTo({
-                        screen: 'EventsTabScreen',
-                        title: 'Events',
-                        navigatorStyle: { navBarTitleTextCentered: true }
-                    })
-                }} />
-            } else if (!userInEvent) {
-                return
-                <Button title='Join this event' onPress={() => {
-                    this.props.join_event(this.props.token, this.props.user, this.props.event.id)
-                }} />
-            }
-
+            return <Button title='Join this event' onPress={() => {
+                this.props.join_event(this.props.token, this.props.user, this.props.event.id)
+                this.props.navigator.resetTo({
+                    screen: 'EventsTabScreen',
+                    title: 'Events',
+                    navigatorStyle: { navBarTitleTextCentered: true }
+                })
+            }} />
         }
     }
 
-render() {
-    return (
-        <View>
-            <List containerStyle={{ borderWidth: 0, borderTopWidth: 0, margin: 20 }}>
-                {
-                    this.basicInfoList.map((item, i) => (
-                        <ListItem
-                            key={i}
-                            title={item.title}
-                            leftIcon={{ name: item.icon, color: '#004263' }}
-                            hideChevron={true}
-                            containerStyle={{ borderBottomWidth: 0, borderTopWidth: 0 }}
-                        />
-                    ))
-                }
-            </List>
-            {this.renderActionButton()}
-        </View>
-    )
-}
+    render() {
+        return (
+            <View>
+                <List containerStyle={{ borderWidth: 0, borderTopWidth: 0, margin: 20 }}>
+                    {
+                        this.basicInfoList.map((item, i) => (
+                            <ListItem
+                                key={i}
+                                title={item.title}
+                                leftIcon={{ name: item.icon, color: '#004263' }}
+                                hideChevron={true}
+                                containerStyle={{ borderBottomWidth: 0, borderTopWidth: 0 }}
+                            />
+                        ))
+                    }
+                </List>
+                {this.renderActionButton()}
+            </View>
+        )
+    }
 }
 
 

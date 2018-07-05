@@ -55,7 +55,7 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
       }
     }
   }
-
+  
   render() {
     const buttons = ['Upcoming', 'Created']
     // const filterEventCardOption = [true || false, true]

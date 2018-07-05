@@ -13,6 +13,7 @@ import Menu from './src/screens/Menu';
 import Notification from './src/screens/Notification';
 import ViewEvent from './src/screens/ViewEvent';
 import CreateEvent from './src/screens/CreateEvent';
+import UsersList from './src/screens/ViewEventComponents/UsersList';
 
 // one page no tab ( LandingPage )
 Navigation.registerComponent('StartScreen', () => Start, store, Provider);
@@ -30,6 +31,7 @@ Navigation.registerComponent('LogInScreen', () => LogIn, store, Provider);
 Navigation.registerComponent('SignUpScreen', () => SignUp, store, Provider);
 Navigation.registerComponent('ViewEventScreen', () => ViewEvent, store, Provider);
 Navigation.registerComponent('CreateEventScreen', () => CreateEvent, store, Provider);
+Navigation.registerComponent('UsersListScreen', () => UsersList, store, Provider);
 
 
 //TEMP USE, easier access to main screen for testing
