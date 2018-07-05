@@ -107,6 +107,7 @@ class CreateEvent extends React.Component<ICreateEventProps, ICreateEventState> 
     setTodo(list){
         const newEvent = this.state.event;
         newEvent.todo = list
+        this.todoTemplate = list
         this.setState({
             event: newEvent
         })

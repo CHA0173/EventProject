@@ -24,13 +24,13 @@ interface IToDoListProps {
   id: number,
   itemlist: string[]
   todotemplate: string[]
-  setTodo: (list) => void
+  setTodo: (list) => void,
 }
 
 interface IToDoListStates {
   Name: string,
   Quantity: string,
-  List: ToDoItem[],
+  List: any[],
 }
 
 export default class ToDoList extends React.Component<IToDoListProps, IToDoListStates> {
@@ -49,7 +49,7 @@ export default class ToDoList extends React.Component<IToDoListProps, IToDoListS
   }
 
   componentWillMount() {
-    const newList = this.props.todotemplate.map(item => {
+    const newList = typeof(this.props.todotemplate[0]) === 'object' ? this.props.todotemplate:  this.props.todotemplate.map(item => {
       return (
         {
           id: Date.now(),
@@ -66,16 +66,17 @@ export default class ToDoList extends React.Component<IToDoListProps, IToDoListS
   }
 
   public renderToDoItem = () => {
+    let newList = this.state.List.concat({
+      id: Date.now(),
+      Name: this.state.Name,
+      Quantity: this.state.Quantity,
+    })
     this.setState({
-      List: this.state.List.concat({
-        id: Date.now(),
-        Name: this.state.Name,
-        Quantity: this.state.Quantity,
-
-      }),
+      List: newList,
       Name: '',
       Quantity: '',
     })
+    this.props.setTodo(newList)
   }
 
 
@@ -138,6 +139,7 @@ export default class ToDoList extends React.Component<IToDoListProps, IToDoListS
                             this.setState({
                               List: newList
                             })
+                            this.props.setTodo(newList)
                           }}
 
                         />
@@ -150,6 +152,7 @@ export default class ToDoList extends React.Component<IToDoListProps, IToDoListS
                             let newList = [...this.state.List]
                             newList[L].Name = text;
                             this.setState({ List: newList })
+                            this.props.setTodo(newList)
                           }}
                         />
                         <TextInput
@@ -159,7 +162,9 @@ export default class ToDoList extends React.Component<IToDoListProps, IToDoListS
                             let newList = [...this.state.List]
                             newList[L].Quantity = text;
                             this.setState({ List: newList })
+                            this.props.setTodo(newList)
                           }}
+                          keyboardType='numeric'
                         />
                       </View>
                     </View>

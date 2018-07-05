@@ -118,7 +118,6 @@ class Discussion extends React.Component<IDiscussionProps, IDiscussionStates> {
                 this.renderData()
                 const AuthStr = 'Bearer '.concat(this.props.token);
                 axios.post(`https://hivent.xyz/api/events/${this.props.user.id}/comment`, {
-                  users_id: this.props.user.id,
                   events_id: this.props.eventIdFromBackend,
                   comment: this.state.discussionData
                 }, { headers: { Authorization: AuthStr } }
