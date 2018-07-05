@@ -62,9 +62,9 @@ export default class UserService {
           "items.quantity     as items_quantity",
           "items.completed    as items_completed",
           "eItem.id           as items_itemEventId",
-          "notes.note as notes_note",
-          "notes.events_id as notes_event_id",
-          "notes.created_at as notes_timestamp",
+          "notifications.note as notes_note",
+          "notifications.events_id as notes_event_id",
+          "notifications.created_at as notes_timestamp",
         ) 
          .leftJoin("events_users", 
          function() {
@@ -87,8 +87,8 @@ export default class UserService {
           this.on("todo.events_id", "eItem.id")
           .andOn("todo.isactive", self.knex.raw(true));
         })
-        .leftJoin("notifications as notes", function() {           //GET NOTIFICATIONS by UserID
-          this.on("notes.users_id", "users.id")
+        .leftJoin("notifications", function() {           //GET NOTIFICATIONS by UserID
+          this.on("notifications.users_id", "users.id")
         })
         .where("users.id", user.id)
         .then(result => {
