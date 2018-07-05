@@ -41,7 +41,13 @@ exports.seed = (knex: Knex) => {
     await Promise.all(toDos);
 
     // Insert Items
-    const items = itemList.reduce((result: any[], item: any) => result.concat(createItem(trx, item)), []);
+    const items = itemList.reduce((result: any[], item: any, index: number) => {
+      if (index % 3 === 0) {
+        return result.concat(createItem(trx, item))
+      } else {
+        return result
+      }
+    }, []);
     await Promise.all(items);
 
     // Insert UserEvents
