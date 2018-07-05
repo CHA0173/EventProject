@@ -10,13 +10,16 @@ import {
 } from 'react-native';
 
 import { Navigator } from 'react-native-navigation';
+import axios from 'axios';
 
 interface LogInProps {
   navigator: Navigator
 }
 
 interface LogInState {
-  text: string
+  displayName: string;
+  email: string;
+  password: string;
 }
 
 export default class LogIn extends React.Component<LogInProps, LogInState> {
@@ -24,37 +27,58 @@ export default class LogIn extends React.Component<LogInProps, LogInState> {
     super(props)
 
     this.state = {
-      text: ''
+      displayName: '',
+      email: '',
+      password: '',
     }
   }
 
   public render() {
     return (
       <View style={{ backgroundColor: 'transparent', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Image source={require('../img/Wevent.png')}/>
+        <Image source={require('../img/Wevent.png')} />
         <View style={{ marginTop: 50, marginBottom: 50 }}>
           <TextInput
             style={{ height: 40, width: 300 }}
             placeholder="Display Name"
-            onChangeText={(text) => this.setState({ text })}
+            onChangeText={(text) => this.setState({ displayName: text })}
           />
           <TextInput
             style={{ height: 40, width: 300 }}
             placeholder="Email"
-            onChangeText={(text) => this.setState({ text })}
+            onChangeText={(text) => this.setState({ email: text })}
           />
           <TextInput
             style={{ height: 40, width: 300 }}
             placeholder="Password"
-            onChangeText={(text) => this.setState({ text })}
+            onChangeText={(text) => this.setState({ password: text })}
           />
         </View>
         <View style={{ width: 300 }}>
           <Button
-            onPress={() => {
-              Alert.alert('Success! ')
-            }}
             title='SignUp'
+            onPress={() => {
+              Alert.alert(
+                '',
+                'Success !!!',
+                [
+                  {
+                    text: 'OK', onPress: () => {
+                      axios.post('https://hivent.xyz/api/signup', {
+                        name: this.state.displayName,
+                        email: this.state.email,
+                        password: this.state.password,
+                      })
+                    }
+                  },
+                ],
+                { cancelable: false }
+              )
+              this.props.navigator.resetTo({
+                screen: 'StartScreen',
+                navigatorStyle: {navBarHidden: true},
+              })
+            }}
           />
         </View>
 

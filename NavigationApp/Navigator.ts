@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 
 // import App from './App';
 import Start from './src/screens/Start';
-import LogIn from './src/screens/Login';
 import SignUp from './src/screens/SignUp';
 import Search from './src/screens/Search';
 import Events from './src/screens/Events';
@@ -27,7 +26,6 @@ Navigation.registerComponent('SearchTabScreen', () => Search, store, Provider);
 Navigation.registerComponent('EventsTabScreen', () => Events, store, Provider);
 Navigation.registerComponent('NotificationTabScreen', () => Notification, store, Provider);
 
-Navigation.registerComponent('LogInScreen', () => LogIn, store, Provider);
 Navigation.registerComponent('SignUpScreen', () => SignUp, store, Provider);
 Navigation.registerComponent('ViewEventScreen', () => ViewEvent, store, Provider);
 Navigation.registerComponent('CreateEventScreen', () => CreateEvent, store, Provider);
