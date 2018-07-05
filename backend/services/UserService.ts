@@ -87,7 +87,7 @@ export default class UserService {
           this.on("todo.events_id", "eItem.id")
           .andOn("todo.isactive", self.knex.raw(true));
         })
-        .join("notifications", function() {           //GET NOTIFICATIONS by UserID
+        .leftJoin("notifications", function() {           //GET NOTIFICATIONS by UserID
           this.on("notifications.users_id", "users.id")
         })
         .where("users.id", user.id)
