@@ -44,7 +44,7 @@ export default class UserService {
   }
 
   getEventsById(user: any) {
-    // console.log("userid", user.id)
+    console.log("userid", user.id)
     const self = this
     return (
       this.knex("users")
@@ -62,9 +62,9 @@ export default class UserService {
           "items.quantity     as items_quantity",
           "items.completed    as items_completed",
           "eItem.id           as items_itemEventId",
-          "invite.note as notes_note",
-          "invite.events_id as notes_event_id",
-          "invite.created_at as notes_timestamp",
+          "invite.note        as notes_note",
+          "invite.events_id   as notes_events_id",
+          "invite.created_at  as notes_timestamp",
         ) 
          .leftJoin("events_users", 
          function() {
