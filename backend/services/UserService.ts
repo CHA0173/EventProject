@@ -62,6 +62,7 @@ export default class UserService {
           "items.quantity     as items_quantity",
           "items.completed    as items_completed",
           "eItem.id           as items_itemEventId",
+          "invite.id          as notes_id",
           "invite.note        as notes_note",
           "invite.events_id   as notes_invite_event_id",
           "invite.created_at  as notes_timestamp"
