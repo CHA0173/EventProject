@@ -135,7 +135,7 @@ class Info extends React.Component<IInfoProps, IinfoState> {
                             color='#004263' />
                         </View>
                         <View>
-                        <Text style={{fontSize: 16, color: 'black'}}>
+                        <Text style={{fontSize: 16,padding: 10, color: 'black'}}>
                             {this.props.event.description}
                         </Text>
                         </View>

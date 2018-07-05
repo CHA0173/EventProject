@@ -11,12 +11,14 @@ import { Navigator, NavigatorButton } from 'react-native-navigation';
 import { Iuser, Ievents } from '../models/users';
 import { connect } from 'react-redux'
 import axios from 'axios';
+import { get_user } from '../actions/auth';
 
 
 interface IEventsProps {
   navigator: Navigator,
   user: Iuser,
   token: string,
+  get_user: (token) => void
 };
 
 interface IEventsStates {
@@ -29,6 +31,12 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
       {
         icon: require('../img/plus.png'),
         id: 'create'
+      }
+    ],
+    leftButtons: [
+      {
+        icon: require('../img/refresh.png'),
+        id: 'refresh'
       }
     ]
   };
@@ -52,6 +60,8 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
         this.props.navigator.push({
           screen: 'CreateEventScreen'
         })
+      } else if (event.id == 'refresh') {
+        this.props.get_user(this.props.token)
       }
     }
   }
@@ -130,6 +140,12 @@ const mapStateToProps = (state) => {
     token: state.authReducer.token,
   }
 }
+const mapDispatchToProps = (dispatch) => {
+  return {
+    get_user: (token) => dispatch(get_user(token)),
+  }
+}
 
-export default connect(mapStateToProps)(Events);
+
+export default connect(mapStateToProps,mapDispatchToProps )(Events);
 
