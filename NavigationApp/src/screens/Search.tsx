@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   FlatList,
   TouchableWithoutFeedback,
-
+  Keyboard
 } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
@@ -90,7 +90,7 @@ class Search extends React.Component<ISearchProps, ISearchState> {
   };
 
   public renderItem(item) {
-
+    let datetime = `${item.datetime.match(/\d{4}-[01]\d-[0-3]\d/)}, start at ${item.datetime.match(/[\d]{2}:[\d]{2}/)}`;
     return (
       <TouchableWithoutFeedback onPress={() => {
         const AuthStr = 'Bearer '.concat(this.props.token);
@@ -106,8 +106,7 @@ class Search extends React.Component<ISearchProps, ISearchState> {
       }}>
         <View>
           <Image style={styles.image} source={{ uri: item.photo }} />
-          <Text style={{ color: 'white', margin: 20 }}>{item.name}</Text>
-          <Text style={{ color: 'white' }}>{item.datetime}</Text>
+          <Text style={{ color: 'white', margin: 20 }}>{`${item.name}  ${datetime}`}</Text>
         </View>
       </TouchableWithoutFeedback>
     )
@@ -147,7 +146,9 @@ class Search extends React.Component<ISearchProps, ISearchState> {
           <TouchableOpacity onPress={() => this.deleteData()}>
             {/* <TouchableOpacity onPress={() => this.props.navigator.switchToTab({
             tabIndex: 1
-          })}> */}
+          })}> */
+          Keyboard.dismiss()
+          }
             <View>
               <Text style={styles.cancelButtonText} >Cancel</Text>
             </View>

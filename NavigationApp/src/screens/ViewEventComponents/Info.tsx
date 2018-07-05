@@ -2,13 +2,15 @@ import * as React from 'react'
 import {
     View,
     Dimensions,
-    Button,
+    ScrollView,
     Text
 } from 'react-native'
 
 import {
     List,
-    ListItem
+    ListItem,
+    Button,
+    Icon
 } from 'react-native-elements'
 
 import { Ievent } from '../../models/events'
@@ -44,15 +46,16 @@ class Info extends React.Component<IInfoProps, IinfoState> {
 
     private = true ? 'Private' : 'Public';
     datetime = `${this.props.event.datetime.match(/\d{4}-[01]\d-[0-3]\d/)}, start at ${this.props.event.datetime.match(/[\d]{2}:[\d]{2}/)}`;
+    creator = this.props.event.attendees.find(attendee => attendee.creator == true)
 
     basicInfoList = [
         {
-            title: this.private,
-            icon: 'lock'
+            title: this.creator.name,
+            icon: 'person-pin'
         },
         {
-            title: this.props.event.description,
-            icon: 'info'
+            title: this.private,
+            icon: 'lock'
         },
         {
             title: this.props.event.address,
@@ -65,47 +68,53 @@ class Info extends React.Component<IInfoProps, IinfoState> {
         {
             title: this.props.event.deposit,
             icon: 'attach-money'
-        }
+        },
     ]
 
     renderActionButton = () => {
         const userId = this.props.user.id
-        const creator = this.props.event.attendees.find(attendee => attendee.creator == true)
+        this.creator = this.props.event.attendees.find(attendee => attendee.creator == true)
         const userInEvent = this.props.event.attendees.some(attendee => attendee.id == userId)
-        if (userId == creator.id) {
-            return <Button title='Delete Event' onPress={() => {
-                this.props.left_event(this.props.token, this.props.user.id, this.props.event.id)
-                this.props.navigator.resetTo({
-                    screen: 'EventsTabScreen',
-                    title: 'Events',
-                    navigatorStyle: { navBarTitleTextCentered: true }
-                })
-            }} />
+        if (userId == this.creator.id) {
+            return <Button title='Delete Event'
+                buttonStyle={{ elevation: 3, width: 300, borderRadius: 25, backgroundColor: '#d15953', marginTop: 20 }}
+                onPress={() => {
+                    this.props.left_event(this.props.token, this.props.user.id, this.props.event.id)
+                    this.props.navigator.resetTo({
+                        screen: 'EventsTabScreen',
+                        title: 'Events',
+                        navigatorStyle: { navBarTitleTextCentered: true }
+                    })
+                }} />
         } else if (userInEvent) {
-            return <Button title='Leave' onPress={() => {
-                this.props.left_event(this.props.token, this.props.user.id, this.props.event.id)
-                this.props.navigator.resetTo({
-                    screen: 'EventsTabScreen',
-                    title: 'Events',
-                    navigatorStyle: { navBarTitleTextCentered: true }
-                })
-            }} />
+            return <Button title='Leave'
+                buttonStyle={{ elevation: 3, width: 300, borderRadius: 25, backgroundColor: '#d15953', marginTop: 20 }}
+                onPress={() => {
+                    this.props.left_event(this.props.token, this.props.user.id, this.props.event.id)
+                    this.props.navigator.resetTo({
+                        screen: 'EventsTabScreen',
+                        title: 'Events',
+                        navigatorStyle: { navBarTitleTextCentered: true }
+                    })
+                }} />
         } else {
-            return <Button title='Join this event' onPress={() => {
-                this.props.join_event(this.props.token, this.props.user, this.props.event.id)
-                this.props.navigator.resetTo({
-                    screen: 'EventsTabScreen',
-                    title: 'Events',
-                    navigatorStyle: { navBarTitleTextCentered: true }
-                })
-            }} />
+            return <Button title='Join this event'
+                buttonStyle={{ elevation: 3, width: 300, borderRadius: 25, backgroundColor: '#7d899a', marginTop: 20 }}
+                onPress={() => {
+                    this.props.join_event(this.props.token, this.props.user, this.props.event.id)
+                    this.props.navigator.resetTo({
+                        screen: 'EventsTabScreen',
+                        title: 'Events',
+                        navigatorStyle: { navBarTitleTextCentered: true }
+                    })
+                }} />
         }
     }
 
     render() {
         return (
-            <View>
-                <List containerStyle={{ borderWidth: 0, borderTopWidth: 0, margin: 20 }}>
+            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                <List containerStyle={{ borderWidth: 0, borderTopWidth: 0, margin: 20, width: width - 50 }}>
                     {
                         this.basicInfoList.map((item, i) => (
                             <ListItem
@@ -118,6 +127,20 @@ class Info extends React.Component<IInfoProps, IinfoState> {
                         ))
                     }
                 </List>
+                <View style={{ marginHorizontal: 20, width: width - 50, height: 100, backgroundColor: 'white' }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <View style={{margin: 10}}>
+                        <Icon 
+                            name='info'
+                            color='#004263' />
+                        </View>
+                        <View>
+                        <Text style={{fontSize: 16,padding: 10, color: 'black'}}>
+                            {this.props.event.description}
+                        </Text>
+                        </View>
+                    </View>
+                </View>
                 {this.renderActionButton()}
             </View>
         )

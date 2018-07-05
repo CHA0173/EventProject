@@ -84,7 +84,7 @@ class ViewEvent extends React.Component<IViewEventProps, IViewEventsState> {
         let content =
             <View>
                 <IndicatorViewPager
-                    style={{ height: windowHeight - 200, backgroundColor: 'white' }}
+                    style={{ height: windowHeight - 80, backgroundColor: 'white' }}
                     indicator={this._renderTitleIndicator()}
                     pagerStyle={{ marginTop: 50 }}
                 >

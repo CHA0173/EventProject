@@ -6,6 +6,13 @@ export interface Iuser {
   photo: string,
   events: Ievents[],
   items: Iitems[],
+  notes: Inotes[]
+}
+
+export interface Inotes {
+  eventId: number
+  note: string
+  timestamp: string
 }
 
 export interface Ievents {

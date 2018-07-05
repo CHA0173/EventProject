@@ -4,15 +4,14 @@ import {
     Text,
     FlatList,
     ScrollView,
-    TouchableOpacity,
-    Image,
-    Button
+    Dimensions
 } from 'react-native'
-import { Card, ListItem } from 'react-native-elements'
+import { Card, ListItem, Button } from 'react-native-elements'
 
 import { Ievent } from '../../models/events';
 import { Iuser } from '../../models/users';
 import { Navigator } from 'react-native-navigation';
+const { width } = Dimensions.get('window')
 
 
 interface IAttendeesProps {
@@ -23,8 +22,10 @@ interface IAttendeesProps {
 export default class Attendees extends React.Component<IAttendeesProps, {}> {
     render() {
         return (
-            <View>
-                <Button title='Invite' onPress={() => { 
+            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <Button title='Invite' 
+                        buttonStyle={{ elevation: 3, width: 300, borderRadius: 25, backgroundColor: '#d15953', marginTop: 20 }}
+                        onPress={() => { 
                     this.props.navigator.push({
                         screen: 'UsersListScreen',
                         title: 'Users List'
@@ -36,6 +37,7 @@ export default class Attendees extends React.Component<IAttendeesProps, {}> {
                             this.props.event.attendees.map((u, i) => {
                                 return (
                                     <ListItem
+                                        containerStyle={{width: width-50}}
                                         key={i}
                                         roundAvatar
                                         title={u.name}
