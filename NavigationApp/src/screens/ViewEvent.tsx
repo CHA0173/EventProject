@@ -6,7 +6,8 @@ import {
     StyleSheet,
     Dimensions,
     Image,
-    ScrollView
+    ScrollView,
+    ActivityIndicator
 } from 'react-native';
 import { IndicatorViewPager, PagerTitleIndicator } from 'rn-viewpager';
 
@@ -80,32 +81,33 @@ class ViewEvent extends React.Component<IViewEventProps, IViewEventsState> {
     }
     render() {
         console.log(this.props.viewEventfromRedux)
-        let content = 
-        <View>
-            <IndicatorViewPager
-                style={{ height: windowHeight - 200, backgroundColor: 'white' }}
-                indicator={this._renderTitleIndicator()}
-                pagerStyle={{ marginTop: 50 }}
-            >
-                <View style={{ backgroundColor: '#bed0db' }}>
-                    <Info event={this.props.viewEventfromRedux}
-                        user={this.props.user}
-                        navigator={this.props.navigator} />
-                </View>
-                <View style={{ backgroundColor: '#bed0db' }}>
-                    <ToDoList eventIdFromBackend={this.props.eventIdFromBackend}/>
-                    {console.log("viewevent", this.props)}
-                </View>
-                <View style={{ backgroundColor: '#bed0db' }}>
-                    <Attendees event={this.props.viewEventfromRedux} />
-                </View>
-                <View style={{ backgroundColor: '#bed0db' }}>
-                    <Discussion event={this.props.viewEventfromRedux} />
-                </View>
-            </IndicatorViewPager>
-        </View>
+        let content =
+            <View>
+                <IndicatorViewPager
+                    style={{ height: windowHeight - 80, backgroundColor: 'white' }}
+                    indicator={this._renderTitleIndicator()}
+                    pagerStyle={{ marginTop: 50 }}
+                >
+                    <View style={{ backgroundColor: '#bed0db' }}>
+                        <Info event={this.props.viewEventfromRedux}
+                            user={this.props.user}
+                            navigator={this.props.navigator} />
+                    </View>
+                    <View style={{ backgroundColor: '#bed0db' }}>
+                        <ToDoList eventIdFromBackend={this.props.eventIdFromBackend} />
+                        {console.log("viewevent", this.props)}
+                    </View>
+                    <View style={{ backgroundColor: '#bed0db' }}>
+                        <Attendees event={this.props.viewEventfromRedux}
+                            navigator={this.props.navigator} />
+                    </View>
+                    <View style={{ backgroundColor: '#bed0db' }}>
+                        <Discussion  eventIdFromBackend={this.props.eventIdFromBackend} />
+                    </View>
+                </IndicatorViewPager>
+            </View>
         if (this.props.isLoading) {
-            content = <Text>Loading...</Text>;
+            content = <ActivityIndicator size="large" />;
         }
         return <View style={{ flex: 1 }}>{content}</View>;
 
@@ -113,7 +115,6 @@ class ViewEvent extends React.Component<IViewEventProps, IViewEventsState> {
 }
 
 const mapStateToProps = (state) => {
-    // console.log("view event events", state.getViewEvent.events)
     return {
         viewEventfromRedux: state.getViewEvent.events,
         isLoading: state.getViewEvent.loading,

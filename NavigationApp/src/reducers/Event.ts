@@ -1,4 +1,4 @@
-import { ADD_EVENT, EDIT_EVENT, DELETE_EVENT, IEventAction } from '../actions/Event';
+import { ADD_EVENT, IEventAction } from '../actions/Event';
 import * as actionType from '../actions/types'
 import { Ievent } from '../models/events';
 
@@ -10,10 +10,18 @@ export interface IeventState {
 const initialState = {
   events: [],
   loading: false,
+  error: null
 }
 
 const EventReducer = (state: IeventState = initialState, action) => {
   switch (action.type) {
+    case (actionType.GET_EVENT_START):
+      return { ...state, loading: true }
+    case (actionType.GET_EVENT_SUCCESS):
+      return { ...state, loading: false, events: action.events }
+    case (actionType.GET_EVENT_FAILURE):
+      return { ...state, loading: false, error: action.err }
+
     case ADD_EVENT: {
       const events = state.events.concat(
         [
@@ -34,25 +42,8 @@ const EventReducer = (state: IeventState = initialState, action) => {
       );
       return { ...state, events: events, loading: true }
     }
-    case (actionType.GET_EVENT_SUCCESS):
-      return { ...state, events: action.events }
-    // case EDIT_EVENT: {
-    //   const events = state.events.filter(events => events.id !== action.id);
-    //   events.push({
-    //     id: action.id,
-    //     name: action.name,
-    //     description: action.description,
-    //     datetime: action.datetime,
-    //     photo: action.photo,
-    //     address: action.address,
-    //     private_event: action.private_event,
-    //     deposit: action.deposit,
-    //     todo: action.todo,
-    //     attendees: action.attendees,
-    //     discussion: action.discussion,
-    //   });
-    //   return { ...state, events: events, loding: false }
-    // }
+
+
     case actionType.ASSIGN_TODOITEM: {
       let eventIndex = null;
       let newStateEvents = state.events;
@@ -80,9 +71,7 @@ const EventReducer = (state: IeventState = initialState, action) => {
 
     case actionType.JOIN_EVENT:{
       let newEvent = state.events
-      console.log(newEvent.find(event => event.id === action.eventId).attendees);
-      console.log(action.user);
-      newEvent.find(event => event.id === action.eventId).attendees.concat(action.user)
+      newEvent.find(event => event.id === action.eventId).attendees = state.events.find(event => event.id === action.eventId).attendees.concat(action.user)
 
       return { ...state, events: newEvent }
     }

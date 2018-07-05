@@ -11,12 +11,14 @@ import { Navigator, NavigatorButton } from 'react-native-navigation';
 import { Iuser, Ievents } from '../models/users';
 import { connect } from 'react-redux'
 import axios from 'axios';
+import { get_user } from '../actions/auth';
 
 
 interface IEventsProps {
   navigator: Navigator,
   user: Iuser,
   token: string,
+  get_user: (token) => void
 };
 
 interface IEventsStates {
@@ -29,6 +31,12 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
       {
         icon: require('../img/plus.png'),
         id: 'create'
+      }
+    ],
+    leftButtons: [
+      {
+        icon: require('../img/refresh.png'),
+        id: 'refresh'
       }
     ]
   };
@@ -52,27 +60,29 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
         this.props.navigator.push({
           screen: 'CreateEventScreen'
         })
+      } else if (event.id == 'refresh') {
+        this.props.get_user(this.props.token)
       }
     }
   }
-
+  
   render() {
     const buttons = ['Upcoming', 'Created']
-    const filterEventCardOption = [true || false, true]
+    // const filterEventCardOption = [true || false, true]
     console.log('this.props.user.events', this.props)
     const { user } = this.props;
     const events = user.events ? user.events : [];
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: '#7d899a' }}>
         <ButtonGroup
           onPress={this.updateIndex}
           selectedIndex={this.state.selectedIndex}
           buttons={buttons}
-          containerStyle={{ marginTop: 10, height: 30, backgroundColor: 'transparent' }}
-          textStyle={{ fontSize: 12 }}
-          buttonStyle={{ backgroundColor: 'transparent' }}
-
+          selectedTextStyle={{color: 'white', backgroundColor: '#d15953'}}
+          containerStyle={{ marginTop: 10, height: 30, backgroundColor: 'white', borderWidth: 0, elevation: 3 }}
+          textStyle={{ fontSize: 14 }}
+          selectedButtonStyle={{backgroundColor: '#d15953'}}
         />
         <ScrollView style={{ flex: 1 }}>
           {console.log(this.props)}
@@ -95,10 +105,11 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
                   }}>
                     <Card
                       containerStyle={{
-                        borderRadius: 10,
                         marginHorizontal: 20,
                         marginVertical: 30,
-                        elevation: 8
+                        elevation: 3,
+                        borderRadius: 8,
+                        borderWidth: 0
                       }}
                       title={event.item.name}
                       image={{ uri: event.item.photo }}
@@ -125,10 +136,16 @@ class Events extends React.Component<IEventsProps, IEventsStates> {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.getView.events,
+    user: state.getUser.user,
     token: state.authReducer.token,
   }
 }
+const mapDispatchToProps = (dispatch) => {
+  return {
+    get_user: (token) => dispatch(get_user(token)),
+  }
+}
 
-export default connect(mapStateToProps)(Events);
+
+export default connect(mapStateToProps,mapDispatchToProps )(Events);
 

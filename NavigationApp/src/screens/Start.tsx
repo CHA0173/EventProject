@@ -65,11 +65,11 @@ class Start extends React.Component<IStartProps, IStartState> {
             navigatorStyle: { navBarTitleTextCentered: true, navBarHidden: true }
           },
           {
-            label: 'Notification',
+            label: 'Invitation',
             screen: 'NotificationTabScreen',
             icon: require('../img/notification3.png'),
             selectedIcon: require('../img/notification3.png'), // iOS only
-            title: 'Notification',
+            title: 'Invitation',
             navigatorStyle: { navBarTitleTextCentered: true }
           },
           {

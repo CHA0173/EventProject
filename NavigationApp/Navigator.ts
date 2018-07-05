@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 
 // import App from './App';
 import Start from './src/screens/Start';
-import LogIn from './src/screens/Login';
 import SignUp from './src/screens/SignUp';
 import Search from './src/screens/Search';
 import Events from './src/screens/Events';
@@ -13,6 +12,7 @@ import Menu from './src/screens/Menu';
 import Notification from './src/screens/Notification';
 import ViewEvent from './src/screens/ViewEvent';
 import CreateEvent from './src/screens/CreateEvent';
+import UsersList from './src/screens/ViewEventComponents/UsersList';
 
 // one page no tab ( LandingPage )
 Navigation.registerComponent('StartScreen', () => Start, store, Provider);
@@ -26,10 +26,10 @@ Navigation.registerComponent('SearchTabScreen', () => Search, store, Provider);
 Navigation.registerComponent('EventsTabScreen', () => Events, store, Provider);
 Navigation.registerComponent('NotificationTabScreen', () => Notification, store, Provider);
 
-Navigation.registerComponent('LogInScreen', () => LogIn, store, Provider);
 Navigation.registerComponent('SignUpScreen', () => SignUp, store, Provider);
 Navigation.registerComponent('ViewEventScreen', () => ViewEvent, store, Provider);
 Navigation.registerComponent('CreateEventScreen', () => CreateEvent, store, Provider);
+Navigation.registerComponent('UsersListScreen', () => UsersList, store, Provider);
 
 
 //TEMP USE, easier access to main screen for testing

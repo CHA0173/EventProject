@@ -10,8 +10,6 @@ import {
   Image,
   Dimensions,
   ScrollView,
-  TouchableWithoutFeedback,
-  Switch,
   Alert
 } from 'react-native';
 import { Button } from 'react-native-elements'
@@ -176,7 +174,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
                   this.props.user.items.find(it => it.id === item.id),
                   this.props.user.id,
                   item.completed,
-                )// FIXME:
+                )
                 this.forceUpdate()
               }
               }
@@ -217,7 +215,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
     // this.props.navigator.setTitle({ title: this.props.user.name })
     return (
       <ScrollView>
-        <View style={{ flex: 1, alignItems: 'center', padding: 20, paddingHorizontal: 40, flexDirection: 'row' }}>
+        <View style={{ flex: 1, alignItems: 'center', padding: 20, paddingHorizontal: 40, flexDirection: 'row', backgroundColor: '#b5b7b4' }}>
           <View style={{ flexGrow: 1 }}>
             <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
               <View style={[styles.avatar, styles.avatarContainer]}>
@@ -230,18 +228,21 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
                 }
               </View>
             </TouchableOpacity>
+            <View>
+              <Text>{this.props.user.name}</Text>
+            </View>
           </View>
           <View style={{ flexGrow: 1, alignItems: 'center' }}>
             <Text style={{ fontSize: 14, color: 'grey' }}>To-do</Text>
-            <Text style={{ fontSize: 36, padding: 5 }}>{eventAttended}</Text>
+            <Text style={{ fontSize: 36, padding: 5 }}>{this.props.user.items.length}</Text>
           </View>
           <View style={{ flexGrow: 1, alignItems: 'center' }}>
             <Text style={{ fontSize: 14, color: 'grey' }}>Attended</Text>
-            <Text style={{ fontSize: 36, padding: 5 }}>{eventAttended}</Text>
+            <Text style={{ fontSize: 36, padding: 5 }}>{this.props.user.events.length}</Text>
           </View>
         </View>
-        <View>
-          <Button icon={{ name: 'view-list' }} title='To-do List' disabledStyle={{ backgroundColor: '#d15953' }} disabled onPress={() => { }} />
+        <View style={{backgroundColor: '#7d899a'}}>
+          <Button icon={{ name: 'view-list' }} buttonStyle={{marginTop:20}} title='To-do List' disabledStyle={{ backgroundColor: '#d15953' }} disabled onPress={() => { }} />
           <FlatList
             style={{ marginHorizontal: 10 }}
             data={this.props.user.items}

@@ -13,6 +13,7 @@ const initialState = {
     photo: '',
     events: [],
     items: [],
+    notes: []
   },
   error: null,
 }

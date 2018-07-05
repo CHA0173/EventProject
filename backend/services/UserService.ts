@@ -62,10 +62,16 @@ export default class UserService {
           "items.quantity     as items_quantity",
           "items.completed    as items_completed",
           "eItem.id           as items_itemEventId",
+<<<<<<< HEAD
           "invite.id          as notes_id",
           "invite.note        as notes_note",
           "invite.events_id   as notes_invite_event_id",
           "invite.created_at  as notes_timestamp"
+=======
+          "notes.note as notes_note",
+          "notes.events_id as notes_events_id",
+          "notes.created_at as notes_timestamp",
+>>>>>>> 235b04f2c1d4c6d34c56e5a2757bcf7ac761bbcb
         ) 
          .leftJoin("events_users", 
          function() {

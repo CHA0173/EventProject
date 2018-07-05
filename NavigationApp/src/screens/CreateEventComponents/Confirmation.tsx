@@ -39,7 +39,7 @@ export default class Confirmation extends React.Component<IConfirmationProps, {}
             icon: 'location-on'
         },
         {
-            title: this.props.event.deposit,
+            title: this.props.event.datetime,
             icon: 'date-range'
         },
         {

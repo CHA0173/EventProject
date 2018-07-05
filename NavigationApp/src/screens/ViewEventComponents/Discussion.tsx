@@ -14,97 +14,115 @@ const { width, height } = Dimensions.get('window');
 
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-// const DiscussionData = [{
-//   username: 'Lucas',
-//   massage: 'awesome event !!!!',
-// }, {
-//   username: 'Brad',
-//   massage: 'YOYOYO',
-// }, {
-//   username: 'Jacob',
-//   massage: 'Yeah',
-// }, {
-//   username: 'Stephen',
-//   massage: 'not bad',
-// }, {
-//   username: 'Alex',
-//   massage: 'Good!',
-// }]
-import { Ievent } from '../../models/events'
 
-interface IData {
-  username: string,
-  massage: string,
-};
+import { Ievent } from '../../models/events'
+import { connect } from 'react-redux';
+import axios from 'axios';
+
+interface IdiscussionData {
+  id: number;
+  name: string;
+  comment: string;
+}
 
 interface IDiscussionProps {
-  event: Ievent,
+  events: any;
+  user: any;
+  eventIdFromBackend: number;
+  token: any;
 }
 
 interface IDiscussionStates {
-  Text: string,
-  Data: IData[],
+  comment: string;
+  discussionData: any[];
 }
 
-export default class Discussion extends React.Component<IDiscussionProps, IDiscussionStates> {
+class Discussion extends React.Component<IDiscussionProps, IDiscussionStates> {
   constructor(props: IDiscussionProps) {
     super(props)
 
     this.state = {
-      Text: '',
-      Data: [{
-        username: '',
-        massage: '',
-      }],
+      comment: '',
+      discussionData: this.props.events.find(ele => ele.id === this.props.eventIdFromBackend).discussion
     }
   }
 
-  // public renderData = () => {
-  //   this.setState({
-  //     Data: this.props.event.discussion.concat({
-  //       name: this.props.event.name,
-  //       comment: this.state.TextBox,
-  //     })
-  //   })
+  // componentWillMount(){
+  //   let comments = this.props.events.find(ele => ele.id === this.props.eventIdFromBackend).discussion
+  //   this.setState({discussionData: comments})
   // }
 
+  public renderData = () => {
+    // console.log(this.props.events)
+    // let events = this.props.events
+    // this.setState({
+    //   Data: events.discussion.concat({
+    //     name: this.state.name,
+    //     comment: this.state.comment
+    //   })
+    // })
+
+    let newcomment = this.state.discussionData
+
+    newcomment = newcomment.concat({
+      id: this.props.user.id,//userId,
+      name: this.props.user.name,//username,
+      comment: this.state.comment,//comment,
+    })
+    this.setState({
+      comment: '',
+      discussionData: newcomment
+    })
+  }
+
   render() {
+    console.log(this.props)
+
     return (
       <View style={{ flex: 1 }}>
         <FlatList
-          data={this.props.event.discussion}
+          data={this.state.discussionData}
           renderItem={(data) => {
             return (
               <ScrollView>
-                <View style={{ marginHorizontal: 20, marginTop: 10, borderRadius: 10, borderWidth: 0, padding: 10, backgroundColor: '#ffffff' }}>
+                <View style={{ marginHorizontal: 20, marginTop: 10, marginBottom: 10, borderRadius: 10, borderWidth: 0, padding: 10, backgroundColor: '#ffffff' }}>
                   <View style={{ marginHorizontal: 10 }}>
                     <Text style={{ fontSize: 16 }}>{data.item.name}</Text>
                   </View>
-                  <View style={{ marginHorizontal: 20, padding:5 }}>
+                  <View style={{ marginHorizontal: 20, padding: 5 }}>
                     <Text style={{ fontSize: 20, color: '#630815' }}>{data.item.comment}</Text>
                   </View>
                 </View>
               </ScrollView>
             )
           }}
-          keyExtractor={data => data.id.toString()}
+          keyExtractor={(index) => index.toString()}
         />
 
         <View style={{ backgroundColor: 'white' }}>
 
           <TextInput
-            value={this.state.Text}
+            value={this.state.comment}
             onChangeText={(text) => this.setState({
-              Text: text
+              comment: text
             })}
             placeholder='massage'
             keyboardAppearance='dark'
             style={{ backgroundColor: 'transparent', width: '80%', marginHorizontal: 10 }}
           />
 
-          {this.state.Text ?
+          {this.state.comment ?
             <TouchableWithoutFeedback
-            // onPress={() => this.renderData} //FIXME:
+              onPress={() => {
+                // console.log('discussion.state',this.state, this.renderData)
+                this.renderData()
+                const AuthStr = 'Bearer '.concat(this.props.token);
+                axios.post(`https://hivent.xyz/api/events/${this.props.user.id}/comment`, {
+                  events_id: this.props.eventIdFromBackend,
+                  comment: this.state.discussionData
+                }, { headers: { Authorization: AuthStr } }
+                )
+              }}
             >
               <Icon
                 name='send-o'
@@ -126,80 +144,14 @@ export default class Discussion extends React.Component<IDiscussionProps, IDiscu
     )
   }
 }
-//   constructor(props: {}) {
-//     super(props)
 
-//     this.state = {
-//       TextBox: '',
-//       Data: [{
-//         username: '',
-//         massage: '',
-//       }],
-//     }
-//   }
 
-//   public renderData = () => {
-//     this.setState({
-//       Data: DiscussionData.concat({
-//         username: 'user.name',
-//         massage: this.state.TextBox,
-//       })
-//     })
-//   }
+const mapStateToProps = (state) => {
+  return {
+    user: state.getUser.user,
+    events: state.event.events,
+    token: state.authReducer.token,
+  }
+}
 
-//   render() {
-//     return (
-//       <View style={{ flex: 1 }}>
-//         <FlatList
-//           data={DiscussionData}
-//           renderItem={(data) => {
-//             return (
-//               <ScrollView>
-//                 <View style={{ marginHorizontal: 20, marginTop: 10, borderRadius: 25, borderWidth: 1, padding: 10, backgroundColor: '#ffffcc' }}>
-//                   <View style={{ marginHorizontal: 10 }}>
-//                     <Text style={{ fontSize: 20 }}>{data.item.username}</Text>
-//                   </View>
-//                   <View style={{ marginHorizontal: 20, padding: 20 }}>
-//                     <Text>{data.item.massage}</Text>
-//                   </View>
-//                 </View>
-//               </ScrollView>
-//             )
-//           }}
-//           keyExtractor={data => data.massage}
-//         />
-
-//         <View style={{ backgroundColor: 'white' }}>
-
-//           <TextInput
-//             value={this.state.TextBox}
-//             onChangeText={(text) => this.setState({
-//               TextBox: text
-//             })}
-//             placeholder='massage'
-//             keyboardAppearance='dark'
-//             style={{ backgroundColor: 'transparent', width: '80%', marginHorizontal: 10 }}
-//           />
-
-//           {this.state.TextBox ?
-//             <TouchableWithoutFeedback onPress={() => this.renderData}>
-//               <Icon
-//                 name='send-o'
-//                 color='green'
-//                 size={25}
-//                 style={{
-//                   position: 'absolute',
-//                   top: 10,
-//                   right: 20,
-//                   zIndex: 1
-//                 }}
-//               />
-//             </TouchableWithoutFeedback>
-//             : null}
-
-//         </View>
-
-//       </View >
-//     )
-//   }
-// }
+export default connect(mapStateToProps)(Discussion)

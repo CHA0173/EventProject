@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   FlatList,
   TouchableWithoutFeedback,
-
+  Keyboard
 } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
@@ -21,9 +21,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 import { connect } from 'react-redux'
-import { fetchingEvents } from '../actions'
 import { Ievent } from '../models/events' 
 import { get_viewevent } from '../actions/auth';
+import axios from 'axios';
 
 interface ISearchProps {
   navigator: Navigator,
@@ -90,23 +90,23 @@ class Search extends React.Component<ISearchProps, ISearchState> {
   };
 
   public renderItem(item) {
-    console.log("search item", item, this.props.events)
+    let datetime = `${item.datetime.match(/\d{4}-[01]\d-[0-3]\d/)}, start at ${item.datetime.match(/[\d]{2}:[\d]{2}/)}`;
     return (
       <TouchableWithoutFeedback onPress={() => {
-        this.props.navigator.push({
-          screen: 'ViewEventScreen',
-          title: item.name,
-          navigatorStyle: {tabBarHidden: true} ,
-          passProps: {
-            item: this.props.events.find(e => e.id === item.id),
-            eventId: item.events_id
-          }
+        const AuthStr = 'Bearer '.concat(this.props.token);
+        axios.get(`https://hivent.xyz/api/events/${item.id}`, { headers: { Authorization: AuthStr } }).then((data) => {
+          console.log('data', data.data)
+          this.props.navigator.push({
+            screen: 'ViewEventScreen',
+            title: item.name,
+            navigatorStyle: { tabBarHidden: true },
+            passProps: { eventIdFromBackend: data.data.id }
+          })
         })
       }}>
         <View>
           <Image style={styles.image} source={{ uri: item.photo }} />
-          <Text style={{ color: 'white', margin: 20 }}>{item.name}</Text>
-          <Text style={{ color: 'white' }}>{item.datetime}</Text>
+          <Text style={{ color: 'white', margin: 20 }}>{`${item.name}  ${datetime}`}</Text>
         </View>
       </TouchableWithoutFeedback>
     )
@@ -146,7 +146,9 @@ class Search extends React.Component<ISearchProps, ISearchState> {
           <TouchableOpacity onPress={() => this.deleteData()}>
             {/* <TouchableOpacity onPress={() => this.props.navigator.switchToTab({
             tabIndex: 1
-          })}> */}
+          })}> */
+          Keyboard.dismiss()
+          }
             <View>
               <Text style={styles.cancelButtonText} >Cancel</Text>
             </View>
@@ -220,7 +222,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    events: state.getEvent.events,
+    events: state.event.events,
     token: state.authReducer.token,
   }
 }
