@@ -21,7 +21,6 @@
     "name": "portable speakers",
     "quantity": 1,
     "isactive": true,
-    "user": "Jacob Chan",
     "completed": false
 
 },
@@ -30,7 +29,6 @@
     "name": "poker set",
     "quantity": 1,
     "isactive": true,
-    "user": "Alex Lau",
     "completed": false
 
 },{
@@ -38,7 +36,6 @@
     "name":"Inflatable Toys",
     "quantity":"1",
     "isactive":true,
-    "user": "Gorden",
     "completed": false
 },{
     "event_name": "Mary's Wedding",
@@ -53,7 +50,6 @@
     "name": "ribbon decorations",
     "quantity": 10,
     "isactive": true,
-    "user": "Brad Wong",
     "completed": false
 },{
     "event_name": "Mary's Wedding",
@@ -74,14 +70,12 @@
     "name":"pack of cards",
     "quantity":"2",
     "isactive":true,
-    "user": "Brad Wong",
     "completed": true
 },{
     "event_name":"Beach Camp",
     "name":"bunsen burner",
     "quantity":"1",
     "isactive":true,
-    "user": "Brad Wong",
     "completed": true
 },{
     "event_name":"Beach Camp",

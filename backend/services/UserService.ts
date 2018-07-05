@@ -34,7 +34,7 @@ export default class UserService {
       {
         mapId: "notesMap",
         idProperty: "id",
-        properties: ["note", "timestamp", "events_id"]
+        properties: ["note", "timestamp", "invite_event_id"]
       }
     ];
   }
@@ -63,7 +63,7 @@ export default class UserService {
           "items.completed    as items_completed",
           "eItem.id           as items_itemEventId",
           "invite.note        as notes_note",
-          "invite.events_id   as notes_events_id",
+          "invite.events_id   as notes_invite_event_id",
           "invite.created_at  as notes_timestamp"
         ) 
          .leftJoin("events_users", 
@@ -87,13 +87,10 @@ export default class UserService {
           this.on("todo.events_id", "eItem.id")
           .andOn("todo.isactive", self.knex.raw(true));
         })
-        .leftJoin("notifications as invite", function() {           //GET NOTIFICATIONS by UserID
-          this.on("invite.users_id", "users.id")
-          // .andOn("todo.isactive", self.knex.raw(true));
-        })
+        .leftJoin("notifications as invite", "invite.users_id", "users.id")
         .where("users.id", user.id)
         .then(result => {
-          // console.log("result", result)
+          console.log("result", result)
 
           return joinjs.mapOne(
             result,
