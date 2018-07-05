@@ -62,8 +62,8 @@ export default class UserService {
           "items.quantity     as items_quantity",
           "items.completed    as items_completed",
           "eItem.id           as items_itemEventId",
-          "notifications.note as notes_note",
-          "notifications.events_id as notes_event_id",
+          "invite.note as notes_note",
+          // "notifications.events_id as notes_event_id",
           // "invite.created_at as notes_timestamp",
         ) 
          .leftJoin("events_users", 
