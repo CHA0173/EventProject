@@ -89,6 +89,7 @@ export default class UserService {
         })
         .leftJoin("notifications as invite", function() {           //GET NOTIFICATIONS by UserID
           this.on("invite.users_id", "users.id")
+          .andOn("todo.isactive", self.knex.raw(true));
         })
         .where("users.id", user.id)
         .then(result => {
