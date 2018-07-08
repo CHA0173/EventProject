@@ -23,6 +23,8 @@ const signupService   = new SignUpService(knex);
 const jwtAuth         = jwtStrategy(userService);
 const apiRouter       = new ApiRouter(jwtAuth, userService, eventService, signupService);
 
+
+
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json({limit: '50mb'}))
 app.use(cors());
