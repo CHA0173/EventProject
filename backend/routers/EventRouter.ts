@@ -19,14 +19,20 @@ export default class EventRouter {
     router.get("/", this.getAll)
     router.get("/search",this.searchByName);
     router.get("/:eventid", this.getById);
-   
     router.post("/:eventid/invite", this.invite)
     router.post("/:eventid/comment", this.comment);
     router.post("/", this.create)
     router.put("/join", this.joinEvent)
     router.put("/:eventid", this.put);
     router.delete("/:eventid", this.delete);
+    router.all("/:eventid", this.updateList);
     return router;
+  }
+
+  updateList = (req:express.Request, res: express.Response) => {
+    return this.eventService.updateList(req.body)
+    .then((data) => res.json(data))
+    .catch((err:express.Errback) => res.status(500).json(err))
   }
 
   invite =  (req:express.Request, res:express.Response) => {
@@ -65,11 +71,6 @@ export default class EventRouter {
       .catch((err: express.Errback) => { console.log("err", err); res.status(500).json(err) })
   }
 
-  // getUpcoming = (req: express.Request, res: express.Response) => { 
-  //   return this.eventService.getUpcomingByUserId(req.params.userid)    
-  //       .then((data) => res.json(data))
-  //       .catch((err: express.Errback) => res.status(500).json(err));
-  // }
 
   create = (req: express.Request, res: express.Response) => {
   return this.eventService.create(req.user, req.body)

@@ -1,6 +1,8 @@
 import * as Knex from "knex";
 // import * as path from "path";
 // import * as fs from "fs-extra";
+//REDO writefile for photo uploads, save photo url into database instead of base64
+//add interface for types
 
 import { Promise as BlueBirdPromise } from "bluebird";
 import { default as joinjs } from 'join-js';
@@ -275,6 +277,10 @@ export default class EventService {
     })
   }
 
+  async updateList(body:any) {  //adds new rows when necessary and updates existing rows when necessary
+
+  }
+
 
   //Completed
   async update(body: any) {
@@ -486,3 +492,5 @@ export default class EventService {
     })
   }
 }
+
+// module.exports = EventService
