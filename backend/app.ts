@@ -14,6 +14,9 @@ import EventService     from './services/EventService';
 import SignUpService from './services/SignUpService';
 
 
+
+
+
 const knex = Knex(Knexfile[config.env]);
 const app  = express();
 
