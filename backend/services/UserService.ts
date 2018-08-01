@@ -114,7 +114,7 @@ export default class UserService {
       .andWhere("password", password)
       .then(value => {
         return value;
-      })
+      }).catch((e) => console.log(e))
 
   }
 
