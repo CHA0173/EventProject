@@ -102,7 +102,7 @@ export function remoteAddEvent(
   return (dispatch: Dispatch<any>) => {
     console.log("todo[0].items", todo[0].items);
     const AuthStr = 'Bearer '.concat(token);
-    axios.post('https://hivent.xyz/api/events', {
+    axios.post('https://api.hivent.xyz/api/events', {
       event_name: name,
       description: description,
       datetime: datetime,
@@ -155,7 +155,7 @@ export const assign_todoitem = (token, eventId, toDoItemId, userId, userName) =>
   return (dispatch: Dispatch) => {
     dispatch(assign_item(token, eventId, toDoItemId, userId, userName))
     const AuthStr = 'Bearer '.concat(token);
-    axios.put(`https://hivent.xyz/api/events/${eventId}`, {
+    axios.put(`https://api.hivent.xyz/api/events/${eventId}`, {
       event: {
         id: eventId,
         private: false,
@@ -185,7 +185,7 @@ export const complete_todoitem = (token, eventId, toDoItemId, userId, itemComple
     let condition = itemComplete ? false : true
     dispatch(complete_item(token, eventId, toDoItemId, userId, itemComplete))
     const AuthStr = 'Bearer '.concat(token);
-    axios.put(`https://hivent.xyz/api/events/${eventId}`, {
+    axios.put(`https://api.hivent.xyz/api/events/${eventId}`, {
       event: {
         id: eventId.id,
         private: false,
@@ -211,7 +211,7 @@ export const join_event = (token, user, eventId) => {
   return (dispatch) => {
     dispatch(user_join_event(user, eventId))
     const AuthStr = 'Bearer '.concat(token);
-    axios.put('https://hivent.xyz/api/events/join', {
+    axios.put('https://api.hivent.xyz/api/events/join', {
       token,
       event_Id: eventId,
     }, { headers: { Authorization: AuthStr } })
@@ -232,7 +232,7 @@ export const left_event = (token, userId, eventId) => {
     dispatch(user_left_event( userId, eventId ))
     const AuthStr = 'Bearer '.concat(token);
     axios.delete(
-      `https://hivent.xyz/api/events/${eventId}`,
+      `https://api.hivent.xyz/api/events/${eventId}`,
      {headers: { Authorization: AuthStr }}
     ).catch(function (error) {
       console.log(error);

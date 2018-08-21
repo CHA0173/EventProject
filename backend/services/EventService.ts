@@ -1,6 +1,7 @@
 import * as Knex from "knex";
-// import * as path from "path";
-// import * as fs from "fs-extra";
+import * as path from "path";
+import * as fs from "fs-extra";
+
 //REDO writefile for photo uploads, save photo url into database instead of base64
 //add interface for types
 
@@ -93,11 +94,12 @@ export default class EventService {
     ]
   }
 
-  // writeFile(eventid: number, name: string, body: Express.Multer.File, trx: Knex) {
-  //   const imagePath = path.join(__dirname, `../public/images/${name}`);
-  //   fs.outputFile(imagePath, body.buffer)
-  //   return trx("events").where("events.id", eventid).update({ photo: name })
-  // }
+  //Upload image to server then return path name
+  writeFile(eventid: number, name: string, body: Express.Multer.File, trx: Knex) {
+    const imagePath = path.join(__dirname, `../public/images/${name}`);
+    fs.outputFile(imagePath, body.buffer)
+    return trx("events").where("events.id", eventid).update({ photo: name })
+  }
 
   isAttended(eventid: number, userid: number) {
     return this.knex("events_users")

@@ -1,5 +1,9 @@
 import * as express from "express";
 import EventService from '../services/EventService';
+import * as multer from "multer";
+import * as bodyparser from "body-parser";
+const storage = multer.memoryStorage()
+const upload = multer({ dest: '../public/images', storage: storage });
 
 /**
  * Events Routes
